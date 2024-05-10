@@ -1,5 +1,12 @@
 
 
+## [1.0.1](https://github.com/baiwumm/next-daily-hot/compare/1.0.0...1.0.1) (2024-05-10)
+
+
+### 🔧 Continuous Integration | CI 配置
+
+* **RealTime:** 使用 lunar-typescript 代替 js-calendar-converter ([11b0379](https://github.com/baiwumm/next-daily-hot/commit/11b0379c76afc9782fc8fedbde4de4dc03cbc086))
+
 ## [1.0.0](https://github.com/baiwumm/next-daily-hot/compare/0.1.1...1.0.0) (2024-05-10)
 
 
