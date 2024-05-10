@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-10 11:14:36
+ * @LastEditTime: 2024-05-10 16:32:21
  * @Description: 默认布局
  */
 import { Inter } from 'next/font/google';
@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         {/* 主体内容 */}
-        <ThemeProvider attribute="class">
+        <ThemeProvider attribute="class" defaultTheme="light">
           {/* 头部布局 */}
           <Header />
           <main>{children}</main>

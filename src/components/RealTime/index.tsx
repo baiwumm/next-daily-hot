@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 13:35:57
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-10 16:12:11
+ * @LastEditTime: 2024-05-10 16:22:44
  * @Description: 实时时间
  */
 'use client';
@@ -29,7 +29,6 @@ const RealTime = () => {
     const IDayCn = lunar.getDayInChinese(); // 农历日
     const ncWeek = lunar.getWeekInChinese(); // 农历星期
     return `${gzYear}年 ${gzMonth}月 ${gzDay}日 ${IMonthCn}月${IDayCn} 星期${ncWeek}`;
-    return '';
   };
 
   /**
