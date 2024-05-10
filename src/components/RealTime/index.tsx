@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 13:35:57
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-10 14:05:39
+ * @LastEditTime: 2024-05-10 16:12:11
  * @Description: 实时时间
  */
 'use client';
@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 import { useInterval, useUnmount } from 'ahooks';
 import dayjs from 'dayjs';
-import calendar from 'js-calendar-converter';
+import { Lunar } from 'lunar-typescript';
 
 const RealTime = () => {
   // 实时时间
@@ -21,8 +21,15 @@ const RealTime = () => {
    */
   const renderLunarCalendar = () => {
     // 解构农历对象
-    const { gzYear, gzMonth, gzDay, IMonthCn, IDayCn, ncWeek } = calendar.solar2lunar();
-    return `${gzYear}年 ${gzMonth}月 ${gzDay}日 ${IMonthCn}${IDayCn} ${ncWeek}`;
+    const lunar = Lunar.fromDate(new Date());
+    const gzYear = lunar.getYearInGanZhi(); // 道历年
+    const gzMonth = lunar.getMonthInGanZhi(); // 道历月
+    const gzDay = lunar.getDayInGanZhi(); // 道历日
+    const IMonthCn = lunar.getMonthInChinese(); // 农历月
+    const IDayCn = lunar.getDayInChinese(); // 农历日
+    const ncWeek = lunar.getWeekInChinese(); // 农历星期
+    return `${gzYear}年 ${gzMonth}月 ${gzDay}日 ${IMonthCn}月${IDayCn} 星期${ncWeek}`;
+    return '';
   };
 
   /**
