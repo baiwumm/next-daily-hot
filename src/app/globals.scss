@@ -2,25 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+$white:#fff;
+$scrollbar-bg:rgba(60, 60, 67, 0.4); // 滚动条背景色
+
 :root {
-  --background: rgb(240, 242, 245);
-  --foreground: black;
-  --scrollbar: rgba(60, 60, 67, 0.4);
   --scrollbar-hover: rgba(0, 0, 0, 0.4);
 }
 
-[data-theme='dark'] {
-  --background: rgb(16, 16, 10);
-  --foreground: white;
+// 黑夜模式
+[data-theme="dark"]{
   --scrollbar-hover: rgba(0, 0, 0, 0.3);
-  --hot-url-underline: rgba(255, 255, 255, 0.08);
-}
-
-/* 顶部白色阴影 */
-.dark .header-white-shadow {
-  box-shadow:
-    0 4px 6px -1px rgb(255 255 255 / 0.1),
-    0 2px 4px -2px rgb(255 255 255 / 0.1);
 }
 
 /* 修改滚动条样式 */
@@ -30,7 +21,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-  background: var(--scrollbar);
+  background: $scrollbar-bg;
   border-radius: 8px;
 }
 

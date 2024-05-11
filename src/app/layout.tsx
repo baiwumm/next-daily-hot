@@ -2,9 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-10 16:32:21
+ * @LastEditTime: 2024-05-11 10:48:48
  * @Description: 默认布局
  */
+import { NextUIProvider } from '@nextui-org/react';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 
@@ -12,7 +13,7 @@ import Header from '@/components/Header'; // 头部布局
 
 import type { Metadata } from 'next';
 
-import './globals.css';
+import './globals.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,12 +34,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        {/* 主体内容 */}
-        <ThemeProvider attribute="class" defaultTheme="light">
-          {/* 头部布局 */}
-          <Header />
-          <main>{children}</main>
-        </ThemeProvider>
+        <NextUIProvider>
+          {/* 主体内容 */}
+          <ThemeProvider attribute="class" defaultTheme={process.env.DEFAULT_THEME}>
+            {/* 头部布局 */}
+            <Header />
+            <main>{children}</main>
+          </ThemeProvider>
+        </NextUIProvider>
       </body>
     </html>
   );
