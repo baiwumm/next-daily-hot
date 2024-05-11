@@ -1,5 +1,23 @@
 
 
+## [1.1.0](https://github.com/baiwumm/next-daily-hot/compare/1.0.1...1.1.0) (2024-05-11)
+
+
+### ✨ Features | 新功能
+
+* 添加热榜卡片相应图标 ([35c8432](https://github.com/baiwumm/next-daily-hot/commit/35c84329b951974ee59fcfad018c7439245b3a7c))
+* **layout:** 设置默认主题模式为 light ([98240ce](https://github.com/baiwumm/next-daily-hot/commit/98240ce5b0630a6a20711849e063fc0585d6802f))
+
+
+### 💄 Styles | 风格
+
+* **Header:** 布局改为 sticky 黏性布局 ([6ab9d1f](https://github.com/baiwumm/next-daily-hot/commit/6ab9d1fea6bc45bafd38d7b3dc040e8989569361))
+
+
+### 🔧 Continuous Integration | CI 配置
+
+* 安装 sass 和 NextUI 包 ([84203e0](https://github.com/baiwumm/next-daily-hot/commit/84203e0f07ae8e8f54fb4769b37661413826bc1e))
+
 ## [1.0.1](https://github.com/baiwumm/next-daily-hot/compare/1.0.0...1.0.1) (2024-05-10)
 
 
