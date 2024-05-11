@@ -6,3 +6,19 @@ export enum THEME_MODE {
   LIGHT = 'light', // 浅色
   DARK = 'dark', // 深色
 }
+
+/**
+ * @description: 请求状态码
+ */
+export enum REQUEST_STATUS {
+  SUCCESS = 200, // 成功
+  ERROR = 500, // 失败
+}
+
+/**
+ * @description: 请求状态对应的文案
+ */
+export enum REQUEST_STATUS_TEXT {
+  SUCCESS = '请求成功',
+  ERROR = '请求失败',
+}
