@@ -1,5 +1,19 @@
 
 
+## [1.2.1](https://github.com/baiwumm/next-daily-hot/compare/1.2.0...1.2.1) (2024-05-13)
+
+
+### ✨ Features | 新功能
+
+* **env :** 添加 revalidate 缓存过期时间变量 ([b05c9a8](https://github.com/baiwumm/next-daily-hot/commit/b05c9a8ef427452229ef4a14e41f87e2682c23c4))
+* **hooks:** 新增 useIsMobile hook ([76acd0f](https://github.com/baiwumm/next-daily-hot/commit/76acd0fcb9ad159fce6368852f041a842da00cb1))
+* **route:** 添加 bilibili 热门榜 ([4c224b0](https://github.com/baiwumm/next-daily-hot/commit/4c224b03289d8391e773b9c21b5cdd01720c039b))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **route:** 更换 typescript 版本，修复 route 引用 .env 变量导致打包报错的问题 ([35dbd64](https://github.com/baiwumm/next-daily-hot/commit/35dbd64fdb473e7fb20be495f6b3b1bc38affe18))
+
 ## [1.2.0](https://github.com/baiwumm/next-daily-hot/compare/1.1.0...1.2.0) (2024-05-13)
 
 
