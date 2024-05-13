@@ -65,4 +65,9 @@ export const hotCardConfig: HotListConfig[] = [
     label: '微博',
     tip: '热搜榜',
   },
+  {
+    value: 'bilibili',
+    label: '哔哩哔哩',
+    tip: '热门榜',
+  },
 ];

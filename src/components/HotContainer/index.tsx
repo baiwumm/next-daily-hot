@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 15:16:31
+ * @LastEditTime: 2024-05-13 16:53:11
  * @Description: 热榜卡片
  */
 'use client';
@@ -32,12 +32,6 @@ const HotContainer = () => {
       : hotCardConfig;
   };
   const [hotConfig] = useState<HotListConfig[]>(filterHiddenHot());
-  return (
-    <div className="w-96">
-      {hotConfig.map((config) => (
-        <HotCard {...config} key={config.value} />
-      ))}
-    </div>
-  );
+  return hotConfig.map((config) => <HotCard {...config} key={config.value} />);
 };
 export default HotContainer;

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 16:03:12
+ * @LastEditTime: 2024-05-13 16:51:50
  * @Description: 热榜卡片
  */
 'use client';
@@ -37,7 +37,7 @@ import type { HotListItem, IResponse, UpdateTime, HotListConfig } from '@/utils/
 
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
-const HotCard = ({ value }: HotListConfig) => {
+const HotCard = ({ value, label, tip }: HotListConfig) => {
   const { theme } = useTheme();
   // 判断是否是深色主题
   const isLight = theme === THEME_MODE.LIGHT;
@@ -98,11 +98,11 @@ const HotCard = ({ value }: HotListConfig) => {
       {/* 头部 */}
       <CardHeader className="flex justify-between">
         <div className="flex items-center gap-2">
-          <Image src="/weibo.svg" alt="微博热搜" width={24} height={24} />
-          <div className="font-bold text-md">微博</div>
+          <Image src={`/${value}.svg`} alt={`${label}${tip}`} width={24} height={24} />
+          <div className="font-bold text-md">{label}</div>
         </div>
         <Chip color="success" startContent={<RiCheckboxCircleFill size={18} />} variant="flat" size="sm">
-          热搜榜
+          {tip}
         </Chip>
       </CardHeader>
       <Divider />

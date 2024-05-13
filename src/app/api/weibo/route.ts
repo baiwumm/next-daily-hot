@@ -2,8 +2,8 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-11 14:37:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-11 18:27:59
- * @Description: 微博热搜榜
+ * @LastEditTime: 2024-05-13 16:27:58
+ * @Description: 微博-热搜榜
  */
 import { NextResponse } from 'next/server';
 
@@ -14,7 +14,7 @@ export async function GET() {
   const url = 'https://weibo.com/ajax/side/hotSearch';
   try {
     // 请求数据
-    const response = await fetch(url, { method: 'GET' }).then(async (res) => await res.json());
+    const response = await fetch(url).then(async (res) => await res.json());
     // 处理数据
     if (response.ok === 1) {
       const result = response.data.realtime.map((v: Record<string, any>) => {
