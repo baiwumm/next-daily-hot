@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 16:51:50
+ * @LastEditTime: 2024-05-13 17:39:52
  * @Description: 热榜卡片
  */
 'use client';
@@ -35,6 +35,7 @@ dayjs.locale('zh-cn');
 import { REQUEST_STATUS, THEME_MODE, LOCAL_KEY } from '@/utils/enum';
 import type { HotListItem, IResponse, UpdateTime, HotListConfig } from '@/utils/types';
 
+import useIsMobile from '@/hooks/useIsMobile';
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
 const HotCard = ({ value, label, tip }: HotListConfig) => {
@@ -47,6 +48,8 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
   const [updateTime, setUpdateTime] = useLocalStorageState<UpdateTime>(LOCAL_KEY.UPDATETIME, {
     defaultValue: {},
   });
+  // 判断是否是移动端
+  const isMobile = useIsMobile();
 
   /**
    * @description: 请求榜单接口
@@ -121,7 +124,7 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
             </div>
           ) : data?.length ? (
             <ul className="m-0 p-0">
-              {data.map(({ id, title, label, url, hot }: HotListItem, index: number) => {
+              {data.map(({ id, title, label, url, hot, mobileUrl }: HotListItem, index: number) => {
                 return (
                   <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0">
                     {/* 索引 */}
@@ -141,7 +144,7 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
                       <Tooltip showArrow content={title} placement="top">
                         <div
                           className="transition ease-in duration-300 cursor-pointer text-sm whitespace-nowrap self-start overflow-hidden text-ellipsis flex-auto relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:-bottom-0 after:bg-slate-200 after:transition-all after:duration-500 hover:translate-x-1 hover:after:w-full"
-                          onClick={() => window.open(url)}
+                          onClick={() => window.open(isMobile ? mobileUrl : url)}
                         >
                           {title}
                         </div>
