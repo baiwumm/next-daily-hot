@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-11 14:37:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 16:27:58
+ * @LastEditTime: 2024-05-13 17:08:39
  * @Description: 微博-热搜榜
  */
 import { NextResponse } from 'next/server';
@@ -38,4 +38,4 @@ export async function GET() {
 }
 
 // 数据过期时间
-export const revalidate = process.env.CACHE_TIME;
+export const revalidate = 60;
