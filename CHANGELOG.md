@@ -1,5 +1,17 @@
 
 
+## [1.2.0](https://github.com/baiwumm/next-daily-hot/compare/1.1.0...1.2.0) (2024-05-13)
+
+
+### ✨ Features | 新功能
+
+* **HotCard:** 完成热榜卡片的基本布局 ([209efee](https://github.com/baiwumm/next-daily-hot/commit/209efee4a1b3cb4f0afd0265961fb2a2739baad1))
+
+
+### 💄 Styles | 风格
+
+* 榜单卡片细节优化 ([a22a116](https://github.com/baiwumm/next-daily-hot/commit/a22a1165f6e0af8aa09f11b484c17d74805547f8))
+
 ## [1.1.0](https://github.com/baiwumm/next-daily-hot/compare/1.0.1...1.1.0) (2024-05-11)
 
 
