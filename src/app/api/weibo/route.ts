@@ -36,3 +36,6 @@ export async function GET() {
     return NextResponse.json(responseError);
   }
 }
+
+// 数据过期时间
+export const revalidate = process.env.CACHE_TIME;

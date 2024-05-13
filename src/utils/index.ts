@@ -1,5 +1,5 @@
 import { REQUEST_STATUS, REQUEST_STATUS_TEXT } from '@/utils/enum';
-import type { IResponse, HotListItem } from '@/utils/types';
+import type { IResponse, HotListItem, HotListConfig } from '@/utils/types';
 
 /**
  * @description: 请求成功返回处理结果
@@ -55,3 +55,14 @@ export const formatNumber = (num: number | string): number | string => {
   num = num.toFixed(2);
   return num + unit;
 };
+
+/**
+ * @description: 热榜配置
+ */
+export const hotCardConfig: HotListConfig[] = [
+  {
+    value: 'weibo',
+    label: '微博',
+    tip: '热搜榜',
+  },
+];
