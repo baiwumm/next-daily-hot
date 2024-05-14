@@ -73,4 +73,5 @@ export const hotCardConfig: HotListConfig[] = [
   { value: 'lol', label: '英雄联盟', tip: '更新公告' },
   { value: 'thepaper', label: '澎湃新闻', tip: '热榜' },
   { value: 'kuaishou', label: '快手', tip: '热榜' },
+  { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
 ];

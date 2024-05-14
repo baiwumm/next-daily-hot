@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 09:10:04
+ * @LastEditTime: 2024-05-14 11:18:48
  * @Description: 热榜卡片
  */
 'use client';
@@ -39,7 +39,7 @@ import OverflowDetector from './OverflowDetector';
 
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
-const HotCard = ({ value, label, tip }: HotListConfig) => {
+const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
   const { theme } = useTheme();
   // 判断是否是深色主题
   const isLight = theme === THEME_MODE.LIGHT;
@@ -49,6 +49,11 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
   const [updateTime, setUpdateTime] = useLocalStorageState<UpdateTime>(LOCAL_KEY.UPDATETIME, {
     defaultValue: {},
   });
+
+  // 渲染热度
+  const renderHot = (value: string | number) => (
+    <div className="flex-initial shrink-0 text-xs text-black/45 dark:text-white">{value}</div>
+  );
 
   /**
    * @description: 请求榜单接口
@@ -113,7 +118,7 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
             </div>
           ) : data?.length ? (
             <ul className="m-0 p-0">
-              {data.map(({ id, title, label, url, hot, mobileUrl }: HotListItem, index: number) => {
+              {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
                 return (
                   <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0">
                     {/* 索引 */}
@@ -134,11 +139,11 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
                         {title}
                       </OverflowDetector>
                       {/* 热度 */}
-                      {hot ? (
-                        <div className="flex-initial shrink-0 text-xs text-black/45 dark:text-white">
-                          {formatNumber(hot)}
-                        </div>
-                      ) : null}
+                      {hot
+                        ? renderHot(formatNumber(hot))
+                        : tip
+                          ? renderHot(`${prefix || ''}${tip}${suffix || ''}`)
+                          : null}
                     </div>
                   </li>
                 );
