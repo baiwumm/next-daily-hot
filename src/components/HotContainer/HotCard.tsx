@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 17:39:52
+ * @LastEditTime: 2024-05-14 09:10:04
  * @Description: 热榜卡片
  */
 'use client';
@@ -21,7 +21,7 @@ import {
   Skeleton,
   Button,
 } from '@nextui-org/react';
-import { useRequest, useDebounceFn, useLocalStorageState, useInterval, useUnmount } from 'ahooks';
+import { useRequest, useLocalStorageState, useInterval, useUnmount } from 'ahooks';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Image from 'next/image';
@@ -35,7 +35,8 @@ dayjs.locale('zh-cn');
 import { REQUEST_STATUS, THEME_MODE, LOCAL_KEY } from '@/utils/enum';
 import type { HotListItem, IResponse, UpdateTime, HotListConfig } from '@/utils/types';
 
-import useIsMobile from '@/hooks/useIsMobile';
+import OverflowDetector from './OverflowDetector';
+
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
 const HotCard = ({ value, label, tip }: HotListConfig) => {
@@ -48,8 +49,6 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
   const [updateTime, setUpdateTime] = useLocalStorageState<UpdateTime>(LOCAL_KEY.UPDATETIME, {
     defaultValue: {},
   });
-  // 判断是否是移动端
-  const isMobile = useIsMobile();
 
   /**
    * @description: 请求榜单接口
@@ -74,16 +73,6 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
       debounceWait: 300,
       // 错误重试次数。如果设置为 -1，则无限次重试。
       retryCount: 3,
-    },
-  );
-
-  // 点击刷新按钮回调
-  const { run: refresh } = useDebounceFn(
-    () => {
-      run();
-    },
-    {
-      wait: 350,
     },
   );
 
@@ -141,14 +130,9 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
                         {label || index + 1}
                       </div>
                       {/* 标题 */}
-                      <Tooltip showArrow content={title} placement="top">
-                        <div
-                          className="transition ease-in duration-300 cursor-pointer text-sm whitespace-nowrap self-start overflow-hidden text-ellipsis flex-auto relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:-bottom-0 after:bg-slate-200 after:transition-all after:duration-500 hover:translate-x-1 hover:after:w-full"
-                          onClick={() => window.open(isMobile ? mobileUrl : url)}
-                        >
-                          {title}
-                        </div>
-                      </Tooltip>
+                      <OverflowDetector url={url} mobileUrl={mobileUrl}>
+                        {title}
+                      </OverflowDetector>
                       {/* 热度 */}
                       {hot ? (
                         <div className="flex-initial shrink-0 text-xs text-black/45 dark:text-white">
@@ -182,7 +166,7 @@ const HotCard = ({ value, label, tip }: HotListConfig) => {
                 variant="light"
                 size="sm"
                 isDisabled={loading}
-                onClick={refresh}
+                onClick={run}
                 className="text-black/45 dark:text-white"
               >
                 <RiLoopRightLine size={18} />
