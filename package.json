@@ -18,7 +18,6 @@
   "dependencies": {
     "@nextui-org/react": "^2.3.6",
     "ahooks": "^3.7.11",
-    "antd": "^5.17.0",
     "cheerio": "1.0.0-rc.12",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.11",
