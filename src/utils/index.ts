@@ -78,6 +78,7 @@ export const hotCardConfig: HotListConfig[] = [
   { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
   { value: 'weread', label: '微信读书', tip: '飙升榜' },
   { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
+  { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
 ];
 
 /**
@@ -138,4 +139,20 @@ export const getWereadID = (bookId: string) => {
     console.error('处理微信读书 ID 时出现错误：' + error);
     return null;
   }
+};
+
+/**
+ * @description: 根据时间戳计算时长
+ */
+export const convertMillisecondsToTime = (milliseconds: number): string => {
+  const seconds = Math.floor((milliseconds / 1000) % 60);
+  const minutes = Math.floor(milliseconds / (1000 * 60));
+
+  // 如果秒数小于10，前面补0
+  const formattedSeconds = seconds < 10 ? '0' + seconds : seconds.toString();
+
+  // 如果分钟数小于10，前面补0
+  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes.toString();
+
+  return `${formattedMinutes}:${formattedSeconds}`;
 };
