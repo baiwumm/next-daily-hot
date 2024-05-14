@@ -1,5 +1,45 @@
 
 
+## [1.3.0](https://github.com/baiwumm/next-daily-hot/compare/1.2.1...1.3.0) (2024-05-14)
+
+
+### ✨ Features | 新功能
+
+* 新增 OverflowDetector 单行内容溢出组件 ([7255f3c](https://github.com/baiwumm/next-daily-hot/commit/7255f3c889918367fd1852faa394a3db8be904c0))
+* **components:** 添加 HotLoading 组件 ([7e8e41f](https://github.com/baiwumm/next-daily-hot/commit/7e8e41fdeb40d60b6eef812e5d6df4457ac9679b))
+* **route:** 完善 TS 类型标注 ([231192b](https://github.com/baiwumm/next-daily-hot/commit/231192b69ff5989930552326d1149d2d93fa1a12))
+* **route:** 新增百度-热搜榜 ([5256980](https://github.com/baiwumm/next-daily-hot/commit/525698049fc58a067a3fba48a4ce74badcc861cb))
+* **route:** 新增百度百科-历史上的今天 ([5020df7](https://github.com/baiwumm/next-daily-hot/commit/5020df7045f6d7c4d7791b502e65ee6c5962aa46))
+* **route:** 新增百度贴吧-热议榜 ([b6b523c](https://github.com/baiwumm/next-daily-hot/commit/b6b523ced007051ec1619bb4255a2edf09765275))
+* **route:** 新增抖音-热点榜 ([892b943](https://github.com/baiwumm/next-daily-hot/commit/892b943d663cf6b96a0fd1bda00bc979fae51d07))
+* **route:** 新增豆瓣电影-新片榜 ([f7a12c3](https://github.com/baiwumm/next-daily-hot/commit/f7a12c30eb4002c978e199781c5bdd4779dda02c))
+* **route:** 新增纪念日头条-热榜 ([fb45040](https://github.com/baiwumm/next-daily-hot/commit/fb45040c88572402fde61c11274fc5d1cf2773e6))
+* **route:** 新增快手-热榜 ([8f75ee0](https://github.com/baiwumm/next-daily-hot/commit/8f75ee02bd5c9278ed12ef2ec5dd72b06aee300f))
+* **route:** 新增澎湃新闻-热榜 ([6acf5a0](https://github.com/baiwumm/next-daily-hot/commit/6acf5a0fbabf83977af80dfdccec289ce8831874))
+* **route:** 新增腾讯新闻-热点榜 ([c096f00](https://github.com/baiwumm/next-daily-hot/commit/c096f005874de7283c88dc323487cef39b804320))
+* **route:** 新增网易新闻-热榜 ([bc3b9e9](https://github.com/baiwumm/next-daily-hot/commit/bc3b9e9eb0c197fea89cfaa26189e7096cfa9f56))
+* **route:** 新增网易云音乐-热歌榜 ([18f464e](https://github.com/baiwumm/next-daily-hot/commit/18f464efbdedf8627d4cbeb472f4cb159ec39513))
+* **route:** 新增微信读书-飙升榜 ([2571d1f](https://github.com/baiwumm/next-daily-hot/commit/2571d1fe19b28169b8fc83f9f8908ff8729cdcd2))
+* **route:** 新增稀土掘金-热榜 ([b31b568](https://github.com/baiwumm/next-daily-hot/commit/b31b568d43a815d8e5e7606a6b0f1cdc9fafc038))
+* **route:** 新增英雄联盟-更新公告 ([0ceafaf](https://github.com/baiwumm/next-daily-hot/commit/0ceafafbd647874f4987651bb38ea8ea874e9d10))
+* **route:** 新增知乎-热榜 ([848cdce](https://github.com/baiwumm/next-daily-hot/commit/848cdce5f3208b50adaf6d9d84b040fe7c8a6d84))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* **HotCard:** 细节样式优化，热榜加载时机优化 ([d0bf159](https://github.com/baiwumm/next-daily-hot/commit/d0bf1598f9da0ad31a1890bfae0669de78f7f41f))
+* **OverflowDetector:** 挪动 OverflowDetector 组件位置 ([c1bc6f3](https://github.com/baiwumm/next-daily-hot/commit/c1bc6f38e2bceba83b3b20e23071e4d042b2a348))
+
+
+### 👷‍ Build System | 构建
+
+* 修复打包过程中产生的错误 ([a0f015d](https://github.com/baiwumm/next-daily-hot/commit/a0f015d2c427dfe9347d1c9645baf380e0c0d926))
+
+
+### 🔧 Continuous Integration | CI 配置
+
+* 删除 antd 包 ([181268e](https://github.com/baiwumm/next-daily-hot/commit/181268eae6b91b021f7bf89314c5de702e3830a9))
+
 ## [1.2.1](https://github.com/baiwumm/next-daily-hot/compare/1.2.0...1.2.1) (2024-05-13)
 
 
