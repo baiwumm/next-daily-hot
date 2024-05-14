@@ -72,4 +72,5 @@ export const hotCardConfig: HotListConfig[] = [
   { value: 'netease', label: '网易新闻', tip: '热榜' },
   { value: 'lol', label: '英雄联盟', tip: '更新公告' },
   { value: 'thepaper', label: '澎湃新闻', tip: '热榜' },
+  { value: 'kuaishou', label: '快手', tip: '热榜' },
 ];
