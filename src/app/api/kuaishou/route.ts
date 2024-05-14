@@ -2,10 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 10:16:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 10:22:33
+ * @LastEditTime: 2024-05-14 11:24:25
  * @Description: 快手-热榜
  */
 import { NextResponse } from 'next/server';
+
+import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
 
@@ -16,7 +18,7 @@ export async function GET() {
     // 请求数据
     const response = await fetch(url).then(async (res) => await res.text());
     // 处理数据
-    const result = [];
+    const result: HotListItem[] = [];
     const pattern = /window.__APOLLO_STATE__=(.*);\(function\(\)/s;
     const idPattern = /clientCacheKey=([A-Za-z0-9]+)/s;
     const matchResult = response.match(pattern);

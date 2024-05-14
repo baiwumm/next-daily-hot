@@ -2,10 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-13 16:25:11
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 17:59:00
+ * @LastEditTime: 2024-05-14 11:23:24
  * @Description: 哔哩哔哩-热门榜
  */
 import { NextResponse } from 'next/server';
+
+import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
 
@@ -23,7 +25,7 @@ export async function GET() {
     }).then(async (res) => await res.json());
     // 处理数据
     if (response.code === 0) {
-      const result = response.data.list.map((v: Record<string, any>) => {
+      const result: HotListItem[] = response.data.list.map((v: Record<string, any>) => {
         return {
           id: v.bvid,
           title: v.title,

@@ -2,10 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:14:07
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 09:15:57
+ * @LastEditTime: 2024-05-14 11:23:41
  * @Description: 抖音-热点榜
  */
 import { NextResponse } from 'next/server';
+
+import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
 
@@ -17,7 +19,7 @@ export async function GET() {
     const response = await fetch(url).then(async (res) => await res.json());
     // 处理数据
     if (response.status_code === 0) {
-      const result = response.data.word_list.map((v: Record<string, any>) => {
+      const result: HotListItem[] = response.data.word_list.map((v: Record<string, any>) => {
         return {
           id: v.group_id,
           title: v.word,
