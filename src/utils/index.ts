@@ -64,4 +64,5 @@ export const hotCardConfig: HotListConfig[] = [
   { value: 'bilibili', label: '哔哩哔哩', tip: '热门榜' },
   { value: 'douyin', label: '抖音', tip: '热点榜' },
   { value: 'toutiao', label: '今日头条', tip: '热榜' },
+  { value: 'zhihu', label: '知乎', tip: '热榜' },
 ];
