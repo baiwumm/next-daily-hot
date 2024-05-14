@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 13:35:57
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-10 16:22:44
+ * @LastEditTime: 2024-05-14 15:07:03
  * @Description: 实时时间
  */
 'use client';
@@ -46,7 +46,7 @@ const RealTime = () => {
     <div className="text-center">
       <div className="text-sm">{nowTime || '正在加载时间...'}</div>
       {/* 农历时间 */}
-      <span className="text-gray-400 mt-2 text-xs">{renderLunarCalendar()}</span>
+      <span className="text-mode mt-2 text-xs">{renderLunarCalendar()}</span>
     </div>
   );
 };

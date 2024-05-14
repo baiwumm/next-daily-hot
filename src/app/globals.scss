@@ -19,6 +19,11 @@ $scrollbar-bg:rgba(60, 60, 67, 0.4); // 滚动条背景色
   @apply cursor-pointer ease-in-out p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800;
 }
 
+// 文字样式
+.text-mode {
+  @apply text-black/45 dark:text-white/85;
+}
+
 /* 修改滚动条样式 */
 *::-webkit-scrollbar {
   width: 6px;

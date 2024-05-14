@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-11 10:48:48
+ * @LastEditTime: 2024-05-14 14:41:46
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`overflow-x-hidden ${inter.className}`}>
         <NextUIProvider>
           {/* 主体内容 */}
           <ThemeProvider attribute="class" defaultTheme={process.env.DEFAULT_THEME}>

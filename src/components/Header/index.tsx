@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-09 09:50:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-13 16:43:27
+ * @LastEditTime: 2024-05-14 15:04:32
  * @Description: 头部布局
  */
 import { Tooltip } from '@nextui-org/react';
@@ -14,13 +14,13 @@ import ThemeMode from '@/components/ThemeMode';
 
 export default function Header() {
   return (
-    <header className="sticky w-screen flex gap-4 justify-between items-center top-0 h-16 shadow-md dark:shadow-[rgba(255,255,255,.15)] backdrop-blur dark:bg-transparent transition-all py-3 px-4 md:px-12 lg:px-20 z-10">
+    <header className="sticky w-screen flex gap-4 justify-between items-center top-0 h-16 shadow-md dark:shadow-[rgba(255,255,255,.15)] backdrop-blur dark:bg-transparent transition-all py-3 px-4 md:px-12 lg:px-20 z-50">
       {/* 左侧 Logo 标题 */}
       <div className="flex gap-3 justify-between items-center grow-0 shrink-0">
         <Image src="/logo.svg" alt="logo" width={40} height={40} />
         <div>
           <h1 className="font-black text-xl">{process.env.SITE_TITLE}</h1>
-          <h3 className="text-xs text-gray-400 mt-1">{process.env.SITE_DESCRIPTION}</h3>
+          <h3 className="text-xs text-mode mt-1">{process.env.SITE_DESCRIPTION}</h3>
         </div>
       </div>
       {/* 实时时间 */}
@@ -36,7 +36,7 @@ export default function Header() {
           <a
             href={`https://github.com/${process.env.GITHUB_USERNAME}/${process.env.PROJECT_NAME}`}
             target="_blank"
-            className="ease-in-out p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800"
+            className="btn-icon"
           >
             <RiGithubFill size={24} />
           </a>

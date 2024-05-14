@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:18:48
+ * @LastEditTime: 2024-05-14 15:26:18
  * @Description: 热榜卡片
  */
 'use client';
 import 'dayjs/locale/zh-cn';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import {
   Card,
@@ -18,15 +18,15 @@ import {
   Divider,
   ScrollShadow,
   Tooltip,
-  Skeleton,
   Button,
+  Skeleton,
 } from '@nextui-org/react';
-import { useRequest, useLocalStorageState, useInterval, useUnmount } from 'ahooks';
+import { useRequest, useLocalStorageState, useInterval, useUnmount, useInViewport } from 'ahooks';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import { RiCheckboxCircleFill, RiLoopRightLine } from 'react-icons/ri';
+import { RiCheckboxCircleFill, RiLoopRightLine, RiCloseCircleLine } from 'react-icons/ri';
 // 引入处理相对时间的插件
 // 配置使用处理相对时间的插件
 dayjs.extend(relativeTime);
@@ -40,6 +40,9 @@ import OverflowDetector from './OverflowDetector';
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
 const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
+  // 观察元素是否在可见区域
+  const ref = useRef<HTMLInputElement>(null);
+  const [inViewport] = useInViewport(ref);
   const { theme } = useTheme();
   // 判断是否是深色主题
   const isLight = theme === THEME_MODE.LIGHT;
@@ -49,6 +52,8 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
   const [updateTime, setUpdateTime] = useLocalStorageState<UpdateTime>(LOCAL_KEY.UPDATETIME, {
     defaultValue: {},
   });
+  // 判断是否请求失败
+  const [isError, setIsError] = useState(false);
 
   // 渲染热度
   const renderHot = (value: string | number) => (
@@ -62,18 +67,19 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
     async () => {
       const response = await fetch(`/api/${value}`);
       if (response.status === REQUEST_STATUS.SUCCESS) {
-        const result: IResponse = await response.json();
+        const { data, code }: IResponse = await response.json();
         if (updateTime) {
           setUpdateTime({ ...updateTime, [value]: dayjs().valueOf() });
         } else {
           setUpdateTime({ [value]: dayjs().valueOf() });
         }
-        return result.data || [];
+        setIsError(code === REQUEST_STATUS.ERROR);
+        return data || [];
       }
       return [];
     },
     {
-      manual: false,
+      manual: true,
       // 防抖等待时间, 单位为毫秒，设置后，进入防抖模式
       debounceWait: 300,
       // 错误重试次数。如果设置为 -1，则无限次重试。
@@ -90,26 +96,39 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
   useUnmount(() => {
     clearInterval();
   });
+
+  // 只在可视范围内才加载数据
+  useEffect(() => {
+    if (!data && inViewport && !loading) {
+      run();
+    }
+  }, [data, inViewport, loading, run]);
   return (
-    <Card className="rounded-lg">
+    <Card className="rounded-lg" ref={ref}>
       {/* 头部 */}
       <CardHeader className="flex justify-between">
         <div className="flex items-center gap-2">
           <Image src={`/${value}.svg`} alt={`${label}${tip}`} width={24} height={24} />
-          <div className="font-bold text-md">{label}</div>
+          <div className="font-bold text-sm">{label}</div>
         </div>
-        <Chip color="success" startContent={<RiCheckboxCircleFill size={18} />} variant="flat" size="sm">
+        <Chip
+          color={isError ? 'danger' : 'success'}
+          startContent={isError ? <RiCloseCircleLine size={18} /> : <RiCheckboxCircleFill size={18} />}
+          variant="flat"
+          size="sm"
+        >
           {tip}
         </Chip>
       </CardHeader>
       <Divider />
       {/* 热榜列表 */}
       <CardBody className="p-0">
-        <ScrollShadow className="w-full h-[280px]">
+        <ScrollShadow className="w-full h-[315px]">
           {loading ? (
             <div className="space-y-5 p-5">
               <Skeleton className="w-3/5 h-4 rounded-lg" />
               <Skeleton className="w-3/5 h-4 rounded-lg" />
+              <Skeleton className="w-full h-4 rounded-lg" />
               <Skeleton className="w-full h-4 rounded-lg" />
               <Skeleton className="w-full h-4 rounded-lg" />
               <Skeleton className="w-full h-4 rounded-lg" />
@@ -120,11 +139,11 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
             <ul className="m-0 p-0">
               {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
                 return (
-                  <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0">
+                  <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0 dark:border-white/25">
                     {/* 索引 */}
                     <div className="flex justify-between items-center w-full gap-2">
                       <div
-                        className="text-xs py-1 px-2 rounded flex-initial shrink-0"
+                        className="text-xs px-2 rounded flex-initial shrink-0 aspect-square flex items-center"
                         style={{
                           backgroundColor: label
                             ? hotLableColor[label]
@@ -150,8 +169,10 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
               })}
             </ul>
           ) : (
-            <div className="flex h-[300px] justify-center items-center text-sm text-slate-600 dark:text-slate-400">
-              各位看官，暂无数据哟🤔
+            <div className="flex h-[300px] justify-center items-center text-xs text-mode px-8 text-center leading-5">
+              {isError
+                ? '抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤓'
+                : '各位看官，暂无数据哟🤔'}
             </div>
           )}
         </ScrollShadow>
@@ -160,9 +181,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
       {/* 底部 */}
       <CardFooter>
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
-          <div className="w-1/2 text-xs text-black/45 dark:text-white">
-            {relativeTime ? `${relativeTime}更新` : '正在加载中...'}
-          </div>
+          <div className="w-1/2 text-xs text-mode">{relativeTime ? `${relativeTime}更新` : '正在加载中...'}</div>
           <Divider orientation="vertical" className="flex-none" />
           <div className="flex w-1/2 justify-center">
             <Tooltip showArrow content="获取最新" placement="bottom">
@@ -172,7 +191,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 size="sm"
                 isDisabled={loading}
                 onClick={run}
-                className="text-black/45 dark:text-white"
+                className={`text-mode hover:!bg-gray-50 dark:hover:!bg-gray-800 ${loading ? 'animate-spin' : 'animate-none'}`}
               >
                 <RiLoopRightLine size={18} />
               </Button>
