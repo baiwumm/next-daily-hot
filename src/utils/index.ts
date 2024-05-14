@@ -68,4 +68,5 @@ export const hotCardConfig: HotListConfig[] = [
   { value: 'baidu', label: '百度', tip: '热搜榜' },
   { value: 'baidutieba', label: '百度贴吧', tip: '热议榜' },
   { value: 'qq', label: '腾讯新闻', tip: '热点榜' },
+  { value: 'juejin', label: '稀土掘金', tip: '热榜' },
 ];
