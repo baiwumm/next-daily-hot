@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 15:32:21
+ * @LastEditTime: 2024-05-14 16:02:04
  * @Description: 热榜卡片
  */
 'use client';
@@ -33,11 +33,10 @@ dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
 
 import HotLoading from '@/components/HotLoading';
+import OverflowDetector from '@/components/OverflowDetector';
 
 import { REQUEST_STATUS, THEME_MODE, LOCAL_KEY } from '@/utils/enum';
 import type { HotListItem, IResponse, UpdateTime, HotListConfig } from '@/utils/types';
-
-import OverflowDetector from './OverflowDetector';
 
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
