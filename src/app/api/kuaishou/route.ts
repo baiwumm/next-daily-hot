@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 10:16:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:24:25
+ * @LastEditTime: 2024-05-14 16:13:20
  * @Description: 快手-热榜
  */
 import { NextResponse } from 'next/server';
@@ -22,12 +22,12 @@ export async function GET() {
     const pattern = /window.__APOLLO_STATE__=(.*);\(function\(\)/s;
     const idPattern = /clientCacheKey=([A-Za-z0-9]+)/s;
     const matchResult = response.match(pattern);
-    const jsonObject = JSON.parse(matchResult[1])['defaultClient'];
+    const jsonObject = matchResult ? JSON.parse(matchResult[1])['defaultClient'] : [];
 
     // 获取所有分类
     const allItems = jsonObject['$ROOT_QUERY.visionHotRank({"page":"home"})']['items'];
     // 遍历所有分类
-    allItems.forEach((v) => {
+    allItems.forEach((v: Record<string, any>) => {
       // 基础数据
       const image = jsonObject[v.id]['poster'];
       const id = image.match(idPattern)[1];
