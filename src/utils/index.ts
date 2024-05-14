@@ -77,6 +77,7 @@ export const hotCardConfig: HotListConfig[] = [
   { value: 'kuaishou', label: '快手', tip: '热榜' },
   { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
   { value: 'weread', label: '微信读书', tip: '飙升榜' },
+  { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
 ];
 
 /**
