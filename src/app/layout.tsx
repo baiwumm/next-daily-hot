@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 14:41:46
+ * @LastEditTime: 2024-05-14 16:29:41
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
@@ -10,6 +10,10 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 
 import Header from '@/components/Header'; // 头部布局
+
+import type { HotListConfig } from '@/utils/types';
+
+import { hotCardConfig } from '@/utils';
 
 import type { Metadata } from 'next';
 
@@ -19,7 +23,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: `${process.env.SITE_TITLE} - ${process.env.SITE_DESCRIPTION}`, // 网站标题
-  description: process.env.SITE_DESCRIPTION, // 网站描述
+  description: hotCardConfig.map((item: HotListConfig) => `${item.label}${item.tip}`).join(','), // 网站描述
   applicationName: process.env.PROJECT_NAME, // 应用名称
   authors: { name: process.env.AUTHOR_NAME, url: process.env.AUTHOR_BLOG }, // 网站作者
   verification: { other: { 'baidu-site-verification': 'codeva-kYzuuOyYCZ' } }, // 网站验证
