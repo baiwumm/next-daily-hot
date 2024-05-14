@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 15:26:18
+ * @LastEditTime: 2024-05-14 15:32:21
  * @Description: 热榜卡片
  */
 'use client';
@@ -19,7 +19,6 @@ import {
   ScrollShadow,
   Tooltip,
   Button,
-  Skeleton,
 } from '@nextui-org/react';
 import { useRequest, useLocalStorageState, useInterval, useUnmount, useInViewport } from 'ahooks';
 import dayjs from 'dayjs';
@@ -27,10 +26,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { RiCheckboxCircleFill, RiLoopRightLine, RiCloseCircleLine } from 'react-icons/ri';
+
 // 引入处理相对时间的插件
 // 配置使用处理相对时间的插件
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
+
+import HotLoading from '@/components/HotLoading';
 
 import { REQUEST_STATUS, THEME_MODE, LOCAL_KEY } from '@/utils/enum';
 import type { HotListItem, IResponse, UpdateTime, HotListConfig } from '@/utils/types';
@@ -125,16 +127,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
       <CardBody className="p-0">
         <ScrollShadow className="w-full h-[315px]">
           {loading ? (
-            <div className="space-y-5 p-5">
-              <Skeleton className="w-3/5 h-4 rounded-lg" />
-              <Skeleton className="w-3/5 h-4 rounded-lg" />
-              <Skeleton className="w-full h-4 rounded-lg" />
-              <Skeleton className="w-full h-4 rounded-lg" />
-              <Skeleton className="w-full h-4 rounded-lg" />
-              <Skeleton className="w-full h-4 rounded-lg" />
-              <Skeleton className="w-full h-4 rounded-lg" />
-              <Skeleton className="w-full h-4 rounded-lg" />
-            </div>
+            <HotLoading />
           ) : data?.length ? (
             <ul className="m-0 p-0">
               {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
