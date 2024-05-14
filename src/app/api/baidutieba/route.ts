@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:38:02
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:22:58
+ * @LastEditTime: 2024-05-14 16:48:10
  * @Description: 百度贴吧-热议榜
  */
 import { NextResponse } from 'next/server';
 
+import { REQUEST_STATUS_TEXT } from '@/utils/enum';
 import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
@@ -16,10 +17,16 @@ export async function GET() {
   const url = 'https://tieba.baidu.com/hottopic/browse/topicList';
   try {
     // 请求数据
-    const response = await fetch(url).then(async (res) => await res.json());
+    const response = await fetch(url);
+    if (!response.ok) {
+      // 如果请求失败，抛出错误，不进行缓存
+      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：百度贴吧-热议榜`);
+    }
+    // 得到请求体
+    const responseBody = await response.json();
     // 处理数据
-    if (response.errmsg === 'success') {
-      const result: HotListItem[] = response.data.bang_topic.topic_list.map((v: Record<string, any>) => {
+    if (responseBody.errmsg === 'success') {
+      const result: HotListItem[] = responseBody.data.bang_topic.topic_list.map((v: Record<string, any>) => {
         return {
           id: v.topic_id.toString(),
           title: v.topic_name,

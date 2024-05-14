@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 14:13:34
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 14:16:09
+ * @LastEditTime: 2024-05-14 16:54:08
  * @Description: 网易云音乐-新歌榜
  */
 import { NextResponse } from 'next/server';
 
+import { REQUEST_STATUS_TEXT } from '@/utils/enum';
 import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess, convertMillisecondsToTime } from '@/utils';
@@ -21,10 +22,16 @@ export async function GET() {
         authority: 'music.163.com',
         referer: 'https://music.163.com/',
       },
-    }).then(async (res) => await res.json());
+    });
+    if (!response.ok) {
+      // 如果请求失败，抛出错误，不进行缓存
+      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：网易云音乐-新歌榜`);
+    }
+    // 得到请求体
+    const responseBody = await response.json();
     // 处理数据
-    if (response.code === 200) {
-      const result: HotListItem[] = response.result.tracks.map((v: Record<string, any>) => {
+    if (responseBody.code === 200) {
+      const result: HotListItem[] = responseBody.result.tracks.map((v: Record<string, any>) => {
         return {
           id: v.id,
           title: v.name,

@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-11 14:37:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:26:15
+ * @LastEditTime: 2024-05-14 16:56:21
  * @Description: 微博-热搜榜
  */
 import { NextResponse } from 'next/server';
 
+import { REQUEST_STATUS_TEXT } from '@/utils/enum';
 import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
@@ -16,10 +17,16 @@ export async function GET() {
   const url = 'https://weibo.com/ajax/side/hotSearch';
   try {
     // 请求数据
-    const response = await fetch(url).then(async (res) => await res.json());
+    const response = await fetch(url);
+    if (!response.ok) {
+      // 如果请求失败，抛出错误，不进行缓存
+      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：微博-热搜榜`);
+    }
+    // 得到请求体
+    const responseBody = await response.json();
     // 处理数据
-    if (response.ok === 1) {
-      const result: HotListItem[] = response.data.realtime.map((v: Record<string, any>) => {
+    if (responseBody.ok === 1) {
+      const result: HotListItem[] = responseBody.data.realtime.map((v: Record<string, any>) => {
         const key = v.word_scheme ? v.word_scheme : `#${v.word}`;
         return {
           id: v.mid,

@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:54:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:24:54
+ * @LastEditTime: 2024-05-14 16:52:48
  * @Description: 英雄联盟-更新公告
  */
 import { NextResponse } from 'next/server';
 
+import { REQUEST_STATUS_TEXT } from '@/utils/enum';
 import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
@@ -16,10 +17,16 @@ export async function GET() {
   const url = 'https://apps.game.qq.com/cmc/zmMcnTargetContentList?page=1&num=50&target=24&source=web_pc';
   try {
     // 请求数据
-    const response = await fetch(url).then(async (res) => await res.json());
+    const response = await fetch(url);
+    if (!response.ok) {
+      // 如果请求失败，抛出错误，不进行缓存
+      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：英雄联盟-更新公告`);
+    }
+    // 得到请求体
+    const responseBody = await response.json();
     // 处理数据
-    if (response.status === 1) {
-      const result: HotListItem[] = response.data.result.map((v: Record<string, any>) => {
+    if (responseBody.status === 1) {
+      const result: HotListItem[] = responseBody.data.result.map((v: Record<string, any>) => {
         return {
           id: v.iDocID,
           title: v.sTitle,

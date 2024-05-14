@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:33:19
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:22:35
+ * @LastEditTime: 2024-05-14 16:47:16
  * @Description: 百度-热搜榜
  */
 import { NextResponse } from 'next/server';
 
+import { REQUEST_STATUS_TEXT } from '@/utils/enum';
 import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess } from '@/utils';
@@ -16,10 +17,16 @@ export async function GET() {
   const url = 'https://top.baidu.com/api/board?platform=wise&tab=realtime';
   try {
     // 请求数据
-    const response = await fetch(url).then(async (res) => await res.json());
+    const response = await fetch(url);
+    if (!response.ok) {
+      // 如果请求失败，抛出错误，不进行缓存
+      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：百度-热搜榜`);
+    }
+    // 得到请求体
+    const responseBody = await response.json();
     // 处理数据
-    if (response.success) {
-      const result: HotListItem[] = response.data.cards[0].content.map((v: Record<string, any>, index: number) => {
+    if (responseBody.success) {
+      const result: HotListItem[] = responseBody.data.cards[0].content.map((v: Record<string, any>, index: number) => {
         return {
           id: index + v.hotScore,
           title: v.word,

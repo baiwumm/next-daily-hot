@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 11:27:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 11:31:56
+ * @LastEditTime: 2024-05-14 16:57:16
  * @Description: 微信读书-飙升榜
  */
 import { NextResponse } from 'next/server';
 
+import { REQUEST_STATUS_TEXT } from '@/utils/enum';
 import type { HotListItem } from '@/utils/types';
 
 import { responseError, responseSuccess, getWereadID } from '@/utils';
@@ -16,10 +17,16 @@ export async function GET() {
   const url = 'https://weread.qq.com/web/bookListInCategory/rising?rank=1';
   try {
     // 请求数据
-    const response = await fetch(url).then(async (res) => await res.json());
+    const response = await fetch(url);
+    if (!response.ok) {
+      // 如果请求失败，抛出错误，不进行缓存
+      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：微信读书-飙升榜`);
+    }
+    // 得到请求体
+    const responseBody = await response.json();
     // 处理数据
-    if (response.books) {
-      const result: HotListItem[] = response.books.map((v: Record<string, any>) => {
+    if (responseBody.books) {
+      const result: HotListItem[] = responseBody.books.map((v: Record<string, any>) => {
         const info = v.bookInfo;
         return {
           id: info.bookId,
