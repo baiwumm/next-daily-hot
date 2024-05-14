@@ -15,7 +15,6 @@ export async function GET() {
   try {
     // 请求数据
     const response = await fetch(url, {
-      method: 'GET',
       headers: {
         Referer: `https://www.bilibili.com/ranking/all`,
         'User-Agent':
