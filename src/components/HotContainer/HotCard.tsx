@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-15 11:30:47
+ * @LastEditTime: 2024-05-15 13:59:36
  * @Description: 热榜卡片
  */
 'use client';
@@ -128,7 +128,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
           {loading ? (
             <HotLoading />
           ) : data?.length ? (
-            <ul className="m-0 p-0 animate-[showCard_0.75s_ease-in-out_forwards] opacity-0 translate-y-4">
+            <ul className="m-0 p-0 animate-[showCard_0.75s_ease-in-out_forwards] opacity-0">
               {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
                 return (
                   <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0 dark:border-white/25">

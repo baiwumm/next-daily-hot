@@ -26,7 +26,11 @@ $scrollbar-bg:rgba(60, 60, 67, 0.4); // 滚动条背景色
 
 // 榜单卡片出场动画
 @keyframes showCard {
-  to {
+  0%{
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
     transform: translateY(0);
     opacity: 1;
   }
