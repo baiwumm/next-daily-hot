@@ -1,5 +1,25 @@
 
 
+## [1.5.0](https://github.com/baiwumm/next-daily-hot/compare/1.4.0...1.5.0) (2024-05-15)
+
+
+### ✨ Features | 新功能
+
+* 添加统计分析代码 ([bec0d26](https://github.com/baiwumm/next-daily-hot/commit/bec0d26d2f3357d6fe5107d51ea8b55c69724bb0))
+* **app:** 新增 robots 文件 ([975f9cd](https://github.com/baiwumm/next-daily-hot/commit/975f9cd08dffd10047cb4cc61f81834faf822b27))
+* **App:** 新增 sitemap 网站地图文件 ([09ff64b](https://github.com/baiwumm/next-daily-hot/commit/09ff64b3688dff1febe2026c8b1f6e61d48b7043))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复卡片出场动画导致滚动条位移的问题 ([b7f4486](https://github.com/baiwumm/next-daily-hot/commit/b7f44863351b45badb01171cf29fc74035ecb1d2))
+* 修复头部宽度溢出导致滚动条的问题 ([debe69a](https://github.com/baiwumm/next-daily-hot/commit/debe69ad76b084d4a7961a51251401ba10ba98c6))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* **HotContainer:** 去掉冗余的代码 ([423d806](https://github.com/baiwumm/next-daily-hot/commit/423d806de7620f2126448394437713879e20ee06))
+
 ## [1.4.0](https://github.com/baiwumm/next-daily-hot/compare/1.3.0...1.4.0) (2024-05-15)
 
 
