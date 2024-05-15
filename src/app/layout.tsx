@@ -2,13 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 16:29:41
+ * @LastEditTime: 2024-05-15 10:35:50
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 
+import Footer from '@/components/Footer'; // 底部版权
 import Header from '@/components/Header'; // 头部布局
 
 import type { HotListConfig } from '@/utils/types';
@@ -44,6 +45,8 @@ export default function RootLayout({
             {/* 头部布局 */}
             <Header />
             <main>{children}</main>
+            {/* 底部版权 */}
+            <Footer />
           </ThemeProvider>
         </NextUIProvider>
       </body>
