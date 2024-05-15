@@ -16,6 +16,7 @@
     "release": "release-it"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.3",
     "@nextui-org/react": "^2.3.6",
     "ahooks": "^3.7.11",
     "cheerio": "1.0.0-rc.12",
