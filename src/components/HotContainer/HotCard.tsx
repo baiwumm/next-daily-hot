@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 16:02:04
+ * @LastEditTime: 2024-05-15 10:24:39
  * @Description: 热榜卡片
  */
 'use client';
@@ -105,7 +105,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
     }
   }, [data, inViewport, loading, run]);
   return (
-    <Card className="rounded-lg" ref={ref}>
+    <Card className="rounded-lg" ref={ref} isFooterBlurred>
       {/* 头部 */}
       <CardHeader className="flex justify-between">
         <div className="flex items-center gap-2">
@@ -128,7 +128,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
           {loading ? (
             <HotLoading />
           ) : data?.length ? (
-            <ul className="m-0 p-0">
+            <ul className="m-0 p-0 animate-[showCard_0.5s_ease-in-out_forwards] opacity-0 translate-y-4">
               {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
                 return (
                   <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0 dark:border-white/25">

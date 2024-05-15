@@ -24,6 +24,14 @@ $scrollbar-bg:rgba(60, 60, 67, 0.4); // 滚动条背景色
   @apply text-black/45 dark:text-white/85;
 }
 
+// 榜单卡片出场动画
+@keyframes showCard {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* 修改滚动条样式 */
 *::-webkit-scrollbar {
   width: 6px;
