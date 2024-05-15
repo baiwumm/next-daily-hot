@@ -1,5 +1,20 @@
 
 
+## [1.4.0](https://github.com/baiwumm/next-daily-hot/compare/1.3.0...1.4.0) (2024-05-15)
+
+
+### ✨ Features | 新功能
+
+* **layout:** 根据配置自动生成网站 description 描述 ([c76031c](https://github.com/baiwumm/next-daily-hot/commit/c76031c954413469c53442bbf281e5abb0fcb5c8))
+* **layout:** 添加 Footer 组件 ([0c95a0e](https://github.com/baiwumm/next-daily-hot/commit/0c95a0e1c2903a3304476cd9fc596fad452957a9))
+* **route:** 接口请求处理边界错误 ([8877bed](https://github.com/baiwumm/next-daily-hot/commit/8877bedbd69d0f6166868196e7290c8248b29db1))
+* **route:** 修改接口过期时间变量 ([fea984f](https://github.com/baiwumm/next-daily-hot/commit/fea984feb57a80185ebc2371683ca3f2399eabb0))
+
+
+### 💄 Styles | 风格
+
+* **HotCard:** 添加榜单卡片和列表出场动画 ([867314e](https://github.com/baiwumm/next-daily-hot/commit/867314eed07017ce1dc2ef5b293f5b699abee2fb))
+
 ## [1.3.0](https://github.com/baiwumm/next-daily-hot/compare/1.2.1...1.3.0) (2024-05-14)
 
 
