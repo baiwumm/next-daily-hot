@@ -1,5 +1,22 @@
 
 
+## [1.5.3](https://github.com/baiwumm/next-daily-hot/compare/1.5.2...1.5.3) (2024-05-16)
+
+
+### ✨ Features | 新功能
+
+* 添加 BackTop 回到顶部按钮组件 ([a03469c](https://github.com/baiwumm/next-daily-hot/commit/a03469c767a5e663800b9d1981a31b5639e57d55))
+
+
+### 📝 Documentation | 文档
+
+* update README.md ([6708315](https://github.com/baiwumm/next-daily-hot/commit/670831548e9a881f0051018176bcad9bc4e37763))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 改用 framer-motion 实现卡片出场动画 ([222288c](https://github.com/baiwumm/next-daily-hot/commit/222288c782ad6bef8ae3b75b8d34178251e47d10))
+
 ## [1.5.2](https://github.com/baiwumm/next-daily-hot/compare/1.5.1...1.5.2) (2024-05-16)
 
 
