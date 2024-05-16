@@ -65,7 +65,7 @@ export default function RootLayout({
         }}
       />
       {/* umami - 站点统计分析 */}
-      <Script src="https://umami.baiwumm.com/script.js" data-website-id="11ab3a77-4c46-4587-ad1d-03b61fb26730" />
+      <Script src="https://umami.baiwumm.com/script.js" data-website-id="27847f8d-303c-46a7-9602-e1ae38133eae" />
       <body className={inter.className}>
         <NextUIProvider>
           {/* 主体内容 */}
