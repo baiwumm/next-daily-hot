@@ -2,13 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-09 09:50:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-15 14:11:02
+ * @LastEditTime: 2024-05-16 16:04:03
  * @Description: 头部布局
  */
 import { Tooltip } from '@nextui-org/react';
 import Image from 'next/image';
 import { RiGithubFill } from 'react-icons/ri';
 
+import BackTop from '@/components/BackTop';
 import RealTime from '@/components/RealTime';
 import ThemeMode from '@/components/ThemeMode';
 
@@ -41,6 +42,8 @@ export default function Header() {
             <RiGithubFill size={24} />
           </a>
         </Tooltip>
+        {/* 回到顶部 */}
+        <BackTop />
       </div>
     </header>
   );
