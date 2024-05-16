@@ -1,5 +1,12 @@
 
 
+## [1.5.4](https://github.com/baiwumm/next-daily-hot/compare/1.5.3...1.5.4) (2024-05-16)
+
+
+### ✨ Features | 新功能
+
+* 保持每次加载时回到顶部 ([752809f](https://github.com/baiwumm/next-daily-hot/commit/752809f293864c77066f1cf50490c5d935260cdb))
+
 ## [1.5.3](https://github.com/baiwumm/next-daily-hot/compare/1.5.2...1.5.3) (2024-05-16)
 
 
