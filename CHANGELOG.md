@@ -1,5 +1,12 @@
 
 
+## [1.5.1](https://github.com/baiwumm/next-daily-hot/compare/1.5.0...1.5.1) (2024-05-16)
+
+
+### ✨ Features | 新功能
+
+* 更改 Umami 统计分析代码 ([5443cd2](https://github.com/baiwumm/next-daily-hot/commit/5443cd272a26e418a1d2ce34c9a0d20f92b31b62))
+
 ## [1.5.0](https://github.com/baiwumm/next-daily-hot/compare/1.4.0...1.5.0) (2024-05-15)
 
 
