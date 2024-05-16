@@ -29,23 +29,23 @@
 
 | **Logo**    | **平台**     | **类别** | **接口地址** | **状态** |
 | :--------: | :--------: | :--------: | :--------: |:--------: |
-|<img alt="微博" src="./public/weibo.svg" width="30" style="display:inline-block"/>| 微博     | 热搜榜 | [weibo](./src/app/api/weibo)   | ✅ |
-|<img alt="哔哩哔哩" src="./public/bilibili.svg" width="30" style="display:inline-block"/>| 哔哩哔哩  | 热门榜   | [bilibili](./src/app/api/bilibili)   | ✅ |
-|<img alt="抖音" src="./public/douyin.svg" width="30" style="display:inline-block"/>| 抖音     | 热点榜 | [douyin](./src/app/api/douyin)   | ✅ |
-|<img alt="今日头条" src="./public/toutiao.svg" width="30" style="display:inline-block"/>| 今日头条 | 热榜     | [toutiao](./src/app/api/toutiao)   | ✅ |
-|<img alt="知乎" src="./public/zhihu.svg" width="30" style="display:inline-block"/>| 知乎     | 热榜 | [zhihu](./src/app/api/zhihu)   | ✅ |
-|<img alt="百度" src="./public/baidu.svg" width="30" style="display:inline-block"/>| 百度     | 热搜榜 | [baidu](./src/app/api/baidu)   | ✅ |
-|<img alt="百度贴吧" src="./public/baidutieba.svg" width="30" style="display:inline-block"/>| 百度贴吧  | 热议榜   | [baidutieba](./src/app/api/baidutieba)   | ✅ |
-|<img alt="腾讯新闻" src="./public/qq.svg" width="30" style="display:inline-block"/>| 腾讯新闻   | 热点榜  | [qq](./src/app/api/qq)   | ✅ |
-|<img alt="稀土掘金" src="./public/juejin.svg" width="30" style="display:inline-block"/>| 稀土掘金   | 热榜  | [juejin](./src/app/api/juejin)   | ✅ |
-|<img alt="网易新闻微博" src="./public/netease.svg" width="30" style="display:inline-block"/>| 网易新闻    | 热榜 | [netease](./src/app/api/netease)   | ✅ |
-|<img alt="英雄联盟" src="./public/lol.svg" width="30" style="display:inline-block"/>| 英雄联盟  | 更新公告   | [lol](./src/app/api/lol)   | ✅ |
-|<img alt="澎湃新闻" src="./public/thepaper.svg" width="30" style="display:inline-block"/>| 澎湃新闻 | 热榜   | [thepaper](./src/app/api/thepaper)   | ✅ |
-|<img alt="快手" src="./public/kuaishou.svg" width="30" style="display:inline-block"/>| 快手 | 热榜   | [kuaishou](./src/app/api/kuaishou)   | ✅ |
-|<img alt="历史上的今天" src="./public/history-today.svg" width="30" style="display:inline-block"/>| 百度百科 | 历史上的今天   | [history-today](./src/app/api/history-today)   | ✅ |
-|<img alt="微信读书" src="./public/weread.svg" width="30" style="display:inline-block"/>| 微信读书 | 飙升榜   | [weread](./src/app/api/weread)   | ✅ |
-|<img alt="豆瓣电影" src="./public/douban-movic.svg" width="30" style="display:inline-block"/>| 豆瓣电影 | 新片榜   | [douban-movic](./src/app/api/douban-movic)   | ✅ |
-|<img alt="网易云音乐" src="./public/netease-music.svg" width="30" style="display:inline-block"/>| 网易云音乐 | 热歌榜   | [netease-music](./src/app/api/netease-music)   | ⭕ |
+|<img alt="微博" src="./public/weibo.svg" width="30" style="display:inline-block"/>| 微博     | 热搜榜 | [weibo](./src/app/api/weibo/route.ts)   | ✅ |
+|<img alt="哔哩哔哩" src="./public/bilibili.svg" width="30" style="display:inline-block"/>| 哔哩哔哩  | 热门榜   | [bilibili](./src/app/api/bilibili/route.ts)   | ✅ |
+|<img alt="抖音" src="./public/douyin.svg" width="30" style="display:inline-block"/>| 抖音     | 热点榜 | [douyin](./src/app/api/douyin/route.ts)   | ✅ |
+|<img alt="今日头条" src="./public/toutiao.svg" width="30" style="display:inline-block"/>| 今日头条 | 热榜     | [toutiao](./src/app/api/toutiao/route.ts)   | ✅ |
+|<img alt="知乎" src="./public/zhihu.svg" width="30" style="display:inline-block"/>| 知乎     | 热榜 | [zhihu](./src/app/api/zhihu/route.ts)   | ✅ |
+|<img alt="百度" src="./public/baidu.svg" width="30" style="display:inline-block"/>| 百度     | 热搜榜 | [baidu](./src/app/api/baidu/route.ts)   | ✅ |
+|<img alt="百度贴吧" src="./public/baidutieba.svg" width="30" style="display:inline-block"/>| 百度贴吧  | 热议榜   | [baidutieba](./src/app/api/baidutieba/route.ts)   | ✅ |
+|<img alt="腾讯新闻" src="./public/qq.svg" width="30" style="display:inline-block"/>| 腾讯新闻   | 热点榜  | [qq](./src/app/api/qq/route.ts)   | ✅ |
+|<img alt="稀土掘金" src="./public/juejin.svg" width="30" style="display:inline-block"/>| 稀土掘金   | 热榜  | [juejin](./src/app/api/juejin/route.ts)   | ✅ |
+|<img alt="网易新闻微博" src="./public/netease.svg" width="30" style="display:inline-block"/>| 网易新闻    | 热榜 | [netease](./src/app/api/netease/route.ts)   | ✅ |
+|<img alt="英雄联盟" src="./public/lol.svg" width="30" style="display:inline-block"/>| 英雄联盟  | 更新公告   | [lol](./src/app/api/lol/route.ts)   | ✅ |
+|<img alt="澎湃新闻" src="./public/thepaper.svg" width="30" style="display:inline-block"/>| 澎湃新闻 | 热榜   | [thepaper](./src/app/api/thepaper/route.ts)   | ✅ |
+|<img alt="快手" src="./public/kuaishou.svg" width="30" style="display:inline-block"/>| 快手 | 热榜   | [kuaishou](./src/app/api/kuaishou/route.ts)   | ✅ |
+|<img alt="历史上的今天" src="./public/history-today.svg" width="30" style="display:inline-block"/>| 百度百科 | 历史上的今天   | [history-today](./src/app/api/history-today/route.ts)   | ✅ |
+|<img alt="微信读书" src="./public/weread.svg" width="30" style="display:inline-block"/>| 微信读书 | 飙升榜   | [weread](./src/app/api/weread/route.ts)   | ✅ |
+|<img alt="豆瓣电影" src="./public/douban-movic.svg" width="30" style="display:inline-block"/>| 豆瓣电影 | 新片榜   | [douban-movic](./src/app/api/douban-movic/route.ts)   | ✅ |
+|<img alt="网易云音乐" src="./public/netease-music.svg" width="30" style="display:inline-block"/>| 网易云音乐 | 热歌榜   | [netease-music](./src/app/api/netease-music/route.ts)   | ⭕ |
 
 ## ✨ 项目运行
 **环境：Node.js > 18.17**
@@ -99,4 +99,4 @@ vercel --prod
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=baiwumm/react-daily-hot&type=Date)](https://star-history.com/#baiwumm/react-daily-hot&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=baiwumm/next-daily-hot&type=Date)](https://star-history.com/#baiwumm/next-daily-hot&Date)
