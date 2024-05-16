@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-15 13:59:36
+ * @LastEditTime: 2024-05-16 14:18:43
  * @Description: 热榜卡片
  */
 'use client';
@@ -23,12 +23,12 @@ import {
 import { useRequest, useLocalStorageState, useInterval, useUnmount, useInViewport } from 'ahooks';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { RiCheckboxCircleFill, RiLoopRightLine, RiCloseCircleLine } from 'react-icons/ri';
 
 // 引入处理相对时间的插件
-// 配置使用处理相对时间的插件
 dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
 
@@ -128,10 +128,14 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
           {loading ? (
             <HotLoading />
           ) : data?.length ? (
-            <ul className="m-0 p-0 animate-[showCard_0.75s_ease-in-out_forwards] opacity-0">
+            <motion.ul
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ ease: 'easeInOut', duration: 0.75 }}
+            >
               {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
                 return (
-                  <li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0 dark:border-white/25">
+                  <motion.li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0 dark:border-white/25">
                     {/* 索引 */}
                     <div className="flex justify-between items-center w-full gap-2">
                       <div
@@ -156,10 +160,10 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                           ? renderHot(`${prefix || ''}${tip}${suffix || ''}`)
                           : null}
                     </div>
-                  </li>
+                  </motion.li>
                 );
               })}
-            </ul>
+            </motion.ul>
           ) : (
             <div className="flex h-[300px] justify-center items-center text-xs text-mode px-8 text-center leading-5">
               {isError
