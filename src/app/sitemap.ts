@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://hot.baiwumm.com',
+      url: process.env.SITE_URL || '',
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
