@@ -1,5 +1,17 @@
 
 
+## [1.5.5](https://github.com/baiwumm/next-daily-hot/compare/1.5.4...1.5.5) (2024-05-17)
+
+
+### ✨ Features | 新功能
+
+* 添加 404 页面 ([c736013](https://github.com/baiwumm/next-daily-hot/commit/c7360132e571a8dddbebbac9a98f957c85da886f))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 修改 robots sitemap 地址 ([a28319b](https://github.com/baiwumm/next-daily-hot/commit/a28319bd80baa066ac044f65bd6b9d7fe17e0d4a))
+
 ## [1.5.4](https://github.com/baiwumm/next-daily-hot/compare/1.5.3...1.5.4) (2024-05-16)
 
 
