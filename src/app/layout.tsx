@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-20 10:18:09
+ * @LastEditTime: 2024-05-20 11:37:25
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
@@ -14,6 +14,7 @@ import GoogleUtilities from '@/components/Analytics/GoogleUtilities'; // 谷歌�
 import MicrosoftClarity from '@/components/Analytics/MicrosoftClarity'; // Microsoft Clarity
 import UmamiAnalytics from '@/components/Analytics/UmamiAnalytics'; // Umami Analytics
 import Footer from '@/components/Footer'; // 底部版权
+import FullLoading from '@/components/FullLoading'; // 全局 Loading
 import Header from '@/components/Header'; // 头部布局
 
 import type { HotListConfig } from '@/utils/types';
@@ -56,6 +57,8 @@ export default function RootLayout({
         <NextUIProvider>
           {/* 主体内容 */}
           <ThemeProvider attribute="class" defaultTheme={process.env.DEFAULT_THEME}>
+            {/* 全局 Loading */}
+            <FullLoading />
             {/* 头部布局 */}
             <Header />
             <main>{children}</main>
