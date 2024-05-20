@@ -2,15 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-15 17:48:37
+ * @LastEditTime: 2024-05-20 10:18:09
  * @Description: 默认布局
  */
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { NextUIProvider } from '@nextui-org/react';
 import { Inter } from 'next/font/google';
-import Script from 'next/script';
 import { ThemeProvider } from 'next-themes';
 
+import BaiDuAnalytics from '@/components/Analytics/BaiDuAnalytics'; // 百度统计
+import GoogleUtilities from '@/components/Analytics/GoogleUtilities'; // 谷歌统计
+import MicrosoftClarity from '@/components/Analytics/MicrosoftClarity'; // Microsoft Clarity
+import UmamiAnalytics from '@/components/Analytics/UmamiAnalytics'; // Umami Analytics
 import Footer from '@/components/Footer'; // 底部版权
 import Header from '@/components/Header'; // 头部布局
 
@@ -43,29 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       {/* 百度统计 */}
-      <Script
-        id="baidu-analytics"
-        dangerouslySetInnerHTML={{
-          __html: `var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?029f8002fa463259746b84add5678d56";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}();`,
-        }}
-      />
+      <BaiDuAnalytics />
       {/* 微软分析 Clarity 代码 */}
-      <Script
-        id="clarity-analytics"
-        dangerouslySetInnerHTML={{
-          __html: `!function(t,e,n,c,s,a,r){t[n]=t[n]||function(){(t[n].q=t[n].q||[]).push(arguments)},(a=e.createElement(c)).async=1,a.src="https://www.clarity.ms/tag/jm0kos9fw7",(r=e.getElementsByTagName(c)[0]).parentNode.insertBefore(a,r)}(window,document,"clarity","script");`,
-        }}
-      />
+      <MicrosoftClarity />
       {/* 谷歌统计 */}
-      <GoogleAnalytics gaId="G-ELGSN8JG3R" />
-      <Script
-        id="google-analytics"
-        dangerouslySetInnerHTML={{
-          __html: `function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-ELGSN8JG3R");`,
-        }}
-      />
+      <GoogleUtilities />
       {/* umami - 站点统计分析 */}
-      <Script src="https://umami.baiwumm.com/script.js" data-website-id="27847f8d-303c-46a7-9602-e1ae38133eae" />
+      <UmamiAnalytics />
       <body className={inter.className}>
         <NextUIProvider>
           {/* 主体内容 */}
