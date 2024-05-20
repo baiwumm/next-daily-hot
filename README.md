@@ -6,7 +6,7 @@
 
 ## 🪴 项目信息
 * 😝 项目预览：https://hot.baiwumm.com/
-* 🎯 技术栈：[React](https://react.dev/)、[Next.js](https://nextjs.org/)、[tailwindcss](https://www.tailwindcss.cn/)、[NextUI](https://nextui.org/)
+* 🎯 技术栈：[React](https://react.dev/)、[Next.js](https://nextjs.org/)、[Tailwindcss](https://www.tailwindcss.cn/)、[NextUI](https://nextui.org/)
 
 ## ✨ 特性
 * 使用前端最新技术栈开发
@@ -50,7 +50,7 @@
 ## 🧑‍💻 项目运行
 **环境：Node.js > 18.17**
 
-```
+```powershell
 // 克隆项目
 git clone https://github.com/baiwumm/next-daily-hot.git
 
@@ -71,7 +71,7 @@ pnpm dev
 </a>
 
 ## ⚙️ Vecel 本地部署
-```
+```powershell
 // 全局安装 vercel
 npm i -g vercel
 
