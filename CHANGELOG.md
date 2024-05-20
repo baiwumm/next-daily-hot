@@ -1,5 +1,12 @@
 
 
+## [1.5.8](https://github.com/baiwumm/next-daily-hot/compare/1.5.7...1.5.8) (2024-05-20)
+
+
+### 📝 Documentation | 文档
+
+* update README.md ([ffa0baa](https://github.com/baiwumm/next-daily-hot/commit/ffa0baaa824ca292d5817a7226d79e2dc2766e56))
+
 ## [1.5.7](https://github.com/baiwumm/next-daily-hot/compare/1.5.6...1.5.7) (2024-05-20)
 
 
