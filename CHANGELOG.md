@@ -1,5 +1,12 @@
 
 
+## [1.5.7](https://github.com/baiwumm/next-daily-hot/compare/1.5.6...1.5.7) (2024-05-20)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复 MICROSOFT_CLARITY 变量引发的报错 ([3270714](https://github.com/baiwumm/next-daily-hot/commit/3270714c09c155c273a403908f4ea6166c51ea79))
+
 ## [1.5.6](https://github.com/baiwumm/next-daily-hot/compare/1.5.5...1.5.6) (2024-05-20)
 
 
