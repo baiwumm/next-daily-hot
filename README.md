@@ -4,9 +4,9 @@
 <p>汇聚全网热点，热门尽览无余</p>
 </div>
 
-## 🚩 项目信息
-* 项目预览：https://hot.baiwumm.com/
-* 技术栈：[React](https://react.dev/)、[Next.js](https://nextjs.org/)、[tailwindcss](https://www.tailwindcss.cn/)、[NextUI](https://nextui.org/)
+## 🪴 项目信息
+* 😝 项目预览：https://hot.baiwumm.com/
+* 🎯 技术栈：[React](https://react.dev/)、[Next.js](https://nextjs.org/)、[tailwindcss](https://www.tailwindcss.cn/)、[NextUI](https://nextui.org/)
 
 ## ✨ 特性
 * 使用前端最新技术栈开发
@@ -47,7 +47,7 @@
 |<img alt="豆瓣电影" src="./public/douban-movic.svg" width="30" style="display:inline-block"/>| 豆瓣电影 | 新片榜   | [douban-movic](./src/app/api/douban-movic/route.ts)   | ✅ |
 |<img alt="网易云音乐" src="./public/netease-music.svg" width="30" style="display:inline-block"/>| 网易云音乐 | 热歌榜   | [netease-music](./src/app/api/netease-music/route.ts)   | ⭕ |
 
-## ✨ 项目运行
+## 🧑‍💻 项目运行
 **环境：Node.js > 18.17**
 
 ```
@@ -86,7 +86,7 @@ vercel --prod
 ```
 > 具体教程可参考文章：[如何使用 Vercel 托管静态网站](https://baiwumm.com/p/5zzij7bt)
 
-## ⚠️ 须知
+## ⚠️ 责任声明
 1. 本项目的接口会频繁请求官方数据，部分接口使用了 **页面爬虫抓取**，若违反对应页面的相关规则，请 **及时通知我去除该接口**
 2. 如果想集成其他平台的热搜或热点 `API`，可以提 `Issues` 
 3. 本项目提供的 `API` 仅供开发者进行技术研究和开发测试使用，任何因使用本 `API` 产生的损失，本项目不负担任何赔偿和责任
