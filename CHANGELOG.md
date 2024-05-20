@@ -1,5 +1,19 @@
 
 
+## [1.5.6](https://github.com/baiwumm/next-daily-hot/compare/1.5.5...1.5.6) (2024-05-20)
+
+
+### ✨ Features | 新功能
+
+* 更新 Demo 示例图 ([d85a4c3](https://github.com/baiwumm/next-daily-hot/commit/d85a4c39eeaae7b966be053d7efd11c53365f0cc))
+* 添加 FullLoading 全局组件 ([77e395f](https://github.com/baiwumm/next-daily-hot/commit/77e395f57756745448bd1a71c677c4d733e5702b))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化 Metadata 配置 ([ceb2348](https://github.com/baiwumm/next-daily-hot/commit/ceb234851a577a069d081948ad759165a5c16afa))
+* **Analytics:** 优化网站统计平台组件结构 ([ad8a2cb](https://github.com/baiwumm/next-daily-hot/commit/ad8a2cb1ff15ee7b008463e9ca7161d3bc84ac0f))
+
 ## [1.5.5](https://github.com/baiwumm/next-daily-hot/compare/1.5.4...1.5.5) (2024-05-17)
 
 
