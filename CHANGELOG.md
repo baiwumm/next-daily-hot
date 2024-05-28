@@ -1,5 +1,29 @@
 
 
+## [1.6.0](https://github.com/baiwumm/next-daily-hot/compare/1.5.8...1.6.0) (2024-05-28)
+
+
+### ✨ Features | 新功能
+
+* 添加 loading 加载组件 ([cabea48](https://github.com/baiwumm/next-daily-hot/commit/cabea48ddf4fc35e60dc74935608a7efca2651ca))
+* 修改 Umami 统计地址 ([58a2599](https://github.com/baiwumm/next-daily-hot/commit/58a2599293bdc067f8c3889b4c0a56d3321c03af))
+* **GlobalSetting:** 添加热榜显示设置功能 ([338dc1e](https://github.com/baiwumm/next-daily-hot/commit/338dc1ea087cd5c6f7d62ff2501e2fa0973ca91c))
+
+
+### 📝 Documentation | 文档
+
+* update README.md ([0aa3533](https://github.com/baiwumm/next-daily-hot/commit/0aa353336d5db3e68c10d1396ff3827c5fb38c5e))
+
+
+### 💄 Styles | 风格
+
+* 样式微调 ([c03840b](https://github.com/baiwumm/next-daily-hot/commit/c03840bdd2a422be6ace395ffc36f4d9293988f1))
+
+
+### 🔧 Continuous Integration | CI 配置
+
+* 添加 sonner 依赖 ([ddb589d](https://github.com/baiwumm/next-daily-hot/commit/ddb589daf76e9330771612ce72cb31284d29df81))
+
 ## [1.5.8](https://github.com/baiwumm/next-daily-hot/compare/1.5.7...1.5.8) (2024-05-20)
 
 
