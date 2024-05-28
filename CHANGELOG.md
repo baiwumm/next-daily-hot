@@ -1,5 +1,12 @@
 
 
+## [1.6.1](https://github.com/baiwumm/next-daily-hot/compare/1.6.0...1.6.1) (2024-05-28)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决 UseThemeProps 和 Toaster 类型不对应导致部署失败的问题 ([4dbcae7](https://github.com/baiwumm/next-daily-hot/commit/4dbcae7627fe1f1ff7ad169a48685be1dadd5656))
+
 ## [1.6.0](https://github.com/baiwumm/next-daily-hot/compare/1.5.8...1.6.0) (2024-05-28)
 
 
