@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-15 10:32:00
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-15 11:37:41
+ * @LastEditTime: 2024-05-27 18:16:07
  * @Description: 底部版权信息
  */
 import type { IconType } from 'react-icons';
@@ -10,6 +10,8 @@ import type { IconType } from 'react-icons';
 import { Link, Spacer, Tooltip } from '@nextui-org/react';
 import Image from 'next/image';
 import { RiGithubLine, RiQuillPenLine, RiWechatLine, RiMailLine, RiBarChart2Line } from 'react-icons/ri';
+
+import GlobalSetting from '@/components/GlobalSetting';
 
 const Footer = () => {
   // 渲染备案
@@ -59,6 +61,8 @@ const Footer = () => {
           {renderSocial('Email', `mailto:${process.env.AUTHOR_EMAIL}`, RiMailLine)}
           {/* 博客 */}
           {renderSocial('博客', process.env.AUTHOR_BLOG, RiQuillPenLine)}
+          {/* 全局设置 */}
+          <GlobalSetting />
         </div>
       </div>
     </footer>
