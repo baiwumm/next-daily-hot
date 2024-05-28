@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-16 14:18:43
+ * @LastEditTime: 2024-05-28 17:04:28
  * @Description: 热榜卡片
  */
 'use client';
@@ -135,7 +135,10 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
             >
               {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
                 return (
-                  <motion.li key={`${id}-${index}`} className="px-3 py-2 border-b last:border-b-0 dark:border-white/25">
+                  <motion.li
+                    key={`${id}-${index}`}
+                    className="px-2.5 py-2 border-b last:border-b-0 dark:border-white/25"
+                  >
                     {/* 索引 */}
                     <div className="flex justify-between items-center w-full gap-2">
                       <div

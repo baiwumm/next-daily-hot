@@ -70,13 +70,13 @@ $white:#fff;
 
 /* 修改滚动条样式 */
 *::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
   background: var(--scrollbar-bg);
-  border-radius: 8px;
+  border-radius: 2.5px;
   transition: .35s background-color;
 }
 
