@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-27 18:02:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-28 16:48:06
+ * @LastEditTime: 2024-05-28 17:30:41
  * @Description:全局设置
  */
 'use client';
@@ -22,10 +22,14 @@ import type { HotTypes, HotListConfig } from '@/utils/types';
 
 import { hotCardConfig } from '@/utils';
 
+type UseThemeProps = {
+  theme?: 'light' | 'dark' | 'system';
+};
+
 const GlobalSetting = () => {
   const router = useRouter();
   // 主题
-  const { theme } = useTheme();
+  const { theme } = useTheme() as UseThemeProps;
   // 判断组件是否挂载
   const [mounted, setMounted] = useState(false);
   // 不显示的榜单列表
