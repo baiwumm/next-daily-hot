@@ -1,5 +1,12 @@
 
 
+## [1.6.2](https://github.com/baiwumm/next-daily-hot/compare/1.6.1...1.6.2) (2024-06-24)
+
+
+### ✨ Features | 新功能
+
+* **HotCard:** 添加 Umami 点击跟踪事件 ([41f2106](https://github.com/baiwumm/next-daily-hot/commit/41f2106ebaadc950ffcbb666732c541bc9416b11))
+
 ## [1.6.1](https://github.com/baiwumm/next-daily-hot/compare/1.6.0...1.6.1) (2024-05-28)
 
 
