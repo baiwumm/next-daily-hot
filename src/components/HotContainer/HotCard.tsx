@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-28 17:04:28
+ * @LastEditTime: 2024-06-24 10:03:40
  * @Description: 热榜卡片
  */
 'use client';
@@ -36,7 +36,7 @@ import HotLoading from '@/components/HotLoading';
 import OverflowDetector from '@/components/OverflowDetector';
 
 import { REQUEST_STATUS, THEME_MODE, LOCAL_KEY } from '@/utils/enum';
-import type { HotListItem, IResponse, UpdateTime, HotListConfig } from '@/utils/types';
+import type { IResponse, UpdateTime, HotListConfig } from '@/utils/types';
 
 import { hotTagColor, hotLableColor, formatNumber } from '@/utils';
 
@@ -133,7 +133,8 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
               animate={{ y: 0, opacity: 1 }}
               transition={{ ease: 'easeInOut', duration: 0.75 }}
             >
-              {data.map(({ id, title, label, url, hot, mobileUrl, tip }: HotListItem, index: number) => {
+              {data.map((record, index) => {
+                const { id, title, label, hot, tip } = record;
                 return (
                   <motion.li
                     key={`${id}-${index}`}
@@ -153,7 +154,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                         {label || index + 1}
                       </div>
                       {/* 标题 */}
-                      <OverflowDetector url={url} mobileUrl={mobileUrl}>
+                      <OverflowDetector record={record} type={value}>
                         {title}
                       </OverflowDetector>
                       {/* 热度 */}
