@@ -47,7 +47,7 @@ const GlobalSetting = () => {
 
   // 全部打开回调
   const onChangeOpenAll = () => {
-    setHiddenHotList(undefined);
+    setHiddenHotList([]);
     toast.success(`全部开启榜单成功`);
   };
 
