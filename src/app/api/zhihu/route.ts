@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:28:41
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 16:57:53
+ * @LastEditTime: 2025-06-06 09:12:25
  * @Description: 知乎-热榜
  */
 import { NextResponse } from 'next/server';
@@ -32,8 +32,8 @@ export async function GET() {
           title: v.target.title,
           pic: v.children[0].thumbnail,
           hot: parseInt(v.detail_text.replace(/[^\d]/g, '')) * 10000,
-          url: `https://www.zhihu.com/question/${v.target.id}`,
-          mobileUrl: `https://www.zhihu.com/question/${v.target.id}`,
+          url: `https://www.zhihu.com/question/${v.card_id.replace('Q_', '')}`,
+          mobileUrl: `https://www.zhihu.com/question/${v.card_id.replace('Q_', '')}`,
         };
       });
       return NextResponse.json(responseSuccess(result));
