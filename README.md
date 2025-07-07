@@ -102,6 +102,8 @@ vercel --prod
 
 官网链接：[亚洲最佳CDN、边缘和安全解决方案 - Tencent EdgeOne](https://edgeone.ai/zh?from=github)
 
+<img alt="EdgeOne" src="./src/assets/EdgeOne.png"/>
+
 ## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=baiwumm/next-daily-hot&type=Date)](https://star-history.com/#baiwumm/next-daily-hot&Date)
