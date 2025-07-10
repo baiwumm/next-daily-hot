@@ -42,7 +42,7 @@ export async function GET() {
       result.push({
         id,
         title: jsonObject[v.id]['name'],
-        hot: jsonObject[v.id]['hotValue'].replace('万', '') * 10000,
+        hot: jsonObject[v.id]['hotValue']?.replace('万', '') * 10000,
         url: `https://www.kuaishou.com/short-video/${id}`,
         mobileUrl: `https://www.kuaishou.com/short-video/${id}`,
       });
