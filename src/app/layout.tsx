@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-20 14:47:04
+ * @LastEditTime: 2025-07-10 09:52:13
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
@@ -10,6 +10,7 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 
 import BaiDuAnalytics from '@/components/Analytics/BaiDuAnalytics'; // 百度统计
+import CloudflareAnalytics from '@/components/Analytics/CloudflareAnalytics'; // Cloudflare Analytics
 import GoogleUtilities from '@/components/Analytics/GoogleUtilities'; // 谷歌统计
 import MicrosoftClarity from '@/components/Analytics/MicrosoftClarity'; // Microsoft Clarity
 import UmamiAnalytics from '@/components/Analytics/UmamiAnalytics'; // Umami Analytics
@@ -80,6 +81,8 @@ export default function RootLayout({
       <GoogleUtilities />
       {/* umami - 站点统计分析 */}
       <UmamiAnalytics />
+      {/* Cloudflare 统计代码 */}
+      <CloudflareAnalytics />
       <body className={inter.className}>
         <NextUIProvider>
           {/* 主体内容 */}
