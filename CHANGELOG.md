@@ -1,5 +1,27 @@
 
 
+## [1.6.3](https://github.com/baiwumm/next-daily-hot/compare/1.6.2...1.6.3) (2025-07-14)
+
+
+### ✨ Features | 新功能
+
+* 更改 Cloudflare 统计代码 ([a1cca61](https://github.com/baiwumm/next-daily-hot/commit/a1cca61985e3465c1c43088405deae3e67cf32ed))
+* 更改邮箱地址 ([ff71ef2](https://github.com/baiwumm/next-daily-hot/commit/ff71ef23e34d58855a17536431ad4e90ba017c91))
+* 更新 Umami 统计地址 ([6bd6f1c](https://github.com/baiwumm/next-daily-hot/commit/6bd6f1ca2aec5cde3304b57404ae4ac69e1b751f))
+* 新增 Cloudflare 统计代码 ([f5e2eb9](https://github.com/baiwumm/next-daily-hot/commit/f5e2eb9c62850e08e529cb734c368508ad18acfe))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复build失败 ([3692a3a](https://github.com/baiwumm/next-daily-hot/commit/3692a3ae31a9a7b6ecb75ba0a19be5c5bce0cb30))
+* **kuaishou:** 修复快手热榜数据显示错误 ([ebea49e](https://github.com/baiwumm/next-daily-hot/commit/ebea49e95f5c241b67ec11bb64c06f90f1569199))
+* **zhihu:** 修复知乎链接跳转 404 的问题 ([056d09e](https://github.com/baiwumm/next-daily-hot/commit/056d09e24ec177ba123627b00f4529774f32d429))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 删除 dev 文件 ([d63c08e](https://github.com/baiwumm/next-daily-hot/commit/d63c08ecac3c6bc00c09aff389fad4799589cb4c))
+
 ## [1.6.2](https://github.com/baiwumm/next-daily-hot/compare/1.6.1...1.6.2) (2024-06-24)
 
 
