@@ -4,7 +4,7 @@
   "private": true,
   "author": {
     "name": "baiwumm",
-    "email": "baiwumm@foxmail.com"
+    "email": "me@baiwumm.com"
   },
   "scripts": {
     "dev": "next dev -p 6688",
