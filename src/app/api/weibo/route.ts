@@ -17,7 +17,14 @@ export async function GET() {
   const url = 'https://weibo.com/ajax/side/hotSearch';
   try {
     // 请求数据
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        Referer: 'https://weibo.com/',
+        Accept: 'application/json',
+      },
+    });
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
       throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：微博-热搜榜`);
