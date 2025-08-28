@@ -2,11 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-08 17:12:20
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-07-10 09:52:13
+ * @LastEditTime: 2025-08-28 09:32:37
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
-import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 
 import BaiDuAnalytics from '@/components/Analytics/BaiDuAnalytics'; // 百度统计
@@ -24,8 +23,6 @@ import { hotCardConfig } from '@/utils';
 import type { Metadata, Viewport } from 'next';
 
 import './globals.scss';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: `${process.env.SITE_TITLE} - ${process.env.SITE_DESCRIPTION}`, // 网站标题
@@ -71,7 +68,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="zh" suppressHydrationWarning>
+      {/* 引入字体文件 */}
+      <head>
+        <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
+      </head>
       {/* 百度统计 */}
       <BaiDuAnalytics />
       {/* 微软分析 Clarity 代码 */}
@@ -80,7 +81,7 @@ export default function RootLayout({
       <GoogleUtilities />
       {/* umami - 站点统计分析 */}
       <UmamiAnalytics />
-      <body className={inter.className}>
+      <body>
         <NextUIProvider>
           {/* 主体内容 */}
           <ThemeProvider attribute="class" defaultTheme={process.env.DEFAULT_THEME}>

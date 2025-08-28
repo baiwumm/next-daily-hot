@@ -4,10 +4,11 @@
   "private": true,
   "author": {
     "name": "baiwumm",
-    "email": "me@baiwumm.com"
+    "email": "me@baiwumm.com",
+    "url":"https://baiwumm.com"
   },
   "scripts": {
-    "dev": "next dev -p 6688",
+    "dev": "next dev -p 5173",
     "build": "next build",
     "start": "next start",
     "lint": "eslint src --fix --ext .ts,.tsx,.js,.jsx --max-warnings 0",
