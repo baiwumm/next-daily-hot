@@ -1,11 +1,11 @@
 {
   "name": "next-daily-hot",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "private": true,
   "author": {
     "name": "baiwumm",
     "email": "me@baiwumm.com",
-    "url":"https://baiwumm.com"
+    "url": "https://baiwumm.com"
   },
   "scripts": {
     "dev": "next dev -p 5173",

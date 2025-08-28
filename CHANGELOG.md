@@ -1,5 +1,20 @@
 
 
+## [1.6.4](https://github.com/baiwumm/next-daily-hot/compare/1.6.3...1.6.4) (2025-08-28)
+
+
+### ✨ Features | 新功能
+
+* 配置全局字体 ([a5c7c36](https://github.com/baiwumm/next-daily-hot/commit/a5c7c36f5efa59efa3aa662930ae0c8f894a3ffe))
+* 微博热搜接口添加请求头 ([666ad8f](https://github.com/baiwumm/next-daily-hot/commit/666ad8ffd1ba9cd5fbe3d7ea7e44615c51bdabf1))
+* 新增顶部链接 ([117dca6](https://github.com/baiwumm/next-daily-hot/commit/117dca69ebf6efe6f1fbf42038977fde29cb22a4))
+* update README.md ([53edc25](https://github.com/baiwumm/next-daily-hot/commit/53edc25681d5969810ca9f32d2b382937bee3260))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 删除 Cloudflare 统计代码 ([d73dcf8](https://github.com/baiwumm/next-daily-hot/commit/d73dcf850b02ab52e0e0f64ffb47ddfe2f16c94e))
+
 ## [1.6.3](https://github.com/baiwumm/next-daily-hot/compare/1.6.2...1.6.3) (2025-07-14)
 
 
