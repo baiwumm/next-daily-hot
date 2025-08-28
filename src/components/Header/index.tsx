@@ -2,12 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-09 09:50:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-16 16:04:03
+ * @LastEditTime: 2025-08-28 09:43:37
  * @Description: 头部布局
  */
 import { Tooltip } from '@nextui-org/react';
 import Image from 'next/image';
 import { RiGithubFill } from 'react-icons/ri';
+import { TbApi } from 'react-icons/tb';
 
 import BackTop from '@/components/BackTop';
 import RealTime from '@/components/RealTime';
@@ -40,6 +41,12 @@ export default function Header() {
             className="btn-icon"
           >
             <RiGithubFill size={24} />
+          </a>
+        </Tooltip>
+        {/* Easy Api */}
+        <Tooltip showArrow content="Easy Api" placement="bottom">
+          <a href="https://api.baiwumm.com" target="_blank" className="btn-icon">
+            <TbApi size={24} />
           </a>
         </Tooltip>
         {/* 回到顶部 */}
