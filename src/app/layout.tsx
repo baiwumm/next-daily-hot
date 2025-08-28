@@ -10,7 +10,6 @@ import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 
 import BaiDuAnalytics from '@/components/Analytics/BaiDuAnalytics'; // 百度统计
-import CloudflareAnalytics from '@/components/Analytics/CloudflareAnalytics'; // Cloudflare Analytics
 import GoogleUtilities from '@/components/Analytics/GoogleUtilities'; // 谷歌统计
 import MicrosoftClarity from '@/components/Analytics/MicrosoftClarity'; // Microsoft Clarity
 import UmamiAnalytics from '@/components/Analytics/UmamiAnalytics'; // Umami Analytics
@@ -81,8 +80,6 @@ export default function RootLayout({
       <GoogleUtilities />
       {/* umami - 站点统计分析 */}
       <UmamiAnalytics />
-      {/* Cloudflare 统计代码 */}
-      <CloudflareAnalytics />
       <body className={inter.className}>
         <NextUIProvider>
           {/* 主体内容 */}
