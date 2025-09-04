@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-13 16:25:11
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 16:46:08
+ * @LastEditTime: 2025-09-04 16:45:41
  * @Description: 哔哩哔哩-热门榜
  */
 import { NextResponse } from 'next/server';
@@ -30,22 +30,22 @@ export async function GET() {
     }
     // 得到请求体
     const responseBody = await response.json();
-    // 处理数据
-    if (responseBody.code === 0) {
-      const result: HotListItem[] = responseBody.data.list.map((v: Record<string, any>) => {
-        return {
-          id: v.bvid,
-          title: v.title,
-          desc: v.desc,
-          pic: v.pic.replace(/http:/, 'https:'),
-          hot: v.stat.view,
-          url: v.short_link_v2 || `https://b23.tv/${v.bvid}`,
-          mobileUrl: `https://m.bilibili.com/video/${v.bvid}`,
-        };
-      });
-      return NextResponse.json(responseSuccess(result));
+    const data = responseBody?.data?.realtime || responseBody?.data?.list;
+    if (!data) {
+      return NextResponse.json(responseSuccess());
     }
-    return NextResponse.json(responseSuccess());
+    const result: HotListItem[] = data.map((v: any) => {
+      return {
+        id: v.bvid,
+        title: v.title,
+        desc: v.desc,
+        pic: v.pic.replace(/http:/, 'https:'),
+        hot: v.stat.view,
+        url: v.short_link_v2 || `https://b23.tv/${v.bvid}`,
+        mobileUrl: `https://m.bilibili.com/video/${v.bvid}`,
+      };
+    });
+    return NextResponse.json(responseSuccess(result));
   } catch (error) {
     return NextResponse.json(responseError);
   }
