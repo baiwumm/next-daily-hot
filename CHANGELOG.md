@@ -1,5 +1,17 @@
 
 
+## [1.6.5](https://github.com/baiwumm/next-daily-hot/compare/1.6.4...1.6.5) (2025-09-30)
+
+
+### ✨ Features | 新功能
+
+* 修改底部版权信息 ([9986feb](https://github.com/baiwumm/next-daily-hot/commit/9986febd24f023f8b9d7184598a907bf031f6221))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复 bilibili 热门榜数据偶尔失败的问题 ([26d21b1](https://github.com/baiwumm/next-daily-hot/commit/26d21b12107d68a10f08b008ee7f15130a934a63))
+
 ## [1.6.4](https://github.com/baiwumm/next-daily-hot/compare/1.6.3...1.6.4) (2025-08-28)
 
 
