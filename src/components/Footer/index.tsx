@@ -2,14 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-15 10:32:00
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-27 18:16:07
+ * @LastEditTime: 2025-09-30 14:48:46
  * @Description: 底部版权信息
  */
 import type { IconType } from 'react-icons';
 
 import { Link, Spacer, Tooltip } from '@nextui-org/react';
 import Image from 'next/image';
-import { RiGithubLine, RiQuillPenLine, RiWechatLine, RiMailLine, RiBarChart2Line } from 'react-icons/ri';
+import { RiGithubLine, RiQuillPenLine, RiMailLine, RiBarChart2Line } from 'react-icons/ri';
 
 import GlobalSetting from '@/components/GlobalSetting';
 
@@ -55,9 +55,7 @@ const Footer = () => {
           {renderSocial('网站统计', process.env.SITE_STATISTICS, RiBarChart2Line)}
           {/* Github */}
           {renderSocial('Github', `https://github.com/${process.env.GITHUB_USERNAME}`, RiGithubLine)}
-          {/* 微信 */}
-          {renderSocial('微信', process.env.AUTHOR_WECHAT, RiWechatLine)}
-          {/* 微信 */}
+          {/* Email */}
           {renderSocial('Email', `mailto:${process.env.AUTHOR_EMAIL}`, RiMailLine)}
           {/* 博客 */}
           {renderSocial('博客', process.env.AUTHOR_BLOG, RiQuillPenLine)}
