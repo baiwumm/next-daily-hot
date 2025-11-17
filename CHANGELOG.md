@@ -1,5 +1,12 @@
 
 
+## [1.6.6](https://github.com/baiwumm/next-daily-hot/compare/1.6.5...1.6.6) (2025-11-17)
+
+
+### ✨ Features | 新功能
+
+* 新增 Vercel 统计 ([473b404](https://github.com/baiwumm/next-daily-hot/commit/473b40474e81beaa6f412795654514bff3802ebb))
+
 ## [1.6.5](https://github.com/baiwumm/next-daily-hot/compare/1.6.4...1.6.5) (2025-09-30)
 
 
