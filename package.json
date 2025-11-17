@@ -19,6 +19,7 @@
   "dependencies": {
     "@next/third-parties": "^14.2.3",
     "@nextui-org/react": "^2.3.6",
+    "@vercel/analytics": "^1.5.0",
     "ahooks": "^3.7.11",
     "cheerio": "1.0.0-rc.12",
     "crypto-js": "^4.2.0",

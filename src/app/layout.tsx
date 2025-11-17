@@ -6,6 +6,7 @@
  * @Description: 默认布局
  */
 import { NextUIProvider } from '@nextui-org/react';
+import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from 'next-themes';
 
 import BaiDuAnalytics from '@/components/Analytics/BaiDuAnalytics'; // 百度统计
@@ -87,6 +88,8 @@ export default function RootLayout({
           <ThemeProvider attribute="class" defaultTheme={process.env.DEFAULT_THEME}>
             {/* 全局 Loading */}
             <FullLoading />
+            {/* Vercel 统计 */}
+            <Analytics />
             {/* 头部布局 */}
             <Header />
             <main>{children}</main>

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-10 17:06:14
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-06-24 10:03:40
+ * @LastEditTime: 2025-11-17 16:50:13
  * @Description: 热榜卡片
  */
 'use client';
@@ -190,7 +190,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 variant="light"
                 size="sm"
                 isDisabled={loading}
-                onClick={run}
+                onPress={run}
                 className={`text-mode hover:!bg-gray-50 dark:hover:!bg-gray-800 ${loading ? 'animate-spin' : 'animate-none'}`}
               >
                 <RiLoopRightLine size={18} />
