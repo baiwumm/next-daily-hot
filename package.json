@@ -2,7 +2,7 @@
   "name": "next-daily-hot",
   "version": "1.6.6",
   "private": true,
-  "author": {
+   "author": {
     "name": "baiwumm",
     "email": "me@baiwumm.com",
     "url": "https://baiwumm.com"
@@ -11,55 +11,22 @@
     "dev": "next dev -p 5173",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src --fix --ext .ts,.tsx,.js,.jsx --max-warnings 0",
-    "pre-commit": "lint-staged",
-    "commitlint": "commitlint --config commitlint.config.cjs -e -V",
+    "lint": "eslint",
     "release": "release-it"
   },
   "dependencies": {
-    "@next/third-parties": "^14.2.3",
-    "@nextui-org/react": "^2.3.6",
-    "@vercel/analytics": "^1.5.0",
-    "ahooks": "^3.7.11",
-    "cheerio": "1.0.0-rc.12",
-    "crypto-js": "^4.2.0",
-    "dayjs": "^1.11.11",
-    "framer-motion": "^11.1.9",
-    "lunar-typescript": "^1.7.5",
-    "next": "14.2.3",
-    "next-themes": "^0.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.2.1",
-    "sonner": "^1.4.41"
+    "next": "16.0.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.3.0",
-    "@commitlint/config-conventional": "^19.2.2",
-    "@release-it/conventional-changelog": "^8.0.1",
-    "@types/crypto-js": "^4.2.2",
-    "@types/node": "^20.12.11",
-    "@types/react": "^18.3.2",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "6.21.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.3",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-prettier": "5.1.3",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "postcss": "^8.4.38",
-    "prettier": "^3.2.5",
-    "release-it": "^17.2.1",
-    "sass": "^1.77.1",
-    "tailwindcss": "^3.4.3",
-    "typescript": "5.2.2"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json}": [
-      "npm run lint",
-      "prettier --write"
-    ]
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
