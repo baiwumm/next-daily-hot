@@ -1,8 +1,8 @@
 {
   "name": "next-daily-hot",
-  "version": "1.6.6",
+  "version": "2.0.0",
   "private": true,
-   "author": {
+  "author": {
     "name": "baiwumm",
     "email": "me@baiwumm.com",
     "url": "https://baiwumm.com"
