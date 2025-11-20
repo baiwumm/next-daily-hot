@@ -2,12 +2,18 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-19 17:47:29
+ * @LastEditTime: 2025-11-20 11:35:28
  * @Description: 根布局文件
  */
 import "./globals.css";
 
 import type { Metadata } from "next";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+import Footer from '@/components/Footer'
+import FullLoading from '@/components/FullLoading'
+import Header from '@/components/Header'
+import { THEME_MODE } from '@/lib/constant'
 
 import pkg from '../../package.json'
 import { Providers } from "./Providers";
@@ -55,7 +61,14 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>
-          {children}
+          <NextThemesProvider attribute="class" defaultTheme={process.env.NEXT_PUBLIC_THEME || THEME_MODE.LIGHT}>
+            <FullLoading />
+            <Header />
+            <main className="min-h-[calc(100vh-9.1rem)] p-4">
+              {children}
+            </main>
+            <Footer />
+          </NextThemesProvider>
         </Providers>
       </body>
     </html>
