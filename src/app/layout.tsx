@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 11:35:28
+ * @LastEditTime: 2025-11-20 14:04:58
  * @Description: 根布局文件
  */
 import "./globals.css";
