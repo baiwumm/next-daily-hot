@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 13:53:19
+ * @LastEditTime: 2025-11-20 15:32:59
  * @Description: 热榜显示
  */
 'use client';
@@ -17,6 +17,7 @@ import type { HotTypes } from '@/lib/type';
 export default function HotSettings() {
   const [hiddenValues, setHiddenValues] = useLocalStorageState<HotTypes[]>(LOCAL_KEY.HOTHIDDEN, {
     defaultValue: [],
+    listenStorageChange: true
   });
 
   const hiddenSet = React.useMemo(() => new Set(hiddenValues), [hiddenValues]);
@@ -48,7 +49,7 @@ export default function HotSettings() {
                   alt={label}
                   width={20}
                   height={20}
-                  className="flex-shrink-0"
+                  className="shrink-0"
                 />
               }
               size="sm"

@@ -26,11 +26,7 @@ export const responseError: IResponse = {
 /**
  * @description: Tag 颜色配置
  */
-export const hotTagColor: Record<string, string> = {
-  0: '#ea444d',
-  1: '#ed702d',
-  2: '#eead3f',
-};
+export const hotTagColor = ['#ea444d', '#ed702d', '#eead3f']
 
 /**
  * @description: 微博爆点配置

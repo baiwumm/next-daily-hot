@@ -2,12 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 14:10:30
+ * @LastEditTime: 2025-11-20 16:14:01
  * @Description: 根布局文件
  */
 import "./globals.css";
 
+import { loadIcons } from '@iconify-icon/react';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from "next";
+import Script from 'next/script';
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import BackTop from '@/components/BackTop'
@@ -54,18 +57,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 预加载所有用到的图标
+  loadIcons(['ri:close-circle-fill', 'ri:checkbox-circle-fill', 'ri:loop-right-line']);
   return (
     <html lang="zh" suppressHydrationWarning>
       {/* 引入字体文件 */}
       <head>
         <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
       </head>
+      {/* Umami 统计 */}
+      {process.env.NEXT_PUBLIC_UMAMI_ID && process.env.NODE_ENV === 'production' ? (
+        <Script src="https://um.baiwumm.com/script.js" data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID} />
+      ) : null}
       <body>
+        {/* Vercel 分析 */}
+        <Analytics />
         <Providers>
           <NextThemesProvider attribute="class" defaultTheme={process.env.NEXT_PUBLIC_THEME || THEME_MODE.LIGHT}>
             <FullLoading />
             <Header />
-            <main className="min-h-[calc(100vh-9.1rem)] p-4">
+            <main className="container! mx-auto min-h-[calc(100vh-9.1rem)] p-4">
               {children}
             </main>
             <Footer />
