@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 14:04:58
+ * @LastEditTime: 2025-11-20 14:10:30
  * @Description: 根布局文件
  */
 import "./globals.css";
@@ -10,6 +10,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
+import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
@@ -68,6 +69,8 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            {/* 回到顶部 */}
+            <BackTop />
           </NextThemesProvider>
         </Providers>
       </body>
