@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-21 09:44:32
+ * @LastEditTime: 2025-11-21 10:11:31
  * @Description: 热榜卡片
  */
 'use client';
@@ -238,10 +238,9 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 size="sm"
                 isDisabled={loading}
                 onPress={run}
-                className={`text-slate-500/75 hover:bg-gray-50! dark:hover:bg-gray-800! ${loading ? 'animate-spin' : ''
-                  }`}
+                className='text-slate-500/75'
               >
-                <RiLoopRightFill size={18} />
+                <RiLoopRightFill size={18} className={loading ? 'animate-spin' : ''} />
               </Button>
             </Tooltip>
           </div>
