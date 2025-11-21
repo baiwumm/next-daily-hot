@@ -16,10 +16,10 @@
   </p>
   
   <p>
-    <img src="https://img.shields.io/badge/React-18+-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React"/>
-    <img src="https://img.shields.io/badge/Next.js-14+-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js"/>
-    <img src="https://img.shields.io/badge/Tailwind_CSS-3+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
-    <img src="https://img.shields.io/badge/NextUI-2+-000000?style=flat-square&logo=nextui&logoColor=white" alt="NextUI"/>
+    <img src="https://img.shields.io/badge/React-19+-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React"/>
+    <img src="https://img.shields.io/badge/Next.js-16+-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js"/>
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
+    <img src="https://img.shields.io/badge/HeroUI-2+-000000?style=flat-square&logo=nextui&logoColor=white" alt="HeroUI"/>
   </p>
 </div>
 
@@ -51,7 +51,7 @@
 
 ## ✨ 核心特性
 
-- 🆕 **最新技术栈** - 基于 React 18、Next.js 14 等前沿技术
+- 🆕 **最新技术栈** - 基于 React 19、Next.js16.x 等前沿技术
 - ⚡ **极速响应** - 优化的数据获取和缓存策略
 - 🏗️ **架构清晰** - 模块化设计，易于维护和扩展
 - 🌙 **主题切换** - 内置明暗主题，护眼体验
@@ -62,20 +62,20 @@
 
 | 技术 | 版本 | 描述 |
 |------|------|------|
-| [React](https://react.dev/) | 18+ | 用户界面构建库 |
-| [Next.js](https://nextjs.org/) | 14+ | 全栈 React 框架 |
+| [React](https://react.dev/) | 19+ | 用户界面构建库 |
+| [Next.js](https://nextjs.org/) | 16+ | 全栈 React 框架 |
 | [TypeScript](https://www.typescriptlang.org/) | 5+ | 类型安全的 JavaScript |
-| [Tailwind CSS](https://tailwindcss.com/) | 3+ | 原子化 CSS 框架 |
-| [NextUI](https://nextui.org/) | 2+ | 现代化 React UI 库 |
+| [Tailwind CSS](https://tailwindcss.com/) | 4+ | 原子化 CSS 框架 |
+| [HeroUI](https://www.heroui.com/) | 2+ | 现代化 Next.js UI 库 |
 
 ## 💻 演示预览
 
 <div align="center">
   <h3>🌞 亮色模式</h3>
-  <img alt="亮色模式预览" src="./src/assets/light.png" width="80%"/>
+  <img alt="亮色模式预览" src="./public/light.png" width="80%"/>
   
   <h3>🌙 暗色模式</h3>
-  <img alt="暗色模式预览" src="./src/assets/dark.png" width="80%"/>
+  <img alt="暗色模式预览" src="./public/dark.png" width="80%"/>
 </div>
 
 ## 💯 支持平台
@@ -127,8 +127,8 @@
 
 ### 📋 环境要求
 
-- **Node.js** >= 18.17.0
-- **pnpm** >= 8.0.0 (推荐) 或 npm/yarn
+- **Node.js** >= 20.9
+- **pnpm** >= 8.0.0 (推荐最新) 或 npm/yarn
 
 ### 🛠️ 本地开发
 
@@ -261,7 +261,7 @@ vercel --prod
 - [imsyy/DailyHotApi](https://github.com/imsyy/DailyHotApi) - API 设计参考
 - [Next.js](https://nextjs.org/) - 强大的 React 框架
 - [Tailwind CSS](https://tailwindcss.com/) - 优秀的 CSS 框架
-- [NextUI](https://nextui.org/) - 现代化的 React UI 库
+- [HeroUI](https://www.heroui.com/) - 现代化的 Next.js UI 库
 
 ### 🌟 赞助商
 
