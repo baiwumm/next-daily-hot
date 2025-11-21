@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:36:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 14:46:10
+ * @LastEditTime: 2025-11-20 17:33:43
  * @Description: 判断文本是否溢出
  */
 'use client';
@@ -49,7 +49,7 @@ const OverflowDetector = ({ children, record, type }: OverflowDetectorProps) => 
     <Tooltip showArrow content={children} placement="top" isDisabled={!isOverflowing}>
       <div
         ref={ref}
-        className="transition ease-in duration-300 cursor-pointer text-sm whitespace-nowrap self-start overflow-hidden text-ellipsis flex-auto relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:bottom-0 after:bg-slate-200 after:transition-all after:duration-500 hover:translate-x-1 hover:after:w-full"
+        className="min-w-0 transition ease-in duration-300 cursor-pointer text-sm whitespace-nowrap self-start overflow-hidden text-ellipsis flex-1 relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:bottom-0 after:bg-slate-200 after:transition-all after:duration-500 hover:translate-x-1 hover:after:w-full"
         onClick={() => handleTitle(isMobile ? record.mobileUrl : record.url)}
         data-umami-event={type}
         data-umami-event-title={record.title}

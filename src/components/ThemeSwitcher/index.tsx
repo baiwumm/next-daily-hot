@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:10:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 11:34:28
+ * @LastEditTime: 2025-11-20 18:14:52
  * @Description: 主题切换
  */
 'use client';
 import { Button, cn } from "@heroui/react";
-import { Icon } from '@iconify-icon/react';
+import { RiMoonLine, RiSunLine } from "@remixicon/react";
 import { useTheme } from "next-themes";
 import { type FC, type MouseEvent, useEffect, useState } from 'react';
 
@@ -71,21 +71,19 @@ const ThemeSwitcher: FC = () => {
   return (
     <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" radius="full" size="sm">
       <div onClick={toggleDark} className="flex items-center justify-center w-full h-full">
-        <div className="relative w-5 h-5">
+        <div className="relative w-4.5 h-4.5">
           {/* 夜间图标 */}
-          <Icon
-            icon="ri:moon-line"
+          <RiMoonLine
             className={cn(
-              "text-lg transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
+              "transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
               !isLight ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
             )}
           />
 
           {/* 日间图标 */}
-          <Icon
-            icon="ri:sun-line"
+          <RiSunLine
             className={cn(
-              "text-lg transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
+              "transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
               !isLight ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
             )}
           />

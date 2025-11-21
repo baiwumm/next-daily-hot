@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:32:59
+ * @LastEditTime: 2025-11-20 18:14:26
  * @Description: 热榜显示
  */
 'use client';
 import { Button, Image, Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
-import { Icon } from '@iconify-icon/react';
+import { RiLayoutLine } from "@remixicon/react";
 import { useLocalStorageState } from 'ahooks';
 import React from 'react';
 
@@ -34,7 +34,7 @@ export default function HotSettings() {
     <Popover placement="bottom" showArrow classNames={{ content: ["p-3"] }}>
       <PopoverTrigger>
         <Button isIconOnly aria-label="热点榜单设置" variant="ghost" radius="full" size="sm">
-          <Icon icon="uil:swatchbook" className="text-lg" />
+          <RiLayoutLine size={18} />
         </Button>
       </PopoverTrigger>
       <PopoverContent>

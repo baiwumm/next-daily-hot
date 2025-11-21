@@ -2,22 +2,21 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 16:14:01
+ * @LastEditTime: 2025-11-21 09:23:37
  * @Description: 根布局文件
  */
 import "./globals.css";
 
-import { loadIcons } from '@iconify-icon/react';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from "next";
-import Script from 'next/script';
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
+import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity, UmamiAnalytics } from '@/components/Analytics'
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
-import { THEME_MODE } from '@/lib/constant'
+import { hotCardConfig, THEME_MODE } from '@/lib/constant'
 
 import pkg from '../../package.json'
 import { Providers } from "./Providers";
@@ -30,6 +29,7 @@ export const metadata: Metadata = {
   verification: {
     other: { 'baidu-site-verification': 'codeva-kYzuuOyYCZ', 'bytedance-verification-code': 'oPgCIrgBz/3Lhr9BoNE2' },
   }, // 网站验证
+  keywords: hotCardConfig.map((item) => `${item.label}${item.tip}`).join(','), // 网站关键词
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
@@ -57,8 +57,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // 预加载所有用到的图标
-  loadIcons(['ri:close-circle-fill', 'ri:checkbox-circle-fill', 'ri:loop-right-line']);
   return (
     <html lang="zh" suppressHydrationWarning>
       {/* 引入字体文件 */}
@@ -66,9 +64,13 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
       </head>
       {/* Umami 统计 */}
-      {process.env.NEXT_PUBLIC_UMAMI_ID && process.env.NODE_ENV === 'production' ? (
-        <Script src="https://um.baiwumm.com/script.js" data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID} />
-      ) : null}
+      <UmamiAnalytics />
+      {/* 百度统计 */}
+      <BaiDuAnalytics />
+      {/* Google 统计 */}
+      <GoogleUtilities />
+      {/* 微软统计 */}
+      <MicrosoftClarity />
       <body>
         {/* Vercel 分析 */}
         <Analytics />

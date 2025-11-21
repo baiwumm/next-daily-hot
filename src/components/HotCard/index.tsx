@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 16:26:20
+ * @LastEditTime: 2025-11-21 09:44:32
  * @Description: 热榜卡片
  */
 'use client';
@@ -15,11 +15,14 @@ import {
   CardHeader,
   Chip,
   Divider,
+  Listbox,
+  ListboxItem,
   ScrollShadow,
   Skeleton,
+  Spinner,
   Tooltip
 } from '@heroui/react';
-import { Icon } from '@iconify-icon/react';
+import { RiCheckboxCircleFill, RiCloseCircleFill, RiLoopRightFill } from "@remixicon/react"
 import {
   useInterval,
   useInViewport,
@@ -59,7 +62,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
     }));
 
   const renderHot = (value: string | number) => (
-    <div className="flex-initial shrink-0 text-xs text-black/45 dark:text-white">
+    <div className="shrink-0 text-xs text-black/45 dark:text-white">
       {value}
     </div>
   );
@@ -84,7 +87,27 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
     }
   );
 
-  const isError = !!error;
+  // 渲染索引
+  const renderStartContent = (label: string | undefined, index: number) => (
+    <div
+      className="text-xs w-6 h-6 rounded shrink-0  flex items-center justify-center"
+      style={{
+        backgroundColor: label
+          ? hotLableColor[label]
+          : hotTagColor[index] || (!isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.04)'),
+        color: isLight && (label ? hotLableColor[label] : hotTagColor[index]) ? '#ffffff' : 'inherit',
+      }}
+    >
+      {label || index + 1}
+    </div>
+  )
+
+  // 渲染热度
+  const renderEndContent = (hot: number | string, tip: string | undefined) => hot
+    ? renderHot(formatNumber(hot))
+    : tip
+      ? renderHot(`${prefix || ''}${tip}${suffix || ''}`)
+      : null
 
   // ✅ 使用 ready 控制自动加载（更可靠）
   useEffect(() => {
@@ -112,20 +135,42 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
           />
           <div className="font-bold text-sm">{label}</div>
         </div>
-        <Chip
-          color={isError ? 'danger' : 'success'}
-          startContent={
-            isError ? (
-              <Icon icon="ri:close-circle-fill" className="text-lg" />
-            ) : (
-              <Icon icon="ri:checkbox-circle-fill" className="text-lg" />
-            )
-          }
-          variant="flat"
-          size="sm"
-        >
-          {tip}
-        </Chip>
+        <AnimatePresence mode="wait">
+          {loading ? (
+            <motion.div
+              key="loading"
+              initial={{ x: 10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 10, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Spinner size="sm" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="status"
+              initial={{ x: -10, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -10, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Chip
+                color={!data?.length ? 'danger' : 'success'}
+                startContent={
+                  !data?.length ? (
+                    <RiCloseCircleFill size={18} />
+                  ) : (
+                    <RiCheckboxCircleFill size={18} />
+                  )
+                }
+                variant="flat"
+                size="sm"
+              >
+                {tip}
+              </Chip>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </CardHeader>
       <Divider />
       <CardBody className="p-0">
@@ -136,55 +181,45 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 <Skeleton key={i} className={`${w} h-4 rounded-lg`} />
               ))}
             </div>
-          ) : !isError && data?.length ? (
-            <AnimatePresence>
-              <motion.ul
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: 20, opacity: 0 }}
-                transition={{ ease: 'easeInOut', duration: 0.5 }}
-                className="list-none"
-              >
-                {data?.map((record, index) => {
-                  const { id, title, label: itemLabel, hot, tip: itemTip } = record;
-                  // ✅ 更稳定的 key
-                  const key = id ?? `${value}-${index}`;
-
-                  return (
-                    <motion.li
-                      key={key}
-                      className="px-2.5 py-2 border-b last:border-b-0 border-slate-200 dark:border-white/25"
-                    >
-                      <div className="flex justify-between items-center w-full gap-2">
-                        <div
-                          className="text-xs px-2 rounded flex-initial shrink-0 aspect-square flex items-center justify-center"
-                          style={{
-                            backgroundColor: itemLabel
-                              ? hotLableColor[itemLabel]
-                              : hotTagColor[index] || (!isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.04)'),
-                            color: isLight && (itemLabel ? hotLableColor[itemLabel] : hotTagColor[index]) ? '#ffffff' : 'inherit',
-                          }}
-                        >
-                          {itemLabel || index + 1}
-                        </div>
-                        <OverflowDetector record={record} type={value}>
-                          {title}
-                        </OverflowDetector>
-                        {hot
-                          ? renderHot(formatNumber(hot))
-                          : itemTip
-                            ? renderHot(`${prefix || ''}${itemTip}${suffix || ''}`)
-                            : null}
-                      </div>
-                    </motion.li>
-                  );
-                })}
-              </motion.ul>
-            </AnimatePresence>
-          ) : (
-            <div className="flex h-[300px] justify-center items-center text-xs text-slate-500/75 px-8 text-center leading-5">
+          ) : !data?.length ? (
+            <div className="flex h-full justify-center items-center text-xs text-slate-500/75 px-8 text-center leading-5">
               抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
             </div>
+          ) : (
+            <AnimatePresence>
+              <motion.div
+                initial={{ y: 20, opacity: 0, filter: 'blur(1rem)' }}
+                animate={{ y: 0, opacity: 1, filter: 'blur(0rem)' }}
+                exit={{ y: 20, opacity: 0, filter: 'blur(1rem)' }}
+                transition={{ ease: 'easeInOut', duration: 0.5 }}
+              >
+                <Listbox
+                  isVirtualized={!!data}
+                  aria-label="Hot Card"
+                  virtualization={{
+                    maxListboxHeight: 315,
+                    itemHeight: 40,
+                  }}
+                  variant='light'
+                  classNames={{ base: 'p-0' }}
+                >
+                  {(data || []).map((item, index) => (
+                    <ListboxItem
+                      key={item.url}
+                      showDivider
+                      startContent={renderStartContent(item.label, index)}
+                      textValue={item.title}
+                      endContent={renderEndContent(item.hot, item.tip)}
+                      classNames={{ title: 'block min-w-0' }}
+                    >
+                      <OverflowDetector record={item} type={value}>
+                        {item.title}
+                      </OverflowDetector>
+                    </ListboxItem>
+                  ))}
+                </Listbox>
+              </motion.div>
+            </AnimatePresence>
           )}
         </ScrollShadow>
       </CardBody>
@@ -206,7 +241,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 className={`text-slate-500/75 hover:bg-gray-50! dark:hover:bg-gray-800! ${loading ? 'animate-spin' : ''
                   }`}
               >
-                <Icon icon="ri:loop-right-line" className="text-lg" />
+                <RiLoopRightFill size={18} />
               </Button>
             </Tooltip>
           </div>

@@ -10,6 +10,22 @@ export default heroui({
       small: "0.5px", // border-small
       medium: "1px", // border-medium (default)
       large: "2px", // border-large
+    }
+  },
+  themes: {
+    light: {
+      colors: {
+        primary: {
+          DEFAULT: '#F82006'
+        }
+      }
     },
+    dark: {
+      colors: {
+        primary: {
+          DEFAULT: '#F82006'
+        }
+      }
+    }
   }
 });

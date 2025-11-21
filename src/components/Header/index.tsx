@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 11:30:18
+ * @LastEditTime: 2025-11-20 18:14:14
  * @Description: 顶部布局
  */
 'use client'
 import { Button, Image, Navbar, NavbarBrand, NavbarContent } from "@heroui/react";
-import { Icon } from '@iconify-icon/react';
+import { RiGithubFill } from "@remixicon/react";
 import { useRafState } from 'ahooks';
 import dayjs from 'dayjs';
 import { Lunar } from 'lunar-typescript';
@@ -79,7 +79,7 @@ export default function Header() {
           radius="full"
           size="sm"
           onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
-          <Icon icon='ri:github-fill' className="text-lg" />
+          <RiGithubFill size={18} />
         </Button>
       </NavbarContent>
     </Navbar>
