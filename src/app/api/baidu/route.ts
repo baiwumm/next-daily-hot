@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:33:19
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:11:15
+ * @LastEditTime: 2026-01-04 09:31:12
  * @Description: 百度-热搜榜
  */
 import { NextResponse } from 'next/server';
@@ -25,14 +25,11 @@ export async function GET() {
     const responseBody = await response.json();
     // 处理数据
     if (responseBody.success) {
-      const result: HotListItem[] = responseBody.data.cards[0].content.map((v, index: number) => {
+      const result: HotListItem[] = responseBody.data.cards[0]?.content[0]?.content.map((v) => {
         return {
-          id: index + v.hotScore,
+          id: v.index,
           title: v.word,
-          desc: v.desc,
-          pic: v.img,
-          hot: Number(v.hotScore),
-          url: `https://www.baidu.com/s?wd=${encodeURIComponent(v.query)}`,
+          url: `https://www.baidu.com/s?wd=${encodeURIComponent(v.word)}`,
           mobileUrl: v.url,
         };
       });
