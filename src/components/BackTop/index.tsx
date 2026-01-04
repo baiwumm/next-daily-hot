@@ -9,7 +9,7 @@
 
 import { CircularProgress } from '@heroui/react';
 import { useMount } from 'ahooks';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { type FC, useState } from 'react';
 
 type BackTopProps = {

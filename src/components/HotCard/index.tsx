@@ -30,7 +30,7 @@ import {
   useRequest,
 } from 'ahooks';
 import dayjs from 'dayjs';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';

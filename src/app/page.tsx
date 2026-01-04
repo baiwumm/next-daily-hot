@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:42:05
+ * @LastEditTime: 2026-01-04 09:40:36
  * @Description: 首页
  */
 'use client';
 
 import { useLocalStorageState } from 'ahooks';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { useMemo } from 'react';
 
 import HotCard from '@/components/HotCard';
