@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 18:14:26
+ * @LastEditTime: 2026-01-04 10:31:36
  * @Description: 热榜显示
  */
 'use client';
 import { Button, Image, Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
-import { RiLayoutLine } from "@remixicon/react";
 import { useLocalStorageState } from 'ahooks';
+import { PanelsTopLeft } from 'lucide-react';
 import React from 'react';
 
 import { hotCardConfig, LOCAL_KEY } from '@/lib/constant';
@@ -34,7 +34,7 @@ export default function HotSettings() {
     <Popover placement="bottom" showArrow classNames={{ content: ["p-3"] }}>
       <PopoverTrigger>
         <Button isIconOnly aria-label="热点榜单设置" variant="ghost" radius="full" size="sm">
-          <RiLayoutLine size={18} />
+          <PanelsTopLeft />
         </Button>
       </PopoverTrigger>
       <PopoverContent>

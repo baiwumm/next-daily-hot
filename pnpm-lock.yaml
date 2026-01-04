@@ -14,9 +14,6 @@ importers:
       '@next/third-parties':
         specifier: ^16.1.1
         version: 16.1.1(next@16.1.1(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
-      '@remixicon/react':
-        specifier: ^4.7.0
-        version: 4.7.0(react@19.2.3)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(next@16.1.1(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
@@ -1732,11 +1729,6 @@ packages:
     engines: {node: ^20.12.0 || >=22.0.0}
     peerDependencies:
       release-it: ^18.0.0 || ^19.0.0
-
-  '@remixicon/react@4.7.0':
-    resolution: {integrity: sha512-ODBQjdbOjnFguCqctYkpDjERXOInNaBnRPDKfZOBvbzExBAwr2BaH/6AHFTg/UAFzBDkwtylfMT8iKPAkLwPLQ==}
-    peerDependencies:
-      react: '>=18.2.0'
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -6641,10 +6633,6 @@ snapshots:
     transitivePeerDependencies:
       - conventional-commits-filter
       - conventional-commits-parser
-
-  '@remixicon/react@4.7.0(react@19.2.3)':
-    dependencies:
-      react: 19.2.3
 
   '@rtsao/scc@1.1.0': {}
 

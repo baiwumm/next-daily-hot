@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-21 10:11:31
+ * @LastEditTime: 2026-01-04 10:27:51
  * @Description: 热榜卡片
  */
 'use client';
@@ -22,7 +22,6 @@ import {
   Spinner,
   Tooltip
 } from '@heroui/react';
-import { RiCheckboxCircleFill, RiCloseCircleFill, RiLoopRightFill } from "@remixicon/react"
 import {
   useInterval,
   useInViewport,
@@ -30,6 +29,7 @@ import {
   useRequest,
 } from 'ahooks';
 import dayjs from 'dayjs';
+import { CircleCheck, CircleX, RefreshCw } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
@@ -158,9 +158,9 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 color={!data?.length ? 'danger' : 'success'}
                 startContent={
                   !data?.length ? (
-                    <RiCloseCircleFill size={18} />
+                    <CircleX />
                   ) : (
-                    <RiCheckboxCircleFill size={18} />
+                    <CircleCheck />
                   )
                 }
                 variant="flat"
@@ -240,7 +240,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
                 onPress={run}
                 className='text-slate-500/75'
               >
-                <RiLoopRightFill size={18} className={loading ? 'animate-spin' : ''} />
+                <RefreshCw className={loading ? 'animate-spin' : ''} />
               </Button>
             </Tooltip>
           </div>

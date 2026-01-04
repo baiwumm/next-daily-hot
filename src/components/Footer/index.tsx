@@ -2,16 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-21 10:10:10
+ * @LastEditTime: 2026-01-04 10:24:41
  * @Description: 底部版权
  */
 'use client'
 import { Button, Chip, Divider, Image, Link, Spacer } from "@heroui/react";
-import { RiBarChart2Line, RiMailLine, RiQuillPenLine } from "@remixicon/react";
 import dayjs from 'dayjs';
-import { ReactNode } from 'react';
+import { ChartColumn, House, Mail } from 'lucide-react';
+import { type ReactNode } from 'react';
 
-import pkg from '../../../package.json';
+import { ApiIcon } from '@/lib/icons';
+import pkg from '#/package.json';
 
 type Social = {
   icon: ReactNode;
@@ -19,22 +20,16 @@ type Social = {
   label: string;
 }
 
-const ApiIcon = () => {
-  return (
-    <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16001" width={18} height={18}><path fill="currentColor" d="M169.12 293.92c-41.224 0-82.448 40.952-82.448 81.96v355.864H169.12V566.84h82.448v164.904h82.448V375.88c0-40.952-41.224-81.984-82.448-81.984l-82.448 0.024z m0 190.464V374.448h82.448v109.936H169.12zM471.44 292c-41.224 0-82.448 41.008-82.448 81.984v357.76H471.44V566.84h82.456c41.224 0 82.448-41.008 82.448-81.984V373.984c0-40.952-41.224-81.984-82.448-81.984H471.448z m0 192.384V374.448h82.456v109.936H471.448z m302.32-109.936v274.84H691.312v82.448h247.352V649.288h-82.448V374.448h82.448V293.92H691.312v80.528H773.76z" p-id="16002"></path></svg>
-  );
-};
-
 export default function Footer() {
   // 社交图标
   const SocialLinks: Social[] = [
     {
-      icon: <RiBarChart2Line size={18} />,
+      icon: <ChartColumn />,
       url: 'https://um.baiwumm.com/share/MKEsllEeHKYZJl0Q',
       label: 'Umami'
     },
     {
-      icon: <RiMailLine size={18} />,
+      icon: <Mail />,
       url: `mailto:${pkg.author.email}`,
       label: 'Email'
     },
@@ -44,7 +39,7 @@ export default function Footer() {
       label: 'Easy Api'
     },
     {
-      icon: <RiQuillPenLine size={18} />,
+      icon: <House />,
       url: pkg.author.url,
       label: 'Blog'
     }

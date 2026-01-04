@@ -2,12 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 18:14:14
+ * @LastEditTime: 2026-01-04 10:25:09
  * @Description: 顶部布局
  */
 'use client'
 import { Button, Image, Navbar, NavbarBrand, NavbarContent } from "@heroui/react";
-import { RiGithubFill } from "@remixicon/react";
 import { useRafState } from 'ahooks';
 import dayjs from 'dayjs';
 import { Lunar } from 'lunar-typescript';
@@ -15,8 +14,8 @@ import { useEffect } from 'react';
 
 import HotSettings from '@/components/HotSettings'
 import ThemeSwitcher from '@/components/ThemeSwitcher';
-
-import pkg from '../../../package.json'
+import { GithubIcon } from '@/lib/icons';
+import pkg from '#/package.json'
 
 export default function Header() {
   // 当前时间
@@ -79,7 +78,7 @@ export default function Header() {
           radius="full"
           size="sm"
           onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
-          <RiGithubFill size={18} />
+          <GithubIcon />
         </Button>
       </NavbarContent>
     </Navbar>

@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:10:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 18:14:52
+ * @LastEditTime: 2026-01-04 10:32:21
  * @Description: 主题切换
  */
 'use client';
 import { Button, cn } from "@heroui/react";
-import { RiMoonLine, RiSunLine } from "@remixicon/react";
+import { Moon, Sun } from 'lucide-react';
 import { useTheme } from "next-themes";
 import { type FC, type MouseEvent, useEffect, useState } from 'react';
 
@@ -73,7 +73,7 @@ const ThemeSwitcher: FC = () => {
       <div onClick={toggleDark} className="flex items-center justify-center w-full h-full">
         <div className="relative w-4.5 h-4.5">
           {/* 夜间图标 */}
-          <RiMoonLine
+          <Moon
             className={cn(
               "transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
               !isLight ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
@@ -81,7 +81,7 @@ const ThemeSwitcher: FC = () => {
           />
 
           {/* 日间图标 */}
-          <RiSunLine
+          <Sun
             className={cn(
               "transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
               !isLight ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
