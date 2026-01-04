@@ -1,7 +1,8 @@
+import tsParser from "@typescript-eslint/parser";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -14,17 +15,41 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  // TypeScript + import 排序
   {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
     plugins: {
-      'simple-import-sort': simpleImportSort,
+      "simple-import-sort": simpleImportSort,
     },
     rules: {
-      'simple-import-sort/imports': 'error', // import排序 npm包需在引入最顶部排序规则
-      'simple-import-sort/exports': 'error', // export排序规则
+      "import/order": "off",
+      "simple-import-sort/imports": [
+        "error",
+        {
+          groups: [
+            ["^node:"], // Node 内置模块
+            ["^@?\\w"], // 第三方模块
+            ["^@nestjs/"], // Nest.js 模块
+            ["^src/"], // 内部 alias
+            ["^\\."], // 相对路径
+          ],
+        },
+      ],
+      "simple-import-sort/exports": "error",
+      "no-duplicate-imports": "error",
+      "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
     },
   },
-  { ignores: ['**/node_modules'] },
 ]);
 
 export default eslintConfig;
