@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.0.1](///compare/3.0.0...3.0.1) (2026-01-05)
+
+### Features
+
+* update README.md 6e7d7d8
+
 ## [3.0.0](///compare/2.1.0...3.0.0) (2026-01-05)
 
 ### Bug Fixes
