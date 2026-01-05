@@ -19,7 +19,7 @@
     <img src="https://img.shields.io/badge/React-19+-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React"/>
     <img src="https://img.shields.io/badge/Next.js-16+-000000?style=flat-square&logo=next.js&logoColor=white" alt="Next.js"/>
     <img src="https://img.shields.io/badge/Tailwind_CSS-4+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
-    <img src="https://img.shields.io/badge/HeroUI-2+-000000?style=flat-square&logo=nextui&logoColor=white" alt="HeroUI"/>
+    <img src="https://img.shields.io/badge/HeroUI-3+-000000?style=flat-square&logo=nextui&logoColor=white" alt="HeroUI"/>
   </p>
 </div>
 
@@ -66,7 +66,7 @@
 | [Next.js](https://nextjs.org/) | 16+ | 全栈 React 框架 |
 | [TypeScript](https://www.typescriptlang.org/) | 5+ | 类型安全的 JavaScript |
 | [Tailwind CSS](https://tailwindcss.com/) | 4+ | 原子化 CSS 框架 |
-| [HeroUI](https://www.heroui.com/) | 2+ | 现代化 Next.js UI 库 |
+| [HeroUI](https://www.heroui.com/) | 3+ | 现代化 Next.js UI 库 |
 
 ## 💻 演示预览
 
@@ -130,6 +130,35 @@
 - **Node.js** >= 20.9
 - **pnpm** >= 8.0.0 (推荐最新) 或 npm/yarn
 
+### ⚙️ 环境变量
+
+在项目根目录创建 `.env`，示例：
+
+```bash
+# 网站名称
+NEXT_PUBLIC_APP_NAME = '今日热榜'
+# 网站描述
+NEXT_PUBLIC_APP_DESC = '汇聚全网热点，热门尽览无余'
+# 网站地址
+NEXT_PUBLIC_APP_URL = 'https://hot.baiwumm.com'
+# 版权名称
+NEXT_PUBLIC_COPYRIGHT = '白雾茫茫丶'
+# ICP 备案号
+NEXT_PUBLIC_ICP = '粤ICP备2023007649号'
+# 公安备案号
+NEXT_PUBLIC_GONGAN = '粤公网安备44030402006402号'
+# 默认主题
+NEXT_PUBLIC_THEME = 'light'
+# Umami ID
+NEXT_PUBLIC_UMAMI_ID = 'e1308f62-9103-464e-8a20-e26ed4c4c6a9'
+# 百度 ID
+NEXT_PUBLIC_BAIDU_ID = '029f8002fa463259746b84add5678d56'
+# Google ID
+NEXT_PUBLIC_GOOGLE_ID = 'G-ELGSN8JG3R'
+# Clarity ID
+NEXT_PUBLIC_CLARITY_ID = 'jm0kos9fw7'
+```
+
 ### 🛠️ 本地开发
 
 ```bash
@@ -146,7 +175,7 @@ pnpm install
 pnpm dev
 
 # 5. 打开浏览器访问
-# http://localhost:3000
+# http://localhost:5173
 ```
 
 ### 🏗️ 构建部署
@@ -161,8 +190,8 @@ pnpm start
 # 代码检查
 pnpm lint
 
-# 类型检查
-pnpm type-check
+# 更新版本
+pnpm release
 ```
 
 ## 📦 部署指南
@@ -268,7 +297,7 @@ vercel --prod
 <div align="center">
   <h4>🚀 CDN 加速服务由 Tencent EdgeOne 提供</h4>
   <a href="https://edgeone.ai/zh?from=github" target="_blank">
-    <img src="./src/assets/EdgeOne.png" alt="Tencent EdgeOne" width="200"/>
+    <img src="./public/EdgeOne.png" alt="Tencent EdgeOne" width="200"/>
   </a>
   <p><em>亚洲最佳 CDN、边缘和安全解决方案</em></p>
 </div>
