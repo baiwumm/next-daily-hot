@@ -1,15 +1,14 @@
 import CryptoJS from 'crypto-js';
 import dayjs from 'dayjs';
 
-import { REQUEST_STATUS, REQUEST_STATUS_TEXT } from './constant';
-import type { HotListItem, IResponse } from './type';
+import { RESPONSE } from '@/enums';
 
 /**
  * @description: 请求成功返回处理结果
  */
-export const responseSuccess = (list?: HotListItem[]): IResponse => ({
-  msg: REQUEST_STATUS_TEXT.SUCCESS,
-  code: REQUEST_STATUS.SUCCESS,
+export const responseSuccess = (list?: App.HotListItem[]): App.IResponse => ({
+  msg: RESPONSE.label(RESPONSE.SUCCESS),
+  code: RESPONSE.SUCCESS,
   data: list || [],
   timestamp: dayjs().valueOf()
 });
@@ -17,9 +16,9 @@ export const responseSuccess = (list?: HotListItem[]): IResponse => ({
 /**
  * @description: 请求失败返回结果
  */
-export const responseError: IResponse = {
-  msg: REQUEST_STATUS_TEXT.ERROR,
-  code: REQUEST_STATUS.ERROR,
+export const responseError: App.IResponse = {
+  msg: RESPONSE.label(RESPONSE.ERROR),
+  code: RESPONSE.ERROR,
   timestamp: dayjs().valueOf()
 };
 

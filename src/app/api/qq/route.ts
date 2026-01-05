@@ -2,13 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:42:24
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:09:30
+ * @LastEditTime: 2026-01-04 18:10:59
  * @Description: 腾讯新闻-热点榜
  */
 import { NextResponse } from 'next/server';
 
-import { REQUEST_STATUS_TEXT } from '@/lib/constant';
-import type { HotListItem } from '@/lib/type';
+import { RESPONSE } from '@/enums';
 import { responseError, responseSuccess } from '@/lib/utils';
 
 export async function GET() {
@@ -19,13 +18,13 @@ export async function GET() {
     const response = await fetch(url);
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：腾讯新闻-热点榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：腾讯新闻-热点榜`);
     }
     // 得到请求体
     const responseBody = await response.json();
     // 处理数据
     if (responseBody.ret === 0) {
-      const result: HotListItem[] = responseBody.idlist[0].newslist.slice(1).map((v) => {
+      const result: App.HotListItem[] = responseBody.idlist[0].newslist.slice(1).map((v) => {
         return {
           id: v.id,
           title: v.title,

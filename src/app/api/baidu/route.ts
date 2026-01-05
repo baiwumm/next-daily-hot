@@ -2,13 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:33:19
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 09:31:12
+ * @LastEditTime: 2026-01-04 18:05:47
  * @Description: 百度-热搜榜
  */
 import { NextResponse } from 'next/server';
 
-import { REQUEST_STATUS_TEXT } from '@/lib/constant';
-import type { HotListItem } from '@/lib/type';
+import { RESPONSE } from '@/enums';
 import { responseError, responseSuccess } from '@/lib/utils';
 
 export async function GET() {
@@ -19,13 +18,13 @@ export async function GET() {
     const response = await fetch(url);
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：百度-热搜榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：百度-热搜榜`);
     }
     // 得到请求体
     const responseBody = await response.json();
     // 处理数据
     if (responseBody.success) {
-      const result: HotListItem[] = responseBody.data.cards[0]?.content[0]?.content.map((v) => {
+      const result: App.HotListItem[] = responseBody.data.cards[0]?.content[0]?.content.map((v) => {
         return {
           id: v.index,
           title: v.word,

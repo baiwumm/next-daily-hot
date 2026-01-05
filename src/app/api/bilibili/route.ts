@@ -2,13 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-13 16:25:11
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:11:00
+ * @LastEditTime: 2026-01-04 18:07:00
  * @Description: 哔哩哔哩-热门榜
  */
 import { NextResponse } from 'next/server';
 
-import { REQUEST_STATUS_TEXT } from '@/lib/constant';
-import type { HotListItem } from '@/lib/type';
+import { RESPONSE } from '@/enums';
 import { responseError, responseSuccess } from '@/lib/utils';
 
 export async function GET() {
@@ -25,7 +24,7 @@ export async function GET() {
     });
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：哔哩哔哩-热门榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：哔哩哔哩-热门榜`);
     }
     // 得到请求体
     const responseBody = await response.json();
@@ -33,7 +32,7 @@ export async function GET() {
     if (!data) {
       return NextResponse.json(responseSuccess());
     }
-    const result: HotListItem[] = data.map((v) => {
+    const result: App.HotListItem[] = data.map((v) => {
       return {
         id: v.bvid,
         title: v.title,

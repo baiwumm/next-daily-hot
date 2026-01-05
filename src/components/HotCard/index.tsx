@@ -2,64 +2,53 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 10:27:51
+ * @LastEditTime: 2026-01-05 10:32:21
  * @Description: 热榜卡片
  */
 'use client';
-
 import {
   Button,
   Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Chip,
-  Divider,
-  Listbox,
-  ListboxItem,
   ScrollShadow,
-  Skeleton,
+  Separator,
   Spinner,
   Tooltip
 } from '@heroui/react';
-import {
-  useInterval,
-  useInViewport,
-  useLocalStorageState,
-  useRequest,
-} from 'ahooks';
+import { useInterval, useRequest } from 'ahooks';
 import dayjs from 'dayjs';
-import { CircleCheck, CircleX, RefreshCw } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import { CircleX, RefreshCw } from 'lucide-react';
+import { motion, useInView } from 'motion/react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 
+import 'dayjs/locale/zh-cn';
+import BlurFade from '@/components/BlurFade';
 import OverflowDetector from '@/components/OverflowDetector';
-import { LOCAL_KEY, REQUEST_STATUS, THEME_MODE } from '@/lib/constant';
-import type { HotListConfig, IResponse, UpdateTime } from '@/lib/type';
+import { RESPONSE, THEME_MODE } from '@/enums';
+import { CircleCheckIcon } from '@/lib/icons';
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
+import { useAppStore } from '@/store/useAppStore';
 
-const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
-  const ref = useRef<HTMLDivElement>(null); // 👈 修正类型：Card 是 div
-  const [inViewport] = useInViewport(ref);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+// 引入处理相对时间的插件
+dayjs.extend(relativeTime);
+dayjs.locale('zh-cn');
+
+const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
+  const UpdateTime = useAppStore(state => state.UpdateTime);
+  const setUpdateTime = useAppStore(state => state.setUpdateTime);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref);
   const { theme } = useTheme();
   const isLight = theme === THEME_MODE.LIGHT;
 
   const [relativeTime, setRelativeTime] = useState<string>('');
-  const [updateTime, setUpdatetime] = useLocalStorageState<UpdateTime>(
-    LOCAL_KEY.UPDATETIME,
-    {
-      defaultValue: {},
-    }
-  );
-
-  // ✅ 函数式更新，避免覆盖其他字段
-  const updateTimestamp = () =>
-    setUpdatetime((prev) => ({
-      ...prev,
-      [value]: dayjs().valueOf(),
-    }));
 
   const renderHot = (value: string | number) => (
     <div className="shrink-0 text-xs text-black/45 dark:text-white">
@@ -67,17 +56,17 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
     </div>
   );
 
-  const { data, loading, run, error } = useRequest(
+  const { data, loading, run } = useRequest(
     async () => {
       const response = await fetch(`/api/${value}`);
-      if (response.status !== REQUEST_STATUS.SUCCESS) {
+      if (response.status !== RESPONSE.SUCCESS) {
         throw new Error('Request failed');
       }
-      const result: IResponse = await response.json();
-      if (result.code === REQUEST_STATUS.ERROR) {
+      const result: App.IResponse = await response.json();
+      if (result.code === RESPONSE.ERROR) {
         throw new Error('API returned error');
       }
-      updateTimestamp(); // ✅ 成功后更新时间
+      setUpdateTime({ [value]: dayjs().valueOf() }); // ✅ 成功后更新时间
       return result.data || [];
     },
     {
@@ -86,21 +75,6 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
       retryCount: 3,
     }
   );
-
-  // 渲染索引
-  const renderStartContent = (label: string | undefined, index: number) => (
-    <div
-      className="text-xs w-6 h-6 rounded shrink-0  flex items-center justify-center"
-      style={{
-        backgroundColor: label
-          ? hotLableColor[label]
-          : hotTagColor[index] || (!isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.04)'),
-        color: isLight && (label ? hotLableColor[label] : hotTagColor[index]) ? '#ffffff' : 'inherit',
-      }}
-    >
-      {label || index + 1}
-    </div>
-  )
 
   // 渲染热度
   const renderEndContent = (hot: number | string, tip: string | undefined) => hot
@@ -111,21 +85,21 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
 
   // ✅ 使用 ready 控制自动加载（更可靠）
   useEffect(() => {
-    if (inViewport && !loading && !data && !error) {
+    if (isInView && !data?.length) {
       run();
     }
-  }, [inViewport, run, loading, data, error]);
+  }, [isInView, run, data]);
 
   // ✅ 自动清理的 interval（ahooks 内部已处理）
   useInterval(() => {
-    const lastUpdate = updateTime?.[value];
+    const lastUpdate = UpdateTime?.[value];
     const text = lastUpdate ? dayjs(lastUpdate).fromNow() : '刚刚';
     setRelativeTime(text);
   }, 1000);
 
   return (
-    <Card className="rounded-lg" ref={ref} isFooterBlurred>
-      <CardHeader className="flex justify-between">
+    <Card className="rounded-lg p-0 gap-0 shadow-md border border-default" ref={ref}>
+      <Card.Header className="flex justify-between items-center flex-row p-3">
         <div className="flex items-center gap-2">
           <Image
             src={`/${value}.svg`}
@@ -135,117 +109,91 @@ const HotCard = ({ value, label, tip, prefix, suffix }: HotListConfig) => {
           />
           <div className="font-bold text-sm">{label}</div>
         </div>
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <motion.div
-              key="loading"
-              initial={{ x: 10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: 10, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Spinner size="sm" />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="status"
-              initial={{ x: -10, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -10, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Chip
-                color={!data?.length ? 'danger' : 'success'}
-                startContent={
-                  !data?.length ? (
-                    <CircleX />
-                  ) : (
-                    <CircleCheck />
-                  )
-                }
-                variant="flat"
-                size="sm"
-              >
-                {tip}
-              </Chip>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </CardHeader>
-      <Divider />
-      <CardBody className="p-0">
-        <ScrollShadow className="w-full h-[315px]">
-          {loading ? (
-            <div className="space-y-5 p-5">
-              {['w-4/5', 'w-full', 'w-3/4', 'w-5/6', 'w-2/3', 'w-full', 'w-11/12', 'w-5/6'].map((w, i) => (
-                <Skeleton key={i} className={`${w} h-4 rounded-lg`} />
-              ))}
-            </div>
-          ) : !data?.length ? (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          transition={{ duration: 0.2, ease: 'easeInOut' }}
+        >
+          <Chip color={data?.length ? 'success' : 'danger'} variant="soft" size="sm" className="px-2">
+            {data?.length ? (
+              <CircleCheckIcon size={12} />
+            ) : (
+              <CircleX size={12} />
+            )}
+            {tip}
+          </Chip>
+        </motion.div>
+      </Card.Header>
+      <Separator />
+      <Card.Content className="relative pl-3 py-0">
+        {loading ? (
+          <div className="absolute inset-0 w-full h-full flex justify-center items-center card--default/75 z-10">
+            <Spinner color="current" />
+          </div>
+        ) : null}
+        <ScrollShadow className="h-[315px] overflow-x-hidden pr-1">
+          {loading ? null : !data?.length ? (
             <div className="flex h-full justify-center items-center text-xs text-slate-500/75 px-8 text-center leading-5">
               抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
             </div>
           ) : (
-            <AnimatePresence>
-              <motion.div
-                initial={{ y: 20, opacity: 0, filter: 'blur(1rem)' }}
-                animate={{ y: 0, opacity: 1, filter: 'blur(0rem)' }}
-                exit={{ y: 20, opacity: 0, filter: 'blur(1rem)' }}
-                transition={{ ease: 'easeInOut', duration: 0.5 }}
-              >
-                <Listbox
-                  isVirtualized={!!data}
-                  aria-label="Hot Card"
-                  virtualization={{
-                    maxListboxHeight: 315,
-                    itemHeight: 40,
-                  }}
-                  variant='light'
-                  classNames={{ base: 'p-0' }}
-                >
-                  {(data || []).map((item, index) => (
-                    <ListboxItem
-                      key={item.url}
-                      showDivider
-                      startContent={renderStartContent(item.label, index)}
-                      textValue={item.title}
-                      endContent={renderEndContent(item.hot, item.tip)}
-                      classNames={{ title: 'block min-w-0' }}
-                    >
+            <BlurFade>
+              {(data || []).map((item, index) => {
+                const { label } = item;
+                return (
+                  <div key={item.url} className="flex group justify-between items-center gap-1 min-w-0 border-b border-default py-1.5 w-full last:border-none">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      <div
+                        className="text-xs w-6 h-6 rounded shrink-0 flex items-center justify-center"
+                        style={{
+                          backgroundColor: label
+                            ? hotLableColor[label]
+                            : hotTagColor[index] || (!isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.04)'),
+                          color: isLight && (label ? hotLableColor[label] : hotTagColor[index]) ? '#ffffff' : 'inherit',
+                        }}
+                      >
+                        {label || index + 1}
+                      </div>
                       <OverflowDetector record={item} type={value}>
                         {item.title}
                       </OverflowDetector>
-                    </ListboxItem>
-                  ))}
-                </Listbox>
-              </motion.div>
-            </AnimatePresence>
+                    </div>
+                    {renderEndContent(item.hot, item.tip)}
+                  </div>
+                )
+              })}
+            </BlurFade>
           )}
         </ScrollShadow>
-      </CardBody>
-      <Divider />
-      <CardFooter>
+      </Card.Content>
+      <Separator />
+      <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
-          <div className="w-1/2 text-xs text-slate-500/75">
+          <div className="w-1/2 text-xs text-slate-500/75 dark:text-slate-300/75">
             {relativeTime ? `${relativeTime}更新` : '正在加载中...'}
           </div>
-          <Divider orientation="vertical" className="flex-none" />
+          <Separator orientation="vertical" className="flex-none" />
           <div className="flex w-1/2 justify-center">
-            <Tooltip showArrow content="获取最新" placement="bottom">
+            <Tooltip>
               <Button
                 isIconOnly
-                variant="light"
+                variant="ghost"
                 size="sm"
                 isDisabled={loading}
                 onPress={run}
-                className='text-slate-500/75'
+                className='text-slate-500/75 dark:text-slate-300/75'
               >
                 <RefreshCw className={loading ? 'animate-spin' : ''} />
               </Button>
+              <Tooltip.Content showArrow placement="bottom">
+                <Tooltip.Arrow />
+                获取最新
+              </Tooltip.Content>
             </Tooltip>
           </div>
         </div>
-      </CardFooter>
+      </Card.Footer>
     </Card>
   );
 };

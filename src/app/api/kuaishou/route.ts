@@ -2,13 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 10:16:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:10:10
+ * @LastEditTime: 2026-01-04 18:09:18
  * @Description: 快手-热榜
  */
 import { NextResponse } from 'next/server';
 
-import { REQUEST_STATUS_TEXT } from '@/lib/constant';
-import type { HotListItem } from '@/lib/type';
+import { RESPONSE } from '@/enums';
 import { responseError, responseSuccess } from '@/lib/utils';
 
 export async function GET() {
@@ -19,12 +18,12 @@ export async function GET() {
     const response = await fetch(url);
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：快手-热榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：快手-热榜`);
     }
     // 得到请求体
     const responseBody = await response.text();
     // 处理数据
-    const result: HotListItem[] = [];
+    const result: App.HotListItem[] = [];
     const pattern = /window.__APOLLO_STATE__=(.*);\(function\(\)/s;
     const idPattern = /clientCacheKey=([A-Za-z0-9]+)/s;
     const matchResult = responseBody.match(pattern);

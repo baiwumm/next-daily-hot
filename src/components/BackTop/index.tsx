@@ -2,15 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:09:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 18:18:33
+ * @LastEditTime: 2026-01-04 15:36:38
  * @Description: 回到顶部
  */
 'use client';
 
-import { CircularProgress } from '@heroui/react';
-import { useMount } from 'ahooks';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
-import { type FC, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
+
+import { ProgressCircle } from '@/components/Progress';
 
 type BackTopProps = {
   visibilityHeight?: number; // 滚动高度达到此参数值才出现 BackTop
@@ -40,9 +40,9 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
   };
 
   // 页面加载时回到顶部
-  useMount(() => {
+  useEffect(() => {
     scrollToTop();
-  });
+  }, []);
 
   return (
     <AnimatePresence>
@@ -55,14 +55,17 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
           exit={{ opacity: 0, y: 20, scale: .5 }}
           transition={{ duration: 0.3 }}
         >
-          <CircularProgress
-            aria-label="BackTop"
-            size="lg"
+          <ProgressCircle
             value={scrollPercentage}
-            color="primary"
-            formatOptions={{ minimumFractionDigits: 0, maximumFractionDigits: 0 }}
-            showValueLabel={true}
-          />
+            size={40}
+            strokeWidth={3}
+            className="text-default"
+            indicatorClassName="text-foreground"
+          >
+            <div className="text-xs text-default-foreground">
+              {Math.round(scrollPercentage)}
+            </div>
+          </ProgressCircle>
         </motion.div>
       )}
     </AnimatePresence>

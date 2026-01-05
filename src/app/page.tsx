@@ -2,32 +2,35 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 09:40:36
+ * @LastEditTime: 2026-01-05 09:57:52
  * @Description: 首页
  */
 'use client';
 
-import { useLocalStorageState } from 'ahooks';
 import { AnimatePresence, motion } from 'motion/react';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import HotCard from '@/components/HotCard';
-import { hotCardConfig, LOCAL_KEY } from '@/lib/constant';
-import type { HotTypes } from '@/lib/type';
+import { HOT_ITEMS } from '@/enums';
+import { useAppStore } from '@/store/useAppStore';
 
 export default function Home() {
-  const [hiddenHotList] = useLocalStorageState<HotTypes[]>(
-    LOCAL_KEY.HOTHIDDEN,
-    {
-      defaultValue: [],
-      listenStorageChange: true,
-    }
-  );
+  const [mounted, setMounted] = useState(false);
+  const showItems = useAppStore(state => state.showItems);
 
-  const visibleConfigs = useMemo(() => {
-    const hiddenSet = new Set(hiddenHotList || []);
-    return hotCardConfig.filter((config) => !hiddenSet.has(config.value));
-  }, [hiddenHotList]);
+  const visibleItems = useMemo(() => {
+    const hiddenSet = new Set(showItems || []);
+    return HOT_ITEMS.items.filter(({ value }) => hiddenSet.has(value));
+  }, [showItems]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!mounted) {
+    return null
+  }
 
   return (
     // 👇 父容器必须是 motion.div 并开启 layout
@@ -37,17 +40,17 @@ export default function Home() {
       layout // ✅ 启用布局动画
     >
       <AnimatePresence>
-        {visibleConfigs.map((config) => (
+        {visibleItems.map(({ raw }) => (
           // 👇 每个子项也必须是 motion.div + layout
           <motion.div
-            key={config.value}
+            key={raw.value}
             layout // ✅ 关键：让位置变化可动画
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.25 } }}
             transition={{ type: 'spring', stiffness: 300, damping: 24 }}
           >
-            <HotCard {...config} />
+            <HotCard {...raw} />
           </motion.div>
         ))}
       </AnimatePresence>

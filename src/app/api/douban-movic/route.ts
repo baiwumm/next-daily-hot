@@ -2,14 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 14:02:04
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-20 15:03:47
+ * @LastEditTime: 2026-01-04 18:07:27
  * @Description: 豆瓣电影-新片榜
  */
 import * as cheerio from 'cheerio';
 import { NextResponse } from 'next/server';
 
-import { REQUEST_STATUS_TEXT } from '@/lib/constant';
-import type { HotListItem } from '@/lib/type';
+import { RESPONSE } from '@/enums';
 import { responseError, responseSuccess } from '@/lib/utils';
 
 export async function GET() {
@@ -20,7 +19,7 @@ export async function GET() {
     const response = await fetch(url);
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：豆瓣电影-新片榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：豆瓣电影-新片榜`);
     }
     // 得到请求体
     const responseBody = await response.text();
@@ -37,7 +36,7 @@ export async function GET() {
     };
     const $ = cheerio.load(responseBody);
     const listDom = $('.article tr.item');
-    const result: HotListItem[] = listDom.toArray().map((item) => {
+    const result: App.HotListItem[] = listDom.toArray().map((item) => {
       const dom = $(item);
       const url = dom.find('a').attr('href') || '';
       const score = dom.find('.rating_nums').text() ?? '0.0';

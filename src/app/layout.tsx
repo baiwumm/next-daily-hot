@@ -2,24 +2,22 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2025-11-21 09:23:37
+ * @LastEditTime: 2026-01-05 10:43:53
  * @Description: 根布局文件
  */
-import "./globals.css";
-
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from "next";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
+import "./globals.css";
 import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity, UmamiAnalytics } from '@/components/Analytics'
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
-import { hotCardConfig, THEME_MODE } from '@/lib/constant'
-
-import pkg from '../../package.json'
-import { Providers } from "./Providers";
+import MainContent from '@/components/MainContent';
+import { HOT_ITEMS, THEME_MODE } from '@/enums';
+import pkg from '#/package.json';
 
 export const metadata: Metadata = {
   title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_DESC}`, // 网站标题
@@ -29,7 +27,7 @@ export const metadata: Metadata = {
   verification: {
     other: { 'baidu-site-verification': 'codeva-kYzuuOyYCZ', 'bytedance-verification-code': 'oPgCIrgBz/3Lhr9BoNE2' },
   }, // 网站验证
-  keywords: hotCardConfig.map((item) => `${item.label}${item.tip}`).join(','), // 网站关键词
+  keywords: HOT_ITEMS.items.map(({ raw }) => `${raw.label}${raw.tip}`).join(','), // 网站关键词
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
@@ -61,31 +59,30 @@ export default function RootLayout({
     <html lang="zh" suppressHydrationWarning>
       {/* 引入字体文件 */}
       <head>
+        <meta name="version" content={pkg.version} />
         <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
+        {/* Umami 统计 */}
+        <UmamiAnalytics />
+        {/* 百度统计 */}
+        <BaiDuAnalytics />
+        {/* Google 统计 */}
+        <GoogleUtilities />
+        {/* 微软统计 */}
+        <MicrosoftClarity />
       </head>
-      {/* Umami 统计 */}
-      <UmamiAnalytics />
-      {/* 百度统计 */}
-      <BaiDuAnalytics />
-      {/* Google 统计 */}
-      <GoogleUtilities />
-      {/* 微软统计 */}
-      <MicrosoftClarity />
       <body>
         {/* Vercel 分析 */}
         <Analytics />
-        <Providers>
-          <NextThemesProvider attribute="class" defaultTheme={process.env.NEXT_PUBLIC_THEME || THEME_MODE.LIGHT}>
-            <FullLoading />
-            <Header />
-            <main className="container! mx-auto min-h-[calc(100vh-9.1rem)] p-4">
-              {children}
-            </main>
-            <Footer />
-            {/* 回到顶部 */}
-            <BackTop />
-          </NextThemesProvider>
-        </Providers>
+        <NextThemesProvider attribute="class" defaultTheme={process.env.NEXT_PUBLIC_THEME || THEME_MODE.LIGHT}>
+          <FullLoading />
+          <Header />
+          <MainContent>
+            {children}
+          </MainContent>
+          <Footer />
+          {/* 回到顶部 */}
+          <BackTop />
+        </NextThemesProvider>
       </body>
     </html>
   );

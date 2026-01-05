@@ -2,16 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:10:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 10:32:21
+ * @LastEditTime: 2026-01-05 10:20:06
  * @Description: 主题切换
  */
 'use client';
-import { Button, cn } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { Moon, Sun } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import { useTheme } from "next-themes";
-import { type FC, type MouseEvent, useEffect, useState } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
-import { THEME_MODE } from '@/lib/constant'
+import { THEME_MODE } from '@/enums';
 
 const ThemeSwitcher: FC = () => {
   const { theme, setTheme } = useTheme();
@@ -43,53 +44,57 @@ const ThemeSwitcher: FC = () => {
     "startViewTransition" in document && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
 
   // 切换动画
-  async function toggleDark({ clientX: x, clientY: y }: MouseEvent) {
+  async function toggleDark() {
 
     if (!enableTransitions()) {
       toggleTheme();
       return;
     }
 
-    const clipPath = [
-      `circle(0px at ${x}px ${y}px)`,
-      `circle(${Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y))}px at ${x}px ${y}px)`,
-    ];
-
     await document.startViewTransition(async () => {
       toggleTheme();
     }).ready;
 
     document.documentElement.animate(
-      { clipPath: isLight ? clipPath.reverse() : clipPath },
+      { clipPath: ['inset(0 100% 0 0)', 'inset(0 0 0 0)'] },
       {
-        duration: 300,
-        easing: "ease-in",
-        pseudoElement: `::view-transition-${isLight ? "old" : "new"}(root)`,
+        duration: 700,
+        easing: 'ease-in-out',
+        pseudoElement: '::view-transition-new(root)',
       }
     );
   }
   return (
-    <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" radius="full" size="sm">
-      <div onClick={toggleDark} className="flex items-center justify-center w-full h-full">
-        <div className="relative w-4.5 h-4.5">
-          {/* 夜间图标 */}
-          <Moon
-            className={cn(
-              "transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
-              !isLight ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
-            )}
-          />
-
-          {/* 日间图标 */}
-          <Sun
-            className={cn(
-              "transition-all duration-500 transform absolute top-0 left-0 w-full h-full",
-              !isLight ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"
-            )}
-          />
-        </div>
-      </div>
-    </Button>
+    <>
+      <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" size="sm" onPress={toggleDark}>
+        <AnimatePresence mode="wait" initial={false}>
+          {isLight ? (
+            <motion.div
+              key="sun"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="text-neutral-800 dark:text-neutral-200 flex justify-center items-center"
+            >
+              <Sun />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="moon"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+              className="text-neutral-800 dark:text-neutral-200 flex justify-center items-center"
+            >
+              <Moon />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Button>
+      <style>{`::view-transition-old(root), ::view-transition-new(root){animation:none;mix-blend-mode:normal;}`}</style>
+    </>
   );
 }
 export default ThemeSwitcher;

@@ -2,13 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 11:27:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-05-14 16:57:16
+ * @LastEditTime: 2026-01-04 18:12:31
  * @Description: 微信读书-飙升榜
  */
 import { NextResponse } from 'next/server';
 
-import { REQUEST_STATUS_TEXT } from '@/lib/constant';
-import type { HotListItem } from '@/lib/type';
+import { RESPONSE } from '@/enums';
 import { getWereadID, responseError, responseSuccess } from '@/lib/utils';
 
 export async function GET() {
@@ -19,13 +18,13 @@ export async function GET() {
     const response = await fetch(url);
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${REQUEST_STATUS_TEXT.ERROR}：微信读书-飙升榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：微信读书-飙升榜`);
     }
     // 得到请求体
     const responseBody = await response.json();
     // 处理数据
     if (responseBody.books) {
-      const result: HotListItem[] = responseBody.books.map((v) => {
+      const result: App.HotListItem[] = responseBody.books.map((v) => {
         const info = v.bookInfo;
         return {
           id: info.bookId,

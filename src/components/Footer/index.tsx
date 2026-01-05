@@ -2,20 +2,27 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 10:24:41
+ * @LastEditTime: 2026-01-05 10:40:36
  * @Description: 底部版权
  */
 'use client'
-import { Button, Chip, Divider, Image, Link, Spacer } from "@heroui/react";
+import { Button, Link, Separator } from "@heroui/react";
 import dayjs from 'dayjs';
-import { ChartColumn, House, Mail } from 'lucide-react';
+import { ChartColumn, House, IdCard, Mail } from 'lucide-react';
+import Image from 'next/image';
 import { type ReactNode } from 'react';
 
+import {
+  Status,
+  StatusIndicator,
+  StatusLabel,
+} from "@/components/Status";
 import { ApiIcon } from '@/lib/icons';
 import pkg from '#/package.json';
 
 type Social = {
-  icon: ReactNode;
+  icon?: ReactNode;
+  image?: string;
   url: string;
   label: string;
 }
@@ -39,33 +46,53 @@ export default function Footer() {
       label: 'Easy Api'
     },
     {
+      icon: <IdCard />,
+      url: 'https://portfolio.baiwumm.com',
+      label: 'Portfolio'
+    },
+    {
       icon: <House />,
       url: pkg.author.url,
       label: 'Blog'
     }
   ]
+
+  // 备案信息
+  const IcpLinks: Social[] = [
+    {
+      image: '/icp.png',
+      url: 'https://beian.miit.gov.cn/#/Integrated/index',
+      label: process.env.NEXT_PUBLIC_ICP!
+    },
+    {
+      image: '/gongan.png',
+      url: 'https://beian.mps.gov.cn/#/query/webSearch',
+      label: process.env.NEXT_PUBLIC_GONGAN!
+    },
+  ]
   return (
-    <footer className="flex w-full flex-col">
-      <Divider />
-      <div className="mx-auto w-full container! px-6 py-3 md:flex md:items-center md:justify-between">
+    <footer className="flex w-full flex-col" id="footer">
+      <Separator />
+      <div className="mx-auto w-full container! px-6 py-2 md:flex md:items-center md:justify-between">
         <div className="md:order-1">
           <div className="flex items-center justify-center gap-3 md:justify-start">
             <div className="flex items-center gap-2">
               <Image src='/logo.svg' width={20} height={20} alt="Logo" />
               <span className="text-small font-bold">{process.env.NEXT_PUBLIC_APP_NAME}</span>
             </div>
-            <Divider className="h-4" orientation="vertical" />
-            <Chip className="border-none px-0 text-default-500" color="success" variant="dot">
-              服务状态正常
-            </Chip>
+            <Separator className="h-4" orientation="vertical" />
+            <Status variant="success">
+              <StatusIndicator />
+              <StatusLabel>服务状态正常</StatusLabel>
+            </Status>
           </div>
-          <p className="text-center text-tiny text-default-400 md:text-start">
-            &copy; {dayjs().format('YYYY')}
+          <p className="text-center text-xs text-slate-500/75 dark:text-slate-300/75 md:text-start mt-1">
+            &copy; {dayjs().format('YYYY')} {" "}
             <a
               href={pkg.author.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-primary transition-colors"
+              className="hover:text-foreground transition-colors"
             >
               {process.env.NEXT_PUBLIC_COPYRIGHT}
             </a>
@@ -73,14 +100,13 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-col items-center justify-center gap-1 md:order-2">
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-1 items-center">
             {SocialLinks.map(({ icon, url, label }) => (
               <Button
                 key={url}
                 isIconOnly
                 aria-label={label}
-                variant="light"
-                radius="full"
+                variant="ghost"
                 size="sm"
                 onPress={() => window.open(url)}>
                 {icon}
@@ -88,16 +114,12 @@ export default function Footer() {
             ))}
           </div>
           <div className="flex gap-2 items-center flex-col sm:flex-row">
-            <Link href='https://beian.miit.gov.cn/#/Integrated/index' color="foreground" isExternal size="sm">
-              <Image src='/icp.png' alt={process.env.NEXT_PUBLIC_ICP} width={16} height={16} />
-              <Spacer x={1} />
-              <span className="text-tiny text-default-400">{process.env.NEXT_PUBLIC_ICP}</span>
-            </Link>
-            <Link href='https://beian.mps.gov.cn/#/query/webSearch' color="foreground" isExternal size="sm">
-              <Image src='/gongan.png' alt={process.env.NEXT_PUBLIC_GONGAN} width={16} height={16} />
-              <Spacer x={1} />
-              <span className="text-tiny text-default-400">{process.env.NEXT_PUBLIC_GONGAN}</span>
-            </Link>
+            {IcpLinks.map(({ image, url, label }) => (
+              <Link key={url} href={url} target="_blank" underline="none" className="flex gap-1 items-center text-slate-500/75 dark:text-slate-300/75 text-xs">
+                <Image src={image!} alt={label} width={16} height={16} />
+                <span>{label}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </div>
