@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](///compare/2.1.0...3.0.0) (2026-01-05)
+
+### Bug Fixes
+
+* 修复百度热搜榜接口异常的问题 d2f7e33
+
+### Performance Improvements
+
+* 优化 SEO 信息 e8ebfcb
+* **eslint:** 优化 eslint 配置规则 be8d366
+
 ## [2.1.0](///compare/2.0.0...2.1.0) (2025-11-21)
 
 ### Features
