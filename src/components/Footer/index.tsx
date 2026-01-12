@@ -86,7 +86,7 @@ export default function Footer() {
               <StatusLabel>服务状态正常</StatusLabel>
             </Status>
           </div>
-          <p className="text-center text-xs text-slate-500/75 dark:text-slate-300/75 md:text-start mt-1">
+          <p className="text-center text-xs text-muted md:text-start mt-1">
             &copy; {dayjs().format('YYYY')} {" "}
             <a
               href={pkg.author.url}
@@ -115,7 +115,7 @@ export default function Footer() {
           </div>
           <div className="flex gap-2 items-center flex-col sm:flex-row">
             {IcpLinks.map(({ image, url, label }) => (
-              <Link key={url} href={url} target="_blank" underline="none" className="flex gap-1 items-center text-slate-500/75 dark:text-slate-300/75 text-xs">
+              <Link key={url} href={url} target="_blank" underline="none" className="flex gap-1 items-center text-muted text-xs">
                 <Image src={image!} alt={label} width={16} height={16} />
                 <span>{label}</span>
               </Link>

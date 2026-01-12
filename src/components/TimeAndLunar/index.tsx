@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-05 09:13:12
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 10:30:37
+ * @LastEditTime: 2026-01-12 14:49:43
  * @Description: 日期时间
  */
 import dayjs from 'dayjs';
@@ -39,9 +39,9 @@ const TimeAndLunar: FC = memo(function TimeAndLunar() {
   }, []);
 
   return (
-    <div className="absolute left-1/2 -translate-x-1/2 hidden sm:flex flex-col gap-1 text-center">
+    <div className="justify-self-center hidden sm:flex flex-col gap-1 text-center">
       <div className="text-sm">{time || '正在加载时间...'}</div>
-      <span className="text-slate-500/75 dark:text-slate-300/75 text-xs">{lunar}</span>
+      <span className="text-muted text-xs">{lunar}</span>
     </div>
   );
 });

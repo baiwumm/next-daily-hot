@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 10:32:21
+ * @LastEditTime: 2026-01-12 14:58:16
  * @Description: 热榜卡片
  */
 'use client';
@@ -115,7 +115,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
-          <Chip color={data?.length ? 'success' : 'danger'} variant="soft" size="sm" className="px-2">
+          <Chip color={data?.length ? 'success' : 'danger'} variant="soft" size="sm" className="px-2 py-0.5">
             {data?.length ? (
               <CircleCheckIcon size={12} />
             ) : (
@@ -170,7 +170,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       <Separator />
       <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
-          <div className="w-1/2 text-xs text-slate-500/75 dark:text-slate-300/75">
+          <div className="w-1/2 text-xs text-muted">
             {relativeTime ? `${relativeTime}更新` : '正在加载中...'}
           </div>
           <Separator orientation="vertical" className="flex-none" />
@@ -182,7 +182,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
                 size="sm"
                 isDisabled={loading}
                 onPress={run}
-                className='text-slate-500/75 dark:text-slate-300/75'
+                className='text-muted'
               >
                 <RefreshCw className={loading ? 'animate-spin' : ''} />
               </Button>

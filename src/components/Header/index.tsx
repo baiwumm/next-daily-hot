@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 10:31:57
+ * @LastEditTime: 2026-01-12 14:56:37
  * @Description: 顶部布局
  */
 'use client'
@@ -18,16 +18,16 @@ import pkg from '#/package.json'
 export default function Header() {
   return (
     <div className="sticky top-0 border-b border-default h-15 z-20 backdrop-blur-sm card--default/75" id="header">
-      <div className="relative container mx-auto h-full flex justify-between items-center px-4">
-        <div className="flex gap-2 justify-between items-center grow-0 shrink-0">
+      <div className="container mx-auto h-full grid grid-cols-3 items-center px-4">
+        <div className="flex gap-2 justify-self-start">
           <Image src='/logo.svg' width={36} height={36} alt="Logo" />
           <div>
             <h1 className="font-black text-base">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
-            <h3 className="text-xs text-slate-500/75 dark:text-slate-300/75 mt-0.5 hidden sm:block">{process.env.NEXT_PUBLIC_APP_DESC}</h3>
+            <h3 className="text-xs text-muted mt-0.5 hidden sm:block">{process.env.NEXT_PUBLIC_APP_DESC}</h3>
           </div>
         </div>
         <TimeAndLunar />
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-1 justify-self-end">
           {/* 热榜设置 */}
           <HotSettings />
           {/* 主题切换按钮 */}
