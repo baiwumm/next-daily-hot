@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 14:58:16
+ * @LastEditTime: 2026-01-12 16:22:14
  * @Description: 热榜卡片
  */
 'use client';
@@ -25,13 +25,14 @@ import { motion, useInView } from 'motion/react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
+import { List } from 'react-window';
+
+import RowComponent from './RowComponent';
 
 import 'dayjs/locale/zh-cn';
 import BlurFade from '@/components/BlurFade';
-import OverflowDetector from '@/components/OverflowDetector';
 import { RESPONSE, THEME_MODE } from '@/enums';
 import { CircleCheckIcon } from '@/lib/icons';
-import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 
 dayjs.extend(utc);
@@ -49,12 +50,6 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
   const isLight = theme === THEME_MODE.LIGHT;
 
   const [relativeTime, setRelativeTime] = useState<string>('');
-
-  const renderHot = (value: string | number) => (
-    <div className="shrink-0 text-xs text-black/45 dark:text-white">
-      {value}
-    </div>
-  );
 
   const { data, loading, run } = useRequest(
     async () => {
@@ -75,13 +70,6 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       retryCount: 3,
     }
   );
-
-  // 渲染热度
-  const renderEndContent = (hot: number | string, tip: string | undefined) => hot
-    ? renderHot(formatNumber(hot))
-    : tip
-      ? renderHot(`${prefix || ''}${tip}${suffix || ''}`)
-      : null
 
   // ✅ 使用 ready 控制自动加载（更可靠）
   useEffect(() => {
@@ -127,42 +115,25 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       </Card.Header>
       <Separator />
       <Card.Content className="relative pl-3 py-0">
-        {loading ? (
-          <div className="absolute inset-0 w-full h-full flex justify-center items-center card--default/75 z-10">
-            <Spinner color="current" />
-          </div>
-        ) : null}
-        <ScrollShadow className="h-[315px] overflow-x-hidden pr-1">
+        <ScrollShadow className="h-[327px]" hideScrollBar visibility="both">
+          {loading ? (
+            <div className="absolute inset-0 w-full h-full flex justify-center items-center card--default/75 z-10">
+              <Spinner color="current" />
+            </div>
+          ) : null}
           {loading ? null : !data?.length ? (
             <div className="flex h-full justify-center items-center text-xs text-slate-500/75 px-8 text-center leading-5">
               抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
             </div>
           ) : (
-            <BlurFade>
-              {(data || []).map((item, index) => {
-                const { label } = item;
-                return (
-                  <div key={item.url} className="flex group justify-between items-center gap-1 min-w-0 border-b border-default py-1.5 w-full last:border-none">
-                    <div className="flex items-center gap-2 min-w-0 flex-1">
-                      <div
-                        className="text-xs w-6 h-6 rounded shrink-0 flex items-center justify-center"
-                        style={{
-                          backgroundColor: label
-                            ? hotLableColor[label]
-                            : hotTagColor[index] || (!isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.04)'),
-                          color: isLight && (label ? hotLableColor[label] : hotTagColor[index]) ? '#ffffff' : 'inherit',
-                        }}
-                      >
-                        {label || index + 1}
-                      </div>
-                      <OverflowDetector record={item} type={value}>
-                        {item.title}
-                      </OverflowDetector>
-                    </div>
-                    {renderEndContent(item.hot, item.tip)}
-                  </div>
-                )
-              })}
+            <BlurFade className="h-full">
+              <List
+                rowComponent={RowComponent}
+                rowCount={(data || []).length}
+                rowHeight={41}
+                rowProps={{ data, isLight, value, prefix, suffix }}
+                className="overflow-x-hidden pr-1"
+              />
             </BlurFade>
           )}
         </ScrollShadow>
