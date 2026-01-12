@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 16:10:24
+ * @LastEditTime: 2026-01-12 16:34:26
  * @Description: 动态列表子项
  */
 import { cn } from '@heroui/react';
@@ -11,6 +11,12 @@ import { type RowComponentProps } from 'react-window';
 import OverflowDetector from '@/components/OverflowDetector';
 import { HOT_ITEMS } from '@/enums';
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
+
+const renderHot = (value: string | number) => (
+  <div className="shrink-0 text-xs text-black/45 dark:text-white">
+    {value}
+  </div>
+);
 
 const RowComponent = ({ index, style, data, isLight = false, value, prefix, suffix }: RowComponentProps<{
   data: App.HotListItem[];
@@ -22,12 +28,6 @@ const RowComponent = ({ index, style, data, isLight = false, value, prefix, suff
   const item = data[index];
   const { label } = item;
   const isLast = index === data.length - 1;
-
-  const renderHot = (value: string | number) => (
-    <div className="shrink-0 text-xs text-black/45 dark:text-white">
-      {value}
-    </div>
-  );
 
   // 渲染热度
   const renderEndContent = (hot: number | string, tip: string | undefined) => hot
@@ -66,4 +66,5 @@ const RowComponent = ({ index, style, data, isLight = false, value, prefix, suff
     </div>
   )
 }
+
 export default RowComponent;

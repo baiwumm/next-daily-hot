@@ -11,6 +11,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import "./globals.css";
 import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity, UmamiAnalytics } from '@/components/Analytics'
+import AppTimeTicker from '@/components/AppTimeTicker';
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
@@ -82,6 +83,7 @@ export default function RootLayout({
           <Footer />
           {/* 回到顶部 */}
           <BackTop />
+          <AppTimeTicker />
         </NextThemesProvider>
       </body>
     </html>

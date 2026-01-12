@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 16:22:14
+ * @LastEditTime: 2026-01-12 17:49:40
  * @Description: 热榜卡片
  */
 'use client';
@@ -15,7 +15,7 @@ import {
   Spinner,
   Tooltip
 } from '@heroui/react';
-import { useInterval, useRequest } from 'ahooks';
+import { useRequest } from 'ahooks';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import timezone from 'dayjs/plugin/timezone';
@@ -24,7 +24,7 @@ import { CircleX, RefreshCw } from 'lucide-react';
 import { motion, useInView } from 'motion/react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { List } from 'react-window';
 
 import RowComponent from './RowComponent';
@@ -42,27 +42,40 @@ dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
 
 const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
-  const UpdateTime = useAppStore(state => state.UpdateTime);
   const setUpdateTime = useAppStore(state => state.setUpdateTime);
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref);
   const { theme } = useTheme();
   const isLight = theme === THEME_MODE.LIGHT;
 
-  const [relativeTime, setRelativeTime] = useState<string>('');
+  // 更新相对时间
+  const relativeText = useAppStore(state =>
+    state.getRelativeTime(value)
+  );
 
   const { data, loading, run } = useRequest(
     async () => {
-      const response = await fetch(`/api/${value}`);
-      if (response.status !== RESPONSE.SUCCESS) {
-        throw new Error('Request failed');
+      try {
+        const response = await fetch(`/api/${value}`)
+        if (response.status !== RESPONSE.SUCCESS) {
+          throw new Error('Request failed')
+        }
+
+        const result: App.IResponse = await response.json()
+        if (result.code === RESPONSE.ERROR) {
+          throw new Error('API returned error')
+        }
+
+        // ✅ 成功：记录成功时间
+        setUpdateTime({ [value]: dayjs().valueOf() })
+
+        return result.data || []
+      } catch (err) {
+        // ⚠️ 失败：也记录一次「尝试时间」
+        setUpdateTime({ [value]: dayjs().valueOf() })
+
+        throw err
       }
-      const result: App.IResponse = await response.json();
-      if (result.code === RESPONSE.ERROR) {
-        throw new Error('API returned error');
-      }
-      setUpdateTime({ [value]: dayjs().valueOf() }); // ✅ 成功后更新时间
-      return result.data || [];
     },
     {
       manual: true,
@@ -77,14 +90,6 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       run();
     }
   }, [isInView, run, data]);
-
-  // ✅ 自动清理的 interval（ahooks 内部已处理）
-  useInterval(() => {
-    const lastUpdate = UpdateTime?.[value];
-    const text = lastUpdate ? dayjs(lastUpdate).fromNow() : '刚刚';
-    setRelativeTime(text);
-  }, 1000);
-
   return (
     <Card className="rounded-lg p-0 gap-0 shadow-md border border-default" ref={ref}>
       <Card.Header className="flex justify-between items-center flex-row p-3">
@@ -142,7 +147,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
           <div className="w-1/2 text-xs text-muted">
-            {relativeTime ? `${relativeTime}更新` : '正在加载中...'}
+            {relativeText ? `${relativeText}更新` : '正在加载中...'}
           </div>
           <Separator orientation="vertical" className="flex-none" />
           <div className="flex w-1/2 justify-center">

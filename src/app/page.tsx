@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 09:57:52
+ * @LastEditTime: 2026-01-12 17:44:43
  * @Description: 首页
  */
 'use client';
@@ -45,10 +45,11 @@ export default function Home() {
           <motion.div
             key={raw.value}
             layout // ✅ 关键：让位置变化可动画
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.25 } }}
-            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+            initial={{ opacity: 0, filter: 'blur(8px)', y: 20 }}
+            whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+            exit={{ opacity: 0, filter: 'blur(8px)', y: 20 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <HotCard {...raw} />
           </motion.div>
