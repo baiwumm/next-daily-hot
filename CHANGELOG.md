@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.1.1](///compare/3.1.0...3.1.1) (2026-01-13)
+
+### Performance Improvements
+
+* 优化类型 05d9eab
+
 ## [3.1.0](///compare/3.0.1...3.1.0) (2026-01-12)
 
 ### Features
