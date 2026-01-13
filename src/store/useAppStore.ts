@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-04 17:56:06
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 17:29:54
+ * @LastEditTime: 2026-01-12 18:07:07
  * @Description: 全局状态
  */
 
@@ -29,8 +29,8 @@ type AppState = {
   getRelativeTime: (key: HotKeys) => string
 
   /** 显示的热榜 */
-  showItems: string[];  // 显示的热榜
-  setShowItems: (items: string[]) => void;
+  showItems: HotKeys[];  // 显示的热榜
+  setShowItems: (items: HotKeys[]) => void;
 }
 
 export const useAppStore = create(
