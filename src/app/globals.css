@@ -4,6 +4,8 @@
 
 :root {
   font-family: 'Maple Mono CN', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* 主题色 */
+  --accent: oklch(0.6235 0.2441 30.44);
 }
 
 @layer base {
