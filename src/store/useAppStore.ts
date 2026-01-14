@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-04 17:56:06
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 11:25:31
+ * @LastEditTime: 2026-01-14 14:30:51
  * @Description: 全局状态
  */
 
@@ -31,6 +31,10 @@ type AppState = {
   /** 隐藏的热榜 */
   hiddenItems: HotKeys[];
   setHiddenItems: (items: HotKeys[]) => void;
+
+  // 热榜排序
+  sortItems: HotKeys[];
+  setSortItems: (items: HotKeys[]) => void;
 }
 
 export const useAppStore = create(
@@ -66,6 +70,11 @@ export const useAppStore = create(
       setHiddenItems: (items) => {
         set({ hiddenItems: items })
       },
+
+      sortItems: HOT_ITEMS.values,
+      setSortItems: (items) => {
+        set({ sortItems: items })
+      },
     }),
     {
       name: 'app-store', // 用于存储在 localStorage 中的键名
@@ -74,5 +83,6 @@ export const useAppStore = create(
       partialize: (state) => ({
         UpdateTime: state.UpdateTime,
         hiddenItems: state.hiddenItems,
+        sortItems: state.sortItems
       } as any),
     }))

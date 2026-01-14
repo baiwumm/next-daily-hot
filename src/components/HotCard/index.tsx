@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 17:49:40
+ * @LastEditTime: 2026-01-14 14:59:30
  * @Description: 热榜卡片
  */
 'use client';
@@ -60,21 +60,14 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
         if (response.status !== RESPONSE.SUCCESS) {
           throw new Error('Request failed')
         }
-
         const result: App.IResponse = await response.json()
         if (result.code === RESPONSE.ERROR) {
           throw new Error('API returned error')
         }
-
-        // ✅ 成功：记录成功时间
-        setUpdateTime({ [value]: dayjs().valueOf() })
-
         return result.data || []
-      } catch (err) {
-        // ⚠️ 失败：也记录一次「尝试时间」
+      } finally {
+        // 记录更新时间
         setUpdateTime({ [value]: dayjs().valueOf() })
-
-        throw err
       }
     },
     {
