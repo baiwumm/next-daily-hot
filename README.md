@@ -86,6 +86,7 @@
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
 | <img src="./public/weibo.svg" width="20"/> 微博 | 热搜榜 | ✅ | [weibo](./src/app/api/weibo/route.ts) |
+| <img src="./public/xiaohongshu.svg" width="20"/> 小红书 | 实时热榜 | ✅ | [kuaishou](./src/app/api/xiaohongshu/route.ts) |
 | <img src="./public/douyin.svg" width="20"/> 抖音 | 热点榜 | ✅ | [douyin](./src/app/api/douyin/route.ts) |
 | <img src="./public/kuaishou.svg" width="20"/> 快手 | 热榜 | ✅ | [kuaishou](./src/app/api/kuaishou/route.ts) |
 

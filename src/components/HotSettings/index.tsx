@@ -2,20 +2,39 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 09:59:15
+ * @LastEditTime: 2026-01-14 12:04:36
  * @Description: 热榜显示
  */
 'use client';
 import { Button, Checkbox, CheckboxGroup, cn, Label, Popover } from "@heroui/react";
 import { PanelsTopLeft } from 'lucide-react';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 import { HOT_ITEMS } from '@/enums';
 import { useAppStore } from '@/store/useAppStore';
 
 export default function HotSettings() {
-  const showItems = useAppStore(state => state.showItems);
-  const setShowItems = useAppStore(state => state.setShowItems);
+  const hiddenItems = useAppStore(state => state.hiddenItems);
+  const setHiddenItems = useAppStore(state => state.setHiddenItems);
+
+  // 👇 当前「显示中的 items」
+  const visibleValues = useMemo(() => {
+    const hiddenSet = new Set(hiddenItems ?? []);
+    return HOT_ITEMS.items
+      .map(i => i.value)
+      .filter(v => !hiddenSet.has(v));
+  }, [hiddenItems]);
+
+  // 点击回调
+  const onChange = (values: string[]) => {
+    const visibleSet = new Set(values);
+    const allValues = HOT_ITEMS.items.map(i => i.value);
+
+    // 👇 反推出 hiddenItems
+    const nextHidden = allValues.filter(v => !visibleSet.has(v));
+    setHiddenItems(nextHidden);
+  }
   return (
     <Popover>
       <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm">
@@ -24,7 +43,7 @@ export default function HotSettings() {
       <Popover.Content placement="bottom" className="rounded-lg">
         <Popover.Dialog>
           <Popover.Arrow />
-          <CheckboxGroup name="hot-items" value={showItems} onChange={(values) => setShowItems(values)}>
+          <CheckboxGroup name="hot-items" value={visibleValues} onChange={onChange}>
             <div className="grid grid-cols-3 gap-2">
               {HOT_ITEMS.items.map(({ value, raw }) => (
                 <Checkbox

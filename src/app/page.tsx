@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 17:44:43
+ * @LastEditTime: 2026-01-14 11:26:27
  * @Description: 首页
  */
 'use client';
@@ -16,12 +16,12 @@ import { useAppStore } from '@/store/useAppStore';
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
-  const showItems = useAppStore(state => state.showItems);
+  const hiddenItems = useAppStore(state => state.hiddenItems);
 
   const visibleItems = useMemo(() => {
-    const hiddenSet = new Set(showItems || []);
-    return HOT_ITEMS.items.filter(({ value }) => hiddenSet.has(value));
-  }, [showItems]);
+    const hiddenSet = new Set(hiddenItems ?? []);
+    return HOT_ITEMS.items.filter(({ value }) => !hiddenSet.has(value));
+  }, [hiddenItems]);
 
   useEffect(() => {
     const timer = setTimeout(() => setMounted(true), 0);

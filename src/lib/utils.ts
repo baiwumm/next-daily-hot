@@ -41,19 +41,35 @@ export const hotLableColor: Record<string, string> = {
 /**
  * @description: 转化数字
  */
-export const formatNumber = (num: number | string): number | string => {
-  num = Number(num);
-  if (isNaN(num)) {
-    return num;
+export const formatNumber = (value: number | string): number | string => {
+  if (value === null || value === undefined) return value;
+
+  let num: number;
+
+  // 1️⃣ 纯数字或数字字符串
+  if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)) {
+    num = Number(value);
   }
-  // 如果小于 10000，直接显示
+  // 2️⃣ 带 w / 万
+  else if (/^\d+(\.\d+)?\s*(w|万)$/i.test(value)) {
+    num = parseFloat(value) * 10000;
+  }
+  // 3️⃣ 带 k / 千（可选）
+  else if (/^\d+(\.\d+)?\s*(k|千)$/i.test(value)) {
+    num = parseFloat(value) * 1000;
+  }
+  // 4️⃣ 其他情况，原样返回
+  else {
+    return value;
+  }
+
+  // 5️⃣ 小于 1 万，直接返回数字
   if (num < 10000) {
     return num;
   }
-  const unit = '万';
-  num /= 10000;
-  num = num.toFixed(2);
-  return num + unit;
+
+  // 6️⃣ 大于等于 1 万，格式化成「万」
+  return (num / 10000).toFixed(2) + '万';
 };
 
 /**

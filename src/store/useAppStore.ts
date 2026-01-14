@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-04 17:56:06
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 18:07:07
+ * @LastEditTime: 2026-01-14 11:25:31
  * @Description: 全局状态
  */
 
@@ -28,9 +28,9 @@ type AppState = {
   /** 获取相对时间文本（派生数据） */
   getRelativeTime: (key: HotKeys) => string
 
-  /** 显示的热榜 */
-  showItems: HotKeys[];  // 显示的热榜
-  setShowItems: (items: HotKeys[]) => void;
+  /** 隐藏的热榜 */
+  hiddenItems: HotKeys[];
+  setHiddenItems: (items: HotKeys[]) => void;
 }
 
 export const useAppStore = create(
@@ -62,9 +62,9 @@ export const useAppStore = create(
       },
 
       /* ================= UI 状态 ================= */
-      showItems: HOT_ITEMS.values,
-      setShowItems: (items) => {
-        set({ showItems: items })
+      hiddenItems: [],
+      setHiddenItems: (items) => {
+        set({ hiddenItems: items })
       },
     }),
     {
@@ -73,6 +73,6 @@ export const useAppStore = create(
       // ⚠️ now 是纯派生用的，不需要持久化
       partialize: (state) => ({
         UpdateTime: state.UpdateTime,
-        showItems: state.showItems,
+        hiddenItems: state.hiddenItems,
       } as any),
     }))
