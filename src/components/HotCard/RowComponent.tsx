@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 16:34:26
+ * @LastEditTime: 2026-01-14 17:45:20
  * @Description: 动态列表子项
  */
 import { cn } from '@heroui/react';
@@ -35,6 +35,9 @@ const RowComponent = ({ index, style, data, isLight = false, value, prefix, suff
     : tip
       ? renderHot(`${prefix || ''}${tip}${suffix || ''}`)
       : null;
+
+  // 默认背景色
+  const labelBgColor = !isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.05)';
   return (
     <div style={style} className={cn(
       'flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default',
@@ -42,19 +45,19 @@ const RowComponent = ({ index, style, data, isLight = false, value, prefix, suff
     )}>
       <div className="flex items-center gap-2 min-w-0 flex-1">
         <div
-          className="text-xs w-6 h-6 rounded shrink-0 flex items-center justify-center"
+          className="text-xs size-6 rounded shrink-0 flex items-center justify-center"
           style={{
             backgroundColor: label
-              ? hotLableColor[label]
+              ? (hotLableColor[label] || labelBgColor)
               : hotTagColor[index] ||
-              (!isLight ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0,0,0,.04)'),
+              labelBgColor,
             color:
               isLight && (label ? hotLableColor[label] : hotTagColor[index])
-                ? '#ffffff'
-                : 'inherit',
+                ? 'var(--white)'
+                : 'text-default-foreground',
           }}
         >
-          {label || index + 1}
+          {label ? label.slice(0, 1) : index + 1}
         </div>
 
         <OverflowDetector record={item} type={value}>
