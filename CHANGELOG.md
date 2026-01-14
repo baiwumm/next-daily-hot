@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.2.0](///compare/3.1.1...3.2.0) (2026-01-14)
+
+### Features
+
+* 新增 懂车帝-热搜榜 00c6b27
+* 新增 小红书-实时热榜 b1b8c99
+* **HotSettings:** 热榜支持拖拽排序显示 db6ce60
+
 ## [3.1.1](///compare/3.1.0...3.1.1) (2026-01-13)
 
 ### Performance Improvements
