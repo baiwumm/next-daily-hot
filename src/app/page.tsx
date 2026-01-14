@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 11:26:27
+ * @LastEditTime: 2026-01-14 14:11:54
  * @Description: 首页
  */
 'use client';
@@ -35,8 +35,7 @@ export default function Home() {
   return (
     // 👇 父容器必须是 motion.div 并开启 layout
     <motion.div
-      className="grid gap-4"
-      style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(20rem, 1fr))' }}
+      className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]"
       layout // ✅ 启用布局动画
     >
       <AnimatePresence>

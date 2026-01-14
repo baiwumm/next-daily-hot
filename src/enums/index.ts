@@ -35,6 +35,7 @@ export const HOT_ITEMS = Enum({
   LOL: { value: 'lol', label: '英雄联盟', tip: '更新公告' },
   THEPAPER: { value: 'thepaper', label: '澎湃新闻', tip: '热榜' },
   KUAISHOU: { value: 'kuaishou', label: '快手', tip: '热榜' },
+  DONGCHEDI: { value: 'dongchedi', label: '懂车帝', tip: '热搜榜' },
   HISTORY_TODAY: { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
   WEREAD: { value: 'weread', label: '微信读书', tip: '飙升榜' },
   DOUBAN_MOVIC: { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },

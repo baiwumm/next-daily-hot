@@ -104,6 +104,7 @@
 | <img src="./public/qq.svg" width="20"/> 腾讯新闻 | 热点榜 | ✅ | [qq](./src/app/api/qq/route.ts) |
 | <img src="./public/netease.svg" width="20"/> 网易新闻 | 热榜 | ✅ | [netease](./src/app/api/netease/route.ts) |
 | <img src="./public/thepaper.svg" width="20"/> 澎湃新闻 | 热榜 | ✅ | [thepaper](./src/app/api/thepaper/route.ts) |
+| <img src="./public/dongchedi.svg" width="20"/> 懂车帝 | 热搜榜 | ✅ | [dongchedi](./src/app/api/dongchedi/route.ts) |
 
 ### 🔍 搜索引擎
 | 平台 | 类别 | 状态 | API |
