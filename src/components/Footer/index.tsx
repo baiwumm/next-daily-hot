@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 10:40:36
+ * @LastEditTime: 2026-01-14 13:45:58
  * @Description: 底部版权
  */
 'use client'
@@ -92,7 +92,7 @@ export default function Footer() {
               href={pkg.author.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-colors"
+              className="hover:text-accent transition-colors"
             >
               {process.env.NEXT_PUBLIC_COPYRIGHT}
             </a>
