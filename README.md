@@ -111,6 +111,7 @@
 |------|------|------|-----|
 | <img src="./public/baidu.svg" width="20"/> 百度 | 热搜榜 | ✅ | [baidu](./src/app/api/baidu/route.ts) |
 | <img src="./public/baidutieba.svg" width="20"/> 百度贴吧 | 热议榜 | ✅ | [baidutieba](./src/app/api/baidutieba/route.ts) |
+| <img src="./public/hupu.svg" width="20"/> 虎扑 | 步行街热帖 | ✅ | [hupu](./src/app/api/hupu/route.ts) |
 
 ### 💡 知识社区
 | 平台 | 类别 | 状态 | API |

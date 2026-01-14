@@ -2,18 +2,38 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 16:01:44
+ * @LastEditTime: 2026-01-14 17:22:35
  * @Description: 热榜显示
  */
 'use client';
 import { Button, Checkbox, CheckboxGroup, cn, Label, Modal } from "@heroui/react";
 import { GripVertical, PanelsTopLeft, Settings } from 'lucide-react';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable';
 import { HOT_ITEMS } from '@/enums';
 import { useAppStore } from '@/store/useAppStore';
+
+type HotKeys = typeof HOT_ITEMS.valueType;
+
+/**
+ * 👇 核心：排序归一化
+ * - 保留旧顺序
+ * - 自动补齐新增项
+ * - 自动剔除已删除项
+ */
+function normalizeSortItems(source: HotKeys[], sortItems?: HotKeys[]) {
+  const sourceSet = new Set(source);
+
+  // 保留仍然存在的排序项
+  const normalized = (sortItems ?? []).filter(v => sourceSet.has(v));
+
+  // 找出新增项
+  const missing = source.filter(v => !normalized.includes(v));
+
+  return [...normalized, ...missing];
+}
 
 export default function HotSettings() {
   const hiddenItems = useAppStore(state => state.hiddenItems);
@@ -21,35 +41,79 @@ export default function HotSettings() {
   const sortItems = useAppStore(state => state.sortItems);
   const setSortItems = useAppStore(state => state.setSortItems);
 
-  // 👇 当前「显示中的 items」
-  const visibleValues = useMemo(() => {
-    const hiddenSet = new Set(hiddenItems ?? []);
-    return HOT_ITEMS.items
-      .map(i => i.value)
-      .filter(v => !hiddenSet.has(v));
-  }, [hiddenItems]);
+  /**
+   * 👇 源数据（唯一可信）
+   */
+  const sourceValues = useMemo(
+    () => HOT_ITEMS.items.map(i => i.value),
+    []
+  );
 
-  // 点击回调
+  /**
+   * 👇 排序兜底（解决你新增一条 HOT_ITEMS 不显示的问题）
+   */
+  const safeSortItems = useMemo(
+    () => normalizeSortItems(sourceValues, sortItems),
+    [sourceValues, sortItems]
+  );
+
+  /**
+   * 👇 隐藏项兜底（防止源数据删了还留在 hiddenItems）
+   */
+  const safeHiddenItems = useMemo(() => {
+    const sourceSet = new Set(sourceValues);
+    return (hiddenItems ?? []).filter(v => sourceSet.has(v));
+  }, [hiddenItems, sourceValues]);
+
+  /**
+   * 👇 当前显示中的 items（CheckboxGroup 使用）
+   */
+  const visibleValues = useMemo(() => {
+    const hiddenSet = new Set(safeHiddenItems);
+    return sourceValues.filter(v => !hiddenSet.has(v));
+  }, [safeHiddenItems, sourceValues]);
+
+  /**
+   * 👇 勾选变化 → 反推出 hiddenItems
+   */
   const onChange = (values: string[]) => {
     const visibleSet = new Set(values);
-    const allValues = HOT_ITEMS.items.map(i => i.value);
-
-    // 👇 反推出 hiddenItems
-    const nextHidden = allValues.filter(v => !visibleSet.has(v));
+    const nextHidden = sourceValues.filter(v => !visibleSet.has(v));
     setHiddenItems(nextHidden);
-  }
+  };
+
+  /**
+   * 👇（可选但强烈推荐）
+   * 当发现 sortItems 不完整时，自动修复 store
+   * 新增项会被持久化，不只是 UI 显示
+   */
+  useEffect(() => {
+    if (!sortItems) return;
+
+    if (safeSortItems.join() !== sortItems.join()) {
+      setSortItems(safeSortItems);
+    }
+  }, [safeSortItems]);
+
   return (
     <Modal>
-      <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm">
+      <Button
+        isIconOnly
+        aria-label="热点榜单设置"
+        variant="ghost"
+        size="sm"
+      >
         <PanelsTopLeft />
       </Button>
+
       <Modal.Backdrop>
-        <Modal.Container size='lg'>
+        <Modal.Container size="lg">
           <Modal.Dialog>
             <Modal.CloseTrigger />
+
             <Modal.Header>
               <Modal.Heading>
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <Modal.Icon className="bg-default text-foreground">
                     <Settings className="size-5" />
                   </Modal.Icon>
@@ -57,24 +121,31 @@ export default function HotSettings() {
                 </div>
               </Modal.Heading>
             </Modal.Header>
+
             <Modal.Body>
-              <CheckboxGroup name="hot-items" value={visibleValues} onChange={onChange}>
+              <CheckboxGroup
+                name="hot-items"
+                value={visibleValues}
+                onChange={onChange}
+              >
                 <Sortable
-                  value={sortItems}
-                  onValueChange={(values) => setSortItems(values)}
+                  value={safeSortItems}
+                  onValueChange={setSortItems}
                   getItemValue={(item) => item}
                   strategy="grid"
                   className="grid grid-cols-3 gap-3"
                 >
-                  {sortItems.map((value) => {
+                  {safeSortItems.map((value) => {
                     const raw = HOT_ITEMS.raw(value);
+                    if (!raw) return null;
+
                     return (
                       <SortableItem key={value} value={value}>
                         <Checkbox
                           isOnSurface
                           value={value}
                           className={cn(
-                            "group gap-2 rounded-md bg-surface px-2 py-3 transition-all border border-default mt-0",
+                            "group mt-0 gap-2 rounded-md border border-default bg-surface px-2 py-3 transition-all",
                             "data-[selected=true]:bg-accent/10 hover:bg-accent/10",
                           )}
                         >
@@ -98,7 +169,7 @@ export default function HotSettings() {
                           </Checkbox.Content>
                         </Checkbox>
                       </SortableItem>
-                    )
+                    );
                   })}
                 </Sortable>
               </CheckboxGroup>
