@@ -33,6 +33,7 @@ export const HOT_ITEMS = Enum({
   HUPU: { value: 'hupu', label: '虎扑', tip: '步行街热帖', suffix: '亮' },
   JUEJIN: { value: 'juejin', label: '稀土掘金', tip: '热榜' },
   NETEASE: { value: 'netease', label: '网易新闻', tip: '热榜' },
+  QUARK: { value: 'quark', label: '夸克', tip: '今日热点' },
   LOL: { value: 'lol', label: '英雄联盟', tip: '更新公告' },
   THEPAPER: { value: 'thepaper', label: '澎湃新闻', tip: '热榜' },
   KUAISHOU: { value: 'kuaishou', label: '快手', tip: '热榜' },
