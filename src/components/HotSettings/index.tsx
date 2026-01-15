@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 17:22:35
+ * @LastEditTime: 2026-01-15 09:37:21
  * @Description: 热榜显示
  */
 'use client';
-import { Button, Checkbox, CheckboxGroup, cn, Label, Modal } from "@heroui/react";
+import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal } from "@heroui/react";
 import { GripVertical, PanelsTopLeft, Settings } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useMemo } from 'react';
@@ -80,6 +80,12 @@ export default function HotSettings() {
     const visibleSet = new Set(values);
     const nextHidden = sourceValues.filter(v => !visibleSet.has(v));
     setHiddenItems(nextHidden);
+  };
+
+  // 恢复默认设置
+  const resetConfig = () => {
+    setSortItems(HOT_ITEMS.values);
+    setHiddenItems([]);
   };
 
   /**
@@ -174,6 +180,29 @@ export default function HotSettings() {
                 </Sortable>
               </CheckboxGroup>
             </Modal.Body>
+            <Modal.Footer>
+              <AlertDialog>
+                <Button className="w-full">恢复默认设置</Button>
+                <AlertDialog.Backdrop variant="blur">
+                  <AlertDialog.Container>
+                    <AlertDialog.Dialog className="sm:max-w-[400px]">
+                      <AlertDialog.CloseTrigger />
+                      <AlertDialog.Header>
+                        <AlertDialog.Icon status="warning" />
+                        <AlertDialog.Heading>恢复默认设置？</AlertDialog.Heading>
+                      </AlertDialog.Header>
+                      <AlertDialog.Body>
+                        该操作会重置热榜的排序与显示配置，并恢复为系统默认状态。
+                      </AlertDialog.Body>
+                      <AlertDialog.Footer>
+                        <Button slot="close" variant="tertiary">取消</Button>
+                        <Button slot="close" variant="danger" onPress={resetConfig}>确认</Button>
+                      </AlertDialog.Footer>
+                    </AlertDialog.Dialog>
+                  </AlertDialog.Container>
+                </AlertDialog.Backdrop>
+              </AlertDialog>
+            </Modal.Footer>
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>
