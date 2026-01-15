@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:33:19
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 18:05:47
+ * @LastEditTime: 2026-01-15 10:27:02
  * @Description: 百度-热搜榜
  */
 import { NextResponse } from 'next/server';
@@ -28,6 +28,7 @@ export async function GET() {
         return {
           id: v.index,
           title: v.word,
+          label: v.newHotName,
           url: `https://www.baidu.com/s?wd=${encodeURIComponent(v.word)}`,
           mobileUrl: v.url,
         };
