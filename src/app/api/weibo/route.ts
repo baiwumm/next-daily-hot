@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-11 14:37:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 18:12:04
+ * @LastEditTime: 2026-01-15 10:23:02
  * @Description: 微博-热搜榜
  */
 import { NextResponse } from 'next/server';
@@ -37,7 +37,7 @@ export async function GET() {
           id: v.mid,
           title: v.word,
           desc: key,
-          hot: v.raw_hot,
+          hot: v.num,
           label: v.label_name,
           url: `https://s.weibo.com/weibo?q=${encodeURIComponent(key)}&t=31&band_rank=1&Refer=top`,
           mobileUrl: `https://s.weibo.com/weibo?q=${encodeURIComponent(key)}&t=31&band_rank=1&Refer=top`,
