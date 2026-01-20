@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-15 09:37:21
+ * @LastEditTime: 2026-01-20 17:46:32
  * @Description: 热榜显示
  */
 'use client';
@@ -112,7 +112,7 @@ export default function HotSettings() {
         <SwatchBook />
       </Button>
 
-      <Modal.Backdrop>
+      <Modal.Backdrop isDismissable={false} isKeyboardDismissDisabled>
         <Modal.Container size="lg">
           <Modal.Dialog>
             <Modal.CloseTrigger />
