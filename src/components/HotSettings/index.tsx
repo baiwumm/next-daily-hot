@@ -7,7 +7,7 @@
  */
 'use client';
 import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal } from "@heroui/react";
-import { GripVertical, PanelsTopLeft, Settings } from 'lucide-react';
+import { GripVertical, Settings, SwatchBook } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useMemo } from 'react';
 
@@ -109,7 +109,7 @@ export default function HotSettings() {
         variant="ghost"
         size="sm"
       >
-        <PanelsTopLeft />
+        <SwatchBook />
       </Button>
 
       <Modal.Backdrop>
