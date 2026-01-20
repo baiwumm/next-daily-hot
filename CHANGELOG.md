@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.4.0](///compare/3.3.1...3.4.0) (2026-01-20)
+
+### Features
+
+* 新增 Github - 热门仓库 8b90396
+* 新增 HelloGithub - 精选 91ac5ac
+
+### Performance Improvements
+
+* **HotSettings:** 禁用 Modal 点击关闭 227bf46
+
 ## [3.3.1](///compare/3.3.0...3.3.1) (2026-01-15)
 
 ### Features
