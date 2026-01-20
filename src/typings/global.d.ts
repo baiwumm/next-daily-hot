@@ -12,7 +12,7 @@ declare namespace App {
     title: string; // 标题
     desc?: string; // 描述
     pic?: string; // 封面图
-    hot: number | string; // 热度
+    hot?: number | string; // 热度
     tip?: string; // 如果不显示热度，显示其他信息
     url: string; // 地址
     mobileUrl: string; // 移动端地址

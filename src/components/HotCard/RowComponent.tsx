@@ -2,19 +2,20 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 17:45:20
+ * @LastEditTime: 2026-01-20 17:12:52
  * @Description: 动态列表子项
  */
 import { cn } from '@heroui/react';
+import { type ReactNode } from 'react';
 import { type RowComponentProps } from 'react-window';
 
 import OverflowDetector from '@/components/OverflowDetector';
 import { HOT_ITEMS } from '@/enums';
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
 
-const renderHot = (value: string | number) => (
-  <div className="shrink-0 text-xs text-black/45 dark:text-white">
-    {value}
+const renderHot = (value: string | number, prefix?: ReactNode, suffix?: ReactNode) => (
+  <div className="shrink-0 text-xs text-black/45 dark:text-white flex items-center gap-0.5">
+    {prefix}{value}{suffix}
   </div>
 );
 
@@ -33,7 +34,7 @@ const RowComponent = ({ index, style, data, isLight = false, value, prefix, suff
   const renderEndContent = (hot: number | string, tip: string | undefined) => hot
     ? renderHot(formatNumber(hot))
     : tip
-      ? renderHot(`${prefix || ''}${tip}${suffix || ''}`)
+      ? renderHot(tip, prefix, suffix)
       : null;
 
   // 默认背景色
