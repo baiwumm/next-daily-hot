@@ -28,7 +28,6 @@ export async function GET() {
     }
     // 得到请求体
     const responseBody = await response.json();
-    console.log('responseBody', responseBody)
     // 处理数据
     if (responseBody.success) {
       const result: App.HotListItem[] = responseBody.data.map((v) => {
@@ -45,7 +44,6 @@ export async function GET() {
     }
     return NextResponse.json(responseSuccess());
   } catch (err) {
-    console.log(err)
     return NextResponse.json(responseError);
   }
 }

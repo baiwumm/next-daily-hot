@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-20 15:22:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-20 17:11:52
+ * @LastEditTime: 2026-01-21 14:12:45
  * @Description: Github - 热门仓库
  */
 
@@ -67,7 +67,6 @@ export async function GET() {
     });
     return NextResponse.json(responseSuccess(result));
   } catch (err) {
-    console.log(err)
     return NextResponse.json(responseError);
   }
 }
