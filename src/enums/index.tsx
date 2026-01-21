@@ -46,4 +46,5 @@ export const HOT_ITEMS = Enum({
   WEREAD: { value: 'weread', label: '微信读书', tip: '飙升榜' },
   DOUBAN_MOVIC: { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
   NETEASE_MUSIC: { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
+  WOSHIPM: { value: 'woshipm', label: '人人都是产品经理', tip: '热榜' }
 })
