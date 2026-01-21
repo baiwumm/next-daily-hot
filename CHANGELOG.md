@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.4.1](///compare/3.4.0...3.4.1) (2026-01-21)
+
+### Features
+
+* 新增 人人都是产品经理 - 热榜 79df423
+* 新增 CSDN - 热榜 cd00515
+
+### Performance Improvements
+
+* 删除 console.log 3a452f6
+
 ## [3.4.0](///compare/3.3.1...3.4.0) (2026-01-20)
 
 ### Features
