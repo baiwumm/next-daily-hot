@@ -121,6 +121,7 @@
 | <img src="./public/juejin.svg" width="20"/> 稀土掘金 | 热榜 | ✅ | [juejin](./src/app/api/juejin/route.ts) |
 | <img src="./public/github-trending.svg" width="20"/> Github | 热门仓库 | ✅ | [github-trending](./src/app/api/github-trending/route.ts) |
 | <img src="./public/hello-github.svg" width="20"/> HelloGithub | 精选 | ✅ | [hello-github](./src/app/api/hello-github/route.ts) |
+| <img src="./public/csdn.svg" width="20"/> CSDN | 热榜 | ✅ | [csdn](./src/app/api/csdn/route.ts) |
 
 ### 📚 其他服务
 | 平台 | 类别 | 状态 | API |

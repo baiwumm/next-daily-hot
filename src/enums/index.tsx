@@ -35,6 +35,7 @@ export const HOT_ITEMS = Enum({
   JUEJIN: { value: 'juejin', label: '稀土掘金', tip: '热榜' },
   GITHUB_TRENDING: { value: 'github-trending', label: 'Github', tip: '热门仓库', suffix: <Star size={12} /> },
   HELLO_GITHUB: { value: 'hello-github', label: 'HelloGithub', tip: '精选' },
+  CSDN: { value: 'csdn', label: 'CSDN', tip: '热榜' },
   NETEASE: { value: 'netease', label: '网易新闻', tip: '热榜' },
   QUARK: { value: 'quark', label: '夸克', tip: '今日热点' },
   LOL: { value: 'lol', label: '英雄联盟', tip: '更新公告' },
