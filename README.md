@@ -107,6 +107,7 @@
 | <img src="./public/dongchedi.svg" width="20"/> 懂车帝 | 热搜榜 | ✅ | [dongchedi](./src/app/api/dongchedi/route.ts) |
 | <img src="./public/quark.svg" width="20"/> 夸克 | 今日热点 | ✅ | [quark](./src/app/api/quark/route.ts) |
 | <img src="./public/36kr.svg" width="20"/> 36kr | 24小时热榜 | ✅ | [36kr](./src/app/api/36kr/route.ts) |
+| <img src="./public/huxiu.svg" width="20"/> 虎嗅 | 最新资讯 | ✅ | [huxiu](./src/app/api/huxiu/route.ts) |
 
 ### 🔍 搜索引擎
 | 平台 | 类别 | 状态 | API |
