@@ -50,5 +50,6 @@ export const HOT_ITEMS = Enum({
   '36KR': { value: '36kr', label: '36氪', tip: '24小时热榜' },
   HUXIU: { value: 'huxiu', label: '虎嗅', tip: '最新资讯' },
   ZHIHU_DAILY: { value: 'zhihu-daily', label: '知乎日报', tip: '推荐榜' },
-  IFANR: { value: 'ifanr', label: '爱范儿', tip: '快讯' }
+  IFANR: { value: 'ifanr', label: '爱范儿', tip: '快讯' },
+  ITHOME: { value: 'ithome', label: 'IT之家', tip: '热榜' }
 })

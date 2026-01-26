@@ -5,10 +5,10 @@ declare namespace App {
     | (Base & { asChild?: false | undefined });
 
   /**
-* @description: 热榜子项
-*/
+   * @description: 热榜子项
+   */
   export type HotListItem = {
-    id: string; // 唯一 key
+    id: string | number; // 唯一 key
     title: string; // 标题
     desc?: string; // 描述
     pic?: string; // 封面图
