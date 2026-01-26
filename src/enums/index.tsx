@@ -48,5 +48,6 @@ export const HOT_ITEMS = Enum({
   NETEASE_MUSIC: { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
   WOSHIPM: { value: 'woshipm', label: '人人都是产品经理', tip: '热榜' },
   '36KR': { value: '36kr', label: '36氪', tip: '24小时热榜' },
-  HUXIU: { value: 'huxiu', label: '虎嗅', tip: '最新资讯' }
+  HUXIU: { value: 'huxiu', label: '虎嗅', tip: '最新资讯' },
+  ZHIHU_DAILY: { value: 'zhihu-daily', label: '知乎日报', tip: '推荐榜' }
 })

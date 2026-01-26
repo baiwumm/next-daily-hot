@@ -132,6 +132,7 @@
 | <img src="./public/weread.svg" width="20"/> 微信读书 | 飙升榜 | ✅ | [weread](./src/app/api/weread/route.ts) |
 | <img src="./public/lol.svg" width="20"/> 英雄联盟 | 更新公告 | ✅ | [lol](./src/app/api/lol/route.ts) |
 | <img src="./public/history-today.svg" width="20"/> 历史上的今天 | 百科 | ✅ | [history-today](./src/app/api/history-today/route.ts) |
+| <img src="./public/zhihu-daily.svg" width="20"/> 知乎日报 | 推荐榜 | ✅ | [zhihu-daily](./src/app/api/zhihu-daily/route.ts) |
 
 ## 🚀 快速开始
 
