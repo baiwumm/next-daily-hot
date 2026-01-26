@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-20 17:12:52
+ * @LastEditTime: 2026-01-26 15:11:13
  * @Description: 动态列表子项
  */
 import { cn } from '@heroui/react';
@@ -31,7 +31,7 @@ const RowComponent = ({ index, style, data, isLight = false, value, prefix, suff
   const isLast = index === data.length - 1;
 
   // 渲染热度
-  const renderEndContent = (hot: number | string, tip: string | undefined) => hot
+  const renderEndContent = (hot?: number | string, tip?: string) => hot
     ? renderHot(formatNumber(hot))
     : tip
       ? renderHot(tip, prefix, suffix)
