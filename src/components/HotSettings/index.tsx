@@ -2,14 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 10:03:57
+ * @LastEditTime: 2026-01-26 14:33:28
  * @Description: 热榜显示
  */
 'use client';
 import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal, toast } from "@heroui/react";
 import { GripVertical, Settings, SwatchBook } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable';
 import { HOT_ITEMS } from '@/enums';
@@ -36,7 +36,6 @@ function normalizeSortItems(source: HotKeys[], sortItems?: HotKeys[]) {
 }
 
 export default function HotSettings() {
-  const [isOpen, setIsOpen] = useState(false);
   const hiddenItems = useAppStore(state => state.hiddenItems);
   const setHiddenItems = useAppStore(state => state.setHiddenItems);
   const sortItems = useAppStore(state => state.sortItems);
@@ -87,7 +86,6 @@ export default function HotSettings() {
   const resetConfig = () => {
     setSortItems(HOT_ITEMS.values);
     setHiddenItems([]);
-    setIsOpen(false);
     toast.success("操作成功！", {
       timeout: 2000
     })
@@ -107,7 +105,7 @@ export default function HotSettings() {
   }, [safeSortItems]);
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+    <Modal>
       <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm" className="rounded-full">
         <SwatchBook />
       </Button>
