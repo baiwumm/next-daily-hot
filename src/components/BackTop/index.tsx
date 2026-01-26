@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:09:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 13:55:03
+ * @LastEditTime: 2026-01-26 09:57:49
  * @Description: 回到顶部
  */
 'use client';
@@ -72,7 +72,7 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
             value={scrollPercentage}
             size={40}
             strokeWidth={3}
-            className="text-accent/25"
+            className="text-accent-soft"
             indicatorClassName="text-accent"
           >
             <AnimatePresence mode="wait">

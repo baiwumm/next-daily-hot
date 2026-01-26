@@ -83,19 +83,13 @@
   --warning-foreground: oklch(21.03% 0.0059 49.53);
 }
 
-@layer base {
-  ::-webkit-scrollbar {
-    width: 5px;
+@layer components {
+  .toast {
+    @apply rounded-xl shadow-lg;
   }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--input);
-    border-radius: 5px;
-  }
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--input) transparent;
+  .toast__content {
+    @apply gap-2;
   }
 }
+
+

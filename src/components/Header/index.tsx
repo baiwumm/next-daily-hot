@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 14:56:37
+ * @LastEditTime: 2026-01-26 09:25:29
  * @Description: 顶部布局
  */
 'use client'
@@ -38,6 +38,7 @@ export default function Header() {
             aria-label="Github"
             variant="ghost"
             size="sm"
+            className="rounded-full"
             onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
             <GithubIcon />
           </Button>

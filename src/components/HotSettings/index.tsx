@@ -2,14 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-20 17:46:32
+ * @LastEditTime: 2026-01-26 10:03:57
  * @Description: 热榜显示
  */
 'use client';
-import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal } from "@heroui/react";
+import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal, toast } from "@heroui/react";
 import { GripVertical, Settings, SwatchBook } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable';
 import { HOT_ITEMS } from '@/enums';
@@ -36,6 +36,7 @@ function normalizeSortItems(source: HotKeys[], sortItems?: HotKeys[]) {
 }
 
 export default function HotSettings() {
+  const [isOpen, setIsOpen] = useState(false);
   const hiddenItems = useAppStore(state => state.hiddenItems);
   const setHiddenItems = useAppStore(state => state.setHiddenItems);
   const sortItems = useAppStore(state => state.sortItems);
@@ -86,6 +87,10 @@ export default function HotSettings() {
   const resetConfig = () => {
     setSortItems(HOT_ITEMS.values);
     setHiddenItems([]);
+    setIsOpen(false);
+    toast.success("操作成功！", {
+      timeout: 2000
+    })
   };
 
   /**
@@ -102,32 +107,24 @@ export default function HotSettings() {
   }, [safeSortItems]);
 
   return (
-    <Modal>
-      <Button
-        isIconOnly
-        aria-label="热点榜单设置"
-        variant="ghost"
-        size="sm"
-      >
+    <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm" className="rounded-full">
         <SwatchBook />
       </Button>
-
       <Modal.Backdrop isDismissable={false} isKeyboardDismissDisabled>
         <Modal.Container size="lg">
           <Modal.Dialog>
-            <Modal.CloseTrigger />
-
+            <Modal.CloseTrigger className='rounded-full' />
             <Modal.Header>
-              <Modal.Heading>
+              <Modal.Heading >
                 <div className="flex items-center gap-2">
-                  <Modal.Icon className="bg-default text-foreground">
+                  <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
                     <Settings className="size-5" />
                   </Modal.Icon>
                   <h1 className="font-bold">热榜设置</h1>
                 </div>
               </Modal.Heading>
             </Modal.Header>
-
             <Modal.Body>
               <CheckboxGroup
                 name="hot-items"
@@ -144,15 +141,13 @@ export default function HotSettings() {
                   {safeSortItems.map((value) => {
                     const raw = HOT_ITEMS.raw(value);
                     if (!raw) return null;
-
                     return (
                       <SortableItem key={value} value={value}>
                         <Checkbox
-                          isOnSurface
                           value={value}
                           className={cn(
-                            "group mt-0 gap-2 rounded-md border border-default bg-surface px-2 py-3 transition-all",
-                            "data-[selected=true]:bg-accent/10 hover:bg-accent/10",
+                            "group mt-0 gap-2 border border-default bg-surface px-2 py-3 transition-all rounded-xl",
+                            "data-[selected=true]:bg-accent-soft hover:bg-accent-soft",
                           )}
                         >
                           <Checkbox.Content className="flex flex-row items-center justify-between gap-1 w-full h-full">
@@ -169,7 +164,7 @@ export default function HotSettings() {
                               />
                               <Label className="flex-1 text-xs truncate">{raw.label}</Label>
                             </div>
-                            <Checkbox.Control className="size-4 rounded-sm before:rounded-sm shrink-0">
+                            <Checkbox.Control className="size-4 shrink-0">
                               <Checkbox.Indicator />
                             </Checkbox.Control>
                           </Checkbox.Content>

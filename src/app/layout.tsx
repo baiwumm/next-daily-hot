@@ -2,9 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-05 10:43:53
+ * @LastEditTime: 2026-01-26 09:34:13
  * @Description: 根布局文件
  */
+import { Toast } from '@heroui/react';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from "next";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
@@ -84,6 +85,7 @@ export default function RootLayout({
           {/* 回到顶部 */}
           <BackTop />
           <AppTimeTicker />
+          <Toast.Container placement='top' />
         </NextThemesProvider>
       </body>
     </html>

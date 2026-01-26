@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 17:37:38
+ * @LastEditTime: 2026-01-26 09:26:28
  * @Description: 热榜卡片
  */
 'use client';
@@ -84,7 +84,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
     }
   }, [isInView, run, data]);
   return (
-    <Card className="rounded-lg p-0 gap-0 shadow-md border border-default" ref={ref}>
+    <Card className="p-0 gap-0 shadow-md border border-default" ref={ref}>
       <Card.Header className="flex justify-between items-center flex-row p-3">
         <div className="flex items-center gap-2">
           <Image
@@ -151,7 +151,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
                 size="sm"
                 isDisabled={loading}
                 onPress={run}
-                className='text-muted'
+                className="text-muted rounded-full"
               >
                 <RefreshCw className={loading ? 'animate-spin' : ''} />
               </Button>

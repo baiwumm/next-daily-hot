@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 13:45:58
+ * @LastEditTime: 2026-01-26 09:29:39
  * @Description: 底部版权
  */
 'use client'
@@ -78,7 +78,7 @@ export default function Footer() {
           <div className="flex items-center justify-center gap-3 md:justify-start">
             <div className="flex items-center gap-2">
               <Image src='/logo.svg' width={20} height={20} alt="Logo" />
-              <span className="text-small font-bold">{process.env.NEXT_PUBLIC_APP_NAME}</span>
+              <span className="text-sm font-bold">{process.env.NEXT_PUBLIC_APP_NAME}</span>
             </div>
             <Separator className="h-4" orientation="vertical" />
             <Status variant="success">
@@ -108,6 +108,7 @@ export default function Footer() {
                 aria-label={label}
                 variant="ghost"
                 size="sm"
+                className="rounded-full"
                 onPress={() => window.open(url)}>
                 {icon}
               </Button>
@@ -115,8 +116,8 @@ export default function Footer() {
           </div>
           <div className="flex gap-2 items-center flex-col sm:flex-row">
             {IcpLinks.map(({ image, url, label }) => (
-              <Link key={url} href={url} target="_blank" underline="none" className="flex gap-1 items-center text-muted text-xs">
-                <Image src={image!} alt={label} width={16} height={16} />
+              <Link key={url} href={url} target="_blank" className="flex gap-1 items-center text-muted text-xs no-underline hover:text-accent transition-colors">
+                <Image src={image!} alt={label} width={14} height={14} />
                 <span>{label}</span>
               </Link>
             ))}
