@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.5.0](///compare/3.4.2...3.5.0) (2026-01-26)
+
+### Features
+
+* 新增 36kr - 24小时热榜 64d6a6e
+* 新增 爱范儿 - 快讯 ba71546
+* 新增 虎嗅 - 最新资讯 1e09849
+* 新增 知乎日报 - 推荐榜 b5e2088
+* 新增 IT之家- 热榜 14c2d42
+
+### Bug Fixes
+
+* 修复 Modal 不能关闭的问题 df3d77c
+
+### Performance Improvements
+
+* 细节调整 22fdd08
+
 ## [3.4.2](///compare/3.4.1...3.4.2) (2026-01-26)
 
 ### Features
