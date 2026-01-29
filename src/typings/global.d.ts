@@ -36,8 +36,8 @@ declare namespace App {
     value: typeof import('@/enums').HOT_ITEMS.valueType;
     label: string;
     tip: string;
-    prefix?: string; // 前缀
-    suffix?: string; // 后缀
+    prefix?: import('react').ReactNode; // 前缀
+    suffix?: import('react').ReactNode; // 后缀
   };
 
 }
