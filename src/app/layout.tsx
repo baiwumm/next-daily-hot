@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 09:34:13
+ * @LastEditTime: 2026-03-11 16:02:20
  * @Description: 根布局文件
  */
 import { Toast } from '@heroui/react';
@@ -85,7 +85,7 @@ export default function RootLayout({
           {/* 回到顶部 */}
           <BackTop />
           <AppTimeTicker />
-          <Toast.Container placement='top' />
+          <Toast.Provider placement='top' />
         </NextThemesProvider>
       </body>
     </html>
