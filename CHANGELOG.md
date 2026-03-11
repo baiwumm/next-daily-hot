@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.5.2](///compare/3.5.1...3.5.2) (2026-03-11)
+
+### Features
+
+* **Footer:** 修改友情链接 286784f
+
+### Performance Improvements
+
+* 禁止 Image 图片优化 7e36173
+* **OverflowDetector:** 优化页面主题切换卡顿的问题 68ff709
+
 ## [3.5.1](///compare/3.5.0...3.5.1) (2026-02-06)
 
 ### Performance Improvements
