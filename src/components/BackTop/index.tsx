@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:09:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 09:57:49
+ * @LastEditTime: 2026-03-11 16:09:50
  * @Description: 回到顶部
  */
 'use client';
@@ -93,7 +93,7 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -6, scale: 0.8 }}
                   transition={{ duration: 0.2 }}
-                  className="text-xs text-default-foreground"
+                  className="text-xs text-muted"
                 >
                   {scrollPercentage}
                 </motion.div>

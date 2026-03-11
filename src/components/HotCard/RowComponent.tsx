@@ -2,10 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-02-06 13:46:54
+ * @LastEditTime: 2026-03-11 16:08:54
  * @Description: 动态列表子项
  */
-import { cn } from '@heroui/react';
+import { cn, Description } from '@heroui/react';
 import { type ReactNode } from 'react';
 import { type RowComponentProps } from 'react-window';
 
@@ -14,9 +14,9 @@ import { HOT_ITEMS } from '@/enums';
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
 
 const renderHot = (value: string | number, prefix?: ReactNode, suffix?: ReactNode) => (
-  <div className="shrink-0 text-xs text-black/45 dark:text-white flex items-center gap-0.5">
+  <Description className="shrink-0 flex items-center gap-0.5">
     {prefix}{value}{suffix}
-  </div>
+  </Description>
 );
 
 const RowComponent = ({ index, style, data, value, prefix, suffix }: RowComponentProps<{

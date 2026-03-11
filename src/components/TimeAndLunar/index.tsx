@@ -2,9 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-05 09:13:12
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-12 14:49:43
+ * @LastEditTime: 2026-03-11 16:05:45
  * @Description: 日期时间
  */
+import { Description } from "@heroui/react";
 import dayjs from 'dayjs';
 import { Lunar } from 'lunar-typescript';
 import { type FC, memo, useEffect, useState } from 'react';
@@ -41,7 +42,7 @@ const TimeAndLunar: FC = memo(function TimeAndLunar() {
   return (
     <div className="justify-self-center hidden sm:flex flex-col gap-1 text-center">
       <div className="text-sm">{time || '正在加载时间...'}</div>
-      <span className="text-muted text-xs">{lunar}</span>
+      <Description>{lunar}</Description>
     </div>
   );
 });

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-02-06 13:50:57
+ * @LastEditTime: 2026-03-11 16:29:28
  * @Description: 热榜卡片
  */
 'use client';
@@ -10,6 +10,7 @@ import {
   Button,
   Card,
   Chip,
+  Description,
   ScrollShadow,
   Separator,
   Spinner,
@@ -117,9 +118,9 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
             </div>
           ) : null}
           {loading ? null : !data?.length ? (
-            <div className="flex h-full justify-center items-center text-xs text-slate-500/75 px-8 text-center leading-5">
+            <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
               抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
-            </div>
+            </Description>
           ) : (
             <BlurFade className="h-full">
               <List
@@ -136,9 +137,9 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       <Separator />
       <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
-          <div className="w-1/2 text-xs text-muted">
+          <Description className="w-1/2">
             {relativeText ? `${relativeText}更新` : '正在加载中...'}
-          </div>
+          </Description>
           <Separator orientation="vertical" className="flex-none" />
           <div className="flex w-1/2 justify-center">
             <Tooltip>

@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 09:25:29
+ * @LastEditTime: 2026-03-11 16:04:49
  * @Description: 顶部布局
  */
 'use client'
-import { Button } from "@heroui/react";
+import { Button, Description } from "@heroui/react";
 import Image from 'next/image';
 
 import HotSettings from '@/components/HotSettings'
@@ -23,7 +23,7 @@ export default function Header() {
           <Image src='/logo.svg' width={36} height={36} alt="Logo" />
           <div>
             <h1 className="font-black text-base">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
-            <h3 className="text-xs text-muted mt-0.5 hidden sm:block">{process.env.NEXT_PUBLIC_APP_DESC}</h3>
+            <Description className="mt-0.5 hidden sm:block">{process.env.NEXT_PUBLIC_APP_DESC}</Description>
           </div>
         </div>
         <TimeAndLunar />
