@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.3](///compare/3.5.2...3.5.3) (2026-03-16)
+
+### Performance Improvements
+
+* 删除 ProgressCircle 组件 16e0142
+* **BackTop:** 使用 Hero UI 的 ProgressCircle 组件，优化卡顿 a421747
+
 ## [3.5.2](///compare/3.5.1...3.5.2) (2026-03-11)
 
 ### Features
