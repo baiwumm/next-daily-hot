@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 09:29:39
+ * @LastEditTime: 2026-03-11 16:35:42
  * @Description: 底部版权
  */
 'use client'
-import { Button, Link, Separator } from "@heroui/react";
+import { Button, Description, Link, Separator, Tooltip } from "@heroui/react";
 import dayjs from 'dayjs';
-import { ChartColumn, House, IdCard, Mail } from 'lucide-react';
+import { ChartColumn, Globe, House, IdCard, Mail } from 'lucide-react';
 import Image from 'next/image';
 import { type ReactNode } from 'react';
 
@@ -38,7 +38,7 @@ export default function Footer() {
     {
       icon: <Mail />,
       url: `mailto:${pkg.author.email}`,
-      label: 'Email'
+      label: '邮箱'
     },
     {
       icon: <ApiIcon />,
@@ -46,14 +46,19 @@ export default function Footer() {
       label: 'Easy Api'
     },
     {
+      icon: <Globe />,
+      url: 'https://dream.baiwumm.com',
+      label: 'Dream Site'
+    },
+    {
       icon: <IdCard />,
       url: 'https://portfolio.baiwumm.com',
-      label: 'Portfolio'
+      label: '作品集'
     },
     {
       icon: <House />,
       url: pkg.author.url,
-      label: 'Blog'
+      label: '博客'
     }
   ]
 
@@ -86,7 +91,7 @@ export default function Footer() {
               <StatusLabel>服务状态正常</StatusLabel>
             </Status>
           </div>
-          <p className="text-center text-xs text-muted md:text-start mt-1">
+          <Description className="text-center md:text-start mt-1">
             &copy; {dayjs().format('YYYY')} {" "}
             <a
               href={pkg.author.url}
@@ -97,28 +102,33 @@ export default function Footer() {
               {process.env.NEXT_PUBLIC_COPYRIGHT}
             </a>
             . All rights reserved.
-          </p>
+          </Description>
         </div>
         <div className="flex flex-col items-center justify-center gap-1 md:order-2">
           <div className="flex gap-1 items-center">
             {SocialLinks.map(({ icon, url, label }) => (
-              <Button
-                key={url}
-                isIconOnly
-                aria-label={label}
-                variant="ghost"
-                size="sm"
-                className="rounded-full"
-                onPress={() => window.open(url)}>
-                {icon}
-              </Button>
+              <Tooltip key={url}>
+                <Button
+                  isIconOnly
+                  aria-label={label}
+                  variant="ghost"
+                  size="sm"
+                  className="rounded-full"
+                  onPress={() => window.open(url)}>
+                  {icon}
+                </Button>
+                <Tooltip.Content showArrow placement="top">
+                  <Tooltip.Arrow />
+                  {label}
+                </Tooltip.Content>
+              </Tooltip>
             ))}
           </div>
           <div className="flex gap-2 items-center flex-col sm:flex-row">
             {IcpLinks.map(({ image, url, label }) => (
-              <Link key={url} href={url} target="_blank" className="flex gap-1 items-center text-muted text-xs no-underline hover:text-accent transition-colors">
+              <Link key={url} href={url} target="_blank" className="flex gap-1 items-center no-underline">
                 <Image src={image!} alt={label} width={14} height={14} />
-                <span>{label}</span>
+                <Description className="hover:text-accent transition-colors">{label}</Description>
               </Link>
             ))}
           </div>

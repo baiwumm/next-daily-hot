@@ -1,6 +1,6 @@
 {
   "name": "next-daily-hot",
-  "version": "3.5.1",
+  "version": "3.5.3",
   "private": true,
   "author": {
     "name": "baiwumm",
@@ -19,10 +19,9 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@heroui/react": "3.0.0-beta.5",
-    "@heroui/styles": "3.0.0-beta.5",
+    "@heroui/react": "3.0.3",
+    "@heroui/styles": "3.0.3",
     "@next/third-parties": "^16.1.1",
-    "@radix-ui/react-progress": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@vercel/analytics": "^1.5.0",
     "ahooks": "^3.9.6",
