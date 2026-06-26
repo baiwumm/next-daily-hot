@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.5.4](https://github.com/baiwumm/next-daily-hot/compare/3.5.3...3.5.4) (2026-06-26)
+
+### 💄 Styles | 风格
+
+* **components:** 更新 Status 组件 variant 样式 ([1a35542](https://github.com/baiwumm/next-daily-hot/commit/1a35542c5822682c16543bdef9d8b3208153b8d4))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 更新 Hero UI 版本 ([9762d58](https://github.com/baiwumm/next-daily-hot/commit/9762d58a65c28b08cac2d6c88407277e626b19fb))
+* 更新包版本 ([bdcbada](https://github.com/baiwumm/next-daily-hot/commit/bdcbada07e46e30c3ff8df6ecb93c707942b585c))
+
 ## [3.5.3](///compare/3.5.2...3.5.3) (2026-03-16)
 
 ### Performance Improvements
