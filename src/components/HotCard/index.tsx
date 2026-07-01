@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-03-11 16:29:28
+ * @LastEditTime: 2026-07-01 15:56:44
  * @Description: 热榜卡片
  */
 'use client';
@@ -111,7 +111,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       </Card.Header>
       <Separator />
       <Card.Content className="relative pl-3 py-0">
-        <ScrollShadow className="h-[327px]" hideScrollBar visibility="bottom">
+        <ScrollShadow className="h-81.75" hideScrollBar visibility="bottom">
           {loading ? (
             <div className="absolute inset-0 w-full h-full flex justify-center items-center card--default/75 z-10">
               <Spinner color="current" />

@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 15:47:03
+ * @LastEditTime: 2026-07-01 15:55:34
  * @Description: 顶部布局
  */
 'use client'
-import { Button, Description } from "@heroui/react";
+import { Button, Description, Tooltip } from "@heroui/react";
 import { House } from 'lucide-react';
 import Image from 'next/image';
 
@@ -30,29 +30,59 @@ export default function Header() {
         <TimeAndLunar />
         <div className="flex gap-1 justify-self-end">
           {/* 热榜设置 */}
-          <HotSettings />
+          <Tooltip>
+            <Tooltip.Trigger aria-label="热榜设置">
+              <HotSettings />
+            </Tooltip.Trigger>
+            <Tooltip.Content showArrow>
+              <Tooltip.Arrow />
+              热榜设置
+            </Tooltip.Content>
+          </Tooltip>
+
           {/* 主题切换按钮 */}
-          <ThemeSwitcher />
+          <Tooltip>
+            <Tooltip.Trigger aria-label="主题切换">
+              <ThemeSwitcher />
+            </Tooltip.Trigger>
+            <Tooltip.Content showArrow>
+              <Tooltip.Arrow />
+              主题切换
+            </Tooltip.Content>
+          </Tooltip>
           {/* Github */}
-          <Button
-            isIconOnly
-            aria-label="Github"
-            variant="ghost"
-            size="sm"
-            className="rounded-full"
-            onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
-            <GithubIcon />
-          </Button>
+          <Tooltip>
+            <Button
+              isIconOnly
+              aria-label="Github"
+              variant="ghost"
+              size="sm"
+              className="rounded-full"
+              onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
+              <GithubIcon />
+            </Button>
+            <Tooltip.Content showArrow>
+              <Tooltip.Arrow />
+              Github
+            </Tooltip.Content>
+          </Tooltip>
           {/* 主页 */}
-          <Button
-            isIconOnly
-            aria-label="博客"
-            variant="ghost"
-            size="sm"
-            className="rounded-full"
-            onPress={() => window.open(pkg.author.url)}>
-            <House />
-          </Button>
+          <Tooltip>
+            <Button
+              isIconOnly
+              aria-label="个人主页"
+              variant="ghost"
+              size="sm"
+              className="rounded-full"
+              onPress={() => window.open(pkg.author.url)}>
+              <House />
+            </Button>
+            <Tooltip.Content showArrow>
+              <Tooltip.Arrow />
+              个人主页
+            </Tooltip.Content>
+          </Tooltip>
+
         </div>
       </div>
     </div>
