@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-03-11 16:04:49
+ * @LastEditTime: 2026-07-01 14:35:59
  * @Description: 顶部布局
  */
 'use client'
 import { Button, Description } from "@heroui/react";
 import Image from 'next/image';
-
+import { House } from 'lucide-react';
 import HotSettings from '@/components/HotSettings'
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import TimeAndLunar from '@/components/TimeAndLunar';
@@ -41,6 +41,16 @@ export default function Header() {
             className="rounded-full"
             onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
             <GithubIcon />
+          </Button>
+          {/* 主页 */}
+          <Button
+            isIconOnly
+            aria-label="博客"
+            variant="ghost"
+            size="sm"
+            className="rounded-full"
+            onPress={() => window.open(pkg.author.url)}>
+            <House />
           </Button>
         </div>
       </div>
