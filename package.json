@@ -48,7 +48,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.62.0",
-    "eslint": "^10.5.0",
+    "eslint": "^9.39.4",
     "eslint-config-next": "16.2.9",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "release-it": "^20.2.0",

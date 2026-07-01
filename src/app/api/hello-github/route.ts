@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-20 15:22:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-20 17:41:57
+ * @LastEditTime: 2026-07-01 15:46:49
  * @Description: HelloGithub - 精选
  */
 import { NextResponse } from 'next/server';
@@ -43,7 +43,7 @@ export async function GET() {
       return NextResponse.json(responseSuccess(result));
     }
     return NextResponse.json(responseSuccess());
-  } catch (err) {
+  } catch {
     return NextResponse.json(responseError);
   }
 }
