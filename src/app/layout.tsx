@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-03-11 16:02:20
+ * @LastEditTime: 2026-07-01 14:24:56
  * @Description: 根布局文件
  */
 import { Toast } from '@heroui/react';
@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 import "./globals.css";
-import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity, UmamiAnalytics } from '@/components/Analytics'
+import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity } from '@/components/Analytics'
 import AppTimeTicker from '@/components/AppTimeTicker';
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
@@ -63,8 +63,6 @@ export default function RootLayout({
       <head>
         <meta name="version" content={pkg.version} />
         <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
-        {/* Umami 统计 */}
-        <UmamiAnalytics />
         {/* 百度统计 */}
         <BaiDuAnalytics />
         {/* Google 统计 */}

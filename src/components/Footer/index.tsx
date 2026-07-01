@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-03-11 16:35:42
+ * @LastEditTime: 2026-07-01 14:24:43
  * @Description: 底部版权
  */
 'use client'
@@ -30,11 +30,6 @@ type Social = {
 export default function Footer() {
   // 社交图标
   const SocialLinks: Social[] = [
-    {
-      icon: <ChartColumn />,
-      url: 'https://um.baiwumm.com/share/MKEsllEeHKYZJl0Q',
-      label: 'Umami'
-    },
     {
       icon: <Mail />,
       url: `mailto:${pkg.author.email}`,
