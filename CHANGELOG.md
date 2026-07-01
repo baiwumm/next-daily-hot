@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.5.6](https://github.com/baiwumm/next-daily-hot/compare/3.5.5...3.5.6) (2026-07-01)
+
+### ✨ Features | 新功能
+
+* 更新 demo 图 ([90195c9](https://github.com/baiwumm/next-daily-hot/commit/90195c9263757314e97f83e2e29a26025dbc541c))
+* **Header:** 添加 Tooltip 显示 ([9d615e5](https://github.com/baiwumm/next-daily-hot/commit/9d615e512ed8cb8f0b63e69b3001a4bd6eacaf24))
+
+### 💄 Styles | 风格
+
+* 优化 UI 主题样式 ([6faa4fa](https://github.com/baiwumm/next-daily-hot/commit/6faa4fae27bd4f4287f592332b808346c001fa1a))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 降低 eslint 到 v9 版本，优化 lint 语法 ([d02b5bf](https://github.com/baiwumm/next-daily-hot/commit/d02b5bfb48931f270926f20a3cd1ccbe75f0ee80))
+
 ## [3.5.5](https://github.com/baiwumm/next-daily-hot/compare/3.5.4...3.5.5) (2026-07-01)
 
 ### ✨ Features | 新功能
