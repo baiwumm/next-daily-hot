@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.5](https://github.com/baiwumm/next-daily-hot/compare/3.5.4...3.5.5) (2026-07-01)
+
+### ✨ Features | 新功能
+
+* 去除社交信息，优化底部版本 ([5fd6889](https://github.com/baiwumm/next-daily-hot/commit/5fd6889cd8ca200b916570133e272fe7f636cf8c))
+* 删除 Umami 统计代码 ([aad3f86](https://github.com/baiwumm/next-daily-hot/commit/aad3f869c06e4b9e519d3e55f67c7059b3ba4e1a))
+
 ## [3.5.4](https://github.com/baiwumm/next-daily-hot/compare/3.5.3...3.5.4) (2026-06-26)
 
 ### 💄 Styles | 风格
