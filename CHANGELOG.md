@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.1](https://github.com/baiwumm/next-daily-hot/compare/3.6.0...3.6.1) (2026-07-03)
+
+### ✨ Features | 新功能
+
+* **public:** 整理图片文件 ([1dd7889](https://github.com/baiwumm/next-daily-hot/commit/1dd78894101c4fb187b792e4ef9e6145da7d020a))
+
 ## [3.6.0](https://github.com/baiwumm/next-daily-hot/compare/3.5.6...3.6.0) (2026-07-03)
 
 ### ✨ Features | 新功能
