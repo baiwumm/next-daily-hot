@@ -63,13 +63,11 @@ export const formatNumber = (value: number | string): number | string => {
     return value;
   }
 
-  // 5️⃣ 小于 1 万，直接返回数字
-  if (num < 10000) {
-    return num;
-  }
-
-  // 6️⃣ 大于等于 1 万，格式化成「万」
-  return (num / 10000).toFixed(2) + '万';
+  return new Intl.NumberFormat('zh-CN', {
+    notation: 'compact',
+    compactDisplay: 'short',
+    maximumFractionDigits: 2,
+  }).format(num);
 };
 
 /**

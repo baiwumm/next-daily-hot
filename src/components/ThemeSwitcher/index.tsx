@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:10:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 09:25:12
+ * @LastEditTime: 2026-07-03 14:49:47
  * @Description: 主题切换
  */
 'use client';
+import { Moon, Sun } from '@gravity-ui/icons';
 import { Button } from "@heroui/react";
-import { Moon, Sun } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useTheme } from "next-themes";
 import { type FC, useEffect, useState } from 'react';
@@ -58,7 +58,7 @@ const ThemeSwitcher: FC = () => {
     document.documentElement.animate(
       { clipPath: ['inset(0 100% 0 0)', 'inset(0 0 0 0)'] },
       {
-        duration: 700,
+        duration: 300,
         easing: 'ease-in-out',
         pseudoElement: '::view-transition-new(root)',
       }
@@ -74,8 +74,8 @@ const ThemeSwitcher: FC = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="text-neutral-800 dark:text-neutral-200 flex justify-center items-center"
+              transition={{ duration: 0.2 }}
+              className="flex justify-center items-center"
             >
               <Sun />
             </motion.div>
@@ -85,8 +85,8 @@ const ThemeSwitcher: FC = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="text-neutral-800 dark:text-neutral-200 flex justify-center items-center"
+              transition={{ duration: 0.2 }}
+              className="flex justify-center items-center"
             >
               <Moon />
             </motion.div>

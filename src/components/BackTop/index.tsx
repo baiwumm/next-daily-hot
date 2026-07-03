@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:09:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-03-16 15:41:32
+ * @LastEditTime: 2026-07-03 14:46:26
  * @Description: 回到顶部
  */
 'use client';
 
+import { ArrowUp } from '@gravity-ui/icons';
 import { ProgressCircle } from '@heroui/react';
-import { ArrowUp } from 'lucide-react';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { type FC, useRef, useState } from 'react';
 
@@ -95,7 +95,7 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
                     exit={{ opacity: 0, y: 6, scale: 0.8 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ArrowUp className="text-accent" size={16} />
+                    <ArrowUp className="text-accent" width={16} />
                   </motion.div>
                 ) : (
                   <motion.div

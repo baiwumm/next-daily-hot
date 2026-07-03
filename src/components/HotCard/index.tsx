@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:28:52
+ * @LastEditTime: 2026-07-03 14:43:38
  * @Description: 热榜卡片
  */
 'use client';
+import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui/icons';
 import {
   Button,
   Card,
@@ -20,7 +21,6 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
-import { CircleX, RefreshCw } from 'lucide-react';
 import { motion, useInView } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
@@ -32,7 +32,6 @@ import 'dayjs/locale/zh-cn';
 import BlurFade from '@/components/BlurFade';
 import SkeletonCard from '@/components/SkeletonCard'
 import { RESPONSE } from '@/enums';
-import { CircleCheckIcon } from '@/lib/icons';
 import { useAppStore } from '@/store/useAppStore';
 
 dayjs.extend(utc);
@@ -102,9 +101,9 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
         >
           <Chip color={data?.length ? 'success' : 'danger'} variant="soft" size="sm" className="px-2 py-0.5">
             {data?.length ? (
-              <CircleCheckIcon size={12} />
+              <CircleCheckFill width={12} />
             ) : (
-              <CircleX size={12} />
+              <CircleXmarkFill width={12} />
             )}
             {tip}
           </Chip>
@@ -150,7 +149,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
                 onPress={run}
                 className="text-muted rounded-full"
               >
-                <RefreshCw className={loading ? 'animate-spin' : ''} />
+                <ArrowsRotateRight className={loading ? 'animate-spin' : ''} />
               </Button>
               <Tooltip.Content showArrow placement="bottom">
                 <Tooltip.Arrow />

@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:28:24
+ * @LastEditTime: 2026-07-03 14:56:30
  * @Description: 热榜显示
  */
 'use client';
+import { BucketPaint, Gear, Grip } from '@gravity-ui/icons';
 import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal, toast } from "@heroui/react";
-import { GripVertical, Settings, SwatchBook } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useMemo } from 'react';
 
@@ -107,7 +107,7 @@ export default function HotSettings() {
   return (
     <Modal>
       <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm" className="rounded-full">
-        <SwatchBook />
+        <BucketPaint />
       </Button>
       <Modal.Backdrop isDismissable={false} isKeyboardDismissDisabled>
         <Modal.Container size="lg">
@@ -117,7 +117,7 @@ export default function HotSettings() {
               <Modal.Heading >
                 <div className="flex items-center gap-2">
                   <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                    <Settings className="size-5" />
+                    <Gear />
                   </Modal.Icon>
                   <h1 className="font-bold">热榜设置</h1>
                 </div>
@@ -151,7 +151,7 @@ export default function HotSettings() {
                           <Checkbox.Content className="flex flex-row items-center justify-between gap-1 w-full h-full">
                             <div className="flex items-center gap-1 min-w-0">
                               <SortableItemHandle className="text-muted-foreground shrink-0">
-                                <GripVertical className="h-3.5 w-3.5" />
+                                <Grip width={16} />
                               </SortableItemHandle>
                               <Image
                                 src={`/${value}.svg`}

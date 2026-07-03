@@ -1,5 +1,5 @@
+import { Star } from '@gravity-ui/icons';
 import { Enum } from 'enum-plus';
-import { Star } from 'lucide-react';
 
 /**
  * @description: 请求状态
@@ -33,7 +33,7 @@ export const HOT_ITEMS = Enum({
   QQ: { value: 'qq', label: '腾讯新闻', tip: '热点榜' },
   HUPU: { value: 'hupu', label: '虎扑', tip: '步行街热帖', suffix: '亮' },
   JUEJIN: { value: 'juejin', label: '稀土掘金', tip: '热榜' },
-  GITHUB_TRENDING: { value: 'github-trending', label: 'Github', tip: '热门仓库', suffix: <Star size={12} /> },
+  GITHUB_TRENDING: { value: 'github-trending', label: 'Github', tip: '热门仓库', suffix: <Star width={12} /> },
   HELLO_GITHUB: { value: 'hello-github', label: 'HelloGithub', tip: '精选' },
   CSDN: { value: 'csdn', label: 'CSDN', tip: '热榜' },
   NETEASE: { value: 'netease', label: '网易新闻', tip: '热榜' },

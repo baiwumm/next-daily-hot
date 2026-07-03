@@ -54,7 +54,6 @@
   /* Font Family */
   /* Make sure to load Inter font in your app */
   --font-sans: 'Maple Mono CN', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --hot-label-bg: rgba(0, 0, 0, 0.05);
 }
 
 .dark,
@@ -92,11 +91,9 @@
   --surface-tertiary-foreground: oklch(99.11% 0.0015 30.44);
   --warning: oklch(82.03% 0.1392 49.53);
   --warning-foreground: oklch(21.03% 0.0059 49.53);
-  --hot-label-bg: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
-  --color-hot-label-bg: var(--hot-label-bg);
 }
 
 @layer components {

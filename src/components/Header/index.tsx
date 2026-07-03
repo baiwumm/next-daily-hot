@@ -2,18 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:07:10
+ * @LastEditTime: 2026-07-03 14:57:47
  * @Description: 顶部布局
  */
 'use client'
+import { HouseFill, LogoGithub } from '@gravity-ui/icons';
 import { Button, Description, Tooltip } from "@heroui/react";
-import { House } from 'lucide-react';
 import Image from 'next/image';
 
 import HotSettings from '@/components/HotSettings'
 import ThemeSwitcher from '@/components/ThemeSwitcher';
 import TimeAndLunar from '@/components/TimeAndLunar';
-import { GithubIcon } from '@/lib/icons';
 import pkg from '#/package.json'
 
 export default function Header() {
@@ -58,7 +57,7 @@ export default function Header() {
             size="sm"
             className="rounded-full"
             onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
-            <GithubIcon />
+            <LogoGithub />
           </Button>
           <Tooltip.Content showArrow>
             <Tooltip.Arrow />
@@ -74,7 +73,7 @@ export default function Header() {
             size="sm"
             className="rounded-full"
             onPress={() => window.open(pkg.author.url)}>
-            <House />
+            <HouseFill />
           </Button>
           <Tooltip.Content showArrow>
             <Tooltip.Arrow />
