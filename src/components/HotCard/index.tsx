@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:43:38
+ * @LastEditTime: 2026-07-03 18:00:49
  * @Description: 热榜卡片
  */
 'use client';
@@ -14,6 +14,7 @@ import {
   Description,
   ScrollShadow,
   Separator,
+  Spinner,
   Tooltip
 } from '@heroui/react';
 import { useRequest } from 'ahooks';
@@ -24,9 +25,8 @@ import utc from 'dayjs/plugin/utc';
 import { motion, useInView } from 'motion/react';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
-import { List } from 'react-window';
 
-import RowComponent from './RowComponent';
+import HotListVirtual from './HotListVirtual'
 
 import 'dayjs/locale/zh-cn';
 import BlurFade from '@/components/BlurFade';
@@ -100,10 +100,12 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
           <Chip color={data?.length ? 'success' : 'danger'} variant="soft" size="sm" className="px-2 py-0.5">
-            {data?.length ? (
-              <CircleCheckFill width={12} />
+            {loading ? (
+              <Spinner size='sm' />
+            ) : data?.length ? (
+              <CircleCheckFill width={14} />
             ) : (
-              <CircleXmarkFill width={12} />
+              <CircleXmarkFill width={14} />
             )}
             {tip}
           </Chip>
@@ -121,13 +123,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
             </Description>
           ) : (
             <BlurFade className="h-full pl-3">
-              <List
-                rowComponent={RowComponent}
-                rowCount={(data || []).length}
-                rowHeight={41}
-                rowProps={{ data, value, prefix, suffix }}
-                className="overflow-x-hidden"
-              />
+              <HotListVirtual data={data} value={value} prefix={prefix} suffix={suffix} />
             </BlurFade>
           )}
         </ScrollShadow>

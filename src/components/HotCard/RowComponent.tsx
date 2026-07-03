@@ -2,18 +2,18 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:41:11
+ * @LastEditTime: 2026-07-03 17:52:57
  * @Description: 动态列表子项
  */
 import { Description } from '@heroui/react';
 import { type ReactNode, useMemo } from 'react';
-import { type RowComponentProps } from 'react-window';
 
 import OverflowDetector from '@/components/OverflowDetector';
 import { HOT_ITEMS } from '@/enums';
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
 
 interface RowData {
+  index: number;
   data: App.HotListItem[];
   value: typeof HOT_ITEMS.valueType;
   prefix?: ReactNode;
@@ -34,7 +34,7 @@ const HotDisplay = ({
   </Description>
 );
 
-const RowComponent = ({ index, style, data, value, prefix, suffix }: RowComponentProps<RowData>) => {
+const RowComponent = ({ index, data, value, prefix, suffix }: RowData) => {
   const item = useMemo(() => data[index], [data, index]);
   const { label } = item;
 
@@ -65,10 +65,7 @@ const RowComponent = ({ index, style, data, value, prefix, suffix }: RowComponen
   }, [item.hot, item.tip, prefix, suffix]);
 
   return (
-    <div
-      style={style}
-      className="flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default"
-    >
+    <div className="flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default">
       <div className="flex items-center gap-2 min-w-0 flex-1">
         <div
           className="text-xs size-6 rounded shrink-0 flex items-center justify-center"
