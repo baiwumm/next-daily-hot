@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.6.0](https://github.com/baiwumm/next-daily-hot/compare/3.5.6...3.6.0) (2026-07-03)
+
+### ✨ Features | 新功能
+
+* 使用 @gravity-ui/icons 代替 lucide-react ([adaceb3](https://github.com/baiwumm/next-daily-hot/commit/adaceb38aedd879ee69516918c2a720645774297))
+* **HotCard:** 使用 @tanstack/react-virtual 代替 react-window 实现虚拟列表 ([657377b](https://github.com/baiwumm/next-daily-hot/commit/657377b3a937f62495f198890d65085a3df6e65e))
+* **TimeAndLunar:** 时间显示改用 NumberFlow 滚动，优化交互 ([23ef35e](https://github.com/baiwumm/next-daily-hot/commit/23ef35e0e553ac2003ee0d505c2bc19c34d34c5b))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决 github-trending tip 没数据的问题 ([8f44447](https://github.com/baiwumm/next-daily-hot/commit/8f4444796b3e6c0fed43036c7661431fe1591298))
+
+### 💄 Styles | 风格
+
+* 优化顶部和底部在小屏幕下的样式 ([241d3d7](https://github.com/baiwumm/next-daily-hot/commit/241d3d7eb7e42d26b859e56e78076c1fa7d6cad4))
+* 优化首页背景和样式 ([b58ad61](https://github.com/baiwumm/next-daily-hot/commit/b58ad61dfca1ab53438f9474f8d9b916194c853e))
+* Logo 给个圆角样式 ([b967952](https://github.com/baiwumm/next-daily-hot/commit/b9679526ae291291750ad5ac13a501655711c1f7))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 删除没用的代码和依赖 ([15a4424](https://github.com/baiwumm/next-daily-hot/commit/15a442442cec325850ecc66db940c2bdbcdde179))
+* 优化卡片加载样式 ([2535489](https://github.com/baiwumm/next-daily-hot/commit/253548967c232cf8a1b3e781b95d13d81ac0eefe))
+* **Footer:** 使用 Chip 代替 Status 组件 ([380ef7a](https://github.com/baiwumm/next-daily-hot/commit/380ef7a11f0abd6838124a7a88bfc48950d24db2))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 新增 @number-flow/react 包 ([a5caa1f](https://github.com/baiwumm/next-daily-hot/commit/a5caa1f048bd45aed24c03b2b59ae969cdcdd009))
+
 ## [3.5.6](https://github.com/baiwumm/next-daily-hot/compare/3.5.5...3.5.6) (2026-07-01)
 
 ### ✨ Features | 新功能
