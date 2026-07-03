@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 15:56:44
+ * @LastEditTime: 2026-07-03 14:05:58
  * @Description: 热榜卡片
  */
 'use client';
@@ -13,7 +13,6 @@ import {
   Description,
   ScrollShadow,
   Separator,
-  Spinner,
   Tooltip
 } from '@heroui/react';
 import { useRequest } from 'ahooks';
@@ -31,6 +30,7 @@ import RowComponent from './RowComponent';
 
 import 'dayjs/locale/zh-cn';
 import BlurFade from '@/components/BlurFade';
+import SkeletonCard from '@/components/SkeletonCard'
 import { RESPONSE } from '@/enums';
 import { CircleCheckIcon } from '@/lib/icons';
 import { useAppStore } from '@/store/useAppStore';
@@ -82,7 +82,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
     }
   }, [isInView, run]);
   return (
-    <Card className="p-0 gap-0 shadow-md border border-default" ref={ref}>
+    <Card className="p-0 gap-0" ref={ref}>
       <Card.Header className="flex justify-between items-center flex-row p-3">
         <div className="flex items-center gap-2">
           <Image
@@ -110,25 +110,23 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
         </motion.div>
       </Card.Header>
       <Separator />
-      <Card.Content className="relative pl-3 py-0">
-        <ScrollShadow className="h-81.75" hideScrollBar visibility="bottom">
+      <Card.Content className="relative py-0">
+        <ScrollShadow className="h-81.75 " hideScrollBar visibility="bottom">
           {loading ? (
-            <div className="absolute inset-0 w-full h-full flex justify-center items-center card--default/75 z-10">
-              <Spinner color="current" />
-            </div>
+            <SkeletonCard />
           ) : null}
           {loading ? null : !data?.length ? (
             <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
               抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
             </Description>
           ) : (
-            <BlurFade className="h-full">
+            <BlurFade className="h-full pl-3">
               <List
                 rowComponent={RowComponent}
                 rowCount={(data || []).length}
                 rowHeight={41}
                 rowProps={{ data, value, prefix, suffix }}
-                className="overflow-x-hidden pr-1"
+                className="overflow-x-hidden"
               />
             </BlurFade>
           )}
