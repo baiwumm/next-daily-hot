@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-20 15:22:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 15:46:42
+ * @LastEditTime: 2026-07-03 15:03:59
  * @Description: Github - 热门仓库
  */
 
@@ -53,7 +53,7 @@ export async function GET() {
         desc: $repo.find('p.my-1').text().trim() || '',
         tip: formatStars(parseInt(
           $repo
-            .find(".mr-3 svg[aria-label='star']")
+            .find(".tmp-mr-3 svg[aria-label='star']")
             .first()
             .parent()
             .text()
