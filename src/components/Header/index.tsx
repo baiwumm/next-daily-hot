@@ -18,8 +18,8 @@ import pkg from '#/package.json'
 
 export default function Header() {
   return (
-    <div className="sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-3 items-center" id="header">
-      <div className="flex gap-2 justify-self-start">
+    <div className="sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center" id="header">
+      <div className="flex gap-2 items-center justify-self-start">
         <Image src='/logo.svg' width={36} height={36} alt="Logo" />
         <div>
           <h1 className="font-black text-base">{process.env.NEXT_PUBLIC_APP_NAME}</h1>

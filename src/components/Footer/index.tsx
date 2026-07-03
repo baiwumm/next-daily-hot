@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:09:18
+ * @LastEditTime: 2026-07-03 14:20:42
  * @Description: 底部版权
  */
 'use client';
@@ -36,8 +36,8 @@ export default function Footer() {
     },
   ];
   return (
-    <footer className="mx-auto w-full container! px-6 py-4 flex md:items-center md:justify-between gap-2 flex-col md:flex-row" id="footer">
-      <div className="flex items-center justify-center gap-3 md:justify-start">
+    <footer className="mx-auto w-full container! px-6 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-2" id="footer">
+      <div className="flex items-center gap-3 justify-self-center sm:justify-self-start">
         <div className="flex items-center gap-2">
           <Image src="/logo.svg" width={20} height={20} alt="Logo" />
           <span className="text-sm font-bold">
@@ -50,7 +50,7 @@ export default function Footer() {
           <StatusLabel>服务状态正常</StatusLabel>
         </Status>
       </div>
-      <Description className="text-center md:text-start">
+      <Description className="justify-self-center">
         &copy; {dayjs().format('YYYY')}{' '}
         <a
           href={pkg.author.url}
@@ -62,7 +62,7 @@ export default function Footer() {
         </a>
         . All rights reserved.
       </Description>
-      <div className="flex gap-2 items-center flex-col sm:flex-row">
+      <div className="flex gap-2 items-center flex-col sm:flex-row justify-self-center sm:justify-self-end">
         {IcpLinks.map(({ image, url, label }) => (
           <Link
             key={url}
