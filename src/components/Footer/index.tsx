@@ -2,16 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:20:42
+ * @LastEditTime: 2026-07-03 17:36:12
  * @Description: 底部版权
  */
 'use client';
-import { Description, Link, Separator } from '@heroui/react';
+import { Chip, cn, Description, Link, Separator } from '@heroui/react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import { type ReactNode } from 'react';
 
-import { Status, StatusIndicator, StatusLabel } from '@/components/Status';
 import pkg from '#/package.json';
 
 type Social = {
@@ -45,10 +44,17 @@ export default function Footer() {
           </span>
         </div>
         <Separator className="h-4 self-center" orientation="vertical" />
-        <Status variant="success">
-          <StatusIndicator />
-          <StatusLabel>服务状态正常</StatusLabel>
-        </Status>
+        <Chip variant='soft' color='success' size='sm' className="px-2 py-0.5 text-[10px]">
+          <div
+            data-slot="status-indicator"
+            className={cn(
+              "relative flex size-2 shrink-0 rounded-full bg-success",
+              "before:absolute before:inset-0 before:animate-ping before:rounded-full before:bg-inherit",
+              "after:absolute after:inset-0.5 after:rounded-full after:bg-inherit"
+            )}
+          />
+          <Chip.Label>服务状态正常</Chip.Label>
+        </Chip>
       </div>
       <Description className="justify-self-center">
         &copy; {dayjs().format('YYYY')}{' '}
