@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:56:30
+ * @LastEditTime: 2026-07-03 18:09:45
  * @Description: 热榜显示
  */
 'use client';
@@ -154,7 +154,7 @@ export default function HotSettings() {
                                 <Grip width={16} />
                               </SortableItemHandle>
                               <Image
-                                src={`/${value}.svg`}
+                                src={`/images/${value}.svg`}
                                 alt={raw.label}
                                 width={16}
                                 height={16}

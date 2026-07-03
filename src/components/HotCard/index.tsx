@@ -85,7 +85,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       <Card.Header className="flex justify-between items-center flex-row p-3">
         <div className="flex items-center gap-2">
           <Image
-            src={`/${value}.svg`}
+            src={`/images/${value}.svg`}
             alt={`${label}${tip}`}
             width={24}
             height={24}
