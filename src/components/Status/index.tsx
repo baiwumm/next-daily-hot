@@ -6,7 +6,7 @@ import type * as React from "react";
 interface DivProps extends React.ComponentProps<"div"> { }
 
 const statusVariants = cva(
-  "inline-flex w-fit shrink-0 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full border px-2.5 py-1 font-medium text-xs transition-colors",
+  "inline-flex w-fit shrink-0 items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-2.5 py-1.5 font-medium text-[10px] transition-colors",
   {
     variants: {
       variant: {

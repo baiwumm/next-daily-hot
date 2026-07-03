@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 14:44:25
+ * @LastEditTime: 2026-07-03 14:09:18
  * @Description: 底部版权
  */
 'use client';
@@ -36,51 +36,46 @@ export default function Footer() {
     },
   ];
   return (
-    <footer className="flex w-full flex-col" id="footer">
-      <Separator />
-      <div className="mx-auto w-full container! px-6 py-2 flex md:items-center md:justify-between gap-2 flex-col md:flex-row">
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center justify-center gap-3 md:justify-start">
-            <div className="flex items-center gap-2">
-              <Image src="/logo.svg" width={20} height={20} alt="Logo" />
-              <span className="text-sm font-bold">
-                {process.env.NEXT_PUBLIC_APP_NAME}
-              </span>
-            </div>
-            <Separator className="h-4" orientation="vertical" />
-            <Status variant="success">
-              <StatusIndicator />
-              <StatusLabel>服务状态正常</StatusLabel>
-            </Status>
-          </div>
-          <Description className="text-center md:text-start">
-            &copy; {dayjs().format('YYYY')}{' '}
-            <a
-              href={pkg.author.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-accent transition-colors"
-            >
-              {process.env.NEXT_PUBLIC_COPYRIGHT}
-            </a>
-            . All rights reserved.
-          </Description>
+    <footer className="mx-auto w-full container! px-6 py-4 flex md:items-center md:justify-between gap-2 flex-col md:flex-row" id="footer">
+      <div className="flex items-center justify-center gap-3 md:justify-start">
+        <div className="flex items-center gap-2">
+          <Image src="/logo.svg" width={20} height={20} alt="Logo" />
+          <span className="text-sm font-bold">
+            {process.env.NEXT_PUBLIC_APP_NAME}
+          </span>
         </div>
-        <div className="flex gap-2 items-center flex-col sm:flex-row">
-          {IcpLinks.map(({ image, url, label }) => (
-            <Link
-              key={url}
-              href={url}
-              target="_blank"
-              className="flex gap-1 items-center no-underline"
-            >
-              <Image src={image!} alt={label} width={14} height={14} />
-              <Description className="hover:text-accent transition-colors">
-                {label}
-              </Description>
-            </Link>
-          ))}
-        </div>
+        <Separator className="h-4 self-center" orientation="vertical" />
+        <Status variant="success">
+          <StatusIndicator />
+          <StatusLabel>服务状态正常</StatusLabel>
+        </Status>
+      </div>
+      <Description className="text-center md:text-start">
+        &copy; {dayjs().format('YYYY')}{' '}
+        <a
+          href={pkg.author.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-accent transition-colors"
+        >
+          {process.env.NEXT_PUBLIC_COPYRIGHT}
+        </a>
+        . All rights reserved.
+      </Description>
+      <div className="flex gap-2 items-center flex-col sm:flex-row">
+        {IcpLinks.map(({ image, url, label }) => (
+          <Link
+            key={url}
+            href={url}
+            target="_blank"
+            className="flex gap-1 items-center no-underline"
+          >
+            <Image src={image!} alt={label} width={14} height={14} />
+            <Description className="hover:text-accent transition-colors">
+              {label}
+            </Description>
+          </Link>
+        ))}
       </div>
     </footer>
   );
