@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:05:58
+ * @LastEditTime: 2026-07-03 14:28:52
  * @Description: 热榜卡片
  */
 'use client';
@@ -90,6 +90,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
             alt={`${label}${tip}`}
             width={24}
             height={24}
+            className="rounded-md shrink-0"
           />
           <div className="font-bold text-sm">{label}</div>
         </div>

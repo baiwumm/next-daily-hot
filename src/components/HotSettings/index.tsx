@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 14:33:28
+ * @LastEditTime: 2026-07-03 14:28:24
  * @Description: 热榜显示
  */
 'use client';
@@ -158,7 +158,7 @@ export default function HotSettings() {
                                 alt={raw.label}
                                 width={16}
                                 height={16}
-                                className="shrink-0"
+                                className="rounded-md shrink-0"
                               />
                               <Label className="flex-1 text-xs truncate">{raw.label}</Label>
                             </div>
