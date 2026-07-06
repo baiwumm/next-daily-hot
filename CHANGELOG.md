@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.3](https://github.com/baiwumm/next-daily-hot/compare/3.6.2...3.6.3) (2026-07-06)
+
+### ✨ Features | 新功能
+
+* update README.md ([f378062](https://github.com/baiwumm/next-daily-hot/commit/f37806277ce294d435ef314bedc410a64d2abfd0))
+
 ## [3.6.2](https://github.com/baiwumm/next-daily-hot/compare/3.6.1...3.6.2) (2026-07-06)
 
 ### 💄 Styles | 风格
