@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 18:00:49
+ * @LastEditTime: 2026-07-06 11:15:51
  * @Description: 热榜卡片
  */
 'use client';
@@ -143,7 +143,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
                 size="sm"
                 isDisabled={loading}
                 onPress={run}
-                className="text-muted rounded-full"
+                className="text-muted"
               >
                 <ArrowsRotateRight className={loading ? 'animate-spin' : ''} />
               </Button>

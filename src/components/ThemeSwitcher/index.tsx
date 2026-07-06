@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:10:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:49:47
+ * @LastEditTime: 2026-07-06 11:16:37
  * @Description: 主题切换
  */
 'use client';
@@ -66,7 +66,7 @@ const ThemeSwitcher: FC = () => {
   }
   return (
     <>
-      <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" size="sm" onPress={toggleDark} className="rounded-full">
+      <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" size="sm" onPress={toggleDark}>
         <AnimatePresence mode="wait" initial={false}>
           {isLight ? (
             <motion.div

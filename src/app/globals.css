@@ -93,18 +93,6 @@
   --warning-foreground: oklch(21.03% 0.0059 49.53);
 }
 
-@theme inline {
-}
-
-@layer components {
-  .toast {
-    @apply rounded-xl shadow-lg;
-  }
-  .toast__content {
-    @apply gap-2;
-  }
-}
-
 @layer base {
   body {
     background-color: var(--background);

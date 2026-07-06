@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 18:09:45
+ * @LastEditTime: 2026-07-06 11:16:23
  * @Description: 热榜显示
  */
 'use client';
@@ -106,13 +106,13 @@ export default function HotSettings() {
 
   return (
     <Modal>
-      <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm" className="rounded-full">
+      <Button isIconOnly aria-label="热点榜单设置" variant="ghost" size="sm">
         <BucketPaint />
       </Button>
       <Modal.Backdrop isDismissable={false} isKeyboardDismissDisabled>
         <Modal.Container size="lg">
           <Modal.Dialog>
-            <Modal.CloseTrigger className='rounded-full' />
+            <Modal.CloseTrigger />
             <Modal.Header>
               <Modal.Heading >
                 <div className="flex items-center gap-2">
