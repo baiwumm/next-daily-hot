@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.2](https://github.com/baiwumm/next-daily-hot/compare/3.6.1...3.6.2) (2026-07-06)
+
+### 💄 Styles | 风格
+
+* 去除重复的样式 ([48594cf](https://github.com/baiwumm/next-daily-hot/commit/48594cf343e7cb6f083002cace8be3260d650462))
+
 ## [3.6.1](https://github.com/baiwumm/next-daily-hot/compare/3.6.0...3.6.1) (2026-07-03)
 
 ### ✨ Features | 新功能
