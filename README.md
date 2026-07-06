@@ -85,56 +85,56 @@
 ### 📱 社交媒体
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
-| <img src="./public/weibo.svg" width="20"/> 微博 | 热搜榜 | ✅ | [weibo](./src/app/api/weibo/route.ts) |
-| <img src="./public/xiaohongshu.svg" width="20"/> 小红书 | 实时热榜 | ✅ | [kuaishou](./src/app/api/xiaohongshu/route.ts) |
-| <img src="./public/douyin.svg" width="20"/> 抖音 | 热点榜 | ✅ | [douyin](./src/app/api/douyin/route.ts) |
-| <img src="./public/kuaishou.svg" width="20"/> 快手 | 热榜 | ✅ | [kuaishou](./src/app/api/kuaishou/route.ts) |
+| <img src="./public/images/weibo.svg" width="20"/> 微博 | 热搜榜 | ✅ | [weibo](./src/app/api/weibo/route.ts) |
+| <img src="./public/images/xiaohongshu.svg" width="20"/> 小红书 | 实时热榜 | ✅ | [kuaishou](./src/app/api/xiaohongshu/route.ts) |
+| <img src="./public/images/douyin.svg" width="20"/> 抖音 | 热点榜 | ✅ | [douyin](./src/app/api/douyin/route.ts) |
+| <img src="./public/images/kuaishou.svg" width="20"/> 快手 | 热榜 | ✅ | [kuaishou](./src/app/api/kuaishou/route.ts) |
 
 ### 🎬 娱乐内容
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
-| <img src="./public/bilibili.svg" width="20"/> 哔哩哔哩 | 热门榜 | ✅ | [bilibili](./src/app/api/bilibili/route.ts) |
-| <img src="./public/douban-movic.svg" width="20"/> 豆瓣电影 | 新片榜 | ✅ | [douban-movic](./src/app/api/douban-movic/route.ts) |
-| <img src="./public/netease-music.svg" width="20"/> 网易云音乐 | 热歌榜 | ⭕ | [netease-music](./src/app/api/netease-music/route.ts) |
+| <img src="./public/images/bilibili.svg" width="20"/> 哔哩哔哩 | 热门榜 | ✅ | [bilibili](./src/app/api/bilibili/route.ts) |
+| <img src="./public/images/douban-movic.svg" width="20"/> 豆瓣电影 | 新片榜 | ✅ | [douban-movic](./src/app/api/douban-movic/route.ts) |
+| <img src="./public/images/netease-music.svg" width="20"/> 网易云音乐 | 热歌榜 | ⭕ | [netease-music](./src/app/api/netease-music/route.ts) |
 
 ### 📰 新闻资讯
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
-| <img src="./public/toutiao.svg" width="20"/> 今日头条 | 热榜 | ✅ | [toutiao](./src/app/api/toutiao/route.ts) |
-| <img src="./public/qq.svg" width="20"/> 腾讯新闻 | 热点榜 | ✅ | [qq](./src/app/api/qq/route.ts) |
-| <img src="./public/netease.svg" width="20"/> 网易新闻 | 热榜 | ✅ | [netease](./src/app/api/netease/route.ts) |
-| <img src="./public/thepaper.svg" width="20"/> 澎湃新闻 | 热榜 | ✅ | [thepaper](./src/app/api/thepaper/route.ts) |
-| <img src="./public/dongchedi.svg" width="20"/> 懂车帝 | 热搜榜 | ✅ | [dongchedi](./src/app/api/dongchedi/route.ts) |
-| <img src="./public/quark.svg" width="20"/> 夸克 | 今日热点 | ✅ | [quark](./src/app/api/quark/route.ts) |
-| <img src="./public/36kr.svg" width="20"/> 36氪 | 24小时热榜 | ✅ | [36kr](./src/app/api/36kr/route.ts) |
-| <img src="./public/huxiu.svg" width="20"/> 虎嗅 | 最新资讯 | ✅ | [huxiu](./src/app/api/huxiu/route.ts) |
-| <img src="./public/ifanr.svg" width="20"/> 爱范儿 | 快讯 | ✅ | [ifanr](./src/app/api/ifanr/route.ts) |
+| <img src="./public/images/toutiao.svg" width="20"/> 今日头条 | 热榜 | ✅ | [toutiao](./src/app/api/toutiao/route.ts) |
+| <img src="./public/images/qq.svg" width="20"/> 腾讯新闻 | 热点榜 | ✅ | [qq](./src/app/api/qq/route.ts) |
+| <img src="./public/images/netease.svg" width="20"/> 网易新闻 | 热榜 | ✅ | [netease](./src/app/api/netease/route.ts) |
+| <img src="./public/images/thepaper.svg" width="20"/> 澎湃新闻 | 热榜 | ✅ | [thepaper](./src/app/api/thepaper/route.ts) |
+| <img src="./public/images/dongchedi.svg" width="20"/> 懂车帝 | 热搜榜 | ✅ | [dongchedi](./src/app/api/dongchedi/route.ts) |
+| <img src="./public/images/quark.svg" width="20"/> 夸克 | 今日热点 | ✅ | [quark](./src/app/api/quark/route.ts) |
+| <img src="./public/images/36kr.svg" width="20"/> 36氪 | 24小时热榜 | ✅ | [36kr](./src/app/api/36kr/route.ts) |
+| <img src="./public/images/huxiu.svg" width="20"/> 虎嗅 | 最新资讯 | ✅ | [huxiu](./src/app/api/huxiu/route.ts) |
+| <img src="./public/images/ifanr.svg" width="20"/> 爱范儿 | 快讯 | ✅ | [ifanr](./src/app/api/ifanr/route.ts) |
 
 ### 🔍 搜索引擎
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
-| <img src="./public/baidu.svg" width="20"/> 百度 | 热搜榜 | ✅ | [baidu](./src/app/api/baidu/route.ts) |
-| <img src="./public/baidutieba.svg" width="20"/> 百度贴吧 | 热议榜 | ✅ | [baidutieba](./src/app/api/baidutieba/route.ts) |
-| <img src="./public/hupu.svg" width="20"/> 虎扑 | 步行街热帖 | ✅ | [hupu](./src/app/api/hupu/route.ts) |
+| <img src="./public/images/baidu.svg" width="20"/> 百度 | 热搜榜 | ✅ | [baidu](./src/app/api/baidu/route.ts) |
+| <img src="./public/images/baidutieba.svg" width="20"/> 百度贴吧 | 热议榜 | ✅ | [baidutieba](./src/app/api/baidutieba/route.ts) |
+| <img src="./public/images/hupu.svg" width="20"/> 虎扑 | 步行街热帖 | ✅ | [hupu](./src/app/api/hupu/route.ts) |
 
 ### 💡 知识社区
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
-| <img src="./public/zhihu.svg" width="20"/> 知乎 | 热榜 | ✅ | [zhihu](./src/app/api/zhihu/route.ts) |
-| <img src="./public/juejin.svg" width="20"/> 稀土掘金 | 热榜 | ✅ | [juejin](./src/app/api/juejin/route.ts) |
-| <img src="./public/github-trending.svg" width="20"/> Github | 热门仓库 | ✅ | [github-trending](./src/app/api/github-trending/route.ts) |
-| <img src="./public/hello-github.svg" width="20"/> HelloGithub | 精选 | ✅ | [hello-github](./src/app/api/hello-github/route.ts) |
-| <img src="./public/csdn.svg" width="20"/> CSDN | 热榜 | ✅ | [csdn](./src/app/api/csdn/route.ts) |
-| <img src="./public/woshipm.svg" width="20"/> 人人都是产品经理 | 热榜 | ✅ | [woshipm](./src/app/api/woshipm/route.ts) |
+| <img src="./public/images/zhihu.svg" width="20"/> 知乎 | 热榜 | ✅ | [zhihu](./src/app/api/zhihu/route.ts) |
+| <img src="./public/images/juejin.svg" width="20"/> 稀土掘金 | 热榜 | ✅ | [juejin](./src/app/api/juejin/route.ts) |
+| <img src="./public/images/github-trending.svg" width="20"/> Github | 热门仓库 | ✅ | [github-trending](./src/app/api/github-trending/route.ts) |
+| <img src="./public/images/hello-github.svg" width="20"/> HelloGithub | 精选 | ✅ | [hello-github](./src/app/api/hello-github/route.ts) |
+| <img src="./public/images/csdn.svg" width="20"/> CSDN | 热榜 | ✅ | [csdn](./src/app/api/csdn/route.ts) |
+| <img src="./public/images/woshipm.svg" width="20"/> 人人都是产品经理 | 热榜 | ✅ | [woshipm](./src/app/api/woshipm/route.ts) |
 
 ### 📚 其他服务
 | 平台 | 类别 | 状态 | API |
 |------|------|------|-----|
-| <img src="./public/weread.svg" width="20"/> 微信读书 | 飙升榜 | ✅ | [weread](./src/app/api/weread/route.ts) |
-| <img src="./public/lol.svg" width="20"/> 英雄联盟 | 更新公告 | ✅ | [lol](./src/app/api/lol/route.ts) |
-| <img src="./public/history-today.svg" width="20"/> 历史上的今天 | 百科 | ✅ | [history-today](./src/app/api/history-today/route.ts) |
-| <img src="./public/zhihu-daily.svg" width="20"/> 知乎日报 | 推荐榜 | ✅ | [zhihu-daily](./src/app/api/zhihu-daily/route.ts) |
-| <img src="./public/ithome.svg" width="20"/> IT之家 | 热榜 | ✅ | [ithome](./src/app/api/ithome/route.ts) |
+| <img src="./public/images/weread.svg" width="20"/> 微信读书 | 飙升榜 | ✅ | [weread](./src/app/api/weread/route.ts) |
+| <img src="./public/images/lol.svg" width="20"/> 英雄联盟 | 更新公告 | ✅ | [lol](./src/app/api/lol/route.ts) |
+| <img src="./public/images/history-today.svg" width="20"/> 历史上的今天 | 百科 | ✅ | [history-today](./src/app/api/history-today/route.ts) |
+| <img src="./public/images/zhihu-daily.svg" width="20"/> 知乎日报 | 推荐榜 | ✅ | [zhihu-daily](./src/app/api/zhihu-daily/route.ts) |
+| <img src="./public/images/ithome.svg" width="20"/> IT之家 | 热榜 | ✅ | [ithome](./src/app/api/ithome/route.ts) |
 
 ## 🚀 快速开始
 
