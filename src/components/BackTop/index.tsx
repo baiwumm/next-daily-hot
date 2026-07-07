@@ -2,15 +2,19 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:09:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 14:46:26
+ * @LastEditTime: 2026-07-07 16:24:23
  * @Description: 回到顶部
  */
 'use client';
-
 import { ArrowUp } from '@gravity-ui/icons';
 import { ProgressCircle } from '@heroui/react';
+import NumberFlow from '@number-flow/react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { type FC, useRef, useState } from 'react';
+
+const MotionProgressCircle = motion.create(ProgressCircle);
+const MotionArrowUp = motion.create(ArrowUp);
+const MotionNumberFlow = motion.create(NumberFlow);
 
 type BackTopProps = {
   visibilityHeight?: number; // 滚动高度达到此参数值才出现 BackTop
@@ -69,7 +73,11 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.div
+        <MotionProgressCircle
+          aria-label="回到顶部"
+          value={scrollPercentage}
+          color="accent"
+          size="lg"
           className="fixed right-5 bottom-5 z-50 cursor-pointer"
           onClick={scrollToTop}
           initial={{ opacity: 0, y: 20, scale: 0.6 }}
@@ -77,48 +85,38 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
           exit={{ opacity: 0, y: 20, scale: 0.6 }}
           transition={{ duration: 0.25 }}
         >
-          <ProgressCircle
-            aria-label="回到顶部"
-            value={scrollPercentage}
-            color="accent"
-            size="lg"
-            className="relative"
-          >
-            {/* 中间内容 */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <AnimatePresence mode="wait">
-                {direction === 'up' ? (
-                  <motion.div
-                    key="arrow"
-                    initial={{ opacity: 0, y: 6, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ArrowUp className="text-accent" width={16} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="percent"
-                    initial={{ opacity: 0, y: -6, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -6, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-xs text-muted"
-                  >
-                    {scrollPercentage}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+          {/* 中间内容 */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {direction === 'up' ? (
+                <MotionArrowUp
+                  key="arrow"
+                  initial={{ opacity: 0, y: 6, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 6, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  className="text-accent"
+                />
+              ) : (
+                <MotionNumberFlow
+                  key="percent"
+                  initial={{ opacity: 0, y: -6, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  value={scrollPercentage}
+                  className="text-xs text-muted"
+                />
+              )}
+            </AnimatePresence>
+          </div>
 
-            {/* 圆环 */}
-            <ProgressCircle.Track>
-              <ProgressCircle.TrackCircle strokeWidth={3} />
-              <ProgressCircle.FillCircle strokeWidth={3} />
-            </ProgressCircle.Track>
-          </ProgressCircle>
-        </motion.div>
+          {/* 圆环 */}
+          <ProgressCircle.Track>
+            <ProgressCircle.TrackCircle strokeWidth={3} />
+            <ProgressCircle.FillCircle strokeWidth={3} />
+          </ProgressCircle.Track>
+        </MotionProgressCircle>
       )}
     </AnimatePresence>
   );
