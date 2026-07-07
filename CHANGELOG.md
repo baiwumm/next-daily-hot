@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.6](https://github.com/baiwumm/next-daily-hot/compare/3.6.5...3.6.6) (2026-07-07)
+
+### ⚡ Performance Improvements | 性能优化
+
+* **BackTop:** 优化交互逻辑 ([e378863](https://github.com/baiwumm/next-daily-hot/commit/e3788630bf2c74b27726a5fadaa61d6bdbe63ddd))
+
 ## [3.6.5](https://github.com/baiwumm/next-daily-hot/compare/3.6.4...3.6.5) (2026-07-07)
 
 ### ⚡ Performance Improvements | 性能优化
