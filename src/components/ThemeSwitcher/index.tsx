@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:10:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-06 11:16:37
+ * @LastEditTime: 2026-07-07 16:14:23
  * @Description: 主题切换
  */
 'use client';
@@ -13,6 +13,9 @@ import { useTheme } from "next-themes";
 import { type FC, useEffect, useState } from 'react';
 
 import { THEME_MODE } from '@/enums';
+
+const MotionMoon = motion.create(Moon);
+const MotionSun = motion.create(Sun);
 
 const ThemeSwitcher: FC = () => {
   const { theme, setTheme } = useTheme();
@@ -38,58 +41,32 @@ const ThemeSwitcher: FC = () => {
   const toggleTheme = () => {
     setTheme(isLight ? THEME_MODE.DARK : THEME_MODE.LIGHT);
   };
-
-  // 判断是否支持 startViewTransition API
-  const enableTransitions = () =>
-    "startViewTransition" in document && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-
-  // 切换动画
-  async function toggleDark() {
-
-    if (!enableTransitions()) {
-      toggleTheme();
-      return;
-    }
-
-    await document.startViewTransition(async () => {
-      toggleTheme();
-    }).ready;
-
-    document.documentElement.animate(
-      { clipPath: ['inset(0 100% 0 0)', 'inset(0 0 0 0)'] },
-      {
-        duration: 300,
-        easing: 'ease-in-out',
-        pseudoElement: '::view-transition-new(root)',
-      }
-    );
-  }
   return (
     <>
-      <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" size="sm" onPress={toggleDark}>
+      <Button
+        isIconOnly
+        aria-label="ThemeSwitcher"
+        variant="ghost"
+        size="sm"
+        onPress={toggleTheme}
+      >
         <AnimatePresence mode="wait" initial={false}>
           {isLight ? (
-            <motion.div
+            <MotionSun
               key="sun"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.2 }}
-              className="flex justify-center items-center"
-            >
-              <Sun />
-            </motion.div>
+            />
           ) : (
-            <motion.div
+            <MotionMoon
               key="moon"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.2 }}
-              className="flex justify-center items-center"
-            >
-              <Moon />
-            </motion.div>
+            />
           )}
         </AnimatePresence>
       </Button>
