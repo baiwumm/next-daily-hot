@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.5](https://github.com/baiwumm/next-daily-hot/compare/3.6.4...3.6.5) (2026-07-07)
+
+### ⚡ Performance Improvements | 性能优化
+
+* **ThemeSwitcher:** 优化主题切换逻辑 ([89e42a2](https://github.com/baiwumm/next-daily-hot/commit/89e42a25ab96be0b87ed3d0a4892f5f46bb4336b))
+
 ## [3.6.4](https://github.com/baiwumm/next-daily-hot/compare/3.6.3...3.6.4) (2026-07-07)
 
 ### 🔧 Continuous Integration | CI 配置
