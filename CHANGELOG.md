@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.4](https://github.com/baiwumm/next-daily-hot/compare/3.6.3...3.6.4) (2026-07-07)
+
+### 🔧 Continuous Integration | CI 配置
+
+* 使用默认端口 ([ec2d9f6](https://github.com/baiwumm/next-daily-hot/commit/ec2d9f67b1ed7d5d3ae81a73250a4b0de22db0fe))
+
 ## [3.6.3](https://github.com/baiwumm/next-daily-hot/compare/3.6.2...3.6.3) (2026-07-06)
 
 ### ✨ Features | 新功能
