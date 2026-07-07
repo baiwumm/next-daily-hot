@@ -2,19 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:09:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-07 16:24:23
+ * @LastEditTime: 2026-07-07 18:20:55
  * @Description: 回到顶部
  */
 'use client';
 import { ArrowUp } from '@gravity-ui/icons';
 import { ProgressCircle } from '@heroui/react';
-import NumberFlow from '@number-flow/react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
 import { type FC, useRef, useState } from 'react';
 
 const MotionProgressCircle = motion.create(ProgressCircle);
 const MotionArrowUp = motion.create(ArrowUp);
-const MotionNumberFlow = motion.create(NumberFlow);
 
 type BackTopProps = {
   visibilityHeight?: number; // 滚动高度达到此参数值才出现 BackTop
@@ -98,15 +96,16 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
                   className="text-accent"
                 />
               ) : (
-                <MotionNumberFlow
+                <motion.div
                   key="percent"
                   initial={{ opacity: 0, y: -6, scale: 0.8 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -6, scale: 0.8 }}
                   transition={{ duration: 0.2 }}
-                  value={scrollPercentage}
                   className="text-xs text-muted"
-                />
+                >
+                  {scrollPercentage}
+                </motion.div>
               )}
             </AnimatePresence>
           </div>

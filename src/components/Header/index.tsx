@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-06 11:15:18
+ * @LastEditTime: 2026-07-07 18:12:00
  * @Description: 顶部布局
  */
 'use client'
@@ -19,7 +19,9 @@ export default function Header() {
   return (
     <div className="sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center" id="header">
       <div className="flex gap-2 items-center justify-self-start">
-        <Image src='/logo.svg' width={36} height={36} alt="Logo" />
+        <div className="size-9 relative">
+          <Image src="/logo.svg" fill alt="Logo" />
+        </div>
         <div>
           <h1 className="font-black text-base">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
           <Description className="mt-0.5 hidden sm:block">{process.env.NEXT_PUBLIC_APP_DESC}</Description>

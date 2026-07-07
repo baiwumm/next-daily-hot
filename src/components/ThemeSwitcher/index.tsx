@@ -1,16 +1,16 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
- * @Date: 2025-11-20 09:10:01
+ * @Date: 2026-01-13 17:03:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-07 16:14:23
+ * @LastEditTime: 2026-07-07 18:09:17
  * @Description: 主题切换
  */
-'use client';
+"use client";
 import { Moon, Sun } from '@gravity-ui/icons';
-import { Button } from "@heroui/react";
-import { AnimatePresence, motion } from 'motion/react';
-import { useTheme } from "next-themes";
-import { type FC, useEffect, useState } from 'react';
+import { Button, Tooltip } from '@heroui/react';
+import { AnimatePresence, motion } from "motion/react";
+import { useTheme } from 'next-themes';
+import { type FC } from "react";
 
 import { THEME_MODE } from '@/enums';
 
@@ -19,59 +19,42 @@ const MotionSun = motion.create(Sun);
 
 const ThemeSwitcher: FC = () => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // 在客户端加载后，更新 mounted 状态，避免服务端渲染时的差异
-  // 延迟更新 mounted 状态
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0); // 延迟到下一轮渲染
-    return () => clearTimeout(timer);
-  }, []);
-
-  // 如果组件还没有挂载，返回一个空元素或者加载状态
-  if (!mounted) {
-    return null; // 或者可以返回一个 loading 动画
-  }
-
-  const isLight = theme === THEME_MODE.LIGHT;
-
-  // 切换模式
-  const toggleTheme = () => {
-    setTheme(isLight ? THEME_MODE.DARK : THEME_MODE.LIGHT);
-  };
+  const isDark = theme === THEME_MODE.DARK;
   return (
-    <>
+    <Tooltip>
       <Button
-        isIconOnly
         aria-label="ThemeSwitcher"
         variant="ghost"
-        size="sm"
-        onPress={toggleTheme}
+        size='sm'
+        isIconOnly
+        onPress={() => setTheme(theme === THEME_MODE.DARK ? THEME_MODE.LIGHT : THEME_MODE.DARK)}
       >
         <AnimatePresence mode="wait" initial={false}>
-          {isLight ? (
-            <MotionSun
-              key="sun"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
-            />
-          ) : (
+          {isDark ? (
             <MotionMoon
               key="moon"
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            />
+          ) : (
+            <MotionSun
+              key="sun"
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
             />
           )}
         </AnimatePresence>
       </Button>
-      <style>{`::view-transition-old(root), ::view-transition-new(root){animation:none;mix-blend-mode:normal;}`}</style>
-    </>
+      <Tooltip.Content showArrow>
+        <Tooltip.Arrow />
+        主题切换
+      </Tooltip.Content>
+    </Tooltip>
   );
-}
+};
+
 export default ThemeSwitcher;
