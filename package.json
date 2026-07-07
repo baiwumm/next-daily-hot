@@ -7,8 +7,12 @@
     "email": "me@baiwumm.com",
     "url": "https://baiwumm.com"
   },
+  "git": {
+    "url": "https://github.com/baiwumm/next-daily-hot",
+    "issues": "https://github.com/baiwumm/next-daily-hot/issues"
+  },
   "scripts": {
-    "dev": "next dev -p 5173",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

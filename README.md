@@ -188,7 +188,7 @@ pnpm install
 pnpm dev
 
 # 5. 打开浏览器访问
-# http://localhost:5173
+# http://localhost:3000
 ```
 
 ### 🏗️ 构建部署
