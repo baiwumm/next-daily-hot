@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.7](https://github.com/baiwumm/next-daily-hot/compare/3.6.6...3.6.7) (2026-07-07)
+
+### 💄 Styles | 风格
+
+* UI 调整 ([c62c25f](https://github.com/baiwumm/next-daily-hot/commit/c62c25fdb15d0cde11b85bb9462c2c22bffe26d2))
+
 ## [3.6.6](https://github.com/baiwumm/next-daily-hot/compare/3.6.5...3.6.6) (2026-07-07)
 
 ### ⚡ Performance Improvements | 性能优化
