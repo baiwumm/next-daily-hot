@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.8](https://github.com/baiwumm/next-daily-hot/compare/3.6.7...3.6.8) (2026-07-17)
+
+### ⚡ Performance Improvements | 性能优化
+
+* 设置  Tooltip 的延迟为0 ([8211189](https://github.com/baiwumm/next-daily-hot/commit/8211189b0edeb1464a26c6da7fa7f0e53e12f6de))
+
 ## [3.6.7](https://github.com/baiwumm/next-daily-hot/compare/3.6.6...3.6.7) (2026-07-07)
 
 ### 💄 Styles | 风格
