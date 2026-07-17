@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-06 11:15:51
+ * @LastEditTime: 2026-07-17 17:22:43
  * @Description: 热榜卡片
  */
 'use client';
@@ -136,7 +136,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
           </Description>
           <Separator orientation="vertical" className="flex-none" />
           <div className="flex w-1/2 justify-center">
-            <Tooltip>
+            <Tooltip delay={0}>
               <Button
                 isIconOnly
                 variant="ghost"

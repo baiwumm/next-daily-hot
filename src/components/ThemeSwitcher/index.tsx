@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-13 17:03:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-07 18:09:17
+ * @LastEditTime: 2026-07-17 17:23:10
  * @Description: 主题切换
  */
 "use client";
@@ -21,7 +21,7 @@ const ThemeSwitcher: FC = () => {
   const { theme, setTheme } = useTheme();
   const isDark = theme === THEME_MODE.DARK;
   return (
-    <Tooltip>
+    <Tooltip delay={0}>
       <Button
         aria-label="ThemeSwitcher"
         variant="ghost"

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:36:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 14:25:08
+ * @LastEditTime: 2026-07-17 17:23:00
  * @Description: 判断文本是否溢出
  */
 'use client';
@@ -51,7 +51,7 @@ const OverflowDetector = memo(function OverflowDetector({
   }, []);
 
   return (
-    <Tooltip delay={200} isDisabled={!isOverflowing}>
+    <Tooltip delay={0} isDisabled={!isOverflowing}>
       <Tooltip.Trigger aria-label={record.title} className="min-w-0 flex-1">
         <div
           ref={ref}

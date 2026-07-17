@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-07 18:12:00
+ * @LastEditTime: 2026-07-17 17:22:18
  * @Description: 顶部布局
  */
 'use client'
@@ -30,7 +30,7 @@ export default function Header() {
       <TimeAndLunar />
       <div className="flex gap-1 justify-self-end">
         {/* 热榜设置 */}
-        <Tooltip>
+        <Tooltip delay={0}>
           <Tooltip.Trigger aria-label="热榜设置">
             <HotSettings />
           </Tooltip.Trigger>
@@ -41,7 +41,7 @@ export default function Header() {
         </Tooltip>
 
         {/* 主题切换按钮 */}
-        <Tooltip>
+        <Tooltip delay={0}>
           <Tooltip.Trigger aria-label="主题切换">
             <ThemeSwitcher />
           </Tooltip.Trigger>
@@ -51,7 +51,7 @@ export default function Header() {
           </Tooltip.Content>
         </Tooltip>
         {/* Github */}
-        <Tooltip>
+        <Tooltip delay={0}>
           <Button
             isIconOnly
             aria-label="Github"
@@ -66,7 +66,7 @@ export default function Header() {
           </Tooltip.Content>
         </Tooltip>
         {/* 主页 */}
-        <Tooltip>
+        <Tooltip delay={0}>
           <Button
             isIconOnly
             aria-label="个人主页"
