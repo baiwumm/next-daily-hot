@@ -327,9 +327,13 @@ vercel --prod
 
 ## ⭐ Star History
 
-<div align="center">
-  <img src="https://api.star-history.com/svg?repos=baiwumm/next-daily-hot&type=Date" alt="Star History Chart" width="600"/>
-</div>
+<a href="https://www.star-history.com/?repos=baiwumm%2Fnext-daily-hot&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=baiwumm/next-daily-hot&type=date&theme=dark&legend=top-left&sealed_token=PZd0lp6w_QmlUxjmgxrUY4UboiQL7jFp-hLwuKraJmZ-pMOT6B3DbsS9M62vMOZgVUN2Q73ZcTN42XS5RTVgL72fckuzwv0wuI2rVGizBPLAJi21lzlG3g" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=baiwumm/next-daily-hot&type=date&legend=top-left&sealed_token=PZd0lp6w_QmlUxjmgxrUY4UboiQL7jFp-hLwuKraJmZ-pMOT6B3DbsS9M62vMOZgVUN2Q73ZcTN42XS5RTVgL72fckuzwv0wuI2rVGizBPLAJi21lzlG3g" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=baiwumm/next-daily-hot&type=date&legend=top-left&sealed_token=PZd0lp6w_QmlUxjmgxrUY4UboiQL7jFp-hLwuKraJmZ-pMOT6B3DbsS9M62vMOZgVUN2Q73ZcTN42XS5RTVgL72fckuzwv0wuI2rVGizBPLAJi21lzlG3g" />
+ </picture>
+</a>
 
 ---
 
