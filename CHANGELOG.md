@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.10](https://github.com/baiwumm/next-daily-hot/compare/3.6.9...3.6.10) (2026-07-22)
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化 env 文件配置和示例 ([055e0b2](https://github.com/baiwumm/next-daily-hot/commit/055e0b27ac08d4598a1ff13007270c3c0071bb20))
+
 ## [3.6.9](https://github.com/baiwumm/next-daily-hot/compare/3.6.8...3.6.9) (2026-07-22)
 
 ### ⚡ Performance Improvements | 性能优化
