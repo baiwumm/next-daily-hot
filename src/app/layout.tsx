@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 14:24:56
+ * @LastEditTime: 2026-07-22 18:08:15
  * @Description: 根布局文件
  */
 import { Toast } from '@heroui/react';
@@ -70,10 +70,10 @@ export default function RootLayout({
         {/* 微软统计 */}
         <MicrosoftClarity />
       </head>
-      <body>
+      <body className="bg-background text-foreground">
         {/* Vercel 分析 */}
         <Analytics />
-        <NextThemesProvider attribute="class" defaultTheme={process.env.NEXT_PUBLIC_THEME || THEME_MODE.LIGHT}>
+        <NextThemesProvider attribute="class">
           <FullLoading />
           <Header />
           <MainContent>
