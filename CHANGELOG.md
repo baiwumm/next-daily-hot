@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.6.9](https://github.com/baiwumm/next-daily-hot/compare/3.6.8...3.6.9) (2026-07-22)
+
+### ⚡ Performance Improvements | 性能优化
+
+* **FullLoading:** 使用 useIsHydrated 代替 mounted ([8b3aa84](https://github.com/baiwumm/next-daily-hot/commit/8b3aa84ca051626281ad0db0088963bd54f5a121))
+
 ## [3.6.8](https://github.com/baiwumm/next-daily-hot/compare/3.6.7...3.6.8) (2026-07-17)
 
 ### ⚡ Performance Improvements | 性能优化
