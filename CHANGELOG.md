@@ -1,5 +1,23 @@
 # Changelog
 
+## [3.7.0](https://github.com/baiwumm/next-daily-hot/compare/3.6.10...3.7.0) (2026-07-31)
+
+### ✨ Features | 新功能
+
+* **ThemeSwitcher:** 添加主题切换过渡动画 ([5d5c355](https://github.com/baiwumm/next-daily-hot/commit/5d5c35510c00253980a009506956d96dda61a2de))
+
+### 🎫 Chores | 其他更新
+
+* 完善应用配置信息 ([48973e0](https://github.com/baiwumm/next-daily-hot/commit/48973e0d6c9ac9dc46c88683e3f4b1f24f4395f9))
+
+### 💄 Styles | 风格
+
+* eslint 换成 @antfu/eslint-config，统一代码风格 ([1bc61c8](https://github.com/baiwumm/next-daily-hot/commit/1bc61c83a5940fe08623b10906e1e92b716f9eb0))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化代码逻辑和结构 ([70a614c](https://github.com/baiwumm/next-daily-hot/commit/70a614c01bce752a7f6d32f06ed916516001ec25))
+
 ## [3.6.10](https://github.com/baiwumm/next-daily-hot/compare/3.6.9...3.6.10) (2026-07-22)
 
 ### ⚡ Performance Improvements | 性能优化
