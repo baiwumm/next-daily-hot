@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 17:21:01
+ * @LastEditTime: 2026-07-31 17:51:09
  * @Description: 根布局文件
  */
 
@@ -26,17 +26,17 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_DESC}`, // 网站标题
   description: process.env.NEXT_PUBLIC_APP_DESC, // 网站描述
-  applicationName: pkg.name, // 应用名称
-  authors: { name: pkg.author.name, url: pkg.author.url }, // 网站作者
+  applicationName: process.env.NEXT_PUBLIC_APP_NAME, // 应用名称
+  authors: [
+    {
+      name: pkg.author.name,
+      url: pkg.author.url,
+    },
+  ],
   verification: {
     other: { 'baidu-site-verification': 'codeva-kYzuuOyYCZ', 'bytedance-verification-code': 'oPgCIrgBz/3Lhr9BoNE2' },
   }, // 网站验证
-  keywords: HOT_ITEMS.items.map(({ raw }) => `${raw.label}${raw.tip}`).join(','), // 网站关键词
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
-  },
+  keywords: HOT_ITEMS.items.map(({ raw }) => `${raw.label}${raw.tip}`), // 网站关键词
   openGraph: {
     type: 'website',
     locale: 'zh_CN',
@@ -44,7 +44,15 @@ export const metadata: Metadata = {
     title: process.env.NEXT_PUBLIC_APP_NAME,
     description: process.env.NEXT_PUBLIC_APP_DESC,
     siteName: process.env.NEXT_PUBLIC_APP_NAME,
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/og.png`,
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
+
   twitter: {
     card: 'summary_large_image',
     title: process.env.NEXT_PUBLIC_APP_NAME,
@@ -60,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="zh" suppressHydrationWarning>
+    <html lang="zh-CN" suppressHydrationWarning>
       {/* 引入字体文件 */}
       <head>
         <meta name="version" content={pkg.version} />
