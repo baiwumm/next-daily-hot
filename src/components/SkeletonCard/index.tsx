@@ -1,4 +1,4 @@
-import { Skeleton } from "@heroui/react";
+import { Skeleton } from '@heroui/react'
 
 export default function HotRankSkeleton() {
   return (
@@ -15,28 +15,30 @@ export default function HotRankSkeleton() {
 
             {/* 标题 */}
             <div className="flex-1 min-w-0 space-y-2">
-              <Skeleton animationType="shimmer"
+              <Skeleton
+                animationType="shimmer"
                 className={`h-4 rounded-md ${index === 0
-                  ? "w-full"
+                  ? 'w-full'
                   : index === 1
-                    ? "w-5/6"
+                    ? 'w-5/6'
                     : index === 2
-                      ? "w-4/5"
+                      ? 'w-4/5'
                       : index % 2
-                        ? "w-3/4"
-                        : "w-full"
-                  }`}
+                        ? 'w-3/4'
+                        : 'w-full'
+                }`}
               />
             </div>
           </div>
 
           {/* 右侧热度 */}
-          <Skeleton animationType="shimmer"
-            className={`h-4 rounded-md shrink-0 ${index < 3 ? "w-12" : "w-10"
-              }`}
+          <Skeleton
+            animationType="shimmer"
+            className={`h-4 rounded-md shrink-0 ${index < 3 ? 'w-12' : 'w-10'
+            }`}
           />
         </div>
       ))}
     </div>
-  );
+  )
 }

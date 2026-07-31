@@ -5,20 +5,21 @@
  * @LastEditTime: 2026-07-07 18:15:52
  * @Description: 底部版权
  */
-'use client';
-import { Chip, cn, Description, Link, Separator } from '@heroui/react';
-import dayjs from 'dayjs';
-import Image from 'next/image';
-import { type ReactNode } from 'react';
+'use client'
+import { Chip, cn, Description, Link, Separator } from '@heroui/react'
+import dayjs from 'dayjs'
+import Image from 'next/image'
 
-import pkg from '#/package.json';
+import pkg from '#/package.json'
 
-type Social = {
-  icon?: ReactNode;
-  image?: string;
-  url: string;
-  label: string;
-};
+import type { ReactNode } from 'react'
+
+interface Social {
+  icon?: ReactNode
+  image?: string
+  url: string
+  label: string
+}
 
 export default function Footer() {
   // 备案信息
@@ -33,37 +34,45 @@ export default function Footer() {
       url: 'https://beian.mps.gov.cn/#/query/webSearch',
       label: process.env.NEXT_PUBLIC_GONGAN!,
     },
-  ];
+  ]
   return (
-    <footer className="mx-auto w-full container! px-6 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-2" id="footer">
+    <footer id="footer" className="mx-auto w-full container! px-6 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-2">
       <div className="flex items-center gap-3 justify-self-center sm:justify-self-start">
         <div className="flex items-center gap-2">
           <div className="size-5 relative">
-            <Image src="/logo.svg" fill alt="Logo" />
+            <Image alt="Logo" fill src="/logo.svg" />
           </div>
           <span className="text-sm font-bold">
             {process.env.NEXT_PUBLIC_APP_NAME}
           </span>
         </div>
-        <Separator className="h-4 self-center" orientation="vertical" />
-        <Chip variant='soft' color='success' size='sm' className="px-2 py-0.5 text-[10px]">
+        <Separator orientation="vertical" className="h-4 self-center" />
+        <Chip
+          color="success"
+          size="sm"
+          variant="soft"
+          className="px-2 py-0.5 text-[10px]"
+        >
           <div
             data-slot="status-indicator"
             className={cn(
-              "relative flex size-2 shrink-0 rounded-full bg-success",
-              "before:absolute before:inset-0 before:animate-ping before:rounded-full before:bg-inherit",
-              "after:absolute after:inset-0.5 after:rounded-full after:bg-inherit"
+              'relative flex size-2 shrink-0 rounded-full bg-success',
+              'before:absolute before:inset-0 before:animate-ping before:rounded-full before:bg-inherit',
+              'after:absolute after:inset-0.5 after:rounded-full after:bg-inherit',
             )}
           />
           <Chip.Label>服务状态正常</Chip.Label>
         </Chip>
       </div>
       <Description className="justify-self-center">
-        &copy; {dayjs().format('YYYY')}{' '}
+        &copy;
+        {' '}
+        {dayjs().format('YYYY')}
+        {' '}
         <a
           href={pkg.author.url}
-          target="_blank"
           rel="noopener noreferrer"
+          target="_blank"
           className="hover:text-accent transition-colors"
         >
           {process.env.NEXT_PUBLIC_COPYRIGHT}
@@ -78,7 +87,12 @@ export default function Footer() {
             target="_blank"
             className="flex gap-1 items-center no-underline"
           >
-            <Image src={image!} alt={label} width={14} height={14} />
+            <Image
+              alt={label}
+              height={14}
+              src={image!}
+              width={14}
+            />
             <Description className="hover:text-accent transition-colors">
               {label}
             </Description>
@@ -86,5 +100,5 @@ export default function Footer() {
         ))}
       </div>
     </footer>
-  );
+  )
 }

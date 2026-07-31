@@ -1,9 +1,9 @@
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { useRef } from 'react'
 
-import RowComponent from './RowComponent';
+import RowComponent from './RowComponent'
 
-import { HOT_ITEMS } from '@/enums';
+import type { HOT_ITEMS } from '@/enums'
 
 export default function HotListVirtual({
   data,
@@ -11,19 +11,19 @@ export default function HotListVirtual({
   prefix,
   suffix,
 }: {
-  data: App.HotListItem[];
-  value: typeof HOT_ITEMS.valueType;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
+  data: App.HotListItem[]
+  value: typeof HOT_ITEMS.valueType
+  prefix?: React.ReactNode
+  suffix?: React.ReactNode
 }) {
-  const parentRef = useRef<HTMLDivElement>(null);
+  const parentRef = useRef<HTMLDivElement>(null)
 
   const rowVirtualizer = useVirtualizer({
     count: data.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 41, // 👈 对应 rowHeight
     overscan: 8,
-  });
+  })
 
   return (
     <div
@@ -39,7 +39,7 @@ export default function HotListVirtual({
         }}
       >
         {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-          const index = virtualRow.index;
+          const index = virtualRow.index
 
           return (
             <div
@@ -53,16 +53,16 @@ export default function HotListVirtual({
               }}
             >
               <RowComponent
-                index={index}
                 data={data}
-                value={value}
+                index={index}
                 prefix={prefix}
                 suffix={suffix}
+                value={value}
               />
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }

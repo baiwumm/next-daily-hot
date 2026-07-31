@@ -5,9 +5,10 @@
  * @LastEditTime: 2025-11-20 14:08:48
  * @Description: 404 页面
  */
-import { Button } from "@heroui/react";
-import Link from 'next/link';
-import { type FC } from 'react';
+import { Button } from '@heroui/react'
+import Link from 'next/link'
+
+import type { FC } from 'react'
 
 const NotFound: FC = () => {
   return (
@@ -24,4 +25,4 @@ const NotFound: FC = () => {
     </div>
   )
 }
-export default NotFound;
+export default NotFound

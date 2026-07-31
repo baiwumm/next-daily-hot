@@ -5,32 +5,32 @@
  * @LastEditTime: 2026-01-04 18:07:00
  * @Description: 哔哩哔哩-热门榜
  */
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums';
-import { responseError, responseSuccess } from '@/lib/utils';
+import { RESPONSE } from '@/enums'
+import { responseError, responseSuccess } from '@/lib/utils'
 
 export async function GET() {
   // 官方 url
-  const url = 'https://api.bilibili.com/x/web-interface/ranking/v2';
+  const url = 'https://api.bilibili.com/x/web-interface/ranking/v2'
   try {
     // 请求数据
     const response = await fetch(url, {
       headers: {
-        Referer: `https://www.bilibili.com/ranking/all`,
+        'Referer': `https://www.bilibili.com/ranking/all`,
         'User-Agent':
           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
       },
-    });
+    })
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：哔哩哔哩-热门榜`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：哔哩哔哩-热门榜`)
     }
     // 得到请求体
-    const responseBody = await response.json();
-    const data = responseBody?.data?.realtime || responseBody?.data?.list;
+    const responseBody = await response.json()
+    const data = responseBody?.data?.realtime || responseBody?.data?.list
     if (!data) {
-      return NextResponse.json(responseSuccess());
+      return NextResponse.json(responseSuccess())
     }
     const result: App.HotListItem[] = data.map((v) => {
       return {
@@ -41,10 +41,11 @@ export async function GET() {
         hot: v.stat.view,
         url: v.short_link_v2 || `https://b23.tv/${v.bvid}`,
         mobileUrl: `https://m.bilibili.com/video/${v.bvid}`,
-      };
-    });
-    return NextResponse.json(responseSuccess(result));
-  } catch {
-    return NextResponse.json(responseError);
+      }
+    })
+    return NextResponse.json(responseSuccess(result))
+  }
+  catch {
+    return NextResponse.json(responseError)
   }
 }

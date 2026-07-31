@@ -7,19 +7,16 @@
  */
 
 'use client'
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { HOT_ITEMS } from '@/enums';
+import { HOT_ITEMS } from '@/enums'
 
-type HotKeys = typeof HOT_ITEMS.valueType;
-
-
-type AppState = {
+interface AppState {
   /** 每个热榜子项的最后更新时间 */
-  UpdateTime: Partial<Record<HotKeys, number>>; // 每个子项更新时间
-  setUpdateTime: (time: Partial<Record<HotKeys, number>>) => void;
+  UpdateTime: Partial<Record<HotKeys, number>> // 每个子项更新时间
+  setUpdateTime: (time: Partial<Record<HotKeys, number>>) => void
 
   /** 当前时间心跳（用于驱动相对时间刷新） */
   now: number
@@ -29,13 +26,15 @@ type AppState = {
   getRelativeTime: (key: HotKeys) => string
 
   /** 隐藏的热榜 */
-  hiddenItems: HotKeys[];
-  setHiddenItems: (items: HotKeys[]) => void;
+  hiddenItems: HotKeys[]
+  setHiddenItems: (items: HotKeys[]) => void
 
   // 热榜排序
-  sortItems: HotKeys[];
-  setSortItems: (items: HotKeys[]) => void;
+  sortItems: HotKeys[]
+  setSortItems: (items: HotKeys[]) => void
 }
+
+type HotKeys = typeof HOT_ITEMS.valueType
 
 export const useAppStore = create(
   persist<AppState>(
@@ -43,7 +42,7 @@ export const useAppStore = create(
       /* ================= 更新时间 ================= */
       UpdateTime: {},
       setUpdateTime: (time) => {
-        set((state) => ({
+        set(state => ({
           UpdateTime: { ...state.UpdateTime, ...time },
         }))
       },
@@ -59,7 +58,8 @@ export const useAppStore = create(
         const { UpdateTime, now } = get()
 
         const ts = UpdateTime[key]
-        if (!ts) return '刚刚'
+        if (!ts)
+          return '刚刚'
 
         // now 只是为了建立依赖
         return dayjs(ts).fromNow()
@@ -80,9 +80,11 @@ export const useAppStore = create(
       name: 'app-store', // 用于存储在 localStorage 中的键名
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
       // ⚠️ now 是纯派生用的，不需要持久化
-      partialize: (state) => ({
+      partialize: state => ({
         UpdateTime: state.UpdateTime,
         hiddenItems: state.hiddenItems,
-        sortItems: state.sortItems
+        sortItems: state.sortItems,
       } as any),
-    }))
+    },
+  ),
+)

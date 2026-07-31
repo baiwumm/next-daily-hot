@@ -2,24 +2,27 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-22 18:08:15
+ * @LastEditTime: 2026-07-31 13:56:39
  * @Description: 根布局文件
  */
-import { Toast } from '@heroui/react';
-import { Analytics } from '@vercel/analytics/next';
-import type { Metadata } from "next";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-import "./globals.css";
+import './globals.css'
+
+import { Toast } from '@heroui/react'
+import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider as NextThemesProvider } from 'next-themes'
+
 import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity } from '@/components/Analytics'
-import AppTimeTicker from '@/components/AppTimeTicker';
+import AppTimeTicker from '@/components/AppTimeTicker'
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
-import MainContent from '@/components/MainContent';
-import { HOT_ITEMS, THEME_MODE } from '@/enums';
-import pkg from '#/package.json';
+import MainContent from '@/components/MainContent'
+import { HOT_ITEMS } from '@/enums'
+import pkg from '#/package.json'
+
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_DESC}`, // 网站标题
@@ -50,29 +53,22 @@ export const metadata: Metadata = {
     images: [`${process.env.NEXT_PUBLIC_APP_URL}/og.png`],
     creator: pkg.author.name,
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="zh" suppressHydrationWarning>
       {/* 引入字体文件 */}
       <head>
         <meta name="version" content={pkg.version} />
-        <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
-        {/* 百度统计 */}
-        <BaiDuAnalytics />
-        {/* Google 统计 */}
-        <GoogleUtilities />
-        {/* 微软统计 */}
-        <MicrosoftClarity />
+        <link href="https://cdn.baiwumm.com" rel="preconnect" />
+        <link href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" rel="stylesheet" />
       </head>
       <body className="bg-background text-foreground">
-        {/* Vercel 分析 */}
-        <Analytics />
         <NextThemesProvider attribute="class">
           <FullLoading />
           <Header />
@@ -83,9 +79,15 @@ export default function RootLayout({
           {/* 回到顶部 */}
           <BackTop />
           <AppTimeTicker />
-          <Toast.Provider placement='top' />
+          <Toast.Provider placement="top" />
         </NextThemesProvider>
+        {/* Analytics */}
+        <BaiDuAnalytics />
+        <GoogleUtilities />
+        <MicrosoftClarity />
+        {/* Vercel Analytics */}
+        <Analytics />
       </body>
     </html>
-  );
+  )
 }

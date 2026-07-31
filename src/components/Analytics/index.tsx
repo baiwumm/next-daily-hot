@@ -2,45 +2,68 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-21 09:16:01
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 14:25:35
+ * @LastEditTime: 2026-07-31 13:53:49
  * @Description: 统计代码
  */
-import { GoogleAnalytics } from '@next/third-parties/google';
-import Script from 'next/script';
+import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
 
 /**
  * @description: 百度统计
  */
-export const BaiDuAnalytics = () => {
-  return process.env.NEXT_PUBLIC_BAIDU_ID && process.env.NODE_ENV === 'production' ? (
+export function BaiDuAnalytics() {
+  const baiduId = process.env.NEXT_PUBLIC_BAIDU_ID
+
+  if (process.env.NODE_ENV !== 'production' || !baiduId)
+    return null
+
+  return (
     <Script
       id="baidu-analytics"
-      dangerouslySetInnerHTML={{
-        __html: `var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?${process.env.NEXT_PUBLIC_BAIDU_ID}";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}();`,
-      }}
+      src={`https://hm.baidu.com/hm.js?${baiduId}`}
+      strategy="afterInteractive"
     />
-  ) : null;
-};
+  )
+}
 
 /**
  * @description: 谷歌统计
  */
-export const GoogleUtilities = () => {
-  return process.env.NEXT_PUBLIC_GOOGLE_ID && process.env.NODE_ENV === 'production' ? (
-    <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ID} />
-  ) : null;
-};
+export function GoogleUtilities() {
+  const gaId = process.env.NEXT_PUBLIC_GOOGLE_ID
+
+  if (process.env.NODE_ENV !== 'production' || !gaId)
+    return null
+
+  return <GoogleAnalytics gaId={gaId} />
+}
 
 /**
  * @description: 微软统计
  */
-export const MicrosoftClarity = () => {
-  return process.env.NEXT_PUBLIC_CLARITY_ID && process.env.NODE_ENV === 'production' ? (
+export function MicrosoftClarity() {
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID
+
+  if (process.env.NODE_ENV !== 'production' || !clarityId)
+    return null
+
+  return (
     <Script
       id="microsoft-clarity"
-      dangerouslySetInnerHTML={{
-        __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${process.env.NEXT_PUBLIC_CLARITY_ID}");`,
-      }}
-    />
-  ) : null;
-};
+      strategy="afterInteractive"
+    >
+      {`
+        (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){
+            (c[a].q=c[a].q||[]).push(arguments)
+          };
+          t=l.createElement(r);
+          t.async=1;
+          t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];
+          y.parentNode.insertBefore(t,y);
+        })(window,document,"clarity","script","${clarityId}");
+      `}
+    </Script>
+  )
+}

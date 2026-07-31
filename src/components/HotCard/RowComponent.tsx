@@ -5,64 +5,70 @@
  * @LastEditTime: 2026-07-03 17:52:57
  * @Description: 动态列表子项
  */
-import { Description } from '@heroui/react';
-import { type ReactNode, useMemo } from 'react';
+import { Description } from '@heroui/react'
+import { useMemo } from 'react'
 
-import OverflowDetector from '@/components/OverflowDetector';
-import { HOT_ITEMS } from '@/enums';
-import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils';
+import OverflowDetector from '@/components/OverflowDetector'
+import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils'
+
+import type { HOT_ITEMS } from '@/enums'
+import type { ReactNode } from 'react'
 
 interface RowData {
-  index: number;
-  data: App.HotListItem[];
-  value: typeof HOT_ITEMS.valueType;
-  prefix?: ReactNode;
-  suffix?: ReactNode;
+  index: number
+  data: App.HotListItem[]
+  value: typeof HOT_ITEMS.valueType
+  prefix?: ReactNode
+  suffix?: ReactNode
 }
 
-const HotDisplay = ({
+function HotDisplay({
   value,
   prefix,
-  suffix
+  suffix,
 }: {
-  value: string | number;
-  prefix?: ReactNode;
-  suffix?: ReactNode;
-}) => (
-  <Description className="shrink-0 flex items-center gap-0.5">
-    {prefix}{value}{suffix}
-  </Description>
-);
+  value: string | number
+  prefix?: ReactNode
+  suffix?: ReactNode
+}) {
+  return (
+    <Description className="shrink-0 flex items-center gap-0.5">
+      {prefix}
+      {value}
+      {suffix}
+    </Description>
+  )
+}
 
-const RowComponent = ({ index, data, value, prefix, suffix }: RowData) => {
-  const item = useMemo(() => data[index], [data, index]);
-  const { label } = item;
+function RowComponent({ index, data, value, prefix, suffix }: RowData) {
+  const item = useMemo(() => data[index], [data, index])
+  const { label } = item
 
   const colorStyle = useMemo(() => {
     const bgColor = label
       ? (hotLableColor[label as keyof typeof hotLableColor] || 'var(--default)')
-      : hotTagColor[index] || 'var(--default)';
+      : hotTagColor[index] || 'var(--default)'
 
     const textColor = (label ? hotLableColor[label as keyof typeof hotLableColor] : hotTagColor[index])
       ? 'var(--white)'
-      : 'var(--default-foreground)';
+      : 'var(--default-foreground)'
 
-    return { backgroundColor: bgColor, color: textColor };
-  }, [label, index]);
+    return { backgroundColor: bgColor, color: textColor }
+  }, [label, index])
 
   const displayText = useMemo(() => {
-    return label ? label.slice(0, 1) : index + 1;
-  }, [label, index]);
+    return label ? label.slice(0, 1) : index + 1
+  }, [label, index])
 
   const endContent = useMemo(() => {
     if (item.hot) {
-      return <HotDisplay value={formatNumber(item.hot)} />;
+      return <HotDisplay value={formatNumber(item.hot)} />
     }
     if (item.tip) {
-      return <HotDisplay value={item.tip} prefix={prefix} suffix={suffix} />;
+      return <HotDisplay prefix={prefix} suffix={suffix} value={item.tip} />
     }
-    return null;
-  }, [item.hot, item.tip, prefix, suffix]);
+    return null
+  }, [item.hot, item.tip, prefix, suffix])
 
   return (
     <div className="flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default">
@@ -73,11 +79,11 @@ const RowComponent = ({ index, data, value, prefix, suffix }: RowData) => {
         >
           {displayText}
         </div>
-        <OverflowDetector record={item} type={value} />
+        <OverflowDetector type={value} record={item} />
       </div>
       {endContent}
     </div>
-  );
-};
+  )
+}
 
-export default RowComponent;
+export default RowComponent

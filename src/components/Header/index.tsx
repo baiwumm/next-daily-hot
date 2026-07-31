@@ -6,21 +6,21 @@
  * @Description: 顶部布局
  */
 'use client'
-import { HouseFill, LogoGithub } from '@gravity-ui/icons';
-import { Button, Description, Tooltip } from "@heroui/react";
-import Image from 'next/image';
+import { HouseFill, LogoGithub } from '@gravity-ui/icons'
+import { Button, Description, Tooltip } from '@heroui/react'
+import Image from 'next/image'
 
 import HotSettings from '@/components/HotSettings'
-import ThemeSwitcher from '@/components/ThemeSwitcher';
-import TimeAndLunar from '@/components/TimeAndLunar';
+import ThemeSwitcher from '@/components/ThemeSwitcher'
+import TimeAndLunar from '@/components/TimeAndLunar'
 import pkg from '#/package.json'
 
 export default function Header() {
   return (
-    <div className="sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center" id="header">
+    <div id="header" className="sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center">
       <div className="flex gap-2 items-center justify-self-start">
         <div className="size-9 relative">
-          <Image src="/logo.svg" fill alt="Logo" />
+          <Image alt="Logo" fill src="/logo.svg" />
         </div>
         <div>
           <h1 className="font-black text-base">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
@@ -53,11 +53,12 @@ export default function Header() {
         {/* Github */}
         <Tooltip delay={0}>
           <Button
-            isIconOnly
             aria-label="Github"
-            variant="ghost"
             size="sm"
-            onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}>
+            variant="ghost"
+            isIconOnly
+            onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}
+          >
             <LogoGithub />
           </Button>
           <Tooltip.Content showArrow>
@@ -68,11 +69,12 @@ export default function Header() {
         {/* 主页 */}
         <Tooltip delay={0}>
           <Button
-            isIconOnly
             aria-label="个人主页"
-            variant="ghost"
             size="sm"
-            onPress={() => window.open(pkg.author.url)}>
+            variant="ghost"
+            isIconOnly
+            onPress={() => window.open(pkg.author.url)}
+          >
             <HouseFill />
           </Button>
           <Tooltip.Content showArrow>
@@ -83,5 +85,5 @@ export default function Header() {
 
       </div>
     </div>
-  );
+  )
 }

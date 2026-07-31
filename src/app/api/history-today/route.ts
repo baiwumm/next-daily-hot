@@ -5,26 +5,26 @@
  * @LastEditTime: 2026-01-04 18:08:17
  * @Description: 百度百科-历史上的今天
  */
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums';
-import { responseError, responseSuccess } from '@/lib/utils';
+import { RESPONSE } from '@/enums'
+import { responseError, responseSuccess } from '@/lib/utils'
 
 export async function GET() {
   // 获取月份
-  const month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  const month = (new Date().getMonth() + 1).toString().padStart(2, '0')
   // 获取天数
-  const day = new Date().getDate().toString().padStart(2, '0');
-  const url = `https://baike.baidu.com/cms/home/eventsOnHistory/${month}.json`;
+  const day = new Date().getDate().toString().padStart(2, '0')
+  const url = `https://baike.baidu.com/cms/home/eventsOnHistory/${month}.json`
   try {
     // 请求数据
-    const response = await fetch(url);
+    const response = await fetch(url)
     if (!response.ok) {
       // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：百度百科-历史上的今天`);
+      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：百度百科-历史上的今天`)
     }
     // 得到请求体
-    const responseBody = await response.json();
+    const responseBody = await response.json()
     // 处理数据
     const result: App.HotListItem[] = responseBody[month][month + day].map((v, index: number) => {
       return {
@@ -34,10 +34,11 @@ export async function GET() {
         type: v.type,
         url: v.link,
         mobileUrl: v.link,
-      };
-    });
-    return NextResponse.json(responseSuccess(result));
-  } catch {
-    return NextResponse.json(responseError);
+      }
+    })
+    return NextResponse.json(responseSuccess(result))
+  }
+  catch {
+    return NextResponse.json(responseError)
   }
 }

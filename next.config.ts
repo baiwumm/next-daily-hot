@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   typescript: {
@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     unoptimized: true, // 禁用 Vercel 图片优化
-  }
-};
+  },
+}
 
-export default nextConfig;
+export default nextConfig

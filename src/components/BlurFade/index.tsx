@@ -1,16 +1,17 @@
-"use client"
+'use client'
 
 import {
   AnimatePresence,
   motion,
-  MotionProps,
   useInView,
+} from 'motion/react'
+import { useRef } from 'react'
+
+import type {
+  MotionProps,
   UseInViewOptions,
   Variants,
-} from "motion/react"
-import { useRef } from "react"
-
-type MarginType = UseInViewOptions["margin"]
+} from 'motion/react'
 
 interface BlurFadeProps extends MotionProps {
   children: React.ReactNode
@@ -22,11 +23,13 @@ interface BlurFadeProps extends MotionProps {
   duration?: number
   delay?: number
   offset?: number
-  direction?: "up" | "down" | "left" | "right"
+  direction?: 'up' | 'down' | 'left' | 'right'
   inView?: boolean
   inViewMargin?: MarginType
   blur?: string
 }
+
+type MarginType = UseInViewOptions['margin']
 
 export default function BlurFade({
   children,
@@ -35,10 +38,10 @@ export default function BlurFade({
   duration = 0.4,
   delay = 0,
   offset = 6,
-  direction = "up",
+  direction = 'up',
   inView = false,
-  inViewMargin = "-50px",
-  blur = "6px",
+  inViewMargin = '-50px',
+  blur = '6px',
   ...props
 }: BlurFadeProps) {
   const ref = useRef(null)
@@ -46,13 +49,13 @@ export default function BlurFade({
   const isInView = !inView || inViewResult
   const defaultVariants: Variants = {
     hidden: {
-      [direction === "left" || direction === "right" ? "x" : "y"]:
-        direction === "right" || direction === "down" ? -offset : offset,
+      [direction === 'left' || direction === 'right' ? 'x' : 'y']:
+        direction === 'right' || direction === 'down' ? -offset : offset,
       opacity: 0,
       filter: `blur(${blur})`,
     },
     visible: {
-      [direction === "left" || direction === "right" ? "x" : "y"]: 0,
+      [direction === 'left' || direction === 'right' ? 'x' : 'y']: 0,
       opacity: 1,
       filter: `blur(0px)`,
     },
@@ -62,15 +65,15 @@ export default function BlurFade({
     <AnimatePresence>
       <motion.div
         ref={ref}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        animate={isInView ? 'visible' : 'hidden'}
         exit="hidden"
-        variants={combinedVariants}
+        initial="hidden"
         transition={{
           delay: 0.04 + delay,
           duration,
-          ease: "easeOut",
+          ease: 'easeOut',
         }}
+        variants={combinedVariants}
         className={className}
         {...props}
       >

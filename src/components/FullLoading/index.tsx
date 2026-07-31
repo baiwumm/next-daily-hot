@@ -5,11 +5,11 @@
  * @LastEditTime: 2026-03-11 16:03:53
  * @Description: 全屏加载
  */
-'use client';
-import { Description, Spinner, useIsHydrated } from "@heroui/react";
+'use client'
+import { Description, Spinner, useIsHydrated } from '@heroui/react'
 
-const FullLoading = () => {
-  const hydrated = useIsHydrated();
+function FullLoading() {
+  const hydrated = useIsHydrated()
 
   // 判断组件是否挂载
   if (!hydrated) {
@@ -20,8 +20,8 @@ const FullLoading = () => {
           <Description className="font-black">正在加载,请稍后...</Description>
         </div>
       </div>
-    );
+    )
   }
-  return null;
-};
-export default FullLoading;
+  return null
+}
+export default FullLoading

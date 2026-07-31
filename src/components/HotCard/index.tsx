@@ -5,8 +5,10 @@
  * @LastEditTime: 2026-07-17 17:22:43
  * @Description: 热榜卡片
  */
-'use client';
-import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui/icons';
+'use client'
+import 'dayjs/locale/zh-cn'
+
+import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui/icons'
 import {
   Button,
   Card,
@@ -15,40 +17,39 @@ import {
   ScrollShadow,
   Separator,
   Spinner,
-  Tooltip
-} from '@heroui/react';
-import { useRequest } from 'ahooks';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-import { motion, useInView } from 'motion/react';
-import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+  Tooltip,
+} from '@heroui/react'
+import { useRequest } from 'ahooks'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
+import { motion, useInView } from 'motion/react'
+import Image from 'next/image'
+import { useEffect, useRef } from 'react'
+
+import BlurFade from '@/components/BlurFade'
+import SkeletonCard from '@/components/SkeletonCard'
+import { RESPONSE } from '@/enums'
+import { useAppStore } from '@/store/useAppStore'
 
 import HotListVirtual from './HotListVirtual'
 
-import 'dayjs/locale/zh-cn';
-import BlurFade from '@/components/BlurFade';
-import SkeletonCard from '@/components/SkeletonCard'
-import { RESPONSE } from '@/enums';
-import { useAppStore } from '@/store/useAppStore';
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
+dayjs.extend(utc)
+dayjs.extend(timezone)
 // 引入处理相对时间的插件
-dayjs.extend(relativeTime);
-dayjs.locale('zh-cn');
+dayjs.extend(relativeTime)
+dayjs.locale('zh-cn')
 
-const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
-  const setUpdateTime = useAppStore(state => state.setUpdateTime);
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true });
+function HotCard({ value, label, tip, prefix, suffix }: App.HotListConfig) {
+  const setUpdateTime = useAppStore(state => state.setUpdateTime)
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true })
 
   // 更新相对时间
   const relativeText = useAppStore(state =>
-    state.getRelativeTime(value)
-  );
+    state.getRelativeTime(value),
+  )
 
   const { data, loading, run } = useRequest(
     async () => {
@@ -62,7 +63,8 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
           throw new Error('API returned error')
         }
         return result.data || []
-      } finally {
+      }
+      finally {
         // 记录更新时间
         setUpdateTime({ [value]: dayjs().valueOf() })
       }
@@ -71,61 +73,81 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
       manual: true,
       debounceWait: 300,
       retryCount: 3,
-    }
-  );
+    },
+  )
 
   // ✅ 使用 ready 控制自动加载（更可靠）
   useEffect(() => {
     if (isInView) {
-      run();
+      run()
     }
-  }, [isInView, run]);
+  }, [isInView, run])
   return (
-    <Card className="p-0 gap-0" ref={ref}>
+    <Card ref={ref} className="p-0 gap-0">
       <Card.Header className="flex justify-between items-center flex-row p-3">
         <div className="flex items-center gap-2">
           <Image
-            src={`/images/${value}.svg`}
             alt={`${label}${tip}`}
-            width={24}
             height={24}
+            src={`/images/${value}.svg`}
+            width={24}
             className="rounded-md shrink-0"
           />
           <div className="font-bold text-sm">{label}</div>
         </div>
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
-          <Chip color={data?.length ? 'success' : 'danger'} variant="soft" size="sm" className="px-2 py-0.5">
-            {loading ? (
-              <Spinner size='sm' />
-            ) : data?.length ? (
-              <CircleCheckFill width={14} />
-            ) : (
-              <CircleXmarkFill width={14} />
-            )}
+          <Chip
+            color={data?.length ? 'success' : 'danger'}
+            size="sm"
+            variant="soft"
+            className="px-2 py-0.5"
+          >
+            {loading
+              ? (
+                  <Spinner size="sm" />
+                )
+              : data?.length
+                ? (
+                    <CircleCheckFill width={14} />
+                  )
+                : (
+                    <CircleXmarkFill width={14} />
+                  )}
             {tip}
           </Chip>
         </motion.div>
       </Card.Header>
       <Separator />
       <Card.Content className="relative py-0">
-        <ScrollShadow className="h-81.75 " hideScrollBar visibility="bottom">
-          {loading ? (
-            <SkeletonCard />
-          ) : null}
-          {loading ? null : !data?.length ? (
-            <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
-              抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
-            </Description>
-          ) : (
-            <BlurFade className="h-full pl-3">
-              <HotListVirtual data={data} value={value} prefix={prefix} suffix={suffix} />
-            </BlurFade>
-          )}
+        <ScrollShadow hideScrollBar visibility="bottom" className="h-81.75 ">
+          {loading
+            ? (
+                <SkeletonCard />
+              )
+            : null}
+          {loading
+            ? null
+            : !data?.length
+                ? (
+                    <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
+                      抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
+                    </Description>
+                  )
+                : (
+                    <BlurFade className="h-full pl-3">
+                      <HotListVirtual
+                        data={data}
+                        prefix={prefix}
+                        suffix={suffix}
+                        value={value}
+                      />
+                    </BlurFade>
+                  )}
         </ScrollShadow>
       </Card.Content>
       <Separator />
@@ -138,16 +160,16 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
           <div className="flex w-1/2 justify-center">
             <Tooltip delay={0}>
               <Button
-                isIconOnly
-                variant="ghost"
                 size="sm"
+                variant="ghost"
                 isDisabled={loading}
+                isIconOnly
                 onPress={run}
                 className="text-muted"
               >
                 <ArrowsRotateRight className={loading ? 'animate-spin' : ''} />
               </Button>
-              <Tooltip.Content showArrow placement="bottom">
+              <Tooltip.Content placement="bottom" showArrow>
                 <Tooltip.Arrow />
                 获取最新
               </Tooltip.Content>
@@ -156,7 +178,7 @@ const HotCard = ({ value, label, tip, prefix, suffix }: App.HotListConfig) => {
         </div>
       </Card.Footer>
     </Card>
-  );
-};
+  )
+}
 
-export default HotCard;
+export default HotCard

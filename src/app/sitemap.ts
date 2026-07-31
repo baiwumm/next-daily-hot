@@ -1,4 +1,4 @@
-import type { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -8,5 +8,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 1,
     },
-  ];
+  ]
 }

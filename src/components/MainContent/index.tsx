@@ -5,13 +5,13 @@
  * @LastEditTime: 2026-01-04 15:19:10
  * @Description: 主体内容
  */
-"use client"
-import { type FC, type ReactNode } from 'react';
+'use client'
+import { useAvailableHeight } from '@/hooks/use-available-height'
 
-import { useAvailableHeight } from '@/hooks/use-available-height';
+import type { FC, ReactNode } from 'react'
 
-type MainContentProps = {
-  children: ReactNode;
+interface MainContentProps {
+  children: ReactNode
 }
 
 const MainContent: FC<MainContentProps> = ({ children }) => {
@@ -19,11 +19,11 @@ const MainContent: FC<MainContentProps> = ({ children }) => {
   const mainHeight = useAvailableHeight({
     elementIds: ['header', 'footer'],
     debounceMs: 150,
-  });
+  })
   return (
     <main className="container! mx-auto p-4" style={{ minHeight: mainHeight }}>
       {children}
     </main>
   )
 }
-export default MainContent;
+export default MainContent
