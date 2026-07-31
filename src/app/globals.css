@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -54,6 +54,8 @@
   /* Font Family */
   /* Make sure to load Inter font in your app */
   --font-sans: 'Maple Mono CN', system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  view-transition-name: root;
 }
 
 .dark,
@@ -97,16 +99,18 @@
   ::-webkit-scrollbar {
     width: 2px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--scrollbar);
     border-radius: 2px;
   }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar) transparent;
   }
 }
-

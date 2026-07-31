@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 13:56:39
+ * @LastEditTime: 2026-07-31 16:35:12
  * @Description: 根布局文件
  */
 
@@ -69,7 +69,7 @@ export default function RootLayout({
         <link href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" rel="stylesheet" />
       </head>
       <body className="bg-background text-foreground">
-        <NextThemesProvider attribute="class">
+        <NextThemesProvider attribute="class" disableTransitionOnChange>
           <FullLoading />
           <Header />
           <MainContent>
