@@ -2,11 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 09:43:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-07 18:15:52
+ * @LastEditTime: 2026-07-31 17:18:59
  * @Description: 底部版权
  */
 'use client'
-import { Chip, cn, Description, Link, Separator } from '@heroui/react'
+import {
+  Chip,
+  cn,
+  Description,
+  Link,
+  Separator,
+} from '@heroui/react'
 import dayjs from 'dayjs'
 import Image from 'next/image'
 
@@ -36,7 +42,7 @@ export default function Footer() {
     },
   ]
   return (
-    <footer id="footer" className="mx-auto w-full container! px-6 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-2">
+    <footer className="shrink-0 mx-auto w-full container! px-6 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-2">
       <div className="flex items-center gap-3 justify-self-center sm:justify-self-start">
         <div className="flex items-center gap-2">
           <div className="size-5 relative">

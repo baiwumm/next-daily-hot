@@ -3,10 +3,12 @@ import dayjs from 'dayjs'
 
 import { RESPONSE } from '@/enums'
 
+import type { HotListItem, IResponse } from '@/types'
+
 /**
  * @description: 请求成功返回处理结果
  */
-export function responseSuccess(list?: App.HotListItem[]): App.IResponse {
+export function responseSuccess(list?: HotListItem[]): IResponse {
   return {
     msg: RESPONSE.label(RESPONSE.SUCCESS),
     code: RESPONSE.SUCCESS,
@@ -18,7 +20,7 @@ export function responseSuccess(list?: App.HotListItem[]): App.IResponse {
 /**
  * @description: 请求失败返回结果
  */
-export const responseError: App.IResponse = {
+export const responseError: IResponse = {
   msg: RESPONSE.label(RESPONSE.ERROR),
   code: RESPONSE.ERROR,
   timestamp: dayjs().valueOf(),

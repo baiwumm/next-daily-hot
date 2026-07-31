@@ -2,13 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 10:25:47
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 18:08:17
+ * @LastEditTime: 2026-07-31 17:36:08
  * @Description: 百度百科-历史上的今天
  */
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 获取月份
@@ -26,7 +28,7 @@ export async function GET() {
     // 得到请求体
     const responseBody = await response.json()
     // 处理数据
-    const result: App.HotListItem[] = responseBody[month][month + day].map((v, index: number) => {
+    const result: HotListItem[] = responseBody[month][month + day].map((v, index: number) => {
       return {
         id: index,
         title: v.title.replace(/<[^>]+>/g, ''),

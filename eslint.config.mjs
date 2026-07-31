@@ -153,11 +153,11 @@ export default antfu({
     ],
 
     // JSX 属性换行规则
-    // 每行最多 3 个 props，超过后换行
+    // 每行最多 5 个 props，超过后换行
     'style/jsx-max-props-per-line': [
       'error',
       {
-        maximum: 3,
+        maximum: 5,
       },
     ],
 
@@ -171,5 +171,19 @@ export default antfu({
         html: true,
       },
     ],
+
+    // 超过 6 个属性时强制换行
+    'object-curly-newline': ['error', {
+      ImportDeclaration: {
+        minProperties: 6,
+        multiline: true,
+        consistent: true,
+      },
+      ExportDeclaration: {
+        minProperties: 6,
+        multiline: true,
+        consistent: true,
+      },
+    }],
   },
 })

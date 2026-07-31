@@ -1,17 +1,9 @@
 'use client'
 
-import {
-  AnimatePresence,
-  motion,
-  useInView,
-} from 'motion/react'
+import { AnimatePresence, motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 
-import type {
-  MotionProps,
-  UseInViewOptions,
-  Variants,
-} from 'motion/react'
+import type { MotionProps, UseInViewOptions, Variants } from 'motion/react'
 
 interface BlurFadeProps extends MotionProps {
   children: React.ReactNode

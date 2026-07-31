@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import RowComponent from './RowComponent'
 
 import type { HOT_ITEMS } from '@/enums'
+import type { HotListItem } from '@/types'
 
 export default function HotListVirtual({
   data,
@@ -11,7 +12,7 @@ export default function HotListVirtual({
   prefix,
   suffix,
 }: {
-  data: App.HotListItem[]
+  data: HotListItem[]
   value: typeof HOT_ITEMS.valueType
   prefix?: React.ReactNode
   suffix?: React.ReactNode
@@ -26,32 +27,13 @@ export default function HotListVirtual({
   })
 
   return (
-    <div
-      ref={parentRef}
-      className="overflow-auto overflow-x-hidden"
-      style={{ height: '100%' }}
-    >
+    <div ref={parentRef} className="overflow-auto overflow-x-hidden h-full">
       {/* 👇 关键：撑开滚动高度 */}
-      <div
-        style={{
-          height: rowVirtualizer.getTotalSize(),
-          position: 'relative',
-        }}
-      >
+      <div className="relative" style={{ height: rowVirtualizer.getTotalSize() }}>
         {rowVirtualizer.getVirtualItems().map((virtualRow) => {
           const index = virtualRow.index
-
           return (
-            <div
-              key={virtualRow.key}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                transform: `translateY(${virtualRow.start}px)`,
-              }}
-            >
+            <div key={virtualRow.key} className="absolute top-0 left-0 w-full" style={{ transform: `translateY(${virtualRow.start}px)` }}>
               <RowComponent
                 data={data}
                 index={index}

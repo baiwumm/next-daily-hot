@@ -2,13 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-26 15:16:29
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 15:23:23
+ * @LastEditTime: 2026-07-31 17:38:28
  * @Description: 知乎日报 - 推荐榜
  */
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -33,7 +35,7 @@ export async function GET() {
     if (!data) {
       return NextResponse.json(responseSuccess())
     }
-    const result: App.HotListItem[] = data.map((v) => {
+    const result: HotListItem[] = data.map((v) => {
       return {
         id: v.id,
         title: v.title,

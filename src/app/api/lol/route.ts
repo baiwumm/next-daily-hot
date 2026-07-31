@@ -2,13 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 09:54:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 18:09:43
+ * @LastEditTime: 2026-07-31 17:34:41
  * @Description: 英雄联盟-更新公告
  */
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -24,7 +26,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.status === 1) {
-      const result: App.HotListItem[] = responseBody.data.result.map((v) => {
+      const result: HotListItem[] = responseBody.data.result.map((v) => {
         return {
           id: v.iDocID,
           title: v.sTitle,

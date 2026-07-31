@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 16:35:12
+ * @LastEditTime: 2026-07-31 17:21:01
  * @Description: 根布局文件
  */
 
@@ -18,7 +18,6 @@ import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
-import MainContent from '@/components/MainContent'
 import { HOT_ITEMS } from '@/enums'
 import pkg from '#/package.json'
 
@@ -68,13 +67,13 @@ export default function RootLayout({
         <link href="https://cdn.baiwumm.com" rel="preconnect" />
         <link href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" rel="stylesheet" />
       </head>
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground flex flex-col gap-4 min-h-screen">
         <NextThemesProvider attribute="class" disableTransitionOnChange>
           <FullLoading />
           <Header />
-          <MainContent>
+          <main className="flex-1 min-h-0 container! mx-auto px-4">
             {children}
-          </MainContent>
+          </main>
           <Footer />
           {/* 回到顶部 */}
           <BackTop />

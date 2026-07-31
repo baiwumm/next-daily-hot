@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-14 17:51:27
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 17:59:22
+ * @LastEditTime: 2026-07-31 17:37:21
  * @Description: 夸克-今日热点
  */
 import dayjs from 'dayjs'
@@ -10,6 +10,8 @@ import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -25,7 +27,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.status === 0) {
-      const result: App.HotListItem[] = responseBody.data.articles.map((v) => {
+      const result: HotListItem[] = responseBody.data.articles.map((v) => {
         return {
           id: v.id,
           title: v.title,

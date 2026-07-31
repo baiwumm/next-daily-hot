@@ -5,12 +5,13 @@
  * @LastEditTime: 2026-07-03 15:03:59
  * @Description: Github - 热门仓库
  */
-
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -45,7 +46,7 @@ export async function GET() {
     const responseBody = await response.text()
     const $ = cheerio.load(responseBody)
     const listDom = $('.Box article.Box-row')
-    const result: App.HotListItem[] = listDom.get().map((repo, index) => {
+    const result: HotListItem[] = listDom.get().map((repo, index) => {
       const $repo = $(repo)
       const relativeUrl = $repo.find('.h3').find('a').attr('href')
       return {

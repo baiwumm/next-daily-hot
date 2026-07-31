@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:33:28
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-17 17:22:43
+ * @LastEditTime: 2026-07-31 17:38:56
  * @Description: 热榜卡片
  */
 'use client'
@@ -14,6 +14,7 @@ import {
   Card,
   Chip,
   Description,
+  Label,
   ScrollShadow,
   Separator,
   Spinner,
@@ -35,13 +36,15 @@ import { useAppStore } from '@/store/useAppStore'
 
 import HotListVirtual from './HotListVirtual'
 
+import type { HotListConfig, IResponse } from '@/types'
+
 dayjs.extend(utc)
 dayjs.extend(timezone)
 // 引入处理相对时间的插件
 dayjs.extend(relativeTime)
 dayjs.locale('zh-cn')
 
-function HotCard({ value, label, tip, prefix, suffix }: App.HotListConfig) {
+function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   const setUpdateTime = useAppStore(state => state.setUpdateTime)
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
@@ -58,7 +61,7 @@ function HotCard({ value, label, tip, prefix, suffix }: App.HotListConfig) {
         if (response.status !== RESPONSE.SUCCESS) {
           throw new Error('Request failed')
         }
-        const result: App.IResponse = await response.json()
+        const result: IResponse = await response.json()
         if (result.code === RESPONSE.ERROR) {
           throw new Error('API returned error')
         }
@@ -93,7 +96,7 @@ function HotCard({ value, label, tip, prefix, suffix }: App.HotListConfig) {
             width={24}
             className="rounded-md shrink-0"
           />
-          <div className="font-bold text-sm">{label}</div>
+          <Label className="font-bold">{label}</Label>
         </div>
         <motion.div
           animate={{ opacity: 1, scale: 1 }}

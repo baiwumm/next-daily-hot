@@ -2,13 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-20 15:22:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-01 15:46:49
+ * @LastEditTime: 2026-07-31 17:36:32
  * @Description: HelloGithub - 精选
  */
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -30,7 +32,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.success) {
-      const result: App.HotListItem[] = responseBody.data.map((v) => {
+      const result: HotListItem[] = responseBody.data.map((v) => {
         return {
           id: v.item_id,
           title: `${v.name}-${v.title}`,

@@ -2,13 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-21 10:07:06
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-21 10:11:02
+ * @LastEditTime: 2026-07-31 17:38:04
  * @Description: 人人都是产品经理 - 热榜
  */
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -30,7 +32,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.CODE === 200) {
-      const result: App.HotListItem[] = responseBody.RESULT.map((v) => {
+      const result: HotListItem[] = responseBody.RESULT.map((v) => {
         const url = `https://www.woshipm.com/${v.data.type}/${v.data.id}.html`
         return {
           id: v.data.id,

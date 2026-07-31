@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-05-14 14:02:04
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 18:07:27
+ * @LastEditTime: 2026-07-31 17:35:06
  * @Description: 豆瓣电影-新片榜
  */
 import * as cheerio from 'cheerio'
@@ -10,6 +10,8 @@ import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -38,7 +40,7 @@ export async function GET() {
     }
     const $ = cheerio.load(responseBody)
     const listDom = $('.article tr.item')
-    const result: App.HotListItem[] = listDom.toArray().map((item) => {
+    const result: HotListItem[] = listDom.toArray().map((item) => {
       const dom = $(item)
       const url = dom.find('a').attr('href') || ''
       const score = dom.find('.rating_nums').text() ?? '0.0'

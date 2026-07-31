@@ -2,25 +2,20 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:40:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-04 14:02:05
+ * @LastEditTime: 2026-07-31 17:22:47
  * @Description: 判断是否移动端
  */
-import * as React from 'react'
-
-const MOBILE_BREAKPOINT = 768
+import { useState } from 'react'
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(undefined)
-
-  React.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`)
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
+  // Initialize state synchronously if possible, avoiding setState in effect
+  const [isMobile] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false
     }
-    mql.addEventListener('change', onChange)
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT)
-    return () => mql.removeEventListener('change', onChange)
-  }, [])
 
-  return !!isMobile
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+  })
+
+  return isMobile
 }

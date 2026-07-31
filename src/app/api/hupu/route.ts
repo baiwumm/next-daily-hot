@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-14 16:54:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 17:26:28
+ * @LastEditTime: 2026-07-31 17:36:56
  * @Description: 虎扑-步行街热帖
  */
 import * as cheerio from 'cheerio'
@@ -10,6 +10,8 @@ import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -28,7 +30,7 @@ export async function GET() {
     const data = JSON.parse(json.text().split('window.$$data=')[1])
       .pageData
       .threads
-    const result: App.HotListItem[] = data.map((v) => {
+    const result: HotListItem[] = data.map((v) => {
       return {
         id: v.tid,
         title: v.title,

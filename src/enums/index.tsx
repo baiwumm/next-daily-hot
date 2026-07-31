@@ -10,15 +10,6 @@ export const RESPONSE = Enum({
 })
 
 /**
- * @description: 主题模式
- */
-export const THEME_MODE = Enum({
-  LIGHT: { value: 'light', label: '浅色模式', icon: 'sun' },
-  DARK: { value: 'dark', label: '深色模式', icon: 'moon' },
-  SYSTEM: { value: 'system', label: '跟随系统', icon: 'laptop' },
-})
-
-/**
  * @description: 热榜子项
  */
 export const HOT_ITEMS = Enum({

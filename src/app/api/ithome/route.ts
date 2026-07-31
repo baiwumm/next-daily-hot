@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-26 15:47:22
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 15:52:15
+ * @LastEditTime: 2026-07-31 17:34:34
  * @Description: IT之家- 热榜
  */
 import * as cheerio from 'cheerio'
@@ -10,6 +10,8 @@ import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
 import { responseError, responseSuccess } from '@/lib/utils'
+
+import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
@@ -37,7 +39,7 @@ export async function GET() {
     }
     const $ = cheerio.load(responseBody)
     const listDom = $('.rank-box .placeholder')
-    const result: App.HotListItem[] = listDom.toArray().map((item, index) => {
+    const result: HotListItem[] = listDom.toArray().map((item, index) => {
       const dom = $(item)
       const href = dom.find('a').attr('href')
       return {

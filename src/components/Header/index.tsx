@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-17 17:22:18
+ * @LastEditTime: 2026-07-31 17:18:38
  * @Description: 顶部布局
  */
 'use client'
@@ -17,7 +17,7 @@ import pkg from '#/package.json'
 
 export default function Header() {
   return (
-    <div id="header" className="sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center">
+    <div className="shrink-0 sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center">
       <div className="flex gap-2 items-center justify-self-start">
         <div className="size-9 relative">
           <Image alt="Logo" fill src="/logo.svg" />

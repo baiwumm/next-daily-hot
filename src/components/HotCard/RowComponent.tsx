@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-12 15:12:53
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 17:52:57
+ * @LastEditTime: 2026-07-31 17:33:53
  * @Description: 动态列表子项
  */
 import { Description } from '@heroui/react'
@@ -12,11 +12,12 @@ import OverflowDetector from '@/components/OverflowDetector'
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils'
 
 import type { HOT_ITEMS } from '@/enums'
+import type { HotListItem } from '@/types'
 import type { ReactNode } from 'react'
 
 interface RowData {
   index: number
-  data: App.HotListItem[]
+  data: HotListItem[]
   value: typeof HOT_ITEMS.valueType
   prefix?: ReactNode
   suffix?: ReactNode

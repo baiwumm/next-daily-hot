@@ -7,7 +7,16 @@
  */
 'use client'
 import { BucketPaint, Gear, Grip } from '@gravity-ui/icons'
-import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal, toast } from '@heroui/react'
+import {
+  AlertDialog,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  cn,
+  Label,
+  Modal,
+  toast,
+} from '@heroui/react'
 import Image from 'next/image'
 import { useEffect, useMemo } from 'react'
 

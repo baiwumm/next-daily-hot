@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 14:36:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-17 17:23:00
+ * @LastEditTime: 2026-07-31 17:33:46
  * @Description: 判断文本是否溢出
  */
 'use client'
@@ -14,9 +14,10 @@ import { memo, useEffect, useRef, useState } from 'react'
 import { useIsMobile } from '@/hooks/use-is-mobile'
 
 import type { HOT_ITEMS } from '@/enums'
+import type { HotListItem } from '@/types'
 
 interface OverflowDetectorProps {
-  record: App.HotListItem
+  record: HotListItem
   type: typeof HOT_ITEMS.valueType
 }
 

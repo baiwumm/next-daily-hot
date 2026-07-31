@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-05 09:13:12
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-03 17:24:59
+ * @LastEditTime: 2026-07-31 17:29:46
  * @Description: 日期时间
  */
 import { Description } from '@heroui/react'
@@ -14,7 +14,7 @@ import { memo, useEffect, useState } from 'react'
 import type { FC } from 'react'
 
 const TimeAndLunar: FC = memo(() => {
-  const [now, setNow] = useState(new Date())
+  const [now, setNow] = useState(() => new Date())
   const [lunar, setLunar] = useState('')
 
   useEffect(() => {

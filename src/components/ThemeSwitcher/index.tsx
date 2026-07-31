@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-13 17:03:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 17:02:18
+ * @LastEditTime: 2026-07-31 17:41:54
  * @Description: 主题切换
  */
 'use client'
@@ -12,7 +12,6 @@ import { AnimatePresence, motion } from 'motion/react'
 import { useTheme } from 'next-themes'
 import { useEffect, useRef } from 'react'
 
-import { THEME_MODE } from '@/enums'
 import { useBlurCircleTheme } from '@/hooks/use-blur-circle-theme'
 
 import type { FC } from 'react'
@@ -25,12 +24,12 @@ const ThemeSwitcher: FC = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
 
   // 使用 next-themes 控制主题
-  const isDarkMode = theme === THEME_MODE.DARK || resolvedTheme === THEME_MODE.DARK
+  const isDarkMode = theme === 'dark' || resolvedTheme === 'dark'
 
   const { ref, toggleTheme, isAnimating } = useBlurCircleTheme({
     isDarkMode,
     onDarkModeChange: (nextIsDark) => {
-      setTheme(nextIsDark ? THEME_MODE.DARK : THEME_MODE.LIGHT)
+      setTheme(nextIsDark ? 'dark' : 'light')
     },
     duration: 750,
     blurAmount: 2,
