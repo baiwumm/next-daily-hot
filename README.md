@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./public/logo.svg" alt="logo" height="90" />
   <h1>今日热榜</h1>
-  <p align="center">汇聚全网热点，热门尽览无余</p>
+  <p align="center">汇聚全网热点资讯，实时掌握热门趋势</p>
   <p align="center">
     <img src="https://img.shields.io/badge/Next-16.0-black?style=flat&logo=Next.js" alt="Next.js">
     <img src="https://img.shields.io/badge/HeroUI-3+-000000?style=flat&logo=HEROui&logoColor=white" alt="HeroUI"/>
@@ -55,7 +55,7 @@ http://localhost:3000
 
 部署完成后，请在 **Vercel Project Settings → Environment Variables** 中配置环境变量。
 
-环境变量参考：[.env.example](./.env.example)
+环境变量参考：[.env](./.env)
 
 ### ⭐ 支持项目
 <div align="center">
