@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.7.1](https://github.com/baiwumm/next-daily-hot/compare/3.7.0...3.7.1) (2026-08-03)
+
+### ✨ Features | 新功能
+
+* update README.md ([7139925](https://github.com/baiwumm/next-daily-hot/commit/713992598f0afe8e17710c4e37fcd2b5626b8b90))
+
 ## [3.7.0](https://github.com/baiwumm/next-daily-hot/compare/3.6.10...3.7.0) (2026-07-31)
 
 ### ✨ Features | 新功能
