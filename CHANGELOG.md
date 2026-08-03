@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.7.2](https://github.com/baiwumm/next-daily-hot/compare/3.7.1...3.7.2) (2026-08-03)
+
+### 🎫 Chores | 其他更新
+
+* 去掉 .env.example 文件 ([2690e3a](https://github.com/baiwumm/next-daily-hot/commit/2690e3a1c4299a46c248e8dae23066fb5bdbb9eb))
+
 ## [3.7.1](https://github.com/baiwumm/next-daily-hot/compare/3.7.0...3.7.1) (2026-08-03)
 
 ### ✨ Features | 新功能
