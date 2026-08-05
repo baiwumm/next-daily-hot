@@ -1,100 +1,117 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
- * @Date: 2025-11-20 09:10:01
+ * @Date: 2026-01-13 17:03:51
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-26 09:25:12
+ * @LastEditTime: 2026-07-31 17:41:54
  * @Description: 主题切换
  */
-'use client';
-import { Button } from "@heroui/react";
-import { Moon, Sun } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
-import { useTheme } from "next-themes";
-import { type FC, useEffect, useState } from 'react';
+'use client'
+import { Moon, Sun } from '@gravity-ui/icons'
+import { Button, Tooltip, useIsHydrated } from '@heroui/react'
+import { AnimatePresence, motion } from 'motion/react'
+import { useTheme } from 'next-themes'
+import { useEffect, useRef } from 'react'
 
-import { THEME_MODE } from '@/enums';
+import { useBlurCircleTheme } from '@/hooks/use-blur-circle-theme'
+
+import type { FC } from 'react'
+
+const MotionMoon = motion.create(Moon)
+const MotionSun = motion.create(Sun)
 
 const ThemeSwitcher: FC = () => {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const hydrated = useIsHydrated()
+  const { theme, setTheme, resolvedTheme } = useTheme()
 
-  // 在客户端加载后，更新 mounted 状态，避免服务端渲染时的差异
-  // 延迟更新 mounted 状态
+  // 使用 next-themes 控制主题
+  const isDarkMode = theme === 'dark' || resolvedTheme === 'dark'
+
+  const { ref, toggleTheme, isAnimating } = useBlurCircleTheme({
+    isDarkMode,
+    onDarkModeChange: (nextIsDark) => {
+      setTheme(nextIsDark ? 'dark' : 'light')
+    },
+    duration: 750,
+    blurAmount: 2,
+  })
+
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0); // 延迟到下一轮渲染
-    return () => clearTimeout(timer);
-  }, []);
+    audioRef.current = new Audio('/sounds/theme-toggle.mp3')
+    audioRef.current.volume = 0.4
+    audioRef.current.preload = 'auto'
+    audioRef.current.load()
 
-  // 如果组件还没有挂载，返回一个空元素或者加载状态
-  if (!mounted) {
-    return null; // 或者可以返回一个 loading 动画
-  }
-
-  const isLight = theme === THEME_MODE.LIGHT;
-
-  // 切换模式
-  const toggleTheme = () => {
-    setTheme(isLight ? THEME_MODE.DARK : THEME_MODE.LIGHT);
-  };
-
-  // 判断是否支持 startViewTransition API
-  const enableTransitions = () =>
-    "startViewTransition" in document && window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-
-  // 切换动画
-  async function toggleDark() {
-
-    if (!enableTransitions()) {
-      toggleTheme();
-      return;
-    }
-
-    await document.startViewTransition(async () => {
-      toggleTheme();
-    }).ready;
-
-    document.documentElement.animate(
-      { clipPath: ['inset(0 100% 0 0)', 'inset(0 0 0 0)'] },
-      {
-        duration: 700,
-        easing: 'ease-in-out',
-        pseudoElement: '::view-transition-new(root)',
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
       }
-    );
+    }
+  }, [])
+
+  const playSound = () => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio('/sounds/theme-toggle.mp3')
+    }
+    audioRef.current.currentTime = 0
+    audioRef.current.play().catch((error) => {
+      console.warn('Failed to play audio:', error)
+    })
   }
+
+  const handleToggle = () => {
+    if (isAnimating)
+      return // 防止动画期间重复点击
+    playSound()
+    toggleTheme()
+  }
+
+  // 服务端渲染时返回占位
+  if (!hydrated) {
+    return null
+  }
+
   return (
-    <>
-      <Button isIconOnly aria-label="ThemeSwitcher" variant="ghost" size="sm" onPress={toggleDark} className="rounded-full">
-        <AnimatePresence mode="wait" initial={false}>
-          {isLight ? (
-            <motion.div
-              key="sun"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="text-neutral-800 dark:text-neutral-200 flex justify-center items-center"
-            >
-              <Sun />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="moon"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="text-neutral-800 dark:text-neutral-200 flex justify-center items-center"
-            >
-              <Moon />
-            </motion.div>
-          )}
+    <Tooltip delay={0}>
+      <Button
+        ref={ref}
+        aria-label="ThemeSwitcher"
+        size="sm"
+        variant="ghost"
+        isDisabled={isAnimating}
+        isIconOnly
+        onPress={handleToggle}
+      >
+        <AnimatePresence initial={false} mode="wait">
+          {isDarkMode
+            ? (
+                <MotionMoon
+                  key="moon"
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6 }}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
+                />
+              )
+            : (
+                <MotionSun
+                  key="sun"
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6 }}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  transition={{ duration: 0.2, ease: 'easeInOut' }}
+                />
+              )}
         </AnimatePresence>
       </Button>
-      <style>{`::view-transition-old(root), ::view-transition-new(root){animation:none;mix-blend-mode:normal;}`}</style>
-    </>
-  );
+      <Tooltip.Content showArrow>
+        <Tooltip.Arrow />
+        主题切换
+      </Tooltip.Content>
+    </Tooltip>
+  )
 }
-export default ThemeSwitcher;
+
+export default ThemeSwitcher

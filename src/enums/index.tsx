@@ -1,27 +1,19 @@
-import { Enum } from 'enum-plus';
-import { Star } from 'lucide-react';
+import { Star } from '@gravity-ui/icons'
+import { Enum } from 'enum-plus'
 
 /**
  * @description: 请求状态
  */
 export const RESPONSE = Enum({
   SUCCESS: { value: 200, label: '请求成功' },
-  ERROR: { value: 500, label: '请求失败' }
+  ERROR: { value: 500, label: '请求失败' },
 })
-
-/**
- * @description: 主题模式
- */
-export const THEME_MODE = Enum({
-  LIGHT: { value: 'light', label: '浅色模式', icon: 'sun' },
-  DARK: { value: 'dark', label: '深色模式', icon: 'moon' },
-  SYSTEM: { value: 'system', label: '跟随系统', icon: 'laptop' }
-});
 
 /**
  * @description: 热榜子项
  */
 export const HOT_ITEMS = Enum({
+
   WEIBO: { value: 'weibo', label: '微博', tip: '热搜榜' },
   XIAOHONGSHU: { value: 'xiaohongshu', label: '小红书', tip: '实时热榜' },
   GITHUB_TRENDING: { value: 'github-trending', label: 'Github', tip: '热门仓库', suffix: <Star size={12} /> },
@@ -53,5 +45,6 @@ export const HOT_ITEMS = Enum({
   ZHIHU_DAILY: { value: 'zhihu-daily', label: '知乎日报', tip: '推荐榜' },
   IFANR: { value: 'ifanr', label: '爱范儿', tip: '快讯' },
   ITHOME: { value: 'ithome', label: 'IT之家', tip: '热榜' }
+
 
 })

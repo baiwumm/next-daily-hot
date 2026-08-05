@@ -1,5 +1,156 @@
 # Changelog
 
+## [3.7.2](https://github.com/baiwumm/next-daily-hot/compare/3.7.1...3.7.2) (2026-08-03)
+
+### 🎫 Chores | 其他更新
+
+* 去掉 .env.example 文件 ([2690e3a](https://github.com/baiwumm/next-daily-hot/commit/2690e3a1c4299a46c248e8dae23066fb5bdbb9eb))
+
+## [3.7.1](https://github.com/baiwumm/next-daily-hot/compare/3.7.0...3.7.1) (2026-08-03)
+
+### ✨ Features | 新功能
+
+* update README.md ([7139925](https://github.com/baiwumm/next-daily-hot/commit/713992598f0afe8e17710c4e37fcd2b5626b8b90))
+
+## [3.7.0](https://github.com/baiwumm/next-daily-hot/compare/3.6.10...3.7.0) (2026-07-31)
+
+### ✨ Features | 新功能
+
+* **ThemeSwitcher:** 添加主题切换过渡动画 ([5d5c355](https://github.com/baiwumm/next-daily-hot/commit/5d5c35510c00253980a009506956d96dda61a2de))
+
+### 🎫 Chores | 其他更新
+
+* 完善应用配置信息 ([48973e0](https://github.com/baiwumm/next-daily-hot/commit/48973e0d6c9ac9dc46c88683e3f4b1f24f4395f9))
+
+### 💄 Styles | 风格
+
+* eslint 换成 @antfu/eslint-config，统一代码风格 ([1bc61c8](https://github.com/baiwumm/next-daily-hot/commit/1bc61c83a5940fe08623b10906e1e92b716f9eb0))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化代码逻辑和结构 ([70a614c](https://github.com/baiwumm/next-daily-hot/commit/70a614c01bce752a7f6d32f06ed916516001ec25))
+
+## [3.6.10](https://github.com/baiwumm/next-daily-hot/compare/3.6.9...3.6.10) (2026-07-22)
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化 env 文件配置和示例 ([055e0b2](https://github.com/baiwumm/next-daily-hot/commit/055e0b27ac08d4598a1ff13007270c3c0071bb20))
+
+## [3.6.9](https://github.com/baiwumm/next-daily-hot/compare/3.6.8...3.6.9) (2026-07-22)
+
+### ⚡ Performance Improvements | 性能优化
+
+* **FullLoading:** 使用 useIsHydrated 代替 mounted ([8b3aa84](https://github.com/baiwumm/next-daily-hot/commit/8b3aa84ca051626281ad0db0088963bd54f5a121))
+
+## [3.6.8](https://github.com/baiwumm/next-daily-hot/compare/3.6.7...3.6.8) (2026-07-17)
+
+### ⚡ Performance Improvements | 性能优化
+
+* 设置  Tooltip 的延迟为0 ([8211189](https://github.com/baiwumm/next-daily-hot/commit/8211189b0edeb1464a26c6da7fa7f0e53e12f6de))
+
+## [3.6.7](https://github.com/baiwumm/next-daily-hot/compare/3.6.6...3.6.7) (2026-07-07)
+
+### 💄 Styles | 风格
+
+* UI 调整 ([c62c25f](https://github.com/baiwumm/next-daily-hot/commit/c62c25fdb15d0cde11b85bb9462c2c22bffe26d2))
+
+## [3.6.6](https://github.com/baiwumm/next-daily-hot/compare/3.6.5...3.6.6) (2026-07-07)
+
+### ⚡ Performance Improvements | 性能优化
+
+* **BackTop:** 优化交互逻辑 ([e378863](https://github.com/baiwumm/next-daily-hot/commit/e3788630bf2c74b27726a5fadaa61d6bdbe63ddd))
+
+## [3.6.5](https://github.com/baiwumm/next-daily-hot/compare/3.6.4...3.6.5) (2026-07-07)
+
+### ⚡ Performance Improvements | 性能优化
+
+* **ThemeSwitcher:** 优化主题切换逻辑 ([89e42a2](https://github.com/baiwumm/next-daily-hot/commit/89e42a25ab96be0b87ed3d0a4892f5f46bb4336b))
+
+## [3.6.4](https://github.com/baiwumm/next-daily-hot/compare/3.6.3...3.6.4) (2026-07-07)
+
+### 🔧 Continuous Integration | CI 配置
+
+* 使用默认端口 ([ec2d9f6](https://github.com/baiwumm/next-daily-hot/commit/ec2d9f67b1ed7d5d3ae81a73250a4b0de22db0fe))
+
+## [3.6.3](https://github.com/baiwumm/next-daily-hot/compare/3.6.2...3.6.3) (2026-07-06)
+
+### ✨ Features | 新功能
+
+* update README.md ([f378062](https://github.com/baiwumm/next-daily-hot/commit/f37806277ce294d435ef314bedc410a64d2abfd0))
+
+## [3.6.2](https://github.com/baiwumm/next-daily-hot/compare/3.6.1...3.6.2) (2026-07-06)
+
+### 💄 Styles | 风格
+
+* 去除重复的样式 ([48594cf](https://github.com/baiwumm/next-daily-hot/commit/48594cf343e7cb6f083002cace8be3260d650462))
+
+## [3.6.1](https://github.com/baiwumm/next-daily-hot/compare/3.6.0...3.6.1) (2026-07-03)
+
+### ✨ Features | 新功能
+
+* **public:** 整理图片文件 ([1dd7889](https://github.com/baiwumm/next-daily-hot/commit/1dd78894101c4fb187b792e4ef9e6145da7d020a))
+
+## [3.6.0](https://github.com/baiwumm/next-daily-hot/compare/3.5.6...3.6.0) (2026-07-03)
+
+### ✨ Features | 新功能
+
+* 使用 @gravity-ui/icons 代替 lucide-react ([adaceb3](https://github.com/baiwumm/next-daily-hot/commit/adaceb38aedd879ee69516918c2a720645774297))
+* **HotCard:** 使用 @tanstack/react-virtual 代替 react-window 实现虚拟列表 ([657377b](https://github.com/baiwumm/next-daily-hot/commit/657377b3a937f62495f198890d65085a3df6e65e))
+* **TimeAndLunar:** 时间显示改用 NumberFlow 滚动，优化交互 ([23ef35e](https://github.com/baiwumm/next-daily-hot/commit/23ef35e0e553ac2003ee0d505c2bc19c34d34c5b))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 解决 github-trending tip 没数据的问题 ([8f44447](https://github.com/baiwumm/next-daily-hot/commit/8f4444796b3e6c0fed43036c7661431fe1591298))
+
+### 💄 Styles | 风格
+
+* 优化顶部和底部在小屏幕下的样式 ([241d3d7](https://github.com/baiwumm/next-daily-hot/commit/241d3d7eb7e42d26b859e56e78076c1fa7d6cad4))
+* 优化首页背景和样式 ([b58ad61](https://github.com/baiwumm/next-daily-hot/commit/b58ad61dfca1ab53438f9474f8d9b916194c853e))
+* Logo 给个圆角样式 ([b967952](https://github.com/baiwumm/next-daily-hot/commit/b9679526ae291291750ad5ac13a501655711c1f7))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 删除没用的代码和依赖 ([15a4424](https://github.com/baiwumm/next-daily-hot/commit/15a442442cec325850ecc66db940c2bdbcdde179))
+* 优化卡片加载样式 ([2535489](https://github.com/baiwumm/next-daily-hot/commit/253548967c232cf8a1b3e781b95d13d81ac0eefe))
+* **Footer:** 使用 Chip 代替 Status 组件 ([380ef7a](https://github.com/baiwumm/next-daily-hot/commit/380ef7a11f0abd6838124a7a88bfc48950d24db2))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 新增 @number-flow/react 包 ([a5caa1f](https://github.com/baiwumm/next-daily-hot/commit/a5caa1f048bd45aed24c03b2b59ae969cdcdd009))
+
+## [3.5.6](https://github.com/baiwumm/next-daily-hot/compare/3.5.5...3.5.6) (2026-07-01)
+
+### ✨ Features | 新功能
+
+* 更新 demo 图 ([90195c9](https://github.com/baiwumm/next-daily-hot/commit/90195c9263757314e97f83e2e29a26025dbc541c))
+* **Header:** 添加 Tooltip 显示 ([9d615e5](https://github.com/baiwumm/next-daily-hot/commit/9d615e512ed8cb8f0b63e69b3001a4bd6eacaf24))
+
+### 💄 Styles | 风格
+
+* 优化 UI 主题样式 ([6faa4fa](https://github.com/baiwumm/next-daily-hot/commit/6faa4fae27bd4f4287f592332b808346c001fa1a))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 降低 eslint 到 v9 版本，优化 lint 语法 ([d02b5bf](https://github.com/baiwumm/next-daily-hot/commit/d02b5bfb48931f270926f20a3cd1ccbe75f0ee80))
+
+## [3.5.5](https://github.com/baiwumm/next-daily-hot/compare/3.5.4...3.5.5) (2026-07-01)
+
+### ✨ Features | 新功能
+
+* 去除社交信息，优化底部版本 ([5fd6889](https://github.com/baiwumm/next-daily-hot/commit/5fd6889cd8ca200b916570133e272fe7f636cf8c))
+* 删除 Umami 统计代码 ([aad3f86](https://github.com/baiwumm/next-daily-hot/commit/aad3f869c06e4b9e519d3e55f67c7059b3ba4e1a))
+
+## [3.5.4](https://github.com/baiwumm/next-daily-hot/compare/3.5.3...3.5.4) (2026-06-26)
+
+### 💄 Styles | 风格
+
+* **components:** 更新 Status 组件 variant 样式 ([1a35542](https://github.com/baiwumm/next-daily-hot/commit/1a35542c5822682c16543bdef9d8b3208153b8d4))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 更新 Hero UI 版本 ([9762d58](https://github.com/baiwumm/next-daily-hot/commit/9762d58a65c28b08cac2d6c88407277e626b19fb))
+* 更新包版本 ([bdcbada](https://github.com/baiwumm/next-daily-hot/commit/bdcbada07e46e30c3ff8df6ecb93c707942b585c))
+
 ## [3.5.3](///compare/3.5.2...3.5.3) (2026-03-16)
 
 ### Performance Improvements

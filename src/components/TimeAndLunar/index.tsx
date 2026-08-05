@@ -2,49 +2,66 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2026-01-05 09:13:12
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-03-11 16:05:45
+ * @LastEditTime: 2026-07-31 17:29:46
  * @Description: 日期时间
  */
-import { Description } from "@heroui/react";
-import dayjs from 'dayjs';
-import { Lunar } from 'lunar-typescript';
-import { type FC, memo, useEffect, useState } from 'react';
+import { Description } from '@heroui/react'
+import NumberFlow, { NumberFlowGroup } from '@number-flow/react'
+import dayjs from 'dayjs'
+import { Lunar } from 'lunar-typescript'
+import { memo, useEffect, useState } from 'react'
 
-const TimeAndLunar: FC = memo(function TimeAndLunar() {
-  const [time, setTime] = useState('');
-  const [lunar, setLunar] = useState('');
+import type { FC } from 'react'
+
+const TimeAndLunar: FC = memo(() => {
+  const [now, setNow] = useState(() => new Date())
+  const [lunar, setLunar] = useState('')
 
   useEffect(() => {
-    let lastDate = '';
-    let frameId: number;
+    let lastDate = ''
+    let frameId: number
 
     const tick = () => {
-      const now = new Date();
-      const timeStr = dayjs(now).format('YYYY-MM-DD HH:mm:ss');
-      setTime(timeStr);
+      const current = new Date()
+      setNow(current)
 
-      const dateStr = dayjs(now).format('YYYY-MM-DD');
+      const dateStr = dayjs(current).format('YYYY-MM-DD')
       if (dateStr !== lastDate) {
-        lastDate = dateStr;
-        const l = Lunar.fromDate(now);
-        const text = `${l.getYearInGanZhi()}年 ${l.getMonthInGanZhi()}月 ${l.getDayInGanZhi()}日 ${l.getMonthInChinese()}月${l.getDayInChinese()} 星期${l.getWeekInChinese()}`;
-        setLunar(text);
+        lastDate = dateStr
+
+        const l = Lunar.fromDate(current)
+        setLunar(
+          `${l.getYearInGanZhi()}年 ${l.getMonthInGanZhi()}月 ${l.getDayInGanZhi()}日 ${l.getMonthInChinese()}月${l.getDayInChinese()} 星期${l.getWeekInChinese()}`,
+        )
       }
 
-      // 使用 requestAnimationFrame 代替 setInterval，更流畅
-      frameId = requestAnimationFrame(tick);
-    };
+      frameId = requestAnimationFrame(tick)
+    }
 
-    frameId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frameId);
-  }, []);
+    frameId = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frameId)
+  }, [])
+
+  const d = now
 
   return (
     <div className="justify-self-center hidden sm:flex flex-col gap-1 text-center">
-      <div className="text-sm">{time || '正在加载时间...'}</div>
-      <Description>{lunar}</Description>
+      {/* 数字流时间 */}
+      <NumberFlowGroup>
+        <div className="flex items-center justify-center text-sm">
+          <NumberFlow format={{ useGrouping: false }} value={d.getFullYear()} />
+          <NumberFlow format={{ minimumIntegerDigits: 2 }} prefix="-" value={d.getMonth() + 1} />
+          <NumberFlow format={{ minimumIntegerDigits: 2 }} prefix="-" value={d.getDate()} />
+          <span className="mx-1"> </span>
+          <NumberFlow format={{ minimumIntegerDigits: 2 }} value={d.getHours()} />
+          <NumberFlow format={{ minimumIntegerDigits: 2 }} prefix=":" value={d.getMinutes()} />
+          <NumberFlow format={{ minimumIntegerDigits: 2 }} prefix=":" value={d.getSeconds()} />
+        </div>
+      </NumberFlowGroup>
+      {/* 农历 */}
+      <Description>{lunar || '加载农历中...'}</Description>
     </div>
-  );
-});
+  )
+})
 
-export default TimeAndLunar;
+export default TimeAndLunar
