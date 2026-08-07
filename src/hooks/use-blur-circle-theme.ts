@@ -9,6 +9,14 @@ interface UseBlurCircleThemeProps {
   onDarkModeChange?: (isDark: boolean) => void // 调用 next-themes 的 setTheme
 }
 
+// 高分辨率屏幕检测：影响遮罩半径与缩放因子，避免高分屏下动画闪烁/性能问题
+function isHighResolution() {
+  return typeof window !== 'undefined' && (window.innerWidth >= 3000 || window.innerHeight >= 2000)
+}
+
+// 模糊圆 SVG mask 缓存：同一 blur + 分辨率组合只生成一次
+const maskCache = new Map<string, string>()
+
 export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
   const {
     duration: customDuration = 750,
@@ -17,7 +25,6 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
     onDarkModeChange,
   } = props
 
-  const isBrowser = typeof window !== 'undefined'
   const ref = useRef<HTMLButtonElement>(null)
   const id = useId()
   const animationIdRef = useRef(`blur-circle-${id}`)
@@ -49,16 +56,6 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
     }
   }, [])
 
-  // 创建模糊圆遮罩
-  const createBlurCircleMask = (blur: number) => {
-    const isHighResolution = isBrowser && (window.innerWidth >= 3000 || window.innerHeight >= 2000)
-
-    const circleRadius = isHighResolution ? 20 : 25
-    const blurFilter = `<filter id="blur"><feGaussianBlur stdDeviation="${blur}" /></filter>`
-
-    return `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100"><defs>${blurFilter}</defs><circle cx="0" cy="0" r="${circleRadius}" fill="white" filter="url(%23blur)"/></svg>')`
-  }
-
   const toggleTheme = async () => {
     // 防止重复点击
     if (isAnimating)
@@ -76,89 +73,90 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
     setIsAnimating(true)
     const styleId = animationIdRef.current
 
-    // 移除旧的样式
-    const existingStyle = document.getElementById(styleId)
-    if (existingStyle) {
-      existingStyle.remove()
-    }
-
-    // 获取按钮位置
-    const { top, left, width, height } = ref.current.getBoundingClientRect()
-    const x = left + width / 2
-    const y = top + height / 2
-
-    // 计算遮罩大小
-    const viewportSize = Math.max(window.innerWidth, window.innerHeight) + 200
-    const isHighResolution = isBrowser && (window.innerWidth >= 3000 || window.innerHeight >= 2000)
-
-    const scaleFactor = isHighResolution ? 2.5 : 4
-    const optimalMaskSize = isHighResolution
-      ? Math.min(viewportSize * scaleFactor, 5000)
-      : viewportSize * scaleFactor
-
-    const topLeft = Math.hypot(x, y)
-    const topRight = Math.hypot(window.innerWidth - x, y)
-    const bottomLeft = Math.hypot(x, window.innerHeight - y)
-    const bottomRight = Math.hypot(window.innerWidth - x, window.innerHeight - y)
-    const maxRadius = Math.max(topLeft, topRight, bottomLeft, bottomRight)
-
-    const blurFactor = isHighResolution ? 1.5 : 1.2
-    const finalMaskSize = Math.max(optimalMaskSize, maxRadius * 2.5)
-
-    const duration = isHighResolution
-      ? Math.max(customDuration * 0.8, 500)
-      : customDuration
-
-    // 注入动画样式
-    const styleElement = document.createElement('style')
-    styleElement.id = styleId
-    styleElement.textContent = `
-      ::view-transition-group(root) {
-        animation-duration: ${duration}ms;
-        animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
-        will-change: transform;
+    try {
+      // 移除旧的样式
+      const existingStyle = document.getElementById(styleId)
+      if (existingStyle) {
+        existingStyle.remove()
       }
 
-      ::view-transition-new(root) {
-        mask: ${createBlurCircleMask(blurAmount * blurFactor)} 0 0 / 100% 100% no-repeat;
-        mask-position: ${x}px ${y}px;
-        animation: maskScale ${duration}ms ease-in-out forwards;
-        transform-origin: ${x}px ${y}px;
-        will-change: mask-size, mask-position;
-      }
+      // 获取按钮位置
+      const { top, left, width, height } = ref.current.getBoundingClientRect()
+      const x = left + width / 2
+      const y = top + height / 2
 
-      ::view-transition-old(root) {
-        animation: maskScale ${duration}ms ease-in-out forwards;
-        transform-origin: ${x}px ${y}px;
-        z-index: -1;
-        will-change: mask-size, mask-position;
-      }
+      // 计算遮罩大小
+      const viewportSize = Math.max(window.innerWidth, window.innerHeight) + 200
+      const highRes = isHighResolution()
 
-      @keyframes maskScale {
-        0% {
-          mask-size: 0px;
+      const scaleFactor = highRes ? 2.5 : 4
+      const optimalMaskSize = highRes
+        ? Math.min(viewportSize * scaleFactor, 5000)
+        : viewportSize * scaleFactor
+
+      const topLeft = Math.hypot(x, y)
+      const topRight = Math.hypot(window.innerWidth - x, y)
+      const bottomLeft = Math.hypot(x, window.innerHeight - y)
+      const bottomRight = Math.hypot(window.innerWidth - x, window.innerHeight - y)
+      const maxRadius = Math.max(topLeft, topRight, bottomLeft, bottomRight)
+
+      const blurFactor = highRes ? 1.5 : 1.2
+      const finalMaskSize = Math.max(optimalMaskSize, maxRadius * 2.5)
+
+      const duration = highRes
+        ? Math.max(customDuration * 0.8, 500)
+        : customDuration
+
+      // 注入动画样式
+      const styleElement = document.createElement('style')
+      styleElement.id = styleId
+      styleElement.textContent = `
+        ::view-transition-group(root) {
+          animation-duration: ${duration}ms;
+          animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+          will-change: transform;
+        }
+
+        ::view-transition-new(root) {
+          mask: ${createBlurCircleMask(blurAmount * blurFactor)} 0 0 / 100% 100% no-repeat;
           mask-position: ${x}px ${y}px;
+          animation: maskScale ${duration}ms ease-in-out forwards;
+          transform-origin: ${x}px ${y}px;
+          will-change: mask-size, mask-position;
         }
-        100% {
-          mask-size: ${finalMaskSize}px;
-          mask-position: ${x - finalMaskSize / 2}px ${y - finalMaskSize / 2}px;
-        }
-      }
-    `
-    document.head.appendChild(styleElement)
 
-    // 执行主题切换
-    const transition = (document as any).startViewTransition(() => {
-      // eslint-disable-next-line react/dom-no-flush-sync
-      flushSync(() => {
-        onDarkModeChange?.(!isDarkMode)
+        ::view-transition-old(root) {
+          animation: maskScale ${duration}ms ease-in-out forwards;
+          transform-origin: ${x}px ${y}px;
+          z-index: -1;
+          will-change: mask-size, mask-position;
+        }
+
+        @keyframes maskScale {
+          0% {
+            mask-size: 0px;
+            mask-position: ${x}px ${y}px;
+          }
+          100% {
+            mask-size: ${finalMaskSize}px;
+            mask-position: ${x - finalMaskSize / 2}px ${y - finalMaskSize / 2}px;
+          }
+        }
+      `
+      document.head.appendChild(styleElement)
+
+      // 执行主题切换
+      const transition = (document as any).startViewTransition(() => {
+        // eslint-disable-next-line react/dom-no-flush-sync
+        flushSync(() => {
+          onDarkModeChange?.(!isDarkMode)
+        })
       })
-    })
 
-    await transition.ready
+      // 等待动画真正完成后再清理样式（比 setTimeout 硬编码更精确）
+      await transition.finished
 
-    // 平滑清理样式 - 修复闪烁的核心
-    setTimeout(() => {
+      // 平滑清理样式 - 修复闪烁的核心
       const styleEl = document.getElementById(styleId)
       if (styleEl) {
         // 1. 先创建一个保持最终状态的稳定样式
@@ -203,24 +201,19 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
               // 等待淡出完成后移除
               setTimeout(() => {
                 stableEl.remove()
-                setIsAnimating(false)
               }, 200)
-            }
-            else {
-              setIsAnimating(false)
             }
           }, 100)
         })
       }
-      else {
-        setIsAnimating(false)
-      }
-    }, duration + 50)
-
-    // 安全兜底：防止动画卡死
-    setTimeout(() => {
+    }
+    catch (error) {
+      console.warn('Theme transition failed:', error)
+    }
+    finally {
+      // 无论成功失败都复位动画状态，防止卡死
       setIsAnimating(false)
-    }, duration + 1000)
+    }
   }
 
   return {
@@ -229,4 +222,21 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
     isDarkMode,
     isAnimating,
   }
+}
+
+// 创建模糊圆遮罩
+function createBlurCircleMask(blur: number) {
+  const highRes = isHighResolution()
+  const cacheKey = `${blur}|${highRes}`
+
+  const cached = maskCache.get(cacheKey)
+  if (cached)
+    return cached
+
+  const circleRadius = highRes ? 20 : 25
+  const blurFilter = `<filter id="blur"><feGaussianBlur stdDeviation="${blur}" /></filter>`
+  const mask = `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100"><defs>${blurFilter}</defs><circle cx="0" cy="0" r="${circleRadius}" fill="white" filter="url(%23blur)"/></svg>')`
+
+  maskCache.set(cacheKey, mask)
+  return mask
 }
