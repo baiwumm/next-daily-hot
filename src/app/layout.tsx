@@ -18,6 +18,7 @@ import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
+import MotionProvider from '@/components/MotionProvider'
 import { HOT_ITEMS } from '@/enums'
 import pkg from '#/package.json'
 
@@ -80,16 +81,18 @@ export default function RootLayout({
       </head>
       <body className="bg-background text-foreground flex flex-col gap-4 min-h-screen">
         <NextThemesProvider attribute="class" disableTransitionOnChange>
-          <FullLoading />
-          <Header />
-          <main className="flex-1 min-h-0 container! mx-auto px-4">
-            {children}
-          </main>
-          <Footer />
-          {/* 回到顶部 */}
-          <BackTop />
-          <AppTimeTicker />
-          <Toast.Provider placement="top" />
+          <MotionProvider>
+            <FullLoading />
+            <Header />
+            <main className="flex-1 min-h-0 container! mx-auto px-4">
+              {children}
+            </main>
+            <Footer />
+            {/* 回到顶部 */}
+            <BackTop />
+            <AppTimeTicker />
+            <Toast.Provider placement="top" />
+          </MotionProvider>
         </NextThemesProvider>
         {/* Analytics */}
         <BaiDuAnalytics />

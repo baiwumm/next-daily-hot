@@ -36,7 +36,11 @@ export default function Home() {
   return (
     // 👇 父容器必须是 motion.div 并开启 layout
     <motion.div
+      initial="hidden"
       layout // ✅ 启用布局动画
+      variants={{ visible: { transition: { staggerChildren: 0.05 } } }} // ✅ 卡片依次交错浮现
+      viewport={{ once: true, margin: '-50px' }}
+      whileInView="visible"
       className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]"
     >
       <AnimatePresence>
@@ -46,12 +50,23 @@ export default function Home() {
             // 👇 每个子项也必须是 motion.div + layout
             <motion.div
               key={raw.value}
-              exit={{ opacity: 0, filter: 'blur(8px)', y: 20 }}
-              initial={{ opacity: 0, filter: 'blur(8px)', y: 20 }}
+              exit={{
+                opacity: 0,
+                filter: 'blur(4px)',
+                y: 20,
+                transition: { duration: 0.3, ease: 'easeOut' },
+              }}
               layout // ✅ 关键：让位置变化可动画
-              transition={{ duration: 0.5, ease: 'easeOut' }}
-              viewport={{ once: true }}
-              whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+              transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }} // ✅ 位置变化用 spring，更跟手
+              variants={{
+                hidden: { opacity: 0, filter: 'blur(4px)', y: 20 },
+                visible: {
+                  opacity: 1,
+                  filter: 'blur(0px)',
+                  y: 0,
+                  transition: { duration: 0.4, ease: 'easeOut' },
+                },
+              }}
             >
               <HotCard {...raw} />
             </motion.div>

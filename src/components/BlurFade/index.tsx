@@ -27,13 +27,13 @@ export default function BlurFade({
   children,
   className,
   variant,
-  duration = 0.4,
+  duration = 0.3,
   delay = 0,
   offset = 6,
   direction = 'up',
   inView = false,
   inViewMargin = '-50px',
-  blur = '6px',
+  blur = '2px',
   ...props
 }: BlurFadeProps) {
   const ref = useRef(null)
@@ -61,7 +61,7 @@ export default function BlurFade({
         exit="hidden"
         initial="hidden"
         transition={{
-          delay: 0.04 + delay,
+          delay,
           duration,
           ease: 'easeOut',
         }}

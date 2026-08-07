@@ -80,10 +80,11 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
           color="accent"
           size="lg"
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.6 }}
+          exit={{ opacity: 0, y: 20, scale: 0.6, transition: { duration: 0.15, ease: 'easeIn' } }}
           initial={{ opacity: 0, y: 20, scale: 0.6 }}
-          transition={{ duration: 0.25 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20 }} // ✅ 进入更 Q 弹自然
           value={scrollPercentage}
+          whileTap={{ scale: 0.9 }} // ✅ 点击按压反馈
           onClick={scrollToTop}
           className="fixed right-5 bottom-5 z-50 cursor-pointer"
         >
