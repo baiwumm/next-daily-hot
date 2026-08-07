@@ -19,7 +19,6 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@heroui/react'
-import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 
 import type { DragEndEvent, DraggableSyntheticListeners, DragStartEvent, UniqueIdentifier } from '@dnd-kit/core'
@@ -36,7 +35,6 @@ const SortableItemContext = React.createContext<{
 })
 
 export interface SortableItemHandleProps {
-  asChild?: boolean
   className?: string
   children?: React.ReactNode
   cursor?: boolean
@@ -44,7 +42,6 @@ export interface SortableItemHandleProps {
 
 export interface SortableItemProps {
   value: string
-  asChild?: boolean
   className?: string
   children: React.ReactNode
   disabled?: boolean
@@ -164,7 +161,7 @@ function Sortable<T>({
   )
 }
 
-function SortableItem({ value, asChild = false, className, children, disabled }: SortableItemProps) {
+function SortableItem({ value, className, children, disabled }: SortableItemProps) {
   const {
     setNodeRef,
     transform,
@@ -182,11 +179,9 @@ function SortableItem({ value, asChild = false, className, children, disabled }:
     transform: CSS.Translate.toString(transform),
   } as React.CSSProperties
 
-  const Comp = asChild ? Slot : 'div'
-
   return (
     <SortableItemContext.Provider value={{ listeners, isDragging: isSortableDragging, disabled }}>
-      <Comp
+      <div
         ref={setNodeRef}
         data-disabled={disabled}
         data-dragging={isSortableDragging}
@@ -197,18 +192,16 @@ function SortableItem({ value, asChild = false, className, children, disabled }:
         className={cn(isSortableDragging && 'opacity-50 z-50', disabled && 'opacity-50', className)}
       >
         {children}
-      </Comp>
+      </div>
     </SortableItemContext.Provider>
   )
 }
 
-function SortableItemHandle({ asChild, className, children, cursor = true }: SortableItemHandleProps) {
+function SortableItemHandle({ className, children, cursor = true }: SortableItemHandleProps) {
   const { listeners, isDragging, disabled } = React.useContext(SortableItemContext)
 
-  const Comp = asChild ? Slot : 'div'
-
   return (
-    <Comp
+    <div
       data-disabled={disabled}
       data-dragging={isDragging}
       data-slot="sortable-item-handle"
@@ -216,7 +209,7 @@ function SortableItemHandle({ asChild, className, children, cursor = true }: Sor
       className={cn(cursor && (isDragging ? 'cursor-grabbing!' : 'cursor-grab!'), className)}
     >
       {children}
-    </Comp>
+    </div>
   )
 }
 
