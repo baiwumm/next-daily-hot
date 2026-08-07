@@ -18,7 +18,6 @@ import {
   Spinner,
   Tooltip,
 } from '@heroui/react'
-import { useRequest } from 'ahooks'
 import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
@@ -26,6 +25,7 @@ import { useEffect, useRef } from 'react'
 import BlurFade from '@/components/BlurFade'
 import SkeletonCard from '@/components/SkeletonCard'
 import { RESPONSE } from '@/enums'
+import { useRequest } from '@/hooks/use-request'
 import { useAppStore } from '@/store/useAppStore'
 
 import HotListVirtual from './HotListVirtual'
