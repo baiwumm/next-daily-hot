@@ -1,5 +1,27 @@
 # Changelog
 
+## [3.8.0](https://github.com/baiwumm/next-daily-hot/compare/3.7.2...3.8.0) (2026-08-07)
+
+### ✨ Features | 新功能
+
+* 新增动态 OG 分享图并调整字体源 ([bff48af](https://github.com/baiwumm/next-daily-hot/commit/bff48af7483d0c75f1a05b2d6dafb1d2d5f8fdef))
+
+### 🎫 Chores | 其他更新
+
+* 添加 HeroUI React 文档和 Agent Skills ([799bb4d](https://github.com/baiwumm/next-daily-hot/commit/799bb4d4fc5ee8e33098b092f7429910b8cc44a1))
+* 移除 @radix-ui/react-slot 依赖 ([ba8d138](https://github.com/baiwumm/next-daily-hot/commit/ba8d138e3c6da774024b58d4794ac79638acdc13))
+* 移除 ahooks 依赖，改用原生 hooks 实现 useRequest ([ca955a9](https://github.com/baiwumm/next-daily-hot/commit/ca955a92e56c954592d57850651c08fe93eb348b))
+* 移除 dayjs 依赖，改用原生 API 实现 ([2fd640e](https://github.com/baiwumm/next-daily-hot/commit/2fd640ef785ba73d67be4dff45c372bae12a782d))
+* 移除未使用的依赖 @dnd-kit/modifiers ([53d88ee](https://github.com/baiwumm/next-daily-hot/commit/53d88ee697832944c2f3f5d3b91278253357edd6))
+
+### 💄 Styles | 风格
+
+* 优化 motion 动画体验并支持 reducedMotion ([707418a](https://github.com/baiwumm/next-daily-hot/commit/707418ab859911ecff42a6538140f4dc676edbac))
+
+### ♻ Code Refactoring | 代码重构
+
+* 优化主题切换动画的清理逻辑与健壮性 ([77eb48a](https://github.com/baiwumm/next-daily-hot/commit/77eb48adf4158736ad606db608e365f3f465751c))
+
 ## [3.7.2](https://github.com/baiwumm/next-daily-hot/compare/3.7.1...3.7.2) (2026-08-03)
 
 ### 🎫 Chores | 其他更新
