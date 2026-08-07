@@ -1,5 +1,4 @@
 import CryptoJS from 'crypto-js'
-import dayjs from 'dayjs'
 
 import { RESPONSE } from '@/enums'
 
@@ -13,7 +12,7 @@ export function responseSuccess(list?: HotListItem[]): IResponse {
     msg: RESPONSE.label(RESPONSE.SUCCESS),
     code: RESPONSE.SUCCESS,
     data: list || [],
-    timestamp: dayjs().valueOf(),
+    timestamp: Date.now(),
   }
 }
 
@@ -23,7 +22,49 @@ export function responseSuccess(list?: HotListItem[]): IResponse {
 export const responseError: IResponse = {
   msg: RESPONSE.label(RESPONSE.ERROR),
   code: RESPONSE.ERROR,
-  timestamp: dayjs().valueOf(),
+  timestamp: Date.now(),
+}
+
+/**
+ * @description: 相对时间文本（原生实现，等价于 dayjs 的 fromNow + zh-cn locale）
+ */
+export function fromNow(timestamp: number): string {
+  const diffSec = (Date.now() - timestamp) / 1000
+  const future = diffSec < 0
+  const suffix = future ? '后' : '前'
+  const abs = Math.abs(diffSec)
+
+  // 分档阈值与 dayjs relativeTime 插件默认配置一致
+  if (abs <= 44)
+    return `几秒${suffix}`
+  if (abs <= 89)
+    return `1 分钟${suffix}`
+
+  const minutes = Math.round(abs / 60)
+  if (minutes <= 44)
+    return `${minutes} 分钟${suffix}`
+  if (minutes <= 89)
+    return `1 小时${suffix}`
+
+  const hours = Math.round(abs / 3600)
+  if (hours <= 21)
+    return `${hours} 小时${suffix}`
+  if (hours <= 35)
+    return `1 天${suffix}`
+
+  const days = Math.round(abs / 86400)
+  if (days <= 25)
+    return `${days} 天${suffix}`
+  if (days <= 45)
+    return `1 个月${suffix}`
+
+  const months = Math.round(abs / (30 * 86400))
+  if (months <= 10)
+    return `${months} 个月${suffix}`
+  if (months <= 17)
+    return `1 年${suffix}`
+
+  return `${Math.round(abs / (365 * 86400))} 年${suffix}`
 }
 
 /**

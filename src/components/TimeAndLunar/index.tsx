@@ -7,7 +7,6 @@
  */
 import { Description } from '@heroui/react'
 import NumberFlow, { NumberFlowGroup } from '@number-flow/react'
-import dayjs from 'dayjs'
 import { Lunar } from 'lunar-typescript'
 import { memo, useEffect, useState } from 'react'
 
@@ -25,7 +24,7 @@ const TimeAndLunar: FC = memo(() => {
       const current = new Date()
       setNow(current)
 
-      const dateStr = dayjs(current).format('YYYY-MM-DD')
+      const dateStr = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, '0')}-${String(current.getDate()).padStart(2, '0')}`
       if (dateStr !== lastDate) {
         lastDate = dateStr
 

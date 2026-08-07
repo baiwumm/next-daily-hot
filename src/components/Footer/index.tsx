@@ -13,7 +13,6 @@ import {
   Link,
   Separator,
 } from '@heroui/react'
-import dayjs from 'dayjs'
 import Image from 'next/image'
 
 import pkg from '#/package.json'
@@ -73,7 +72,7 @@ export default function Footer() {
       <Description className="justify-self-center">
         &copy;
         {' '}
-        {dayjs().format('YYYY')}
+        {new Date().getFullYear()}
         {' '}
         <a
           href={pkg.author.url}

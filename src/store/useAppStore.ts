@@ -7,11 +7,11 @@
  */
 
 'use client'
-import dayjs from 'dayjs'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { HOT_ITEMS } from '@/enums'
+import { fromNow } from '@/lib/utils'
 
 interface AppState {
   /** 每个热榜子项的最后更新时间 */
@@ -62,7 +62,7 @@ export const useAppStore = create(
           return '刚刚'
 
         // now 只是为了建立依赖
-        return dayjs(ts).fromNow()
+        return fromNow(ts)
       },
 
       /* ================= UI 状态 ================= */

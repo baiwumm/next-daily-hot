@@ -6,8 +6,6 @@
  * @Description: 热榜卡片
  */
 'use client'
-import 'dayjs/locale/zh-cn'
-
 import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui/icons'
 import {
   Button,
@@ -21,10 +19,6 @@ import {
   Tooltip,
 } from '@heroui/react'
 import { useRequest } from 'ahooks'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
 import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
@@ -37,12 +31,6 @@ import { useAppStore } from '@/store/useAppStore'
 import HotListVirtual from './HotListVirtual'
 
 import type { HotListConfig, IResponse } from '@/types'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-// 引入处理相对时间的插件
-dayjs.extend(relativeTime)
-dayjs.locale('zh-cn')
 
 function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   const setUpdateTime = useAppStore(state => state.setUpdateTime)
@@ -69,7 +57,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       }
       finally {
         // 记录更新时间
-        setUpdateTime({ [value]: dayjs().valueOf() })
+        setUpdateTime({ [value]: Date.now() })
       }
     },
     {

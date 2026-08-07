@@ -5,7 +5,6 @@
  * @LastEditTime: 2026-07-31 17:37:21
  * @Description: 夸克-今日热点
  */
-import dayjs from 'dayjs'
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums'
@@ -28,10 +27,13 @@ export async function GET() {
     // 处理数据
     if (responseBody.status === 0) {
       const result: HotListItem[] = responseBody.data.articles.map((v) => {
+        // publish_time 为毫秒时间戳，取本地时区的 HH:mm
+        const publishTime = new Date(v.publish_time)
+        const tip = `${String(publishTime.getHours()).padStart(2, '0')}:${String(publishTime.getMinutes()).padStart(2, '0')}`
         return {
           id: v.id,
           title: v.title,
-          tip: dayjs(v.publish_time).format('HH:mm'),
+          tip,
           url: `https://123.quark.cn/detail?item_id=${v.id}`,
           mobileUrl: `https://123.quark.cn/detail?item_id=${v.id}`,
         }
