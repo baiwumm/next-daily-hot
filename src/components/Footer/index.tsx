@@ -81,7 +81,7 @@ export default function Footer() {
           target="_blank"
           className="hover:text-accent transition-colors"
         >
-          {process.env.NEXT_PUBLIC_COPYRIGHT}
+          {process.env.NEXT_PUBLIC_AUTHOR_NAME}
         </a>
         . All rights reserved.
       </Description>

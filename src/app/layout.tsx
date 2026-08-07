@@ -23,7 +23,10 @@ import pkg from '#/package.json'
 
 import type { Metadata } from 'next'
 
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://hot.baiwumm.com'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(APP_URL), // 基础 URL,用于补全相对路径
   title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_DESC}`, // 网站标题
   description: process.env.NEXT_PUBLIC_APP_DESC, // 网站描述
   applicationName: process.env.NEXT_PUBLIC_APP_NAME, // 应用名称
@@ -40,13 +43,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'zh_CN',
-    url: process.env.NEXT_PUBLIC_APP_URL,
+    url: APP_URL,
     title: process.env.NEXT_PUBLIC_APP_NAME,
     description: process.env.NEXT_PUBLIC_APP_DESC,
     siteName: process.env.NEXT_PUBLIC_APP_NAME,
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/og.png`,
+        url: `${APP_URL}/opengraph-image`,
         width: 1200,
         height: 630,
       },
@@ -57,7 +60,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: process.env.NEXT_PUBLIC_APP_NAME,
     description: process.env.NEXT_PUBLIC_APP_DESC,
-    images: [`${process.env.NEXT_PUBLIC_APP_URL}/og.png`],
+    images: [`${APP_URL}/opengraph-image`],
     creator: pkg.author.name,
   },
 }
@@ -73,7 +76,7 @@ export default function RootLayout({
       <head>
         <meta name="version" content={pkg.version} />
         <link href="https://cdn.baiwumm.com" rel="preconnect" />
-        <link href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" rel="stylesheet" />
+        <link href="https://cn-font.claude-code-best.win/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css" rel="stylesheet" />
       </head>
       <body className="bg-background text-foreground flex flex-col gap-4 min-h-screen">
         <NextThemesProvider attribute="class" disableTransitionOnChange>
