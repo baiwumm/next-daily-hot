@@ -28,7 +28,7 @@ export async function GET() {
     // 得到请求体
     const responseBody = await response.json()
     // 处理数据
-    const result: HotListItem[] = responseBody[month][month + day].map((v, index: number) => {
+    const result: HotListItem[] = responseBody[month][month + day].map((v: any, index: number) => {
       return {
         id: index,
         title: v.title.replace(/<[^>]+>/g, ''),

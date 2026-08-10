@@ -33,7 +33,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.ok === 1) {
-      const result: HotListItem[] = responseBody.data.realtime.map((v) => {
+      const result: HotListItem[] = responseBody.data.realtime.map((v: any) => {
         const key = v.word_scheme ? v.word_scheme : `#${v.word}`
         return {
           id: v.mid,

@@ -28,7 +28,7 @@ export async function GET() {
     const $ = cheerio.load(responseBody)
     const json = $('script#__NEXT_DATA__', responseBody).contents().text()
     const data = JSON.parse(json)
-    const result: HotListItem[] = (data?.props?.pageProps?.hotSearchList || []).map((v, idx) => {
+    const result: HotListItem[] = (data?.props?.pageProps?.hotSearchList || []).map((v: any, idx: number) => {
       return {
         id: idx + 1,
         title: v.title,

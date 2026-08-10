@@ -82,12 +82,13 @@ export const useAppStore = create(
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
       migrate: (persistedState) => {
         // 兼容旧数据 / 版本升级：缺失字段回退到默认值
+        // 返回类型断言为 AppState：persist 默认 merge 会与初始 state 浅合并补全方法
         const state = (persistedState ?? {}) as Partial<AppState>
         return {
           UpdateTime: state.UpdateTime ?? {},
           hiddenItems: state.hiddenItems ?? [],
           sortItems: state.sortItems ?? HOT_ITEMS.values,
-        }
+        } as AppState
       },
       // ⚠️ now 是纯派生用的，不需要持久化
       partialize: state => ({

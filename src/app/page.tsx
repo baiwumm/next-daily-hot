@@ -65,7 +65,7 @@ export default function Home() {
     <motion.div
       initial="hidden"
       layout // ✅ 启用布局动画
-      variants={{ visible: { transition: { staggerChildren: 0.05 } } }} // ✅ 卡片依次交错浮现
+      variants={{ visible: { transition: { staggerChildren: 0.02 } } }} // ✅ 卡片依次交错浮现（30 张卡约 0.6s，避免过长）
       viewport={{ once: true, margin: '-50px' }}
       whileInView="visible"
       className={gridClassName}

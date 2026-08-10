@@ -53,6 +53,10 @@ export function useRequest<TData>(
         }
         catch (error) {
           lastError = error
+          // 指数退避：500ms → 1s → 2s，避免连续快速重试加重源站负担
+          if (attempt < retryCount) {
+            await new Promise(resolve => setTimeout(resolve, 500 * 2 ** attempt))
+          }
         }
       }
       throw lastError

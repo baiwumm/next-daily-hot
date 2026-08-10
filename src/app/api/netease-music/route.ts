@@ -31,7 +31,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.code === 200) {
-      const result: HotListItem[] = responseBody.result.tracks.map((v) => {
+      const result: HotListItem[] = responseBody.result.tracks.map((v: any) => {
         return {
           id: v.id,
           title: v.name,

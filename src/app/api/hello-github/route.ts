@@ -32,7 +32,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.success) {
-      const result: HotListItem[] = responseBody.data.map((v) => {
+      const result: HotListItem[] = responseBody.data.map((v: any) => {
         return {
           id: v.item_id,
           title: `${v.name}-${v.title}`,

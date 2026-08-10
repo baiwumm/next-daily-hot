@@ -34,7 +34,7 @@ export async function GET() {
     // 获取所有分类
     const allItems = jsonObject['$ROOT_QUERY.visionHotRank({"page":"home"})'].items
     // 遍历所有分类
-    allItems.forEach((v) => {
+    allItems.forEach((v: any) => {
       // 基础数据
       const image = jsonObject[v.id].poster
       const id = image.match(idPattern)[1]

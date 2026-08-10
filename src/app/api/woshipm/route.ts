@@ -32,7 +32,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.CODE === 200) {
-      const result: HotListItem[] = responseBody.RESULT.map((v) => {
+      const result: HotListItem[] = responseBody.RESULT.map((v: any) => {
         const url = `https://www.woshipm.com/${v.data.type}/${v.data.id}.html`
         return {
           id: v.data.id,

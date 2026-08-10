@@ -26,7 +26,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.books) {
-      const result: HotListItem[] = responseBody.books.map((v) => {
+      const result: HotListItem[] = responseBody.books.map((v: any) => {
         const info = v.bookInfo
         return {
           id: info.bookId,

@@ -40,7 +40,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.success) {
-      const result: HotListItem[] = responseBody.data?.items.map((v) => {
+      const result: HotListItem[] = responseBody.data?.items.map((v: any) => {
         return {
           id: v.id,
           title: v.title,

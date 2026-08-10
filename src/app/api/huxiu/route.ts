@@ -30,11 +30,11 @@ export async function GET() {
     // 得到请求体
     const responseBody = await response.json()
     if (responseBody.success) {
-      const result: HotListItem[] = responseBody?.data?.moment_list?.datalist.map((v) => {
+      const result: HotListItem[] = responseBody?.data?.moment_list?.datalist.map((v: any) => {
         const content = (v.content || '').replace(/<br\s*\/?>/gi, '\n')
         const [titleLine, ...rest] = content
           .split('\n')
-          .map(s => s.trim())
+          .map((s: any) => s.trim())
           .filter(Boolean)
         const title = titleLine?.replace(/。$/, '') || ''
         const intro = rest.join('\n')

@@ -26,7 +26,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.msg === 'success') {
-      const result: HotListItem[] = responseBody.data.list.map((v) => {
+      const result: HotListItem[] = responseBody.data.list.map((v: any) => {
         return {
           id: v.skipID,
           title: v.title,

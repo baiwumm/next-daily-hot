@@ -26,7 +26,7 @@ export async function GET() {
     const responseBody = await response.json()
     // 处理数据
     if (responseBody.status === 0) {
-      const result: HotListItem[] = responseBody.data.articles.map((v) => {
+      const result: HotListItem[] = responseBody.data.articles.map((v: any) => {
         // publish_time 为毫秒时间戳，取本地时区的 HH:mm
         const publishTime = new Date(v.publish_time)
         const tip = `${String(publishTime.getHours()).padStart(2, '0')}:${String(publishTime.getMinutes()).padStart(2, '0')}`

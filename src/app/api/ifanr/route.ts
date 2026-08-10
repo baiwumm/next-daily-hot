@@ -28,7 +28,7 @@ export async function GET() {
     if (!data) {
       return NextResponse.json(responseSuccess())
     }
-    const result: HotListItem[] = data.map((v) => {
+    const result: HotListItem[] = data.map((v: any) => {
       return {
         id: v.post_id,
         title: v.post_title,

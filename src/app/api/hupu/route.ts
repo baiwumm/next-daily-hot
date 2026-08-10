@@ -30,7 +30,7 @@ export async function GET() {
     const data = JSON.parse(json.text().split('window.$$data=')[1])
       .pageData
       .threads
-    const result: HotListItem[] = data.map((v) => {
+    const result: HotListItem[] = data.map((v: any) => {
       return {
         id: v.tid,
         title: v.title,

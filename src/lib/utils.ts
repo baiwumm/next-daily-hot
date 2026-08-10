@@ -87,16 +87,17 @@ export const hotLableColor: Record<string, string> = {
  * @description: 根据时间戳计算时长
  */
 export function convertMillisecondsToTime(milliseconds: number): string {
-  const seconds = Math.floor((milliseconds / 1000) % 60)
-  const minutes = Math.floor(milliseconds / (1000 * 60))
+  const totalSeconds = Math.floor(milliseconds / 1000)
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
 
-  // 如果秒数小于10，前面补0
-  const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds.toString()
+  const pad = (n: number) => n.toString().padStart(2, '0')
 
-  // 如果分钟数小于10，前面补0
-  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes.toString()
-
-  return `${formattedMinutes}:${formattedSeconds}`
+  // 超过 1 小时显示 HH:MM:SS，否则保持 MM:SS
+  return hours > 0
+    ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
+    : `${pad(minutes)}:${pad(seconds)}`
 }
 
 /**
@@ -109,15 +110,15 @@ export function formatNumber(value: number | string): number | string {
   let num: number
 
   // 1️⃣ 纯数字或数字字符串
-  if (typeof value === 'number' || /^\d+(\.\d+)?$/.test(value)) {
+  if (typeof value === 'number' || /^\d+(?:\.\d+)?$/.test(value)) {
     num = Number(value)
   }
   // 2️⃣ 带 w / 万
-  else if (/^\d+(\.\d+)?\s*(w|万)$/i.test(value)) {
+  else if (/^\d+(?:\.\d+)?\s*(?:w|万)$/i.test(value)) {
     num = Number.parseFloat(value) * 10000
   }
   // 3️⃣ 带 k / 千（可选）
-  else if (/^\d+(\.\d+)?\s*(k|千)$/i.test(value)) {
+  else if (/^\d+(?:\.\d+)?\s*(?:k|千)$/i.test(value)) {
     num = Number.parseFloat(value) * 1000
   }
   // 4️⃣ 其他情况，原样返回
