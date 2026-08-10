@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.8.2](https://github.com/baiwumm/next-daily-hot/compare/3.8.1...3.8.2) (2026-08-10)
+
+### 📝 Documentation | 文档
+
+* 预览图改用 dark/light 双图，移除未使用的 snapshots 图片 ([1810280](https://github.com/baiwumm/next-daily-hot/commit/1810280e192e7c2925a8ec9fa48905671e462619))
+
+### 💄 Styles | 风格
+
+* 重制 OG 分享图，适配站点主题与视觉规范 ([0118c5e](https://github.com/baiwumm/next-daily-hot/commit/0118c5ea7485accd91947b45d86a0dbc45ba251a))
+
 ## [3.8.1](https://github.com/baiwumm/next-daily-hot/compare/3.8.0...3.8.1) (2026-08-10)
 
 ### 🐛 Bug Fixes | Bug 修复
