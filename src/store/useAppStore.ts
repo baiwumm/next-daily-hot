@@ -55,13 +55,13 @@ export const useAppStore = create(
 
       /* ================= 相对时间 selector ================= */
       getRelativeTime: (key) => {
-        const { UpdateTime, now } = get()
+        const { UpdateTime } = get()
 
         const ts = UpdateTime[key]
         if (!ts)
           return '刚刚'
 
-        // now 只是为了建立依赖
+        // 依赖 now 的订阅由调用方 selector 建立，此处仅读取最新状态
         return fromNow(ts)
       },
 
@@ -78,7 +78,17 @@ export const useAppStore = create(
     }),
     {
       name: 'app-store', // 用于存储在 localStorage 中的键名
+      version: 1, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
+      migrate: (persistedState) => {
+        // 兼容旧数据 / 版本升级：缺失字段回退到默认值
+        const state = (persistedState ?? {}) as Partial<AppState>
+        return {
+          UpdateTime: state.UpdateTime ?? {},
+          hiddenItems: state.hiddenItems ?? [],
+          sortItems: state.sortItems ?? HOT_ITEMS.values,
+        }
+      },
       // ⚠️ now 是纯派生用的，不需要持久化
       partialize: state => ({
         UpdateTime: state.UpdateTime,

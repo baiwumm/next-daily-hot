@@ -8,12 +8,15 @@
 'use client'
 import { HouseFill, LogoGithub } from '@gravity-ui/icons'
 import { Button, Description, Tooltip } from '@heroui/react'
+import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
-import HotSettings from '@/components/HotSettings'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import TimeAndLunar from '@/components/TimeAndLunar'
 import pkg from '#/package.json'
+
+// Vercel 最佳实践：HotSettings 含 @dnd-kit 等重依赖，动态导入避免进入首屏 bundle
+const HotSettings = dynamic(() => import('@/components/HotSettings'))
 
 export default function Header() {
   return (

@@ -158,7 +158,10 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
                 onPress={run}
                 className="text-muted"
               >
-                <ArrowsRotateRight className={loading ? 'animate-spin' : ''} />
+                {/* Vercel 最佳实践：动画加在包装层而非 SVG 元素上 */}
+                <div className={loading ? 'animate-spin' : ''}>
+                  <ArrowsRotateRight />
+                </div>
               </Button>
               <Tooltip.Content placement="bottom" showArrow>
                 <Tooltip.Arrow />

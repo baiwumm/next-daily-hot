@@ -26,12 +26,18 @@ const ASSET_MIME_TYPES: Record<string, string> = {
   '.webp': 'image/webp',
 }
 
+// Vercel 最佳实践：静态 I/O 提升到模块级，只读一次，避免每次请求重复 readFile
+const bgAsset = publicAssetToDataUrl('og-bg.jpg')
+const logoAsset = publicAssetToDataUrl('logo.png')
+const previewAsset = publicAssetToDataUrl('og-preview.png')
+const avatarAsset = publicAssetToDataUrl('avatar.jpg')
+
 export default async function OpenGraphImage() {
   const [bgUrl, logoUrl, previewUrl, avatarUrl] = await Promise.all([
-    publicAssetToDataUrl('og-bg.jpg'),
-    publicAssetToDataUrl('logo.png'),
-    publicAssetToDataUrl('og-preview.png'),
-    publicAssetToDataUrl('avatar.jpg'),
+    bgAsset,
+    logoAsset,
+    previewAsset,
+    avatarAsset,
   ])
 
   return new ImageResponse(

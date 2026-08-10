@@ -57,9 +57,8 @@ function RowComponent({ index, data, value, prefix, suffix }: RowData) {
     return { backgroundColor: bgColor, color: textColor }
   }, [label, index])
 
-  const displayText = useMemo(() => {
-    return label ? label.slice(0, 1) : index + 1
-  }, [label, index])
+  // Vercel 最佳实践：primitive 派生值无需 useMemo 缓存
+  const displayText = label ? label.slice(0, 1) : index + 1
 
   const endContent = useMemo(() => {
     if (item.hot) {
