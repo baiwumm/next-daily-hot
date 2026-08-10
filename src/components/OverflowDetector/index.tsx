@@ -25,7 +25,7 @@ const OverflowDetector = memo(({
   record,
   type,
 }: OverflowDetectorProps) => {
-  const ref = useRef<HTMLDivElement>(null)
+  const ref = useRef<HTMLAnchorElement>(null)
 
   // 判断是否是移动端
   const isMobile = useIsMobile()
@@ -33,9 +33,8 @@ const OverflowDetector = memo(({
   // 内容是否溢出
   const [isOverflowing, setIsOverflowing] = useState(false)
 
-  // 点击标题回调
-  const handleTitle = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer')
+  // 点击标题上报
+  const handleTitle = () => {
     track(type)
   }
 
@@ -56,13 +55,16 @@ const OverflowDetector = memo(({
   return (
     <Tooltip isDisabled={!isOverflowing} delay={0}>
       <Tooltip.Trigger aria-label={record.title} className="min-w-0 flex-1">
-        <div
+        <a
           ref={ref}
-          onClick={() => handleTitle(isMobile ? record.mobileUrl : record.url)}
-          className="truncate transition-transform ease-in duration-300 cursor-pointer text-sm relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:bottom-0 after:bg-border after:transition-[width] after:duration-500 hover:translate-x-1 hover:after:w-full"
+          href={isMobile ? record.mobileUrl : record.url}
+          rel="noopener noreferrer"
+          target="_blank"
+          onClick={handleTitle}
+          className="truncate block transition-transform ease-in duration-300 text-sm relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:bottom-0 after:bg-border after:transition-[width] after:duration-500 hover:translate-x-1 hover:after:w-full"
         >
           {record.title}
-        </div>
+        </a>
       </Tooltip.Trigger>
 
       <Tooltip.Content placement="top">

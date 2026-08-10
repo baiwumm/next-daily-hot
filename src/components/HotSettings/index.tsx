@@ -106,7 +106,7 @@ export default function HotSettings() {
       >
         <BucketPaint />
       </Button>
-      <Modal.Backdrop isDismissable={false} isKeyboardDismissDisabled>
+      <Modal.Backdrop isDismissable={false}>
         <Modal.Container size="lg">
           <Modal.Dialog>
             <Modal.CloseTrigger />

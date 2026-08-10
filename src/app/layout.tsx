@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 17:51:09
+ * @LastEditTime: 2026-08-10 10:03:28
  * @Description: 根布局文件
  */
 
@@ -16,7 +16,6 @@ import { BaiDuAnalytics, GoogleUtilities, MicrosoftClarity } from '@/components/
 import AppTimeTicker from '@/components/AppTimeTicker'
 import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
-import FullLoading from '@/components/FullLoading'
 import Header from '@/components/Header'
 import MotionProvider from '@/components/MotionProvider'
 import { HOT_ITEMS } from '@/enums'
@@ -79,12 +78,11 @@ export default function RootLayout({
         <link href="https://cdn.baiwumm.com" rel="preconnect" />
         <link href="https://cn-font.claude-code-best.win/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css" rel="stylesheet" />
       </head>
-      <body className="bg-background text-foreground flex flex-col gap-4 min-h-screen">
+      <body className="bg-background text-foreground flex flex-col min-h-screen">
         <NextThemesProvider attribute="class" disableTransitionOnChange>
           <MotionProvider>
-            <FullLoading />
             <Header />
-            <main className="flex-1 min-h-0 container! mx-auto px-4">
+            <main className="flex-1 min-h-0 container! mx-auto p-4">
               {children}
             </main>
             <Footer />

@@ -7,12 +7,16 @@
  */
 'use client'
 
+import { Card, Separator, Skeleton } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useMemo, useState } from 'react'
 
 import HotCard from '@/components/HotCard'
+import SkeletonCard from '@/components/SkeletonCard'
 import { HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
+
+const gridClassName = 'grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]'
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -29,8 +33,31 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [])
 
+  // 挂载前渲染骨架网格，避免 SSR 空白 + 全屏 loading 的闪烁
   if (!mounted) {
-    return null
+    return (
+      <div className={gridClassName}>
+        {Array.from({ length: 8 }).map((_, index) => (
+          <Card key={index} className="p-0 gap-0">
+            <Card.Header className="flex justify-between items-center flex-row p-3">
+              <div className="flex items-center gap-2">
+                <Skeleton className="size-6 rounded-md" />
+                <Skeleton className="h-4 w-16 rounded-md" />
+              </div>
+              <Skeleton className="h-5 w-14 rounded-full" />
+            </Card.Header>
+            <Separator />
+            <Card.Content className="relative py-0 h-81.75 overflow-hidden">
+              <SkeletonCard />
+            </Card.Content>
+            <Separator />
+            <Card.Footer className="p-3">
+              <Skeleton className="h-4 w-32 rounded-md" />
+            </Card.Footer>
+          </Card>
+        ))}
+      </div>
+    )
   }
 
   return (
@@ -41,7 +68,7 @@ export default function Home() {
       variants={{ visible: { transition: { staggerChildren: 0.05 } } }} // ✅ 卡片依次交错浮现
       viewport={{ once: true, margin: '-50px' }}
       whileInView="visible"
-      className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]"
+      className={gridClassName}
     >
       <AnimatePresence>
         {visibleItems.map((value) => {
