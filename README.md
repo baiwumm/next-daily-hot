@@ -16,7 +16,9 @@
 ### 📸 预览
 
 <div align="center">
-  <img src="./public/snapshots/readme-1.png" width="90%" />
+  <img src="./public/light.png" width="90%" alt="Light 模式" />
+  <br />
+  <img src="./public/dark.png" width="90%" alt="Dark 模式" />
 </div>
 
 ### 🚀 特性
