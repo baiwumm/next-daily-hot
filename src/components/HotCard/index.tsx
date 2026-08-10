@@ -115,7 +115,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       </Card.Header>
       <Separator />
       <Card.Content className="relative py-0">
-        <ScrollShadow hideScrollBar visibility="bottom" className="h-81.75 ">
+        <ScrollShadow hideScrollBar visibility="bottom" className="h-81.75 relative">
           {loading
             ? (
                 <SkeletonCard />

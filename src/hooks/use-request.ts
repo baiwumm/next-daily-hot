@@ -71,6 +71,8 @@ export function useRequest<TData>(
         void doRequest().catch(() => {})
       }
       if (debounceWait > 0) {
+        // 防抖等待期间立即给出 loading 反馈，避免点击后"无响应"的错觉
+        setLoading(true)
         clearTimeout(timerRef.current)
         timerRef.current = setTimeout(request, debounceWait)
         return

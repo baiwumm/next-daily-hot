@@ -51,7 +51,7 @@ function RowComponent({ index, data, value, prefix, suffix }: RowData) {
       : hotTagColor[index] || 'var(--default)'
 
     const textColor = (label ? hotLableColor[label as keyof typeof hotLableColor] : hotTagColor[index])
-      ? 'var(--white)'
+      ? '#fff'
       : 'var(--default-foreground)'
 
     return { backgroundColor: bgColor, color: textColor }
