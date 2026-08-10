@@ -29,6 +29,7 @@ export function useRequest<TData>(
   const { manual = false, debounceWait = 0, retryCount = 0 } = options
   const [data, setData] = useState<TData>()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<unknown>(undefined)
   const serviceRef = useRef(service)
   const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const requestIdRef = useRef(0)
@@ -39,6 +40,8 @@ export function useRequest<TData>(
   const doRequest = useCallback(async () => {
     const requestId = ++requestIdRef.current
     setLoading(true)
+    // 新请求开始时清除上一次的错误状态
+    setError(undefined)
     try {
       let lastError: unknown
       // 失败后自动重试 retryCount 次（总尝试次数 = retryCount + 1）
@@ -51,13 +54,17 @@ export function useRequest<TData>(
           }
           return result
         }
-        catch (error) {
-          lastError = error
+        catch (catchError) {
+          lastError = catchError
           // 指数退避：500ms → 1s → 2s，避免连续快速重试加重源站负担
           if (attempt < retryCount) {
             await new Promise(resolve => setTimeout(resolve, 500 * 2 ** attempt))
           }
         }
+      }
+      // 全部重试失败后记录错误
+      if (requestId === requestIdRef.current) {
+        setError(lastError)
       }
       throw lastError
     }
@@ -99,7 +106,7 @@ export function useRequest<TData>(
     run()
   }, [manual, run])
 
-  return { data, loading, run }
+  return { data, loading, error, run }
 }
 
 export default useRequest

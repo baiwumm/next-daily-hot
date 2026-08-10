@@ -42,23 +42,19 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
     state.getRelativeTime(value),
   )
 
-  const { data, loading, run } = useRequest(
+  const { data, loading, error, run } = useRequest(
     async () => {
-      try {
-        const response = await fetch(`/api/${value}`)
-        if (response.status !== RESPONSE.SUCCESS) {
-          throw new Error('Request failed')
-        }
-        const result: IResponse = await response.json()
-        if (result.code === RESPONSE.ERROR) {
-          throw new Error('API returned error')
-        }
-        return result.data || []
+      const response = await fetch(`/api/${value}`)
+      if (response.status !== RESPONSE.SUCCESS) {
+        throw new Error('Request failed')
       }
-      finally {
-        // 记录更新时间
-        setUpdateTime({ [value]: Date.now() })
+      const result: IResponse = await response.json()
+      if (result.code === RESPONSE.ERROR) {
+        throw new Error('API returned error')
       }
+      // 仅在请求成功时记录更新时间，失败时保留旧值
+      setUpdateTime({ [value]: Date.now() })
+      return result.data || []
     },
     {
       manual: true,
@@ -145,7 +141,11 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
           <Description className="w-1/2">
-            {relativeText ? `${relativeText}更新` : '正在加载中...'}
+            {loading
+              ? '正在加载中...'
+              : error
+                ? '更新失败'
+                : `${relativeText}更新`}
           </Description>
           <Separator orientation="vertical" className="flex-none" />
           <div className="flex w-1/2 justify-center">
