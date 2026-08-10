@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.8.1](https://github.com/baiwumm/next-daily-hot/compare/3.8.0...3.8.1) (2026-08-10)
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 请求失败时不再误显示"刚刚更新" ([6b6e209](https://github.com/baiwumm/next-daily-hot/commit/6b6e209e63f1b431cc4f29642ff2425825bbb0e5))
+* 优化 UI 细节与可访问性 ([10b0281](https://github.com/baiwumm/next-daily-hot/commit/10b02813acd7aef3b8e888467531096223394748))
+* 优化热榜卡片滚动体验与刷新反馈 ([2431ca2](https://github.com/baiwumm/next-daily-hot/commit/2431ca25ec4bc34d2fece5e9ec825d5d4dd1dab5))
+* 优化重试退避与时长格式化，全面启用类型检查 ([7a1f488](https://github.com/baiwumm/next-daily-hot/commit/7a1f4882a143e0a6c1548430c535935b0676bb25))
+
+### 🎫 Chores | 其他更新
+
+* 移除 enum-plus 依赖，改用 as const 枚举配置 ([73c1e3a](https://github.com/baiwumm/next-daily-hot/commit/73c1e3a6ae8f01967c5dc7e2b30a32e96acc3f72))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 依据 Vercel 最佳实践优化性能与 bundle 体积 ([573e938](https://github.com/baiwumm/next-daily-hot/commit/573e93894bdc8463b4087ea712fd6d135fd00899))
+
 ## [3.8.0](https://github.com/baiwumm/next-daily-hot/compare/3.7.2...3.8.0) (2026-08-07)
 
 ### ✨ Features | 新功能
