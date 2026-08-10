@@ -2,7 +2,7 @@
  * @description: 榜单配置
  */
 export interface HotListConfig {
-  value: typeof import('@/enums').HOT_ITEMS.valueType
+  value: import('@/enums').HotValue
   label: string
   tip: string
   prefix?: import('react').ReactNode // 前缀

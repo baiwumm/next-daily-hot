@@ -24,7 +24,7 @@ import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortabl
 import { HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
 
-type HotKeys = typeof HOT_ITEMS.valueType
+import type { HotValue } from '@/enums'
 
 export default function HotSettings() {
   const hiddenItems = useAppStore(state => state.hiddenItems)
@@ -207,7 +207,7 @@ export default function HotSettings() {
  * - 自动补齐新增项
  * - 自动剔除已删除项
  */
-function normalizeSortItems(source: HotKeys[], sortItems?: HotKeys[]) {
+function normalizeSortItems(source: HotValue[], sortItems?: HotValue[]) {
   const sourceSet = new Set(source)
 
   // 保留仍然存在的排序项

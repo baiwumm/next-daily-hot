@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import RowComponent from './RowComponent'
 
-import type { HOT_ITEMS } from '@/enums'
+import type { HotValue } from '@/enums'
 import type { HotListItem } from '@/types'
 
 export default function HotListVirtual({
@@ -15,7 +15,7 @@ export default function HotListVirtual({
   suffix,
 }: {
   data: HotListItem[]
-  value: typeof HOT_ITEMS.valueType
+  value: HotValue
   prefix?: React.ReactNode
   suffix?: React.ReactNode
 }) {

@@ -1,18 +1,30 @@
 import { Star } from '@gravity-ui/icons'
-import { Enum } from 'enum-plus'
+
+import type { ReactNode } from 'react'
 
 /**
  * @description: 请求状态
  */
-export const RESPONSE = Enum({
+const responseConfig = {
   SUCCESS: { value: 200, label: '请求成功' },
   ERROR: { value: 500, label: '请求失败' },
-})
+} as const
+
+/** 请求状态码类型 */
+export type ResponseValue = (typeof responseConfig)[keyof typeof responseConfig]['value']
+
+export const RESPONSE = {
+  SUCCESS: responseConfig.SUCCESS.value,
+  ERROR: responseConfig.ERROR.value,
+  /** 根据状态码获取文案 */
+  label: (value: ResponseValue) =>
+    value === responseConfig.SUCCESS.value ? responseConfig.SUCCESS.label : responseConfig.ERROR.label,
+}
 
 /**
- * @description: 热榜子项
+ * @description: 热榜子项配置（唯一数据源）
  */
-export const HOT_ITEMS = Enum({
+const hotItemsConfig = {
   'WEIBO': { value: 'weibo', label: '微博', tip: '热搜榜' },
   'XIAOHONGSHU': { value: 'xiaohongshu', label: '小红书', tip: '实时热榜' },
   'BILIBILI': { value: 'bilibili', label: '哔哩哔哩', tip: '热门榜' },
@@ -43,4 +55,43 @@ export const HOT_ITEMS = Enum({
   'ZHIHU_DAILY': { value: 'zhihu-daily', label: '知乎日报', tip: '推荐榜' },
   'IFANR': { value: 'ifanr', label: '爱范儿', tip: '快讯' },
   'ITHOME': { value: 'ithome', label: 'IT之家', tip: '热榜' },
-})
+} as const
+
+/** 热榜子项（与 enum-plus 的 items 形状保持一致） */
+export interface HotItem {
+  key: HotKey
+  value: HotValue
+  label: string
+  tip: string
+  suffix?: ReactNode
+  raw: HotRaw
+}
+
+/** 热榜 key 类型 */
+export type HotKey = keyof typeof hotItemsConfig
+/** 热榜项原始配置 */
+export type HotRaw = (typeof hotItemsConfig)[HotKey]
+/** 热榜 value 类型 */
+export type HotValue = (typeof hotItemsConfig)[HotKey]['value']
+
+const hotItems: HotItem[] = (Object.entries(hotItemsConfig) as [HotKey, HotRaw][]).map(([key, raw]) => ({
+  key,
+  value: raw.value,
+  label: raw.label,
+  tip: raw.tip,
+  suffix: 'suffix' in raw ? raw.suffix : undefined,
+  raw,
+}))
+
+const hotValues: HotValue[] = hotItems.map(item => item.value)
+
+const hotRawMap = Object.fromEntries(
+  hotItems.map(item => [item.value, item.raw]),
+) as Record<HotValue, HotRaw>
+
+export const HOT_ITEMS = {
+  items: hotItems,
+  values: hotValues,
+  /** 根据 value 获取原始配置 */
+  raw: (value: HotValue): HotRaw | undefined => hotRawMap[value],
+}

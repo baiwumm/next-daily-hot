@@ -44,9 +44,6 @@ importers:
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
-      enum-plus:
-        specifier: ^3.2.0
-        version: 3.2.0
       lunar-typescript:
         specifier: ^1.8.6
         version: 1.8.6
@@ -1802,10 +1799,6 @@ packages:
   entities@7.0.1:
     resolution: {integrity: sha512-TWrgLOFUQTH994YUyl1yT4uyavY5nNB5muff+RtWaqNVCAK408b5ZnnbNAUEWLTCpum9w6arT70i1XdQ4UeOPA==}
     engines: {node: '>=0.12'}
-
-  enum-plus@3.2.0:
-    resolution: {integrity: sha512-3TvwAn2SBCphe0+faApIqscPiimDCxqUNMt79qxRJDJEry4nmy8m+iP3BqKDKXwlC68+FT0Q5/NtP+nTS5tl7Q==}
-    engines: {node: '>=7.10.1'}
 
   escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
@@ -5184,8 +5177,6 @@ snapshots:
   entities@6.0.1: {}
 
   entities@7.0.1: {}
-
-  enum-plus@3.2.0: {}
 
   escalade@3.2.0: {}
 

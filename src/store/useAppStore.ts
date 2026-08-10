@@ -13,28 +13,28 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { HOT_ITEMS } from '@/enums'
 import { fromNow } from '@/lib/utils'
 
+import type { HotValue } from '@/enums'
+
 interface AppState {
   /** 每个热榜子项的最后更新时间 */
-  UpdateTime: Partial<Record<HotKeys, number>> // 每个子项更新时间
-  setUpdateTime: (time: Partial<Record<HotKeys, number>>) => void
+  UpdateTime: Partial<Record<HotValue, number>> // 每个子项更新时间
+  setUpdateTime: (time: Partial<Record<HotValue, number>>) => void
 
   /** 当前时间心跳（用于驱动相对时间刷新） */
   now: number
   tick: () => void
 
   /** 获取相对时间文本（派生数据） */
-  getRelativeTime: (key: HotKeys) => string
+  getRelativeTime: (key: HotValue) => string
 
   /** 隐藏的热榜 */
-  hiddenItems: HotKeys[]
-  setHiddenItems: (items: HotKeys[]) => void
+  hiddenItems: HotValue[]
+  setHiddenItems: (items: HotValue[]) => void
 
   // 热榜排序
-  sortItems: HotKeys[]
-  setSortItems: (items: HotKeys[]) => void
+  sortItems: HotValue[]
+  setSortItems: (items: HotValue[]) => void
 }
-
-type HotKeys = typeof HOT_ITEMS.valueType
 
 export const useAppStore = create(
   persist<AppState>(

@@ -73,6 +73,9 @@ export default function Home() {
       <AnimatePresence>
         {visibleItems.map((value) => {
           const raw = HOT_ITEMS.raw(value)
+          if (!raw)
+            return null
+
           return (
             // 👇 每个子项也必须是 motion.div + layout
             <motion.div

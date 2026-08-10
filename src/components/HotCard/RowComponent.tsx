@@ -11,14 +11,14 @@ import { useMemo } from 'react'
 import OverflowDetector from '@/components/OverflowDetector'
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils'
 
-import type { HOT_ITEMS } from '@/enums'
+import type { HotValue } from '@/enums'
 import type { HotListItem } from '@/types'
 import type { ReactNode } from 'react'
 
 interface RowData {
   index: number
   data: HotListItem[]
-  value: typeof HOT_ITEMS.valueType
+  value: HotValue
   prefix?: ReactNode
   suffix?: ReactNode
 }

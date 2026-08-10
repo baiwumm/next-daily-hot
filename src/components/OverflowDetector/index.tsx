@@ -13,12 +13,12 @@ import { memo, useEffect, useRef, useState } from 'react'
 
 import { useIsMobile } from '@/hooks/use-is-mobile'
 
-import type { HOT_ITEMS } from '@/enums'
+import type { HotValue } from '@/enums'
 import type { HotListItem } from '@/types'
 
 interface OverflowDetectorProps {
   record: HotListItem
-  type: typeof HOT_ITEMS.valueType
+  type: HotValue
 }
 
 const OverflowDetector = memo(({
