@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -17,13 +17,7 @@ export async function GET() {
   const url = 'https://sso.ifanr.com/api/v5/wp/buzz/?limit=50&offset=0'
   try {
     // 请求数据
-    const response = await fetch(url)
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：爱范儿 - 快讯`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
+    const responseBody = await fetchJson(url)
     const data = responseBody?.objects
     if (!data) {
       return NextResponse.json(responseSuccess())
@@ -38,7 +32,8 @@ export async function GET() {
     })
     return NextResponse.json(responseSuccess(result))
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

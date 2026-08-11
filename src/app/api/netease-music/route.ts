@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { convertMillisecondsToTime, responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -16,19 +16,13 @@ export async function GET() {
   // 官方 url
   const url = 'https://music.163.com/api/playlist/detail?id=3778678'
   try {
-    // 请求数据
-    const response = await fetch(url, {
+    // 请求数据（统一 UA + 超时）
+    const responseBody = await fetchJson(url, {
       headers: {
         authority: 'music.163.com',
         referer: 'https://music.163.com/',
       },
     })
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：网易云音乐-新歌榜`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
     // 处理数据
     if (responseBody.code === 200) {
       const result: HotListItem[] = responseBody.result.tracks.map((v: any) => {
@@ -46,7 +40,8 @@ export async function GET() {
     }
     return NextResponse.json(responseSuccess())
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

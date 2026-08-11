@@ -8,7 +8,7 @@
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchText } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -18,13 +18,7 @@ export async function GET() {
   const url = 'https://movie.douban.com/chart/'
   try {
     // 请求数据
-    const response = await fetch(url)
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：豆瓣电影-新片榜`)
-    }
-    // 得到请求体
-    const responseBody = await response.text()
+    const responseBody = await fetchText(url)
     // 处理数据
     const getNumbers = (text: string | undefined) => {
       if (!text)
@@ -56,7 +50,8 @@ export async function GET() {
     })
     return NextResponse.json(responseSuccess(result))
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

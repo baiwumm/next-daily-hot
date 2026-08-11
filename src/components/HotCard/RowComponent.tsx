@@ -6,7 +6,7 @@
  * @Description: 动态列表子项
  */
 import { Description } from '@heroui/react'
-import { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import OverflowDetector from '@/components/OverflowDetector'
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils'
@@ -41,7 +41,8 @@ function HotDisplay({
   )
 }
 
-function RowComponent({ index, data, value, prefix, suffix }: RowData) {
+// Vercel 最佳实践：虚拟列表行组件用 memo，避免滚动/数据更新时无关行重渲染
+const RowComponent = memo(({ index, data, value, prefix, suffix }: RowData) => {
   const item = useMemo(() => data[index], [data, index])
   const { label } = item
 
@@ -84,6 +85,6 @@ function RowComponent({ index, data, value, prefix, suffix }: RowData) {
       {endContent}
     </div>
   )
-}
+})
 
 export default RowComponent

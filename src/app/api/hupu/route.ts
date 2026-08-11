@@ -8,7 +8,7 @@
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchText } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -17,14 +17,10 @@ export async function GET() {
   // 官方 url
   const url = 'https://bbs.hupu.com/all-gambia'
   try {
-    // 请求数据
-    const response = await fetch(url)
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}虎扑-步行街热帖`)
-    }
-    // 得到请求体
-    const responseBody = await response.text()
+    // 请求数据（虎扑对桌面 UA 返回反爬页，保持无 UA 请求）
+    const responseBody = await fetchText(url, {
+      headers: { 'User-Agent': '' },
+    })
     const $ = cheerio.load(responseBody)
     const json = $('script').first()
     const data = JSON.parse(json.text().split('window.$$data=')[1])
@@ -43,7 +39,8 @@ export async function GET() {
     })
     return NextResponse.json(responseSuccess(result))
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

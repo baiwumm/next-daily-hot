@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -16,8 +16,8 @@ export async function GET() {
   // 官方 url
   const url = 'https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot'
   try {
-    // 请求数据
-    const response = await fetch(url, {
+    // 请求数据（统一超时，覆盖 Mac UA）
+    const responseBody = await fetchJson(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -32,12 +32,6 @@ export async function GET() {
         timestamp: Date.now(),
       }),
     })
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：36kr - 24小时热榜`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
     // 处理数据
     if (responseBody.code === 0) {
       const result: HotListItem[] = responseBody.data?.hotRankList.map((v: any) => {
@@ -54,7 +48,8 @@ export async function GET() {
     }
     return NextResponse.json(responseSuccess())
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

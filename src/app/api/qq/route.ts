@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -17,13 +17,7 @@ export async function GET() {
   const url = 'https://r.inews.qq.com/gw/event/hot_ranking_list'
   try {
     // 请求数据
-    const response = await fetch(url)
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：腾讯新闻-热点榜`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
+    const responseBody = await fetchJson(url)
     // 处理数据
     if (responseBody.ret === 0) {
       const result: HotListItem[] = responseBody.idlist[0].newslist.slice(1).map((v: any) => {
@@ -41,7 +35,8 @@ export async function GET() {
     }
     return NextResponse.json(responseSuccess())
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

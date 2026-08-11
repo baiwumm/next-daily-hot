@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -16,20 +16,10 @@ export async function GET() {
   // 官方 url
   const url = 'https://www.woshipm.com/api2/app/article/popular/daily'
   try {
-    // 请求数据
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36',
-      },
+    // 请求数据（统一 UA + 超时）
+    const responseBody = await fetchJson(url, {
       cache: 'no-store',
     })
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)} 人人都是产品经理 - 热榜`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
     // 处理数据
     if (responseBody.CODE === 200) {
       const result: HotListItem[] = responseBody.RESULT.map((v: any) => {
@@ -48,7 +38,8 @@ export async function GET() {
     }
     return NextResponse.json(responseSuccess())
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

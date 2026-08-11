@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'
@@ -20,13 +20,7 @@ export async function GET() {
   const url = `https://baike.baidu.com/cms/home/eventsOnHistory/${month}.json`
   try {
     // 请求数据
-    const response = await fetch(url)
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：百度百科-历史上的今天`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
+    const responseBody = await fetchJson(url)
     // 处理数据
     const result: HotListItem[] = responseBody[month][month + day].map((v: any, index: number) => {
       return {
@@ -40,7 +34,8 @@ export async function GET() {
     })
     return NextResponse.json(responseSuccess(result))
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }

@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums/response'
+import { fetchJson } from '@/lib/request'
 import { responseError, responseSuccess } from '@/lib/utils'
 import { getWereadID } from '@/lib/weread'
 
@@ -18,13 +18,7 @@ export async function GET() {
   const url = 'https://weread.qq.com/web/bookListInCategory/rising?rank=1'
   try {
     // 请求数据
-    const response = await fetch(url)
-    if (!response.ok) {
-      // 如果请求失败，抛出错误，不进行缓存
-      throw new Error(`${RESPONSE.label(RESPONSE.ERROR)}：微信读书-飙升榜`)
-    }
-    // 得到请求体
-    const responseBody = await response.json()
+    const responseBody = await fetchJson(url)
     // 处理数据
     if (responseBody.books) {
       const result: HotListItem[] = responseBody.books.map((v: any) => {
@@ -42,7 +36,8 @@ export async function GET() {
     }
     return NextResponse.json(responseSuccess())
   }
-  catch {
+  catch (error) {
+    console.error('上游请求失败：', error)
     return NextResponse.json(responseError)
   }
 }
