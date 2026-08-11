@@ -1,28 +1,3 @@
-import { RESPONSE } from '@/enums/response'
-
-import type { HotListItem, IResponse } from '@/types'
-
-/**
- * @description: 请求成功返回处理结果
- */
-export function responseSuccess(list?: HotListItem[]): IResponse {
-  return {
-    msg: RESPONSE.label(RESPONSE.SUCCESS),
-    code: RESPONSE.SUCCESS,
-    data: list || [],
-    timestamp: Date.now(),
-  }
-}
-
-/**
- * @description: 请求失败返回结果
- */
-export const responseError: IResponse = {
-  msg: RESPONSE.label(RESPONSE.ERROR),
-  code: RESPONSE.ERROR,
-  timestamp: Date.now(),
-}
-
 /**
  * @description: 相对时间文本（原生实现，等价于 dayjs 的 fromNow + zh-cn locale）
  */

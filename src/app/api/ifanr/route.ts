@@ -5,10 +5,8 @@
  * @LastEditTime: 2026-07-31 17:34:25
  * @Description: 爱范儿 - 快讯
  */
-import { NextResponse } from 'next/server'
-
 import { fetchJson } from '@/lib/request'
-import { responseError, responseSuccess } from '@/lib/utils'
+import { errorResponse, successResponse } from '@/lib/response'
 
 import type { HotListItem } from '@/types'
 
@@ -20,7 +18,7 @@ export async function GET() {
     const responseBody = await fetchJson(url)
     const data = responseBody?.objects
     if (!data) {
-      return NextResponse.json(responseSuccess())
+      return successResponse()
     }
     const result: HotListItem[] = data.map((v: any) => {
       return {
@@ -30,10 +28,10 @@ export async function GET() {
         mobileUrl: v.buzz_original_url || `https://www.ifanr.com/digest/${v.post_id}`,
       }
     })
-    return NextResponse.json(responseSuccess(result))
+    return successResponse(result)
   }
   catch (error) {
     console.error('上游请求失败：', error)
-    return NextResponse.json(responseError)
+    return errorResponse()
   }
 }

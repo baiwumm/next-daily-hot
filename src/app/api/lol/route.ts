@@ -5,10 +5,8 @@
  * @LastEditTime: 2026-07-31 17:34:41
  * @Description: 英雄联盟-更新公告
  */
-import { NextResponse } from 'next/server'
-
 import { fetchJson } from '@/lib/request'
-import { responseError, responseSuccess } from '@/lib/utils'
+import { errorResponse, successResponse } from '@/lib/response'
 
 import type { HotListItem } from '@/types'
 
@@ -31,12 +29,12 @@ export async function GET() {
           mobileUrl: `https://lol.qq.com/news/detail.shtml?docid=${encodeURIComponent(v.iDocID)}`,
         }
       })
-      return NextResponse.json(responseSuccess(result))
+      return successResponse(result)
     }
-    return NextResponse.json(responseSuccess())
+    return successResponse()
   }
   catch (error) {
     console.error('上游请求失败：', error)
-    return NextResponse.json(responseError)
+    return errorResponse()
   }
 }

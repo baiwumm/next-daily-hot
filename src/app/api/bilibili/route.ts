@@ -5,10 +5,8 @@
  * @LastEditTime: 2026-07-31 17:35:44
  * @Description: 哔哩哔哩-热门榜
  */
-import { NextResponse } from 'next/server'
-
 import { fetchJson } from '@/lib/request'
-import { responseError, responseSuccess } from '@/lib/utils'
+import { errorResponse, successResponse } from '@/lib/response'
 
 import type { HotListItem } from '@/types'
 
@@ -24,7 +22,7 @@ export async function GET() {
     })
     const data = responseBody?.data?.realtime || responseBody?.data?.list
     if (!data) {
-      return NextResponse.json(responseSuccess())
+      return successResponse()
     }
     const result: HotListItem[] = data.map((v: any) => {
       return {
@@ -37,10 +35,10 @@ export async function GET() {
         mobileUrl: `https://m.bilibili.com/video/${v.bvid}`,
       }
     })
-    return NextResponse.json(responseSuccess(result))
+    return successResponse(result)
   }
   catch (error) {
     console.error('上游请求失败：', error)
-    return NextResponse.json(responseError)
+    return errorResponse()
   }
 }

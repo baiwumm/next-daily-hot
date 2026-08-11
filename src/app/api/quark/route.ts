@@ -5,10 +5,8 @@
  * @LastEditTime: 2026-07-31 17:37:21
  * @Description: 夸克-今日热点
  */
-import { NextResponse } from 'next/server'
-
 import { fetchJson } from '@/lib/request'
-import { responseError, responseSuccess } from '@/lib/utils'
+import { errorResponse, successResponse } from '@/lib/response'
 
 import type { HotListItem } from '@/types'
 
@@ -32,12 +30,12 @@ export async function GET() {
           mobileUrl: `https://123.quark.cn/detail?item_id=${v.id}`,
         }
       })
-      return NextResponse.json(responseSuccess(result))
+      return successResponse(result)
     }
-    return NextResponse.json(responseSuccess())
+    return successResponse()
   }
   catch (error) {
     console.error('上游请求失败：', error)
-    return NextResponse.json(responseError)
+    return errorResponse()
   }
 }

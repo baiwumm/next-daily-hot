@@ -5,10 +5,8 @@
  * @LastEditTime: 2026-07-31 17:34:16
  * @Description: 快手-热榜
  */
-import { NextResponse } from 'next/server'
-
 import { fetchText } from '@/lib/request'
-import { responseError, responseSuccess } from '@/lib/utils'
+import { errorResponse, successResponse } from '@/lib/response'
 
 import type { HotListItem } from '@/types'
 
@@ -41,10 +39,10 @@ export async function GET() {
         mobileUrl: `https://www.kuaishou.com/short-video/${id}`,
       })
     })
-    return NextResponse.json(responseSuccess(result))
+    return successResponse(result)
   }
   catch (error) {
     console.error('上游请求失败：', error)
-    return NextResponse.json(responseError)
+    return errorResponse()
   }
 }

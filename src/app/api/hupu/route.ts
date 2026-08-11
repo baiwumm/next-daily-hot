@@ -6,10 +6,9 @@
  * @Description: 虎扑-步行街热帖
  */
 import * as cheerio from 'cheerio'
-import { NextResponse } from 'next/server'
 
 import { fetchText } from '@/lib/request'
-import { responseError, responseSuccess } from '@/lib/utils'
+import { errorResponse, successResponse } from '@/lib/response'
 
 import type { HotListItem } from '@/types'
 
@@ -37,10 +36,10 @@ export async function GET() {
         mobileUrl: `https://bbs.hupu.com${v.url}`,
       }
     })
-    return NextResponse.json(responseSuccess(result))
+    return successResponse(result)
   }
   catch (error) {
     console.error('上游请求失败：', error)
-    return NextResponse.json(responseError)
+    return errorResponse()
   }
 }
