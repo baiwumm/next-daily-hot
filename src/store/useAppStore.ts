@@ -55,14 +55,15 @@ export const useAppStore = create(
 
       /* ================= 相对时间 selector ================= */
       getRelativeTime: (key) => {
-        const { UpdateTime } = get()
+        const { UpdateTime, now } = get()
 
         const ts = UpdateTime[key]
         if (!ts)
           return '刚刚'
 
-        // 依赖 now 的订阅由调用方 selector 建立，此处仅读取最新状态
-        return fromNow(ts)
+        // 用 store 的 now 作为基准，与刷新冷却倒计时保持同一时钟，保证显示自洽
+        // max 钳制：store 心跳可能略旧于刚写入的 updateTime，避免误显示未来时态
+        return fromNow(ts, Math.max(now, ts))
       },
 
       /* ================= UI 状态 ================= */

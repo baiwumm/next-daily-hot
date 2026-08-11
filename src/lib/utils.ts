@@ -1,8 +1,10 @@
 /**
  * @description: 相对时间文本（原生实现，等价于 dayjs 的 fromNow + zh-cn locale）
+ * @param timestamp 时间戳
+ * @param now 基准时间（默认 Date.now()）；传入 store 时钟可与冷却倒计时保持同源
  */
-export function fromNow(timestamp: number): string {
-  const diffSec = (Date.now() - timestamp) / 1000
+export function fromNow(timestamp: number, now: number = Date.now()): string {
+  const diffSec = (now - timestamp) / 1000
   const future = diffSec < 0
   const suffix = future ? '后' : '前'
   const abs = Math.abs(diffSec)

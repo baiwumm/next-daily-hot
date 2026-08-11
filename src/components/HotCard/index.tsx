@@ -45,8 +45,12 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   // 上次成功更新时间 + 当前时间（分钟级心跳，用于刷新冷却判断）
   const updateTime = useAppStore(state => state.UpdateTime[value])
   const now = useAppStore(state => state.now)
-  // 冷却剩余（ms）：距上次成功更新不足缓存窗口则禁用刷新，避免拿到旧缓存
-  const cooldownMs = updateTime ? Math.max(0, API_CACHE_SECONDS * 1000 - (now - updateTime)) : 0
+  // 已过分钟数（与"x 分钟前更新"的 fromNow 同源同取整，保证显示自洽）
+  const elapsedMin = updateTime ? Math.round((now - updateTime) / 60_000) : 0
+  // 剩余分钟 = 缓存窗口 - 已过分钟（两者相加恒等于缓存窗口）
+  const remainMin = Math.round(API_CACHE_SECONDS / 60) - elapsedMin
+  // 精确冷却判断（毫秒）：冷却结束才恢复可刷新
+  const cooldownMs = updateTime ? API_CACHE_SECONDS * 1000 - (now - updateTime) : 0
   const isCooldown = cooldownMs > 0
 
   // 手动刷新时绕过 CDN 缓存（URL 加时间戳），自动加载走缓存
@@ -175,10 +179,11 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
               <Button
                 size="sm"
                 variant="ghost"
-                isDisabled={loading || isCooldown}
+                isDisabled={loading}
                 isIconOnly
-                onPress={handleRefresh}
-                className="text-muted"
+                // 冷却时不禁用按钮（否则 hover 不触发 Tooltip），改为拦截点击 + 视觉淡化
+                onPress={isCooldown ? undefined : handleRefresh}
+                className={`text-muted${isCooldown ? ' opacity-50' : ''}`}
               >
                 {/* Vercel 最佳实践：动画加在包装层而非 SVG 元素上 */}
                 <div className={loading ? 'animate-spin' : ''}>
@@ -188,7 +193,9 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
               <Tooltip.Content placement="bottom" showArrow>
                 <Tooltip.Arrow />
                 {isCooldown
-                  ? `缓存中，约 ${Math.ceil(cooldownMs / 60_000)} 分钟后可刷新`
+                  ? remainMin > 0
+                    ? `缓存中，约 ${remainMin} 分钟后可刷新`
+                    : '缓存中，即将可刷新'
                   : '获取最新'}
               </Tooltip.Content>
             </Tooltip>
