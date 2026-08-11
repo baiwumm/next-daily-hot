@@ -24,7 +24,7 @@ import { useEffect, useRef } from 'react'
 
 import BlurFade from '@/components/BlurFade'
 import SkeletonCard from '@/components/SkeletonCard'
-import { RESPONSE } from '@/enums/response'
+import { API_CACHE_SECONDS, RESPONSE } from '@/enums/response'
 import { useRequest } from '@/hooks/use-request'
 import { useAppStore } from '@/store/useAppStore'
 
@@ -41,6 +41,13 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   const relativeText = useAppStore(state =>
     state.getRelativeTime(value),
   )
+
+  // 上次成功更新时间 + 当前时间（分钟级心跳，用于刷新冷却判断）
+  const updateTime = useAppStore(state => state.UpdateTime[value])
+  const now = useAppStore(state => state.now)
+  // 冷却剩余（ms）：距上次成功更新不足缓存窗口则禁用刷新，避免拿到旧缓存
+  const cooldownMs = updateTime ? Math.max(0, API_CACHE_SECONDS * 1000 - (now - updateTime)) : 0
+  const isCooldown = cooldownMs > 0
 
   // 手动刷新时绕过 CDN 缓存（URL 加时间戳），自动加载走缓存
   const bypassCacheRef = useRef(false)
@@ -168,7 +175,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
               <Button
                 size="sm"
                 variant="ghost"
-                isDisabled={loading}
+                isDisabled={loading || isCooldown}
                 isIconOnly
                 onPress={handleRefresh}
                 className="text-muted"
@@ -180,7 +187,9 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
               </Button>
               <Tooltip.Content placement="bottom" showArrow>
                 <Tooltip.Arrow />
-                获取最新
+                {isCooldown
+                  ? `缓存中，约 ${Math.ceil(cooldownMs / 60_000)} 分钟后可刷新`
+                  : '获取最新'}
               </Tooltip.Content>
             </Tooltip>
           </div>

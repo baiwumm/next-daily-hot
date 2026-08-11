@@ -1,6 +1,8 @@
 /**
- * @description: 上游请求公共工具：统一 UA、超时与错误日志
+ * @description: 上游请求公共工具：统一 UA、超时、缓存与错误日志
  */
+
+import { API_CACHE_SECONDS } from '@/enums/response'
 
 /** Chrome 桌面端 UA（多数上游 JSON API 的反爬要求） */
 export const UA_CHROME = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'
@@ -11,6 +13,10 @@ export const REQUEST_TIMEOUT = 15_000
 interface RequestInitLike {
   headers?: Record<string, string>
   signal?: AbortSignal
+  /** 显式缓存策略（传了则跳过默认 revalidate） */
+  cache?: RequestCache
+  /** 显式 Next.js 缓存配置（传了则跳过默认 revalidate） */
+  next?: { revalidate?: number }
   [key: string]: unknown
 }
 
@@ -18,13 +24,18 @@ interface RequestInitLike {
  * 统一 GET 请求并解析 JSON
  * - 默认携带 Chrome UA（可被 init.headers 覆盖，传空字符串可移除）
  * - 默认 15s 超时（可被 init.signal 覆盖）
+ * - 默认缓存 API_CACHE_SECONDS 秒（可被 init.cache / init.next 覆盖）
  * - 非 2xx 直接抛错（错误信息含状态码与 URL）
  */
 export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}): Promise<T> {
+  const { cache, next, headers, signal, ...restInit } = init
   const response = await fetch(url, {
-    ...init,
-    signal: init.signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
-    headers: buildHeaders(init.headers),
+    ...restInit,
+    ...(cache ? { cache } : {}),
+    // 默认 revalidate 缓存；调用方显式传 cache / next 时尊重调用方
+    ...(next ?? (cache ? {} : { next: { revalidate: API_CACHE_SECONDS } })),
+    signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
+    headers: buildHeaders(headers),
   })
   if (!response.ok) {
     throw new Error(`上游请求失败：${response.status} ${url}`)
@@ -36,10 +47,14 @@ export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}
  * 统一 GET 请求并返回文本（用于 cheerio / 正则解析的 HTML 页面）
  */
 export async function fetchText(url: string, init: RequestInitLike = {}): Promise<string> {
+  const { cache, next, headers, signal, ...restInit } = init
   const response = await fetch(url, {
-    ...init,
-    signal: init.signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
-    headers: buildHeaders(init.headers),
+    ...restInit,
+    ...(cache ? { cache } : {}),
+    // 默认 revalidate 缓存；调用方显式传 cache / next 时尊重调用方
+    ...(next ?? (cache ? {} : { next: { revalidate: API_CACHE_SECONDS } })),
+    signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
+    headers: buildHeaders(headers),
   })
   if (!response.ok) {
     throw new Error(`上游请求失败：${response.status} ${url}`)
