@@ -32,16 +32,9 @@ export default function Header() {
       </div>
       <TimeAndLunar />
       <div className="flex gap-1 justify-self-end">
-        {/* 热榜设置 */}
-        <Tooltip delay={0}>
-          <Tooltip.Trigger aria-label="热榜设置">
-            <HotSettings />
-          </Tooltip.Trigger>
-          <Tooltip.Content showArrow>
-            <Tooltip.Arrow />
-            热榜设置
-          </Tooltip.Content>
-        </Tooltip>
+        {/* 热榜设置（Tooltip 内置于 HotSettings，只包裹触发按钮；若在此包住整个 Modal，
+            弹窗经 portal 渲染后仍在 Tooltip 触发元素之下，弹窗内 hover 会误触发 Tooltip） */}
+        <HotSettings />
 
         {/* 主题切换按钮 */}
         <Tooltip delay={0}>

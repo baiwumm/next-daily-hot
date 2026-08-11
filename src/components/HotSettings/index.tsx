@@ -16,6 +16,7 @@ import {
   Label,
   Modal,
   toast,
+  Tooltip,
 } from '@heroui/react'
 import Image from 'next/image'
 import { useEffect, useMemo } from 'react'
@@ -98,14 +99,24 @@ export default function HotSettings() {
 
   return (
     <Modal>
-      <Button
-        aria-label="热点榜单设置"
-        size="sm"
-        variant="ghost"
-        isIconOnly
-      >
-        <BucketPaint />
-      </Button>
+      {/* Tooltip 只包裹触发按钮，不能包裹整个 Modal：Modal 的 backdrop/弹窗经 portal 渲染，
+          但在 React 树中仍是 Tooltip 触发元素的后代，会导致弹窗内 hover 误触发 Tooltip */}
+      <Tooltip delay={0}>
+        <Tooltip.Trigger aria-label="热榜设置">
+          <Button
+            aria-label="热点榜单设置"
+            size="sm"
+            variant="ghost"
+            isIconOnly
+          >
+            <BucketPaint />
+          </Button>
+        </Tooltip.Trigger>
+        <Tooltip.Content showArrow>
+          <Tooltip.Arrow />
+          热榜设置
+        </Tooltip.Content>
+      </Tooltip>
       <Modal.Backdrop isDismissable={false}>
         <Modal.Container size="lg">
           <Modal.Dialog>
