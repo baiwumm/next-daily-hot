@@ -7,8 +7,9 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums'
-import { getWereadID, responseError, responseSuccess } from '@/lib/utils'
+import { RESPONSE } from '@/enums/response'
+import { responseError, responseSuccess } from '@/lib/utils'
+import { getWereadID } from '@/lib/weread'
 
 import type { HotListItem } from '@/types'
 

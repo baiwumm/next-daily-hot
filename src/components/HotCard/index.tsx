@@ -24,7 +24,7 @@ import { useEffect, useRef } from 'react'
 
 import BlurFade from '@/components/BlurFade'
 import SkeletonCard from '@/components/SkeletonCard'
-import { RESPONSE } from '@/enums'
+import { RESPONSE } from '@/enums/response'
 import { useRequest } from '@/hooks/use-request'
 import { useAppStore } from '@/store/useAppStore'
 

@@ -8,7 +8,7 @@
 import * as cheerio from 'cheerio'
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums'
+import { RESPONSE } from '@/enums/response'
 import { responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'

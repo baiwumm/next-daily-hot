@@ -7,7 +7,7 @@
  */
 import { NextResponse } from 'next/server'
 
-import { RESPONSE } from '@/enums'
+import { RESPONSE } from '@/enums/response'
 import { convertMillisecondsToTime, responseError, responseSuccess } from '@/lib/utils'
 
 import type { HotListItem } from '@/types'

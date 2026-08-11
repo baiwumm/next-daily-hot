@@ -3,25 +3,6 @@ import { Star } from '@gravity-ui/icons'
 import type { ReactNode } from 'react'
 
 /**
- * @description: 请求状态
- */
-const responseConfig = {
-  SUCCESS: { value: 200, label: '请求成功' },
-  ERROR: { value: 500, label: '请求失败' },
-} as const
-
-/** 请求状态码类型 */
-export type ResponseValue = (typeof responseConfig)[keyof typeof responseConfig]['value']
-
-export const RESPONSE = {
-  SUCCESS: responseConfig.SUCCESS.value,
-  ERROR: responseConfig.ERROR.value,
-  /** 根据状态码获取文案 */
-  label: (value: ResponseValue) =>
-    value === responseConfig.SUCCESS.value ? responseConfig.SUCCESS.label : responseConfig.ERROR.label,
-}
-
-/**
  * @description: 热榜子项配置（唯一数据源）
  */
 const hotItemsConfig = {
