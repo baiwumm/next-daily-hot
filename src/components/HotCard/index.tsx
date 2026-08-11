@@ -42,9 +42,17 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
     state.getRelativeTime(value),
   )
 
+  // 手动刷新时绕过 CDN 缓存（URL 加时间戳），自动加载走缓存
+  const bypassCacheRef = useRef(false)
+
   const { data, loading, error, run } = useRequest(
     async () => {
-      const response = await fetch(`/api/${value}`)
+      const url = bypassCacheRef.current
+        ? `/api/${value}?t=${Date.now()}`
+        : `/api/${value}`
+      // 一次性消费标记
+      bypassCacheRef.current = false
+      const response = await fetch(url)
       if (response.status !== RESPONSE.SUCCESS) {
         throw new Error('Request failed')
       }
@@ -69,6 +77,13 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       run()
     }
   }, [isInView, run])
+
+  // 手动刷新：绕过 CDN 缓存拿最新数据
+  const handleRefresh = () => {
+    bypassCacheRef.current = true
+    run()
+  }
+
   return (
     <Card ref={ref} className="p-0 gap-0">
       <Card.Header className="flex justify-between items-center flex-row p-3">
@@ -155,7 +170,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
                 variant="ghost"
                 isDisabled={loading}
                 isIconOnly
-                onPress={run}
+                onPress={handleRefresh}
                 className="text-muted"
               >
                 {/* Vercel 最佳实践：动画加在包装层而非 SVG 元素上 */}
