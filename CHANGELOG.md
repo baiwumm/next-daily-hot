@@ -1,5 +1,28 @@
 # Changelog
 
+## [3.9.0](https://github.com/baiwumm/next-daily-hot/compare/3.8.2...3.9.0) (2026-08-11)
+
+### ✨ Features | 新功能
+
+* 缓存窗口可配置化，相对时间与刷新冷却同源自洽 ([b93e81b](https://github.com/baiwumm/next-daily-hot/commit/b93e81b9d0c4ecdc247d2c77e331ca6230c3e23f))
+* 手动刷新绕过 CDN 缓存，获取最新热榜 ([f42fc3f](https://github.com/baiwumm/next-daily-hot/commit/f42fc3f3e8659dcf5a47ded461f72850a7fd9635))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复热榜设置弹窗内 hover 误触发 Tooltip ([9b2ed2f](https://github.com/baiwumm/next-daily-hot/commit/9b2ed2fd9a81e102f108f93221931de4a467bfd6))
+
+### 💄 Styles | 风格
+
+* 精简 eslint ignores，仅保留 .reasonix 排除 ([0c8e5ab](https://github.com/baiwumm/next-daily-hot/commit/0c8e5ab6bbb3b238afaa948d3ec2221d8ee57522))
+* 清理 eslint 警告，忽略 .reasonix 等工具目录 ([dfb1ccf](https://github.com/baiwumm/next-daily-hot/commit/dfb1ccf44fa7c68c61ace763c4ff15ccce1ec728))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 拆分 bundle 依赖，隔离 crypto-js 与 RESPONSE 常量 ([f33fff5](https://github.com/baiwumm/next-daily-hot/commit/f33fff587c8b82a0f07df7405aab9768f3064d5a))
+* 抽取上游请求公共层，补齐超时与错误日志 ([c08a95a](https://github.com/baiwumm/next-daily-hot/commit/c08a95a58b2836ea625920c7b7c2757708bc6b74))
+* 服务器 fetch 缓存 + 刷新按钮冷却 ([8910ff5](https://github.com/baiwumm/next-daily-hot/commit/8910ff513ae284a1c5dc301aade5410eec230f6b))
+* 响应统一加 CDN 缓存头，修复错误时间戳恒定 ([57484d6](https://github.com/baiwumm/next-daily-hot/commit/57484d6d50fe76bf31d6ab7b1535ab2d79729604))
+
 ## [3.8.2](https://github.com/baiwumm/next-daily-hot/compare/3.8.1...3.8.2) (2026-08-10)
 
 ### 📝 Documentation | 文档
