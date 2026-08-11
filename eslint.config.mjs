@@ -1,6 +1,12 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
+  // 忽略工具内部文件与构建产物，避免被当作源码检查
+  ignores: [
+    '**/.reasonix/**',
+    '**/.next/**',
+    '**/node_modules/**',
+  ],
   nextjs: true,
   react: true,
   stylistic: true,

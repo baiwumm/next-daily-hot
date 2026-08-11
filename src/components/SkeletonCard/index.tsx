@@ -3,9 +3,9 @@ import { Skeleton } from '@heroui/react'
 export default function HotRankSkeleton() {
   return (
     <div className="w-full px-4 py-3 space-y-2">
-      {Array.from({ length: 8 }).map((_, index) => (
+      {Array.from({ length: 8 }, (_, index) => index + 1).map((item, index) => (
         <div
-          key={index}
+          key={item}
           className="flex items-center justify-between gap-3 py-1"
         >
           {/* 左侧 */}

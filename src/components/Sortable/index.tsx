@@ -144,8 +144,12 @@ function Sortable<T>({
         {activeId
           ? (
               <div className="z-50">
+                {/* dnd-kit DragOverlay 需要遍历 children 找到被拖拽项并克隆增强样式，是官方推荐写法 */}
+                {/* eslint-disable-next-line react/no-children-map */}
                 {React.Children.map(children, (child) => {
                   if (React.isValidElement(child) && (child.props as any).value === activeId) {
+                    // 修改子元素 props 只能通过 cloneElement（React 官方 API）
+                    // eslint-disable-next-line react/no-clone-element
                     return React.cloneElement(child as React.ReactElement<any>, {
                       ...(child.props as any),
                       className: cn((child.props as any).className, 'z-50 shadow-lg'),
@@ -180,7 +184,7 @@ function SortableItem({ value, className, children, disabled }: SortableItemProp
   } as React.CSSProperties
 
   return (
-    <SortableItemContext.Provider value={{ listeners, isDragging: isSortableDragging, disabled }}>
+    <SortableItemContext value={{ listeners, isDragging: isSortableDragging, disabled }}>
       <div
         ref={setNodeRef}
         data-disabled={disabled}
@@ -193,12 +197,12 @@ function SortableItem({ value, className, children, disabled }: SortableItemProp
       >
         {children}
       </div>
-    </SortableItemContext.Provider>
+    </SortableItemContext>
   )
 }
 
 function SortableItemHandle({ className, children, cursor = true }: SortableItemHandleProps) {
-  const { listeners, isDragging, disabled } = React.useContext(SortableItemContext)
+  const { listeners, isDragging, disabled } = React.use(SortableItemContext)
 
   return (
     <div

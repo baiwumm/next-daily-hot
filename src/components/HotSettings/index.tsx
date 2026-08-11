@@ -94,7 +94,7 @@ export default function HotSettings() {
     if (safeSortItems.join() !== sortItems.join()) {
       setSortItems(safeSortItems)
     }
-  }, [safeSortItems])
+  }, [safeSortItems, sortItems, setSortItems])
 
   return (
     <Modal>

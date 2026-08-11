@@ -82,7 +82,10 @@ export function useRequest<TData>(
         void doRequest().catch(() => {})
       }
       if (debounceWait > 0) {
-        // 防抖等待期间立即给出 loading 反馈，避免点击后"无响应"的错觉
+        // 防抖等待期间立即给出 loading 反馈，避免点击后"无响应"的错觉。
+        // run 同时被事件处理器与自动请求的 effect 调用，此处为有意设计，
+        // 自动模式下该 setState 冗余（初始 loading 状态一致），React 会直接 bail out，故豁免规则。
+        // eslint-disable-next-line react/set-state-in-effect
         setLoading(true)
         clearTimeout(timerRef.current)
         timerRef.current = setTimeout(request, debounceWait)

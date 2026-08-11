@@ -37,8 +37,8 @@ export default function Home() {
   if (!mounted) {
     return (
       <div className={gridClassName}>
-        {Array.from({ length: 8 }).map((_, index) => (
-          <Card key={index} className="p-0 gap-0">
+        {Array.from({ length: 8 }, (_, index) => index + 1).map(item => (
+          <Card key={item} className="p-0 gap-0">
             <Card.Header className="flex justify-between items-center flex-row p-3">
               <div className="flex items-center gap-2">
                 <Skeleton className="size-6 rounded-md" />

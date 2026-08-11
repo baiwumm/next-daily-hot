@@ -14,6 +14,7 @@ import {
   Separator,
 } from '@heroui/react'
 import Image from 'next/image'
+import { useState } from 'react'
 
 import pkg from '#/package.json'
 
@@ -27,6 +28,8 @@ interface Social {
 }
 
 export default function Footer() {
+  // 版权年份：渲染期间固定（state 惰性初始化，避免渲染期调用 new Date 导致不纯）
+  const [year] = useState(() => new Date().getFullYear())
   // 备案信息
   const IcpLinks: Social[] = [
     {
@@ -72,7 +75,7 @@ export default function Footer() {
       <Description className="justify-self-center">
         &copy;
         {' '}
-        {new Date().getFullYear()}
+        {year}
         {' '}
         <a
           href={pkg.author.url}
