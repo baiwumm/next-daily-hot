@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.9.1](https://github.com/baiwumm/next-daily-hot/compare/3.9.0...3.9.1) (2026-08-12)
+
+### 🎫 Chores | 其他更新
+
+* 升级 eslint 10.8.1 与 @antfu/eslint-config 9.3.0 ([db75f20](https://github.com/baiwumm/next-daily-hot/commit/db75f209e259b7ca5bf095ab539fd9d3d2b2da46))
+* 升级 HeroUI 依赖与文档到最新版 ([1e45680](https://github.com/baiwumm/next-daily-hot/commit/1e456802fa0ce2038df8e963a4be3b229701b865))
+* 升级 Next.js 16.3.0 及配套依赖 ([0aff218](https://github.com/baiwumm/next-daily-hot/commit/0aff218168fd752d51b7101bf0800ea7a80a51ea))
+
 ## [3.9.0](https://github.com/baiwumm/next-daily-hot/compare/3.8.2...3.9.0) (2026-08-11)
 
 ### ✨ Features | 新功能
