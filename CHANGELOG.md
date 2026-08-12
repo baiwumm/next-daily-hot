@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.9.2](https://github.com/baiwumm/next-daily-hot/compare/3.9.1...3.9.2) (2026-08-12)
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 热榜卡片空数据误显示更新时间并触发刷新冷却 ([7307940](https://github.com/baiwumm/next-daily-hot/commit/7307940537a6b91f6a7593a4ee4a28d00334eff4))
+
 ## [3.9.1](https://github.com/baiwumm/next-daily-hot/compare/3.9.0...3.9.1) (2026-08-12)
 
 ### 🎫 Chores | 其他更新
