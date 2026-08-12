@@ -50,8 +50,8 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   // 剩余分钟 = 缓存窗口 - 已过分钟（两者相加恒等于缓存窗口）
   const remainMin = Math.round(API_CACHE_SECONDS / 60) - elapsedMin
   // 精确冷却判断（毫秒）：冷却结束才恢复可刷新
+  // 注意：isCooldown 需在 useRequest 之后基于 error 计算（失败时允许立即重试）
   const cooldownMs = updateTime ? API_CACHE_SECONDS * 1000 - (now - updateTime) : 0
-  const isCooldown = cooldownMs > 0
 
   // 手动刷新时绕过 CDN 缓存（URL 加时间戳），自动加载走缓存
   const bypassCacheRef = useRef(false)
@@ -71,9 +71,14 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       if (result.code === RESPONSE.ERROR) {
         throw new Error('API returned error')
       }
-      // 仅在请求成功时记录更新时间，失败时保留旧值
+      const list = result.data || []
+      // 空数据视为失败：不写入更新时间（否则会显示"xx 前更新"并触发刷新冷却，导致无法立即重试）
+      if (!list.length) {
+        throw new Error('API returned empty data')
+      }
+      // 仅在请求成功且有数据时记录更新时间，失败/空数据时保留旧值
       setUpdateTime({ [value]: Date.now() })
-      return result.data || []
+      return list
     },
     {
       manual: true,
@@ -83,6 +88,10 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   )
 
   // ✅ 使用 ready 控制自动加载（更可靠）
+  // 失败状态强制可刷新：即使 localStorage 残留了上次"假成功"写入的更新时间，
+  // error 时也不进入冷却，保证用户能立即重试
+  const isCooldown = !error && cooldownMs > 0
+
   useEffect(() => {
     if (isInView) {
       run()
