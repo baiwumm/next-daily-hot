@@ -7,16 +7,17 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://moment-api.huxiu.com/web-v3/moment/feed?platform=www'
 
   try {
     // 请求数据（统一 UA + 超时）
     const responseBody = await fetchJson(url, {
+      refresh: isManualRefresh(request),
       headers: {
         // 覆盖默认 UA：虎嗅要求极简 UA
         'User-Agent': 'Mozilla/5.0',

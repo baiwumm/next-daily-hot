@@ -9,16 +9,17 @@ import type { HotListItem } from '@/types'
 
 import * as cheerio from 'cheerio'
 
-import { fetchText } from '@/lib/request'
+import { fetchText, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://bbs.hupu.com/all-gambia'
 
   try {
     // 请求数据（虎扑对桌面 UA 返回反爬页，保持无 UA 请求）
     const responseBody = await fetchText(url, {
+      refresh: isManualRefresh(request),
       headers: { 'User-Agent': '' },
     })
     const $ = cheerio.load(responseBody)

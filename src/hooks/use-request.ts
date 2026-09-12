@@ -45,6 +45,11 @@ export function useRequest<TData>(service: () => Promise<TData>, options: UseReq
 
       // 失败后自动重试 retryCount 次（总尝试次数 = retryCount + 1）
       for (let attempt = 0; attempt <= retryCount; attempt++) {
+        // 已被更新的请求取代时立即放弃，不再继续重试打上游（重试放大）
+        if (requestId !== requestIdRef.current) {
+          return undefined
+        }
+
         try {
           const result = await serviceRef.current()
 

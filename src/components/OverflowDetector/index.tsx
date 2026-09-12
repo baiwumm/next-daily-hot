@@ -47,6 +47,9 @@ const OverflowDetector = memo(function OverflowDetector({ record, type }: Overfl
 
     // 等 DOM 渲染完成
     requestAnimationFrame(checkOverflow)
+
+    // 自托管字体异步加载完成后文本宽度会变化，复检一次避免 tooltip 误判
+    void document.fonts.ready.then(checkOverflow)
   }, [])
 
   return (

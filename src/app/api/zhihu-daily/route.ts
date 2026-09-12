@@ -7,16 +7,17 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://daily.zhihu.com/api/4/news/latest'
 
   try {
     // 请求数据（统一 UA + 超时）
     const responseBody = await fetchJson(url, {
+      refresh: isManualRefresh(request),
       headers: {
         Referer: 'https://daily.zhihu.com/api/4/news/latest',
         Host: 'daily.zhihu.com',

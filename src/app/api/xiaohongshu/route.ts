@@ -7,10 +7,10 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://edith.xiaohongshu.com/api/sns/v1/search/hot_list'
   const xhsHeaders = {
@@ -29,6 +29,7 @@ export async function GET() {
   try {
     // 请求数据（统一超时，覆盖 iPhone 微信 UA 等反爬头）
     const responseBody = await fetchJson(url, {
+      refresh: isManualRefresh(request),
       headers: xhsHeaders,
     })
 

@@ -7,16 +7,16 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://www.toutiao.com/hot-event/hot-board/?origin=toutiao_pc'
 
   try {
     // 请求数据
-    const responseBody = await fetchJson(url)
+    const responseBody = await fetchJson(url, { refresh: isManualRefresh(request) })
 
     // 处理数据
     if (responseBody.status === 'success') {
@@ -24,7 +24,7 @@ export async function GET() {
         return {
           id: v.ClusterId,
           title: v.Title,
-          pic: v.Image.url,
+          pic: v.Image?.url,
           hot: v.HotValue,
           url: `https://www.toutiao.com/trending/${v.ClusterIdStr}/`,
           mobileUrl: `https://api.toutiaoapi.com/feoffline/amos_land/new/html/main/index.html?topic_id=${v.ClusterIdStr}`,

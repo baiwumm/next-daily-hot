@@ -7,16 +7,17 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://gateway.36kr.com/api/mis/nav/home/nav/rank/hot'
 
   try {
     // 请求数据（统一超时，覆盖 Mac UA）
     const responseBody = await fetchJson(url, {
+      refresh: isManualRefresh(request),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -39,8 +40,8 @@ export async function GET() {
         return {
           id: v.itemId,
           title: v?.templateMaterial?.widgetTitle,
-          pic: v?.templateMaterial.widgetImage,
-          hot: v?.templateMaterial.statRead,
+          pic: v?.templateMaterial?.widgetImage,
+          hot: v?.templateMaterial?.statRead,
           url: `https://www.36kr.com/p/${v.itemId}`,
           mobileUrl: `https://m.36kr.com/p/${v.itemId}`,
         }

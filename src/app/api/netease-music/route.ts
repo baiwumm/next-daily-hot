@@ -7,17 +7,18 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 import { convertMillisecondsToTime } from '@/lib/utils'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://music.163.com/api/playlist/detail?id=3778678'
 
   try {
     // 请求数据（统一 UA + 超时）
     const responseBody = await fetchJson(url, {
+      refresh: isManualRefresh(request),
       headers: {
         authority: 'music.163.com',
         referer: 'https://music.163.com/',
@@ -30,8 +31,7 @@ export async function GET() {
         return {
           id: v.id,
           title: v.name,
-          author: v.artists.map((item: { name: string }) => item.name).join('/'),
-          pic: v.album.picUrl,
+          pic: v.album?.picUrl,
           tip: convertMillisecondsToTime(v.duration),
           url: `https://music.163.com/#/song?id=${v.id}`,
           mobileUrl: `https://music.163.com/m/song?id=${v.id}`,

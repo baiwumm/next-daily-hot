@@ -7,26 +7,37 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
-  // 获取月份
-  const month = (new Date().getMonth() + 1).toString().padStart(2, '0')
-  // 获取天数
-  const day = new Date().getDate().toString().padStart(2, '0')
+/** 按东八区取当前月/日：服务端运行在 UTC，直接 new Date() 在北京时间 0~8 点会拿到昨天 */
+function getBeijingMonthDay(): { month: string; day: string } {
+  // en-CA 的日期格式固定为 YYYY-MM-DD，便于直接拆分
+  const [, month, day] = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Shanghai',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+    .format(new Date())
+    .split('-')
+
+  return { month, day }
+}
+
+export async function GET(request: Request) {
+  const { month, day } = getBeijingMonthDay()
   const url = `https://baike.baidu.com/cms/home/eventsOnHistory/${month}.json`
 
   try {
     // 请求数据
-    const responseBody = await fetchJson(url)
+    const responseBody = await fetchJson(url, { refresh: isManualRefresh(request) })
     // 处理数据
     const result: HotListItem[] = responseBody[month][month + day].map((v: any, index: number) => {
       return {
         id: index,
         title: v.title.replace(/<[^>]+>/g, ''),
         tip: v.year,
-        type: v.type,
         url: v.link,
         mobileUrl: v.link,
       }

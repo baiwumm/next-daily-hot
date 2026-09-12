@@ -7,16 +7,16 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchJson } from '@/lib/request'
+import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://aweme.snssdk.com/aweme/v1/hot/search/list/'
 
   try {
     // 请求数据
-    const responseBody = await fetchJson(url)
+    const responseBody = await fetchJson(url, { refresh: isManualRefresh(request) })
 
     // 处理数据
     if (responseBody.status_code === 0) {
@@ -24,7 +24,7 @@ export async function GET() {
         return {
           id: v.group_id,
           title: v.word,
-          pic: `${v.word_cover.url_list[0]}`,
+          pic: v.word_cover?.url_list?.[0],
           hot: Number(v.hot_value),
           url: `https://www.douyin.com/hot/${encodeURIComponent(v.sentence_id)}`,
           mobileUrl: `https://www.douyin.com/hot/${encodeURIComponent(v.sentence_id)}`,

@@ -9,16 +9,16 @@ import type { HotListItem } from '@/types'
 
 import * as cheerio from 'cheerio'
 
-import { fetchText } from '@/lib/request'
+import { fetchText, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://movie.douban.com/chart/'
 
   try {
     // 请求数据
-    const responseBody = await fetchText(url)
+    const responseBody = await fetchText(url, { refresh: isManualRefresh(request) })
     // 处理数据
     const getNumbers = (text: string | undefined) => {
       if (!text) return 10000000
@@ -36,14 +36,12 @@ export async function GET() {
     const result: HotListItem[] = listDom.toArray().map((item) => {
       const dom = $(item)
       const url = dom.find('a').attr('href') || ''
-      const score = dom.find('.rating_nums').text() ?? '0.0'
 
       return {
         id: String(getNumbers(url)),
         title: `${dom.find('.pl2 a').text().replace(/\s+/g, ' ').trim().replace(/\n/g, '')}`,
         desc: dom.find('p.pl').text(),
         hot: getNumbers(dom.find('span.pl').text()),
-        score: Number(score),
         url,
         mobileUrl: `https://m.douban.com/movie/subject/${getNumbers(url)}/`,
       }

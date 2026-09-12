@@ -18,7 +18,17 @@ interface RequestInitLike {
   cache?: RequestCache
   /** 显式 Next.js 缓存配置（传了则跳过默认 revalidate） */
   next?: { revalidate?: number }
+  /** 手动刷新：绕过 Next Data Cache 直接回源（配合客户端 ?t= 绕过 CDN，才能真正拿到最新数据） */
+  refresh?: boolean
   [key: string]: unknown
+}
+
+/**
+ * 判断请求是否为手动刷新：客户端刷新按钮会在 URL 上加 ?t= 时间戳绕过 CDN 边缘缓存，
+ * 服务端需同步绕过 Data Cache，否则刷新拿到的仍是数据缓存里的旧数据（timestamp 却是新的）
+ */
+export function isManualRefresh(request: Request): boolean {
+  return new URL(request.url).searchParams.has('t')
 }
 
 /**
@@ -29,12 +39,14 @@ interface RequestInitLike {
  * - 非 2xx 直接抛错（错误信息含状态码与 URL）
  */
 export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}): Promise<T> {
-  const { cache, next, headers, signal, ...restInit } = init
+  const { cache, next, headers, signal, refresh, ...restInit } = init
   const response = await fetch(url, {
     ...restInit,
     ...(cache ? { cache } : {}),
     // 默认 revalidate 缓存；调用方显式传 cache / next 时尊重调用方
     ...(next ?? (cache ? {} : { next: { revalidate: API_CACHE_SECONDS } })),
+    // 手动刷新优先级最高：no-store 不读写数据缓存，保证回源拿最新
+    ...(refresh ? { cache: 'no-store' as RequestCache } : {}),
     signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
     headers: buildHeaders(headers),
   })
@@ -50,12 +62,14 @@ export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}
  * 统一 GET 请求并返回文本（用于 cheerio / 正则解析的 HTML 页面）
  */
 export async function fetchText(url: string, init: RequestInitLike = {}): Promise<string> {
-  const { cache, next, headers, signal, ...restInit } = init
+  const { cache, next, headers, signal, refresh, ...restInit } = init
   const response = await fetch(url, {
     ...restInit,
     ...(cache ? { cache } : {}),
     // 默认 revalidate 缓存；调用方显式传 cache / next 时尊重调用方
     ...(next ?? (cache ? {} : { next: { revalidate: API_CACHE_SECONDS } })),
+    // 手动刷新优先级最高：no-store 不读写数据缓存，保证回源拿最新
+    ...(refresh ? { cache: 'no-store' as RequestCache } : {}),
     signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
     headers: buildHeaders(headers),
   })

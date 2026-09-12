@@ -7,16 +7,16 @@
  */
 import type { HotListItem } from '@/types'
 
-import { fetchText } from '@/lib/request'
+import { fetchText, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-export async function GET() {
+export async function GET(request: Request) {
   // 官方 url
   const url = 'https://www.kuaishou.com/?isHome=1'
 
   try {
     // 请求数据
-    const responseBody = await fetchText(url)
+    const responseBody = await fetchText(url, { refresh: isManualRefresh(request) })
     // 处理数据
     const result: HotListItem[] = []
     const pattern = /window.__APOLLO_STATE__=(.*);\(function\(\)/s
@@ -29,15 +29,17 @@ export async function GET() {
 
     // 遍历所有分类
     allItems.forEach((v: any) => {
-      // 基础数据
-      const image = jsonObject[v.id].poster
-      const id = image.match(idPattern)[1]
+      const info = jsonObject[v.id]
+      const id = info?.poster?.match(idPattern)?.[1]
 
-      // 数据处理
+      // 上游偶发缺失条目数据或海报链接，跳过该条，避免一条脏数据打挂整个榜单
+      if (!id) return
+
+      // 热度形如 "123.4万"，缺失时不输出 NaN
       result.push({
         id,
-        title: jsonObject[v.id].name,
-        hot: jsonObject[v.id].hotValue?.replace('万', '') * 10000,
+        title: info.name,
+        hot: info.hotValue ? Number.parseFloat(info.hotValue) * 10000 : undefined,
         url: `https://www.kuaishou.com/short-video/${id}`,
         mobileUrl: `https://www.kuaishou.com/short-video/${id}`,
       })
