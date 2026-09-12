@@ -32,15 +32,12 @@ export function isManualRefresh(request: Request): boolean {
 }
 
 /**
- * 统一 GET 请求并解析 JSON
- * - 默认携带 Chrome UA（可被 init.headers 覆盖，传空字符串可移除）
- * - 默认 15s 超时（可被 init.signal 覆盖）
- * - 默认缓存 API_CACHE_SECONDS 秒（可被 init.cache / init.next 覆盖）
- * - 非 2xx 直接抛错（错误信息含状态码与 URL）
+ * 组装 fetch 参数并发起请求：UA / 超时 / 缓存策略的公共层，fetchJson 与 fetchText 共用
  */
-export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}): Promise<T> {
+async function fetchWithDefaults(url: string, init: RequestInitLike): Promise<Response> {
   const { cache, next, headers, signal, refresh, ...restInit } = init
-  const response = await fetch(url, {
+
+  return fetch(url, {
     ...restInit,
     ...(cache ? { cache } : {}),
     // 默认 revalidate 缓存；调用方显式传 cache / next 时尊重调用方
@@ -50,6 +47,17 @@ export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}
     signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
     headers: buildHeaders(headers),
   })
+}
+
+/**
+ * 统一 GET 请求并解析 JSON
+ * - 默认携带 Chrome UA（可被 init.headers 覆盖，传空字符串可移除）
+ * - 默认 15s 超时（可被 init.signal 覆盖）
+ * - 默认缓存 API_CACHE_SECONDS 秒（可被 init.cache / init.next 覆盖）
+ * - 非 2xx 直接抛错（错误信息含状态码与 URL）
+ */
+export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}): Promise<T> {
+  const response = await fetchWithDefaults(url, init)
 
   if (!response.ok) {
     throw new Error(`上游请求失败：${response.status} ${url}`)
@@ -62,17 +70,7 @@ export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}
  * 统一 GET 请求并返回文本（用于 cheerio / 正则解析的 HTML 页面）
  */
 export async function fetchText(url: string, init: RequestInitLike = {}): Promise<string> {
-  const { cache, next, headers, signal, refresh, ...restInit } = init
-  const response = await fetch(url, {
-    ...restInit,
-    ...(cache ? { cache } : {}),
-    // 默认 revalidate 缓存；调用方显式传 cache / next 时尊重调用方
-    ...(next ?? (cache ? {} : { next: { revalidate: API_CACHE_SECONDS } })),
-    // 手动刷新优先级最高：no-store 不读写数据缓存，保证回源拿最新
-    ...(refresh ? { cache: 'no-store' as RequestCache } : {}),
-    signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
-    headers: buildHeaders(headers),
-  })
+  const response = await fetchWithDefaults(url, init)
 
   if (!response.ok) {
     throw new Error(`上游请求失败：${response.status} ${url}`)

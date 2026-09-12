@@ -52,6 +52,13 @@ export interface SortableRootProps<T> {
   onDragEnd?: (event: DragEndEvent) => void
 }
 
+/** 拖拽排序策略映射：strategy → dnd-kit 排序策略 */
+const SORTING_STRATEGIES = {
+  horizontal: rectSortingStrategy,
+  grid: rectSortingStrategy,
+  vertical: verticalListSortingStrategy,
+} as const
+
 function Sortable<T>({
   value,
   onValueChange,
@@ -110,23 +117,11 @@ function Sortable<T>({
     [value, getItemValue, onValueChange, onMove, onDragEnd],
   )
 
-  const getStrategy = () => {
-    switch (strategy) {
-      case 'horizontal':
-        return rectSortingStrategy
-      case 'grid':
-        return rectSortingStrategy
-      case 'vertical':
-      default:
-        return verticalListSortingStrategy
-    }
-  }
-
   const itemIds = React.useMemo(() => value.map(getItemValue), [value, getItemValue])
 
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
-      <SortableContext items={itemIds} strategy={getStrategy()}>
+      <SortableContext items={itemIds} strategy={SORTING_STRATEGIES[strategy]}>
         <div className={cn(className)} data-dragging={activeId !== null} data-slot="sortable">
           {children}
         </div>

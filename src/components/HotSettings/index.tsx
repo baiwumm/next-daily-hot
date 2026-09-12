@@ -17,6 +17,9 @@ import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortabl
 import { HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
 
+/** 源数据（唯一可信）：HOT_ITEMS 是模块常量，直接提升，避免每次渲染重算 */
+const SOURCE_VALUES = HOT_ITEMS.items.map((item) => item.value)
+
 export default function HotSettings() {
   const hiddenItems = useAppStore((state) => state.hiddenItems)
   const setHiddenItems = useAppStore((state) => state.setHiddenItems)
@@ -24,23 +27,18 @@ export default function HotSettings() {
   const setSortItems = useAppStore((state) => state.setSortItems)
 
   /**
-   * 👇 源数据（唯一可信）
-   */
-  const sourceValues = useMemo(() => HOT_ITEMS.items.map((i) => i.value), [])
-
-  /**
    * 👇 排序兜底（解决你新增一条 HOT_ITEMS 不显示的问题）
    */
-  const safeSortItems = useMemo(() => normalizeSortItems(sourceValues, sortItems), [sourceValues, sortItems])
+  const safeSortItems = useMemo(() => normalizeSortItems(SOURCE_VALUES, sortItems), [sortItems])
 
   /**
    * 👇 隐藏项兜底（防止源数据删了还留在 hiddenItems）
    */
   const safeHiddenItems = useMemo(() => {
-    const sourceSet = new Set(sourceValues)
+    const sourceSet = new Set(SOURCE_VALUES)
 
     return (hiddenItems ?? []).filter((v) => sourceSet.has(v))
-  }, [hiddenItems, sourceValues])
+  }, [hiddenItems])
 
   /**
    * 👇 当前显示中的 items（CheckboxGroup 使用）
@@ -48,15 +46,15 @@ export default function HotSettings() {
   const visibleValues = useMemo(() => {
     const hiddenSet = new Set(safeHiddenItems)
 
-    return sourceValues.filter((v) => !hiddenSet.has(v))
-  }, [safeHiddenItems, sourceValues])
+    return SOURCE_VALUES.filter((v) => !hiddenSet.has(v))
+  }, [safeHiddenItems])
 
   /**
    * 👇 勾选变化 → 反推出 hiddenItems
    */
   const onChange = (values: string[]) => {
     const visibleSet = new Set(values)
-    const nextHidden = sourceValues.filter((v) => !visibleSet.has(v))
+    const nextHidden = SOURCE_VALUES.filter((v) => !visibleSet.has(v))
 
     setHiddenItems(nextHidden)
   }
@@ -203,9 +201,10 @@ function normalizeSortItems(source: HotValue[], sortItems?: HotValue[]) {
 
   // 保留仍然存在的排序项
   const normalized = (sortItems ?? []).filter((v) => sourceSet.has(v))
+  const normalizedSet = new Set(normalized)
 
   // 找出新增项
-  const missing = source.filter((v) => !normalized.includes(v))
+  const missing = source.filter((v) => !normalizedSet.has(v))
 
   return [...normalized, ...missing]
 }

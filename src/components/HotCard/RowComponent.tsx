@@ -35,20 +35,15 @@ function HotDisplay({ value, prefix, suffix }: { value: string | number; prefix?
 
 // Vercel 最佳实践：虚拟列表行组件用 memo，避免滚动/数据更新时无关行重渲染
 const RowComponent = memo(function RowComponent({ index, data, value, prefix, suffix }: RowData) {
-  const item = useMemo(() => data[index], [data, index])
+  const item = data[index]
   const { label } = item
 
-  const colorStyle = useMemo(() => {
-    const bgColor = label
-      ? hotLableColor[label as keyof typeof hotLableColor] || 'var(--default)'
-      : hotTagColor[index] || 'var(--default)'
-
-    const textColor = (label ? hotLableColor[label as keyof typeof hotLableColor] : hotTagColor[index])
-      ? '#fff'
-      : 'var(--default-foreground)'
-
-    return { backgroundColor: bgColor, color: textColor }
-  }, [label, index])
+  // 简单的查表取值（primitive / 小对象）无需 useMemo：行组件自身已按 props memo，重渲染频率很低
+  const labelColor = label ? hotLableColor[label as keyof typeof hotLableColor] : hotTagColor[index]
+  const colorStyle = {
+    backgroundColor: labelColor || 'var(--default)',
+    color: labelColor ? '#fff' : 'var(--default-foreground)',
+  }
 
   // Vercel 最佳实践：primitive 派生值无需 useMemo 缓存
   const displayText = label ? label.slice(0, 1) : index + 1

@@ -52,6 +52,9 @@ export const hotLableColor: Record<string, string> = {
   爆: '#bd0000',
 }
 
+/** 两位数补零 */
+const pad2 = (n: number) => n.toString().padStart(2, '0')
+
 /**
  * @description: 根据时间戳计算时长
  */
@@ -61,11 +64,23 @@ export function convertMillisecondsToTime(milliseconds: number): string {
   const minutes = Math.floor((totalSeconds % 3600) / 60)
   const seconds = totalSeconds % 60
 
-  const pad = (n: number) => n.toString().padStart(2, '0')
-
   // 超过 1 小时显示 HH:MM:SS，否则保持 MM:SS
-  return hours > 0 ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}` : `${pad(minutes)}:${pad(seconds)}`
+  return hours > 0 ? `${pad2(hours)}:${pad2(minutes)}:${pad2(seconds)}` : `${pad2(minutes)}:${pad2(seconds)}`
 }
+
+/** 纯数字或数字字符串（无 /g 标志，可安全提升到模块级复用） */
+const PLAIN_NUMBER_REGEXP = /^\d+(?:\.\d+)?$/
+/** 带 w / 万 单位 */
+const WAN_NUMBER_REGEXP = /^\d+(?:\.\d+)?\s*(?:w|万)$/i
+/** 带 k / 千 单位 */
+const QIAN_NUMBER_REGEXP = /^\d+(?:\.\d+)?\s*(?:k|千)$/i
+
+/** 中文紧凑计数格式（Intl.NumberFormat 构造开销较大，提升到模块级，列表每行渲染都会调用） */
+const COMPACT_NUMBER_FORMAT = new Intl.NumberFormat('zh-CN', {
+  notation: 'compact',
+  compactDisplay: 'short',
+  maximumFractionDigits: 2,
+})
 
 /**
  * @description: 转化数字
@@ -76,15 +91,15 @@ export function formatNumber(value: number | string): number | string {
   let num: number
 
   // 1️⃣ 纯数字或数字字符串
-  if (typeof value === 'number' || /^\d+(?:\.\d+)?$/.test(value)) {
+  if (typeof value === 'number' || PLAIN_NUMBER_REGEXP.test(value)) {
     num = Number(value)
   }
   // 2️⃣ 带 w / 万
-  else if (/^\d+(?:\.\d+)?\s*(?:w|万)$/i.test(value)) {
+  else if (WAN_NUMBER_REGEXP.test(value)) {
     num = Number.parseFloat(value) * 10000
   }
   // 3️⃣ 带 k / 千（可选）
-  else if (/^\d+(?:\.\d+)?\s*(?:k|千)$/i.test(value)) {
+  else if (QIAN_NUMBER_REGEXP.test(value)) {
     num = Number.parseFloat(value) * 1000
   }
   // 4️⃣ 其他情况，原样返回
@@ -92,9 +107,5 @@ export function formatNumber(value: number | string): number | string {
     return value
   }
 
-  return new Intl.NumberFormat('zh-CN', {
-    notation: 'compact',
-    compactDisplay: 'short',
-    maximumFractionDigits: 2,
-  }).format(num)
+  return COMPACT_NUMBER_FORMAT.format(num)
 }
