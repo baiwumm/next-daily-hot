@@ -37,6 +37,7 @@ export default defineConfig([
     "**/node_modules",
     "**/coverage",
     "**/.next",
+    "next-env.d.ts",
     "**/build",
     ".heroui-docs/*",
     "!**/.commitlintrc.cjs",

@@ -1,0 +1,21 @@
+/* Maple Mono CN —— 自托管子集字体
+ *
+ * 来源：Maple Mono（开源，OFL-1.1，https://github.com/subframe7536/maple-font v7.9）
+ * 子集：GB2312 常用汉字全集（一级 3755 + 二级 3008）+ 项目静态文案用字 +
+ *       ASCII 可见字符 + 常见中文标点（共 6893 字形，woff2 ≈ 1.7MB）。
+ * 边界：子集外的生僻字/动态数据用字将回退到系统字体——与旧 cn-font 服务
+ *       的子集行为一致，可接受。
+ *
+ * 命名与原外链服务保持一致（'Maple Mono CN'），globals.css 的 --font-sans
+ * 引用无需任何改动即自动命中本规则。
+ */
+@font-face {
+  font-family: 'Maple Mono CN';
+  src: url('/fonts/maple-mono-cn-regular.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  /* 仅对这些区段启用本字体，其余字符自然走系统字体，不产生额外加载 */
+  unicode-range: U+0020-007E, U+00B1, U+00B7, U+00D7, U+00F7, U+2014,
+    U+2018-2019, U+201C-201D, U+2026, U+3000-303F, U+4E00-9FFF, U+FF00-FFEF;
+}

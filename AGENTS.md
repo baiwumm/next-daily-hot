@@ -51,6 +51,7 @@ src/
 │   ├── utils.ts            # fromNow / formatNumber 等纯工具
 │   └── weread.ts           # 微信读书书籍 ID 算法（crypto-js）
 ├── store/useAppStore.ts    # zustand 全局状态（更新时间/心跳/隐藏/排序，persist）
+├── styles/fonts.css        # Maple Mono CN 自托管 @font-face（字体文件在 public/fonts/）
 └── types/index.ts          # HotListConfig / HotListItem / IResponse 共享类型
 .agents/skills/             # Agent Skills（见「AI Agent 代码生成规范」）
 .heroui-docs/               # HeroUI 本地文档（工具生成，gitignore）

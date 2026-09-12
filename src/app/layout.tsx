@@ -37,7 +37,10 @@ export const metadata: Metadata = {
     },
   ],
   verification: {
-    other: { 'baidu-site-verification': 'codeva-kYzuuOyYCZ', 'bytedance-verification-code': 'oPgCIrgBz/3Lhr9BoNE2' },
+    other: {
+      'baidu-site-verification': 'codeva-kYzuuOyYCZ',
+      'bytedance-verification-code': 'oPgCIrgBz/3Lhr9BoNE2',
+    },
   }, // 网站验证
   keywords: HOT_ITEMS.items.map(({ raw }) => `${raw.label}${raw.tip}`), // 网站关键词
   openGraph: {
@@ -72,14 +75,8 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="zh-CN">
-      {/* 引入字体文件 */}
       <head>
         <meta content={pkg.version} name="version" />
-        <link href="https://cdn.baiwumm.com" rel="preconnect" />
-        <link
-          href="https://cn-font.claude-code-best.win/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css"
-          rel="stylesheet"
-        />
       </head>
       <body className="bg-background text-foreground flex flex-col min-h-screen">
         <NextThemesProvider disableTransitionOnChange attribute="class">
