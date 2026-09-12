@@ -1,5 +1,33 @@
 # Changelog
 
+## [3.10.0](https://github.com/baiwumm/next-daily-hot/compare/3.9.2...3.10.0) (2026-09-12)
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 手动刷新真正回源、服务端按东八区取数并统一缓存三层同源 ([371889e](https://github.com/baiwumm/next-daily-hot/commit/371889ee5008cdefd24dba64e9680944da3aeb69))
+
+### 🎫 Chores | 其他更新
+
+* 常规依赖更新（semver 范围内最新） ([2542d27](https://github.com/baiwumm/next-daily-hot/commit/2542d2737fe90ebfe61487b19513aea601a22abb))
+* 切换 ESLint 至 better-admin/react 体系，新增 .prettierrc 并统一格式化 ([4508a97](https://github.com/baiwumm/next-daily-hot/commit/4508a97aa613842a1ee064a46c04d034d5821de0))
+* HeroUI 升级至 3.2.5 ([5327374](https://github.com/baiwumm/next-daily-hot/commit/5327374f40be2b3e57211d8476d2ff3e1406f03e))
+* Next.js 升级至 16.3.4 ([7b8ce0b](https://github.com/baiwumm/next-daily-hot/commit/7b8ce0bad7d3d1bee320b807f80caf7328a4e539))
+* pnpm.overrides 迁移至 pnpm-workspace.yaml ([ffd9bb4](https://github.com/baiwumm/next-daily-hot/commit/ffd9bb4de58ad489271dabb195a311986537d49f))
+* React 升级至 19.3.0 ([fc34087](https://github.com/baiwumm/next-daily-hot/commit/fc34087c85983bdc48311a58f79d694426596baf))
+
+### 📝 Documentation | 文档
+
+* 新增 AGENTS.md 开发指南并安装 Vercel React Skills ([2fb22e7](https://github.com/baiwumm/next-daily-hot/commit/2fb22e744b711b92e6de6cff8d1e80308b55e172))
+
+### ♻ Code Refactoring | 代码重构
+
+* 按 Vercel React 最佳实践做等价逻辑优化，行为不变 ([51fbe05](https://github.com/baiwumm/next-daily-hot/commit/51fbe058b59f80c7124cbc4fe4b2beabe8dcf0af))
+* 微信读书 ID 算法改用 node:crypto，移除已废弃的 crypto-js ([2a44bba](https://github.com/baiwumm/next-daily-hot/commit/2a44bbaaa3f167a40e0cb4accb8aff902f3d1d18))
+
+### ⚡ Performance Improvements | 性能优化
+
+* 字体改为自托管 [@font-face](https://github.com/font-face)，移除第三方字体 CSS 外链 ([73fcb3a](https://github.com/baiwumm/next-daily-hot/commit/73fcb3ae8156644ce5cf87feed8d6e3b8f232fcc))
+
 ## [3.9.2](https://github.com/baiwumm/next-daily-hot/compare/3.9.1...3.9.2) (2026-08-12)
 
 ### 🐛 Bug Fixes | Bug 修复
