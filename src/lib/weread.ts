@@ -1,13 +1,18 @@
-import CryptoJS from 'crypto-js'
+import { createHash } from 'node:crypto'
 
 /**
  * 获取微信读书的书籍 ID
  * 感谢 @MCBBC 及 ChatGPT
  */
+function md5Hex(input: string) {
+  // crypto-js 已停止维护，MD5 直接用 Node 内置模块（本算法仅在服务端使用）
+  return createHash('md5').update(input).digest('hex')
+}
+
 export function getWereadID(bookId: string) {
   try {
     // 使用 MD5 哈希算法创建哈希对象
-    const str = CryptoJS.MD5(bookId).toString()
+    const str = md5Hex(bookId)
     // 取哈希结果的前三个字符作为初始值
     let strSub = str.substring(0, 3)
     // 判断书籍 ID 的类型并进行转换
@@ -55,7 +60,7 @@ export function getWereadID(bookId: string) {
       strSub += str.substring(0, 20 - strSub.length)
     }
     // 使用 MD5 哈希算法创建新的哈希对象
-    const finalStr = CryptoJS.MD5(strSub).toString()
+    const finalStr = md5Hex(strSub)
 
     // 取最终哈希结果的前三个字符并添加到初始值的末尾
     strSub += finalStr.substring(0, 3)
