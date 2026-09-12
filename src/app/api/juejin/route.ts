@@ -5,17 +5,19 @@
  * @LastEditTime: 2026-07-31 17:34:07
  * @Description: 稀土掘金-热榜
  */
+import type { HotListItem } from '@/types'
+
 import { fetchJson } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
-
-import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
   const url = 'https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot'
+
   try {
     // 请求数据
     const responseBody = await fetchJson(url)
+
     // 处理数据
     if (responseBody.err_msg === 'success') {
       const result: HotListItem[] = responseBody.data.map((v: any) => {
@@ -27,12 +29,14 @@ export async function GET() {
           mobileUrl: `https://juejin.cn/post/${v.content.content_id}`,
         }
       })
+
       return successResponse(result)
     }
+
     return successResponse()
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

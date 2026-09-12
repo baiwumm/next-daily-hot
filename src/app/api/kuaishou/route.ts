@@ -5,14 +5,15 @@
  * @LastEditTime: 2026-07-31 17:34:16
  * @Description: 快手-热榜
  */
+import type { HotListItem } from '@/types'
+
 import { fetchText } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
-
-import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
   const url = 'https://www.kuaishou.com/?isHome=1'
+
   try {
     // 请求数据
     const responseBody = await fetchText(url)
@@ -25,11 +26,13 @@ export async function GET() {
 
     // 获取所有分类
     const allItems = jsonObject['$ROOT_QUERY.visionHotRank({"page":"home"})'].items
+
     // 遍历所有分类
     allItems.forEach((v: any) => {
       // 基础数据
       const image = jsonObject[v.id].poster
       const id = image.match(idPattern)[1]
+
       // 数据处理
       result.push({
         id,
@@ -39,10 +42,11 @@ export async function GET() {
         mobileUrl: `https://www.kuaishou.com/short-video/${id}`,
       })
     })
+
     return successResponse(result)
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

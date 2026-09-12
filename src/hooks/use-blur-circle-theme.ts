@@ -18,12 +18,7 @@ function isHighResolution() {
 const maskCache = new Map<string, string>()
 
 export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
-  const {
-    duration: customDuration = 750,
-    blurAmount = 2,
-    isDarkMode = false,
-    onDarkModeChange,
-  } = props
+  const { duration: customDuration = 750, blurAmount = 2, isDarkMode = false, onDarkModeChange } = props
 
   const ref = useRef<HTMLButtonElement>(null)
   const id = useId()
@@ -33,8 +28,10 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
   // 注入基础样式
   useEffect(() => {
     const styleId = 'blur-circle-base-style'
+
     if (!document.getElementById(styleId)) {
       const style = document.createElement('style')
+
       style.id = styleId
       style.textContent = `
         ::view-transition-old(root),
@@ -58,15 +55,15 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
 
   const toggleTheme = async () => {
     // 防止重复点击
-    if (isAnimating)
-      return
+    if (isAnimating) return
 
     if (
-      !ref.current
-      || !(document as any).startViewTransition
-      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      !ref.current ||
+      !(document as any).startViewTransition ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
       onDarkModeChange?.(!isDarkMode)
+
       return
     }
 
@@ -76,6 +73,7 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
     try {
       // 移除旧的样式
       const existingStyle = document.getElementById(styleId)
+
       if (existingStyle) {
         existingStyle.remove()
       }
@@ -90,9 +88,7 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
       const highRes = isHighResolution()
 
       const scaleFactor = highRes ? 2.5 : 4
-      const optimalMaskSize = highRes
-        ? Math.min(viewportSize * scaleFactor, 5000)
-        : viewportSize * scaleFactor
+      const optimalMaskSize = highRes ? Math.min(viewportSize * scaleFactor, 5000) : viewportSize * scaleFactor
 
       const topLeft = Math.hypot(x, y)
       const topRight = Math.hypot(window.innerWidth - x, y)
@@ -103,12 +99,11 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
       const blurFactor = highRes ? 1.5 : 1.2
       const finalMaskSize = Math.max(optimalMaskSize, maxRadius * 2.5)
 
-      const duration = highRes
-        ? Math.max(customDuration * 0.8, 500)
-        : customDuration
+      const duration = highRes ? Math.max(customDuration * 0.8, 500) : customDuration
 
       // 注入动画样式
       const styleElement = document.createElement('style')
+
       styleElement.id = styleId
       styleElement.textContent = `
         ::view-transition-group(root) {
@@ -147,7 +142,6 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
 
       // 执行主题切换
       const transition = (document as any).startViewTransition(() => {
-        // eslint-disable-next-line react/dom-no-flush-sync
         flushSync(() => {
           onDarkModeChange?.(!isDarkMode)
         })
@@ -158,10 +152,12 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
 
       // 平滑清理样式 - 修复闪烁的核心
       const styleEl = document.getElementById(styleId)
+
       if (styleEl) {
         // 1. 先创建一个保持最终状态的稳定样式
         const stableStyleId = `${styleId}-stable`
         const stableStyle = document.createElement('style')
+
         stableStyle.id = stableStyleId
         stableStyle.textContent = `
           ::view-transition-new(root) {
@@ -185,6 +181,7 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
           // 3. 延迟移除稳定样式（添加淡出效果）
           setTimeout(() => {
             const stableEl = document.getElementById(stableStyleId)
+
             if (stableEl) {
               // 添加淡出过渡
               stableEl.textContent += `
@@ -206,11 +203,9 @@ export function useBlurCircleTheme(props: UseBlurCircleThemeProps = {}) {
           }, 100)
         })
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.warn('Theme transition failed:', error)
-    }
-    finally {
+    } finally {
       // 无论成功失败都复位动画状态，防止卡死
       setIsAnimating(false)
     }
@@ -230,13 +225,14 @@ function createBlurCircleMask(blur: number) {
   const cacheKey = `${blur}|${highRes}`
 
   const cached = maskCache.get(cacheKey)
-  if (cached)
-    return cached
+
+  if (cached) return cached
 
   const circleRadius = highRes ? 20 : 25
   const blurFilter = `<filter id="blur"><feGaussianBlur stdDeviation="${blur}" /></filter>`
   const mask = `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100"><defs>${blurFilter}</defs><circle cx="0" cy="0" r="${circleRadius}" fill="white" filter="url(%23blur)"/></svg>')`
 
   maskCache.set(cacheKey, mask)
+
   return mask
 }

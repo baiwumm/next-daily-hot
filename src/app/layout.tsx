@@ -8,6 +8,8 @@
 
 import './globals.css'
 
+import type { Metadata } from 'next'
+
 import { Toast } from '@heroui/react'
 import { Analytics } from '@vercel/analytics/next'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
@@ -20,8 +22,6 @@ import Header from '@/components/Header'
 import MotionProvider from '@/components/MotionProvider'
 import { HOT_ITEMS } from '@/enums'
 import pkg from '#/package.json'
-
-import type { Metadata } from 'next'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://hot.baiwumm.com'
 
@@ -71,20 +71,21 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html suppressHydrationWarning lang="zh-CN">
       {/* 引入字体文件 */}
       <head>
-        <meta name="version" content={pkg.version} />
+        <meta content={pkg.version} name="version" />
         <link href="https://cdn.baiwumm.com" rel="preconnect" />
-        <link href="https://cn-font.claude-code-best.win/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css" rel="stylesheet" />
+        <link
+          href="https://cn-font.claude-code-best.win/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css"
+          rel="stylesheet"
+        />
       </head>
       <body className="bg-background text-foreground flex flex-col min-h-screen">
-        <NextThemesProvider attribute="class" disableTransitionOnChange>
+        <NextThemesProvider disableTransitionOnChange attribute="class">
           <MotionProvider>
             <Header />
-            <main className="flex-1 min-h-0 container! mx-auto p-4">
-              {children}
-            </main>
+            <main className="flex-1 min-h-0 container! mx-auto p-4">{children}</main>
             <Footer />
             {/* 回到顶部 */}
             <BackTop />

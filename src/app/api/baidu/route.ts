@@ -5,17 +5,19 @@
  * @LastEditTime: 2026-07-31 17:36:23
  * @Description: 百度-热搜榜
  */
+import type { HotListItem } from '@/types'
+
 import { fetchJson } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
-
-import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
   const url = 'https://top.baidu.com/api/board?platform=wise&tab=realtime'
+
   try {
     // 请求数据
     const responseBody = await fetchJson(url)
+
     // 处理数据
     if (responseBody.success) {
       const result: HotListItem[] = responseBody.data.cards[0]?.content[0]?.content.map((v: any) => {
@@ -27,12 +29,14 @@ export async function GET() {
           mobileUrl: v.url,
         }
       })
+
       return successResponse(result)
     }
+
     return successResponse()
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

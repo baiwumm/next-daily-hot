@@ -22,10 +22,7 @@ export interface UseRequestOptions {
  * - debounceWait: 对 run() 调用做防抖
  * - retryCount: 请求失败后自动重试次数
  */
-export function useRequest<TData>(
-  service: () => Promise<TData>,
-  options: UseRequestOptions = {},
-) {
+export function useRequest<TData>(service: () => Promise<TData>, options: UseRequestOptions = {}) {
   const { manual = false, debounceWait = 0, retryCount = 0 } = options
   const [data, setData] = useState<TData>()
   const [loading, setLoading] = useState(false)
@@ -39,26 +36,29 @@ export function useRequest<TData>(
 
   const doRequest = useCallback(async () => {
     const requestId = ++requestIdRef.current
+
     setLoading(true)
     // 新请求开始时清除上一次的错误状态
     setError(undefined)
     try {
       let lastError: unknown
+
       // 失败后自动重试 retryCount 次（总尝试次数 = retryCount + 1）
       for (let attempt = 0; attempt <= retryCount; attempt++) {
         try {
           const result = await serviceRef.current()
+
           // 只认最后一次请求的结果（防止旧请求覆盖新结果）
           if (requestId === requestIdRef.current) {
             setData(result)
           }
+
           return result
-        }
-        catch (catchError) {
+        } catch (catchError) {
           lastError = catchError
           // 指数退避：500ms → 1s → 2s，避免连续快速重试加重源站负担
           if (attempt < retryCount) {
-            await new Promise(resolve => setTimeout(resolve, 500 * 2 ** attempt))
+            await new Promise((resolve) => setTimeout(resolve, 500 * 2 ** attempt))
           }
         }
       }
@@ -67,8 +67,7 @@ export function useRequest<TData>(
         setError(lastError)
       }
       throw lastError
-    }
-    finally {
+    } finally {
       if (requestId === requestIdRef.current) {
         setLoading(false)
       }
@@ -81,14 +80,15 @@ export function useRequest<TData>(
         // 吞掉错误，避免 unhandled rejection（ahooks 的 run 同样静默吞错）
         void doRequest().catch(() => {})
       }
+
       if (debounceWait > 0) {
         // 防抖等待期间立即给出 loading 反馈，避免点击后"无响应"的错觉。
         // run 同时被事件处理器与自动请求的 effect 调用，此处为有意设计，
-        // 自动模式下该 setState 冗余（初始 loading 状态一致），React 会直接 bail out，故豁免规则。
-        // eslint-disable-next-line react/set-state-in-effect
+        // 自动模式下该 setState 冗余（初始 loading 状态一致），React 会直接 bail out。
         setLoading(true)
         clearTimeout(timerRef.current)
         timerRef.current = setTimeout(request, debounceWait)
+
         return
       }
       request()

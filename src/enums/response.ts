@@ -14,12 +14,12 @@ function resolveCacheSeconds(): number {
   const MAX_SECONDS = 3600
 
   const raw = process.env.NEXT_PUBLIC_HOT_CACHE_SECONDS
-  if (!raw)
-    return DEFAULT_SECONDS
+
+  if (!raw) return DEFAULT_SECONDS
 
   const value = Number.parseInt(raw, 10)
-  if (Number.isNaN(value))
-    return DEFAULT_SECONDS
+
+  if (Number.isNaN(value)) return DEFAULT_SECONDS
 
   return Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, value))
 }

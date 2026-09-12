@@ -5,14 +5,15 @@
  * @LastEditTime: 2026-07-31 17:35:44
  * @Description: 哔哩哔哩-热门榜
  */
+import type { HotListItem } from '@/types'
+
 import { fetchJson } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
-
-import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 官方 url
   const url = 'https://api.bilibili.com/x/web-interface/ranking/v2'
+
   try {
     // 请求数据（统一 UA + 超时）
     const responseBody = await fetchJson(url, {
@@ -21,6 +22,7 @@ export async function GET() {
       },
     })
     const data = responseBody?.data?.realtime || responseBody?.data?.list
+
     if (!data) {
       return successResponse()
     }
@@ -35,10 +37,11 @@ export async function GET() {
         mobileUrl: `https://m.bilibili.com/video/${v.bvid}`,
       }
     })
+
     return successResponse(result)
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

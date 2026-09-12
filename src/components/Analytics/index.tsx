@@ -14,16 +14,9 @@ import Script from 'next/script'
 export function BaiDuAnalytics() {
   const baiduId = process.env.NEXT_PUBLIC_BAIDU_ID
 
-  if (process.env.NODE_ENV !== 'production' || !baiduId)
-    return null
+  if (process.env.NODE_ENV !== 'production' || !baiduId) return null
 
-  return (
-    <Script
-      id="baidu-analytics"
-      src={`https://hm.baidu.com/hm.js?${baiduId}`}
-      strategy="afterInteractive"
-    />
-  )
+  return <Script id="baidu-analytics" src={`https://hm.baidu.com/hm.js?${baiduId}`} strategy="afterInteractive" />
 }
 
 /**
@@ -32,8 +25,7 @@ export function BaiDuAnalytics() {
 export function GoogleUtilities() {
   const gaId = process.env.NEXT_PUBLIC_GOOGLE_ID
 
-  if (process.env.NODE_ENV !== 'production' || !gaId)
-    return null
+  if (process.env.NODE_ENV !== 'production' || !gaId) return null
 
   return <GoogleAnalytics gaId={gaId} />
 }
@@ -44,14 +36,10 @@ export function GoogleUtilities() {
 export function MicrosoftClarity() {
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID
 
-  if (process.env.NODE_ENV !== 'production' || !clarityId)
-    return null
+  if (process.env.NODE_ENV !== 'production' || !clarityId) return null
 
   return (
-    <Script
-      id="microsoft-clarity"
-      strategy="afterInteractive"
-    >
+    <Script id="microsoft-clarity" strategy="afterInteractive">
       {`
         (function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){

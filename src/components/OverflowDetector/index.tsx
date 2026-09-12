@@ -7,24 +7,21 @@
  */
 'use client'
 
+import type { HotValue } from '@/enums'
+import type { HotListItem } from '@/types'
+
 import { Tooltip } from '@heroui/react'
 import { track } from '@vercel/analytics'
 import { memo, useEffect, useRef, useState } from 'react'
 
 import { useIsMobile } from '@/hooks/use-is-mobile'
 
-import type { HotValue } from '@/enums'
-import type { HotListItem } from '@/types'
-
 interface OverflowDetectorProps {
   record: HotListItem
   type: HotValue
 }
 
-const OverflowDetector = memo(({
-  record,
-  type,
-}: OverflowDetectorProps) => {
+const OverflowDetector = memo(function OverflowDetector({ record, type }: OverflowDetectorProps) {
   const ref = useRef<HTMLAnchorElement>(null)
 
   // 判断是否是移动端
@@ -41,8 +38,8 @@ const OverflowDetector = memo(({
   // 只在组件挂载时检测一次 overflow
   useEffect(() => {
     const el = ref.current
-    if (!el)
-      return
+
+    if (!el) return
 
     const checkOverflow = () => {
       setIsOverflowing(el.scrollWidth > el.clientWidth)
@@ -53,15 +50,15 @@ const OverflowDetector = memo(({
   }, [])
 
   return (
-    <Tooltip isDisabled={!isOverflowing} delay={0}>
+    <Tooltip delay={0} isDisabled={!isOverflowing}>
       <Tooltip.Trigger aria-label={record.title} className="min-w-0 flex-1">
         <a
           ref={ref}
+          className="truncate block transition-transform ease-in duration-300 text-sm relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:bottom-0 after:bg-border after:transition-[width] after:duration-500 hover:translate-x-1 hover:after:w-full"
           href={isMobile ? record.mobileUrl : record.url}
           rel="noopener noreferrer"
           target="_blank"
           onClick={handleTitle}
-          className="truncate block transition-transform ease-in duration-300 text-sm relative py-1 after:absolute after:content-[''] after:h-0.5 after:w-0 after:left-0 after:bottom-0 after:bg-border after:transition-[width] after:duration-500 hover:translate-x-1 hover:after:w-full"
         >
           {record.title}
         </a>

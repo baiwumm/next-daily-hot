@@ -5,10 +5,10 @@
  * @LastEditTime: 2026-07-31 17:36:08
  * @Description: 百度百科-历史上的今天
  */
+import type { HotListItem } from '@/types'
+
 import { fetchJson } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
-
-import type { HotListItem } from '@/types'
 
 export async function GET() {
   // 获取月份
@@ -16,6 +16,7 @@ export async function GET() {
   // 获取天数
   const day = new Date().getDate().toString().padStart(2, '0')
   const url = `https://baike.baidu.com/cms/home/eventsOnHistory/${month}.json`
+
   try {
     // 请求数据
     const responseBody = await fetchJson(url)
@@ -30,10 +31,11 @@ export async function GET() {
         mobileUrl: v.link,
       }
     })
+
     return successResponse(result)
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

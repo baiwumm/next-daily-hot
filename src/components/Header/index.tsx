@@ -23,7 +23,7 @@ export default function Header() {
     <div className="shrink-0 sticky top-0 z-20 backdrop-blur-sm p-4 container mx-auto grid grid-cols-2 sm:grid-cols-3 items-center">
       <div className="flex gap-2 items-center justify-self-start">
         <div className="size-9 relative">
-          <Image alt="Logo" fill src="/logo.svg" />
+          <Image fill alt="Logo" src="/logo.svg" />
         </div>
         <div>
           <h1 className="font-black text-base">{process.env.NEXT_PUBLIC_APP_NAME}</h1>
@@ -49,10 +49,10 @@ export default function Header() {
         {/* Github */}
         <Tooltip delay={0}>
           <Button
+            isIconOnly
             aria-label="Github"
             size="sm"
             variant="ghost"
-            isIconOnly
             onPress={() => window.open(`https://github.com/${pkg.author.name}/${pkg.name}`)}
           >
             <LogoGithub />
@@ -65,10 +65,10 @@ export default function Header() {
         {/* 主页 */}
         <Tooltip delay={0}>
           <Button
+            isIconOnly
             aria-label="个人主页"
             size="sm"
             variant="ghost"
-            isIconOnly
             onPress={() => window.open(pkg.author.url)}
           >
             <HouseFill />
@@ -78,7 +78,6 @@ export default function Header() {
             个人主页
           </Tooltip.Content>
         </Tooltip>
-
       </div>
     </div>
   )

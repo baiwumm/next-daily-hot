@@ -1,12 +1,12 @@
+import type { HotValue } from '@/enums'
+import type { HotListItem } from '@/types'
+
 import { ArrowDown } from '@gravity-ui/icons'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
 import RowComponent from './RowComponent'
-
-import type { HotValue } from '@/enums'
-import type { HotListItem } from '@/types'
 
 export default function HotListVirtual({
   data,
@@ -33,18 +33,21 @@ export default function HotListVirtual({
 
   useEffect(() => {
     const el = parentRef.current
-    if (!el)
-      return
+
+    if (!el) return
 
     const update = () => {
       const next = el.scrollHeight - el.scrollTop - el.clientHeight > 8
-      setCanScrollDown(prev => (prev === next ? prev : next))
+
+      setCanScrollDown((prev) => (prev === next ? prev : next))
     }
 
     // rAF 延迟首次测量，避免 effect 中同步 setState
     const frame = requestAnimationFrame(update)
+
     el.addEventListener('scroll', update, { passive: true })
     const observer = new ResizeObserver(update)
+
     observer.observe(el)
 
     return () => {
@@ -61,21 +64,16 @@ export default function HotListVirtual({
         <div className="relative" style={{ height: rowVirtualizer.getTotalSize() }}>
           {rowVirtualizer.getVirtualItems().map((virtualRow) => {
             const index = virtualRow.index
+
             return (
               <div
                 key={virtualRow.key}
                 ref={rowVirtualizer.measureElement}
-                data-index={virtualRow.index}
                 className="absolute top-0 left-0 w-full"
+                data-index={virtualRow.index}
                 style={{ transform: `translateY(${virtualRow.start}px)` }}
               >
-                <RowComponent
-                  data={data}
-                  index={index}
-                  prefix={prefix}
-                  suffix={suffix}
-                  value={value}
-                />
+                <RowComponent data={data} index={index} prefix={prefix} suffix={suffix} value={value} />
               </div>
             )
           })}
@@ -87,13 +85,13 @@ export default function HotListVirtual({
         {canScrollDown && (
           <motion.div
             animate={{ opacity: 1, y: 0 }}
+            className="absolute bottom-2 right-2 pointer-events-none"
             exit={{ opacity: 0, y: 4 }}
             initial={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.15 }}
-            className="absolute bottom-2 right-2 pointer-events-none"
           >
             <div className="bg-background/70 backdrop-blur-sm rounded-full p-1 shadow-sm">
-              <ArrowDown width={12} className="text-muted" />
+              <ArrowDown className="text-muted" width={12} />
             </div>
           </motion.div>
         )}

@@ -1,14 +1,8 @@
 'use client'
 
-import {
-  DndContext,
+import type { DragEndEvent, DraggableSyntheticListeners, DragStartEvent, UniqueIdentifier } from '@dnd-kit/core'
 
-  DragOverlay,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
+import { DndContext, DragOverlay, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import {
   arrayMove,
   rectSortingStrategy,
@@ -20,8 +14,6 @@ import {
 import { CSS } from '@dnd-kit/utilities'
 import { cn } from '@heroui/react'
 import * as React from 'react'
-
-import type { DragEndEvent, DraggableSyntheticListeners, DragStartEvent, UniqueIdentifier } from '@dnd-kit/core'
 
 // Sortable Item Context
 const SortableItemContext = React.createContext<{
@@ -54,7 +46,7 @@ export interface SortableRootProps<T> {
   getItemValue: (item: T) => string
   children: React.ReactNode
   className?: string
-  onMove?: (event: { event: DragEndEvent, activeIndex: number, overIndex: number }) => void
+  onMove?: (event: { event: DragEndEvent; activeIndex: number; overIndex: number }) => void
   strategy?: 'horizontal' | 'vertical' | 'grid'
   onDragStart?: (event: DragStartEvent) => void
   onDragEnd?: (event: DragEndEvent) => void
@@ -95,11 +87,11 @@ function Sortable<T>({
   const handleDragEnd = React.useCallback(
     (event: DragEndEvent) => {
       const { active, over } = event
+
       setActiveId(null)
       onDragEnd?.(event)
 
-      if (!over)
-        return
+      if (!over) return
 
       // Handle item reordering
       const activeIndex = value.findIndex((item: T) => getItemValue(item) === active.id)
@@ -108,9 +100,9 @@ function Sortable<T>({
       if (activeIndex !== overIndex) {
         if (onMove) {
           onMove({ event, activeIndex, overIndex })
-        }
-        else {
+        } else {
           const newValue = arrayMove(value, activeIndex, overIndex)
+
           onValueChange(newValue)
         }
       }
@@ -135,31 +127,28 @@ function Sortable<T>({
   return (
     <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
       <SortableContext items={itemIds} strategy={getStrategy()}>
-        <div data-dragging={activeId !== null} data-slot="sortable" className={cn(className)}>
+        <div className={cn(className)} data-dragging={activeId !== null} data-slot="sortable">
           {children}
         </div>
       </SortableContext>
 
       <DragOverlay>
-        {activeId
-          ? (
-              <div className="z-50">
-                {/* dnd-kit DragOverlay 需要遍历 children 找到被拖拽项并克隆增强样式，是官方推荐写法 */}
-                {/* eslint-disable-next-line react/no-children-map */}
-                {React.Children.map(children, (child) => {
-                  if (React.isValidElement(child) && (child.props as any).value === activeId) {
-                    // 修改子元素 props 只能通过 cloneElement（React 官方 API）
-                    // eslint-disable-next-line react/no-clone-element
-                    return React.cloneElement(child as React.ReactElement<any>, {
-                      ...(child.props as any),
-                      className: cn((child.props as any).className, 'z-50 shadow-lg'),
-                    })
-                  }
-                  return null
-                })}
-              </div>
-            )
-          : null}
+        {activeId ? (
+          <div className="z-50">
+            {/* dnd-kit DragOverlay 需要遍历 children 找到被拖拽项并克隆增强样式，是官方推荐写法 */}
+            {React.Children.map(children, (child) => {
+              if (React.isValidElement(child) && (child.props as any).value === activeId) {
+                // 修改子元素 props 只能通过 cloneElement（React 官方 API）
+                return React.cloneElement(child as React.ReactElement<any>, {
+                  ...(child.props as any),
+                  className: cn((child.props as any).className, 'z-50 shadow-lg'),
+                })
+              }
+
+              return null
+            })}
+          </div>
+        ) : null}
       </DragOverlay>
     </DndContext>
   )

@@ -5,7 +5,8 @@
 import { API_CACHE_SECONDS } from '@/enums/response'
 
 /** Chrome 桌面端 UA（多数上游 JSON API 的反爬要求） */
-export const UA_CHROME = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'
+export const UA_CHROME =
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36'
 
 /** 默认请求超时（ms）：上游挂死时避免请求永久挂起 */
 export const REQUEST_TIMEOUT = 15_000
@@ -37,9 +38,11 @@ export async function fetchJson<T = any>(url: string, init: RequestInitLike = {}
     signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
     headers: buildHeaders(headers),
   })
+
   if (!response.ok) {
     throw new Error(`上游请求失败：${response.status} ${url}`)
   }
+
   return response.json() as Promise<T>
 }
 
@@ -56,9 +59,11 @@ export async function fetchText(url: string, init: RequestInitLike = {}): Promis
     signal: signal ?? AbortSignal.timeout(REQUEST_TIMEOUT),
     headers: buildHeaders(headers),
   })
+
   if (!response.ok) {
     throw new Error(`上游请求失败：${response.status} ${url}`)
   }
+
   return response.text()
 }
 
@@ -74,10 +79,8 @@ function buildHeaders(initHeaders?: Record<string, string>) {
   for (const [key, value] of Object.entries(initHeaders ?? {})) {
     if (key.toLowerCase() === 'user-agent') {
       hasExplicitUA = true
-      if (value)
-        headers.set(key, value)
-    }
-    else {
+      if (value) headers.set(key, value)
+    } else {
       headers.set(key, value)
     }
   }

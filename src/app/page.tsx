@@ -20,16 +20,18 @@ const gridClassName = 'grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
-  const hiddenItems = useAppStore(state => state.hiddenItems)
-  const sortItems = useAppStore(state => state.sortItems)
+  const hiddenItems = useAppStore((state) => state.hiddenItems)
+  const sortItems = useAppStore((state) => state.sortItems)
 
   const visibleItems = useMemo(() => {
     const hiddenSet = new Set(hiddenItems ?? [])
-    return sortItems.filter(value => !hiddenSet.has(value))
+
+    return sortItems.filter((value) => !hiddenSet.has(value))
   }, [hiddenItems, sortItems])
 
   useEffect(() => {
     const timer = setTimeout(setMounted, 0, true)
+
     return () => clearTimeout(timer)
   }, [])
 
@@ -37,7 +39,7 @@ export default function Home() {
   if (!mounted) {
     return (
       <div className={gridClassName}>
-        {Array.from({ length: 8 }, (_, index) => index + 1).map(item => (
+        {Array.from({ length: 8 }, (_, index) => index + 1).map((item) => (
           <Card key={item} className="p-0 gap-0">
             <Card.Header className="flex justify-between items-center flex-row p-3">
               <div className="flex items-center gap-2">
@@ -63,30 +65,30 @@ export default function Home() {
   return (
     // 👇 父容器必须是 motion.div 并开启 layout
     <motion.div
-      initial="hidden"
       layout // ✅ 启用布局动画
+      className={gridClassName}
+      initial="hidden"
       variants={{ visible: { transition: { staggerChildren: 0.02 } } }} // ✅ 卡片依次交错浮现（30 张卡约 0.6s，避免过长）
       viewport={{ once: true, margin: '-50px' }}
       whileInView="visible"
-      className={gridClassName}
     >
       <AnimatePresence>
         {visibleItems.map((value) => {
           const raw = HOT_ITEMS.raw(value)
-          if (!raw)
-            return null
+
+          if (!raw) return null
 
           return (
             // 👇 每个子项也必须是 motion.div + layout
             <motion.div
               key={raw.value}
+              layout // ✅ 关键：让位置变化可动画
               exit={{
                 opacity: 0,
                 filter: 'blur(4px)',
                 y: 20,
                 transition: { duration: 0.3, ease: 'easeOut' },
               }}
-              layout // ✅ 关键：让位置变化可动画
               transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }} // ✅ 位置变化用 spring，更跟手
               variants={{
                 hidden: { opacity: 0, filter: 'blur(4px)', y: 20 },

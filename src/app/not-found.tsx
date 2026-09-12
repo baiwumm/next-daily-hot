@@ -5,17 +5,19 @@
  * @LastEditTime: 2025-11-20 14:08:48
  * @Description: 404 页面
  */
+import type { FC } from 'react'
+
 import { Button } from '@heroui/react'
 import Link from 'next/link'
-
-import type { FC } from 'react'
 
 const NotFound: FC = () => {
   return (
     <div className="min-h-[calc(100vh-12rem)] flex justify-center items-center">
       <div className="text-center">
         <h1 className="mt-4 text-5xl font-semibold tracking-tight text-balance text-foreground sm:text-7xl">404</h1>
-        <p className="mt-6 text-lg font-medium text-pretty text-muted sm:text-xl/8">看来这个页面去环球旅行了，还没寄明信片回来。</p>
+        <p className="mt-6 text-lg font-medium text-pretty text-muted sm:text-xl/8">
+          看来这个页面去环球旅行了，还没寄明信片回来。
+        </p>
         <div className="flex items-center justify-center mt-10">
           <Link href="/">
             <Button>回到首页</Button>
@@ -25,4 +27,5 @@ const NotFound: FC = () => {
     </div>
   )
 }
+
 export default NotFound

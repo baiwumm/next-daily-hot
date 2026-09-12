@@ -5,16 +5,17 @@
  * @LastEditTime: 2026-07-31 17:35:56
  * @Description: 懂车帝-热搜榜
  */
+import type { HotListItem } from '@/types'
+
 import * as cheerio from 'cheerio'
 
 import { fetchText } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-import type { HotListItem } from '@/types'
-
 export async function GET() {
   // 官方 url
   const url = 'https://www.dongchedi.com/news'
+
   try {
     // 请求数据
     const responseBody = await fetchText(url)
@@ -30,10 +31,11 @@ export async function GET() {
         mobileUrl: `https://www.dongchedi.com/search?keyword=${encodeURIComponent(v.title)}`,
       }
     })
+
     return successResponse(result)
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

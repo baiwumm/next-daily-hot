@@ -1,193 +1,176 @@
-import antfu from '@antfu/eslint-config'
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-export default antfu({
-  // 忽略工具内部文件，避免被当作源码检查（.next 与 node_modules 已被默认排除）
-  ignores: [
-    '**/.reasonix/**',
-  ],
-  nextjs: true,
-  react: true,
-  stylistic: true,
-  tailwindcss: true,
-  typescript: true,
-  rules: {
-  // 允许使用全局 process（Node.js 环境）
-    'node/prefer-global/process': ['error', 'always'],
+import { defineConfig, globalIgnores } from "eslint/config";
+import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
+import react from "eslint-plugin-react";
+import unusedImports from "eslint-plugin-unused-imports";
+import _import from "eslint-plugin-import";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import jsxA11Y from "eslint-plugin-jsx-a11y";
+import prettier from "eslint-plugin-prettier";
+import globals from "globals";
+import tsParser from "@typescript-eslint/parser";
+import js from "@eslint/js";
+import { FlatCompat } from "@eslint/eslintrc";
 
-    // 排序 export 导出顺序
-    // 例如 export { A }、export { B } 按字母升序排列
-    'perfectionist/sort-exports': [
-      'warn',
-      {
-        order: 'asc',
-        type: 'alphabetical',
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
+});
+
+export default defineConfig([
+  globalIgnores([
+    ".now/*",
+    "**/*.css",
+    "**/.changeset",
+    "**/dist",
+    "esm/*",
+    "public/*",
+    "tests/*",
+    "scripts/*",
+    "**/*.config.js",
+    "**/.DS_Store",
+    "**/node_modules",
+    "**/coverage",
+    "**/.next",
+    "**/build",
+    ".heroui-docs/*",
+    "!**/.commitlintrc.cjs",
+    "!**/.lintstagedrc.cjs",
+    "!**/jest.config.js",
+    "!**/plopfile.js",
+    "!**/react-shim.js",
+    "!**/tsup.config.ts",
+  ]),
+  {
+    extends: fixupConfigRules(
+      compat.extends(
+        "plugin:react/recommended",
+        "plugin:prettier/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
+      ),
+    ),
+
+    plugins: {
+      react: fixupPluginRules(react),
+      "unused-imports": unusedImports,
+      import: fixupPluginRules(_import),
+      "@typescript-eslint": typescriptEslint,
+      "jsx-a11y": fixupPluginRules(jsxA11Y),
+      prettier: fixupPluginRules(prettier),
+    },
+
+    languageOptions: {
+      globals: {
+        ...Object.fromEntries(
+          Object.entries(globals.browser).map(([key]) => [key, "off"]),
+        ),
+        ...globals.node,
       },
-    ],
 
-    // import 分组及排序
-    // side-effect → Node 内置 → 第三方依赖 → 项目内部 → 相对路径 → 类型导入
-    'perfectionist/sort-imports': [
-      'error',
-      {
-        groups: [
-          'side-effect',
-          'builtin',
-          'external',
-          'internal',
-          ['parent', 'sibling', 'index'],
-          'type',
-        ],
+      parser: tsParser,
+      ecmaVersion: 12,
+      sourceType: "module",
 
-        // 不同 import 分组之间保留 1 行空行
-        newlinesBetween: 1,
-
-        // 按字母升序排列
-        order: 'asc',
-
-        // 使用字母排序规则
-        type: 'alphabetical',
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
-    ],
+    },
 
-    // 排序具名 export
-    // 例如 export { Button, Avatar } 按名称排序
-    'perfectionist/sort-named-exports': [
-      'error',
-      {
-        order: 'asc',
-        type: 'alphabetical',
+    settings: {
+      react: {
+        version: "detect",
       },
-    ],
+    },
 
-    // 排序 import 中的具名导入
-    // 例如 import { useEffect, useState } from 'react'
-    'perfectionist/sort-named-imports': [
-      'error',
-      {
-        order: 'asc',
-        type: 'alphabetical',
-      },
-    ],
 
-    // 排序模块
-    'perfectionist/sort-modules': [
-      'error',
-      {
-        order: 'asc',
-        type: 'alphabetical',
-      },
-    ],
+    files: ["**/*.ts", "**/*.tsx"],
 
-    'perfectionist/sort-jsx-props': [
-      'error',
-      {
-        type: 'alphabetical',
-        order: 'asc',
-        customGroups: [
-          {
-            // React 特殊属性
-            groupName: 'react',
-            elementNamePattern: '^(key|ref)$',
-          },
-          {
-            // 无障碍属性
-            // 例如 aria-label、aria-describedby
-            groupName: 'aria',
-            elementNamePattern: '^aria-',
-          },
-          {
-            // HTML 原生属性
-            // 例如 id、role、name、type
-            groupName: 'html',
-            elementNamePattern: '^(id|role|name|type|title)$',
-          },
-          {
-            // UI 组件常用属性
-            // 例如 variant="outline" size="sm"
-            groupName: 'ui',
-            elementNamePattern: '^(variant|size|color|radius)$',
-          },
-          {
-            // 状态类属性
-            // 例如 isDisabled、isLoading
-            groupName: 'state',
-            elementNamePattern: '^(is|has)[A-Z]',
-          },
-          {
-            // 事件回调
-            // 例如 onClick、onChange
-            groupName: 'events',
-            elementNamePattern: '^on[A-Z]',
-          },
-          {
-            // 样式相关
-            // 放最后方便扫一眼
-            groupName: 'style',
-            elementNamePattern: '^(className|style)$',
-          },
-        ],
+    rules: {
+      "no-console": "warn",
+      "react/prop-types": "off",
+      "react/jsx-uses-react": "off",
+      "react/react-in-jsx-scope": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "jsx-a11y/click-events-have-key-events": "warn",
+      "jsx-a11y/interactive-supports-focus": "warn",
+      "prettier/prettier": "warn",
+      "no-unused-vars": "off",
+      "unused-imports/no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "warn",
 
-        groups: [
-          'react',
-          'aria',
-          'html',
-          'ui',
-          'state',
-          'unknown',
-          'events',
-          'style',
-        ],
-      },
-    ],
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          args: "after-used",
+          ignoreRestSiblings: false,
+          argsIgnorePattern: "^_.*?$",
+        },
+      ],
 
-    // 禁止无意义 React Fragment
-    // 例如避免 <><div /></>，推荐直接使用 <div />
-    'react/jsx-no-useless-fragment': [
-      'warn',
-    ],
+      "import/order": [
+        "warn",
+        {
+          groups: [
+            "type",
+            "builtin",
+            "object",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+          ],
 
-    // JSX 表达式大括号空格规则
-    // 统一使用 {value}，禁止 { value }
-    'style/jsx-curly-spacing': [
-      'error',
-      {
-        children: true,
-        when: 'never',
-      },
-    ],
+          pathGroups: [
+            {
+              pattern: "~/**",
+              group: "external",
+              position: "after",
+            },
+          ],
 
-    // JSX 属性换行规则
-    // 每行最多 5 个 props，超过后换行
-    'style/jsx-max-props-per-line': [
-      'error',
-      {
-        maximum: 5,
-      },
-    ],
+          "newlines-between": "always",
+        },
+      ],
 
-    // JSX 自闭合标签规则
-    // 空组件和 HTML 标签必须使用自闭合形式
-    // 例如 <Icon /> 而不是 <Icon></Icon>
-    'style/jsx-self-closing-comp': [
-      'error',
-      {
-        component: true,
-        html: true,
-      },
-    ],
+      "react/self-closing-comp": "warn",
 
-    // 超过 6 个属性时强制换行
-    'object-curly-newline': ['error', {
-      ImportDeclaration: {
-        minProperties: 6,
-        multiline: true,
-        consistent: true,
-      },
-      ExportDeclaration: {
-        minProperties: 6,
-        multiline: true,
-        consistent: true,
-      },
-    }],
+      "react/jsx-sort-props": [
+        "warn",
+        {
+          callbacksLast: true,
+          shorthandFirst: true,
+          noSortAlphabetically: false,
+          reservedFirst: true,
+        },
+      ],
+
+      "padding-line-between-statements": [
+        "warn",
+        {
+          blankLine: "always",
+          prev: "*",
+          next: "return",
+        },
+        {
+          blankLine: "always",
+          prev: ["const", "let", "var"],
+          next: "*",
+        },
+        {
+          blankLine: "any",
+          prev: ["const", "let", "var"],
+          next: ["const", "let", "var"],
+        },
+      ],
+    },
   },
-})
+]);

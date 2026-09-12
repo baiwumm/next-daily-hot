@@ -7,13 +7,13 @@
  */
 
 'use client'
+import type { HotValue } from '@/enums'
+
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 import { HOT_ITEMS } from '@/enums'
 import { fromNow } from '@/lib/utils'
-
-import type { HotValue } from '@/enums'
 
 interface AppState {
   /** 每个热榜子项的最后更新时间 */
@@ -42,7 +42,7 @@ export const useAppStore = create(
       /* ================= 更新时间 ================= */
       UpdateTime: {},
       setUpdateTime: (time) => {
-        set(state => ({
+        set((state) => ({
           UpdateTime: { ...state.UpdateTime, ...time },
         }))
       },
@@ -58,8 +58,8 @@ export const useAppStore = create(
         const { UpdateTime, now } = get()
 
         const ts = UpdateTime[key]
-        if (!ts)
-          return '刚刚'
+
+        if (!ts) return '刚刚'
 
         // 用 store 的 now 作为基准，与刷新冷却倒计时保持同一时钟，保证显示自洽
         // max 钳制：store 心跳可能略旧于刚写入的 updateTime，避免误显示未来时态
@@ -85,6 +85,7 @@ export const useAppStore = create(
         // 兼容旧数据 / 版本升级：缺失字段回退到默认值
         // 返回类型断言为 AppState：persist 默认 merge 会与初始 state 浅合并补全方法
         const state = (persistedState ?? {}) as Partial<AppState>
+
         return {
           UpdateTime: state.UpdateTime ?? {},
           hiddenItems: state.hiddenItems ?? [],
@@ -92,11 +93,12 @@ export const useAppStore = create(
         } as AppState
       },
       // ⚠️ now 是纯派生用的，不需要持久化
-      partialize: state => ({
-        UpdateTime: state.UpdateTime,
-        hiddenItems: state.hiddenItems,
-        sortItems: state.sortItems,
-      } as any),
+      partialize: (state) =>
+        ({
+          UpdateTime: state.UpdateTime,
+          hiddenItems: state.hiddenItems,
+          sortItems: state.sortItems,
+        }) as any,
     },
   ),
 )

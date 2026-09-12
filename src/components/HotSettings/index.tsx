@@ -6,18 +6,10 @@
  * @Description: 热榜显示
  */
 'use client'
+import type { HotValue } from '@/enums'
+
 import { BucketPaint, Gear, Grip } from '@gravity-ui/icons'
-import {
-  AlertDialog,
-  Button,
-  Checkbox,
-  CheckboxGroup,
-  cn,
-  Label,
-  Modal,
-  toast,
-  Tooltip,
-} from '@heroui/react'
+import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal, toast, Tooltip } from '@heroui/react'
 import Image from 'next/image'
 import { useEffect, useMemo } from 'react'
 
@@ -25,36 +17,29 @@ import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortabl
 import { HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
 
-import type { HotValue } from '@/enums'
-
 export default function HotSettings() {
-  const hiddenItems = useAppStore(state => state.hiddenItems)
-  const setHiddenItems = useAppStore(state => state.setHiddenItems)
-  const sortItems = useAppStore(state => state.sortItems)
-  const setSortItems = useAppStore(state => state.setSortItems)
+  const hiddenItems = useAppStore((state) => state.hiddenItems)
+  const setHiddenItems = useAppStore((state) => state.setHiddenItems)
+  const sortItems = useAppStore((state) => state.sortItems)
+  const setSortItems = useAppStore((state) => state.setSortItems)
 
   /**
    * 👇 源数据（唯一可信）
    */
-  const sourceValues = useMemo(
-    () => HOT_ITEMS.items.map(i => i.value),
-    [],
-  )
+  const sourceValues = useMemo(() => HOT_ITEMS.items.map((i) => i.value), [])
 
   /**
    * 👇 排序兜底（解决你新增一条 HOT_ITEMS 不显示的问题）
    */
-  const safeSortItems = useMemo(
-    () => normalizeSortItems(sourceValues, sortItems),
-    [sourceValues, sortItems],
-  )
+  const safeSortItems = useMemo(() => normalizeSortItems(sourceValues, sortItems), [sourceValues, sortItems])
 
   /**
    * 👇 隐藏项兜底（防止源数据删了还留在 hiddenItems）
    */
   const safeHiddenItems = useMemo(() => {
     const sourceSet = new Set(sourceValues)
-    return (hiddenItems ?? []).filter(v => sourceSet.has(v))
+
+    return (hiddenItems ?? []).filter((v) => sourceSet.has(v))
   }, [hiddenItems, sourceValues])
 
   /**
@@ -62,7 +47,8 @@ export default function HotSettings() {
    */
   const visibleValues = useMemo(() => {
     const hiddenSet = new Set(safeHiddenItems)
-    return sourceValues.filter(v => !hiddenSet.has(v))
+
+    return sourceValues.filter((v) => !hiddenSet.has(v))
   }, [safeHiddenItems, sourceValues])
 
   /**
@@ -70,7 +56,8 @@ export default function HotSettings() {
    */
   const onChange = (values: string[]) => {
     const visibleSet = new Set(values)
-    const nextHidden = sourceValues.filter(v => !visibleSet.has(v))
+    const nextHidden = sourceValues.filter((v) => !visibleSet.has(v))
+
     setHiddenItems(nextHidden)
   }
 
@@ -89,8 +76,7 @@ export default function HotSettings() {
    * 新增项会被持久化，不只是 UI 显示
    */
   useEffect(() => {
-    if (!sortItems)
-      return
+    if (!sortItems) return
 
     if (safeSortItems.join() !== sortItems.join()) {
       setSortItems(safeSortItems)
@@ -103,12 +89,7 @@ export default function HotSettings() {
           但在 React 树中仍是 Tooltip 触发元素的后代，会导致弹窗内 hover 误触发 Tooltip */}
       <Tooltip delay={0}>
         <Tooltip.Trigger aria-label="热榜设置">
-          <Button
-            aria-label="热点榜单设置"
-            size="sm"
-            variant="ghost"
-            isIconOnly
-          >
+          <Button isIconOnly aria-label="热点榜单设置" size="sm" variant="ghost">
             <BucketPaint />
           </Button>
         </Tooltip.Trigger>
@@ -132,30 +113,27 @@ export default function HotSettings() {
               </Modal.Heading>
             </Modal.Header>
             <Modal.Body>
-              <CheckboxGroup
-                name="hot-items"
-                value={visibleValues}
-                onChange={onChange}
-              >
+              <CheckboxGroup name="hot-items" value={visibleValues} onChange={onChange}>
                 <Sortable
-                  getItemValue={item => item}
+                  className="grid grid-cols-3 gap-3"
+                  getItemValue={(item) => item}
                   strategy="grid"
                   value={safeSortItems}
                   onValueChange={setSortItems}
-                  className="grid grid-cols-3 gap-3"
                 >
                   {safeSortItems.map((value) => {
                     const raw = HOT_ITEMS.raw(value)
-                    if (!raw)
-                      return null
+
+                    if (!raw) return null
+
                     return (
                       <SortableItem key={value} value={value}>
                         <Checkbox
-                          value={value}
                           className={cn(
                             'group mt-0 gap-2 border border-default bg-surface px-2 py-3 transition-all rounded-xl',
                             'data-[selected=true]:bg-accent-soft hover:bg-accent-soft',
                           )}
+                          value={value}
                         >
                           <Checkbox.Content className="flex flex-row items-center justify-between gap-1 w-full h-full">
                             <div className="flex items-center gap-1 min-w-0">
@@ -164,10 +142,10 @@ export default function HotSettings() {
                               </SortableItemHandle>
                               <Image
                                 alt={raw.label}
+                                className="rounded-md shrink-0"
                                 height={16}
                                 src={`/images/${value}.svg`}
                                 width={16}
-                                className="rounded-md shrink-0"
                               />
                               <Label className="flex-1 text-xs truncate">{raw.label}</Label>
                             </div>
@@ -193,12 +171,14 @@ export default function HotSettings() {
                         <AlertDialog.Icon status="warning" />
                         <AlertDialog.Heading>恢复默认设置？</AlertDialog.Heading>
                       </AlertDialog.Header>
-                      <AlertDialog.Body>
-                        该操作会重置热榜的排序与显示配置，并恢复为系统默认状态。
-                      </AlertDialog.Body>
+                      <AlertDialog.Body>该操作会重置热榜的排序与显示配置，并恢复为系统默认状态。</AlertDialog.Body>
                       <AlertDialog.Footer>
-                        <Button variant="tertiary" slot="close">取消</Button>
-                        <Button variant="danger" slot="close" onPress={resetConfig}>确认</Button>
+                        <Button slot="close" variant="tertiary">
+                          取消
+                        </Button>
+                        <Button slot="close" variant="danger" onPress={resetConfig}>
+                          确认
+                        </Button>
                       </AlertDialog.Footer>
                     </AlertDialog.Dialog>
                   </AlertDialog.Container>
@@ -222,10 +202,10 @@ function normalizeSortItems(source: HotValue[], sortItems?: HotValue[]) {
   const sourceSet = new Set(source)
 
   // 保留仍然存在的排序项
-  const normalized = (sortItems ?? []).filter(v => sourceSet.has(v))
+  const normalized = (sortItems ?? []).filter((v) => sourceSet.has(v))
 
   // 找出新增项
-  const missing = source.filter(v => !normalized.includes(v))
+  const missing = source.filter((v) => !normalized.includes(v))
 
   return [...normalized, ...missing]
 }

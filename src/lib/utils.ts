@@ -10,34 +10,28 @@ export function fromNow(timestamp: number, now: number = Date.now()): string {
   const abs = Math.abs(diffSec)
 
   // 分档阈值与 dayjs relativeTime 插件默认配置一致
-  if (abs <= 44)
-    return `几秒${suffix}`
-  if (abs <= 89)
-    return `1 分钟${suffix}`
+  if (abs <= 44) return `几秒${suffix}`
+  if (abs <= 89) return `1 分钟${suffix}`
 
   const minutes = Math.round(abs / 60)
-  if (minutes <= 44)
-    return `${minutes} 分钟${suffix}`
-  if (minutes <= 89)
-    return `1 小时${suffix}`
+
+  if (minutes <= 44) return `${minutes} 分钟${suffix}`
+  if (minutes <= 89) return `1 小时${suffix}`
 
   const hours = Math.round(abs / 3600)
-  if (hours <= 21)
-    return `${hours} 小时${suffix}`
-  if (hours <= 35)
-    return `1 天${suffix}`
+
+  if (hours <= 21) return `${hours} 小时${suffix}`
+  if (hours <= 35) return `1 天${suffix}`
 
   const days = Math.round(abs / 86400)
-  if (days <= 25)
-    return `${days} 天${suffix}`
-  if (days <= 45)
-    return `1 个月${suffix}`
+
+  if (days <= 25) return `${days} 天${suffix}`
+  if (days <= 45) return `1 个月${suffix}`
 
   const months = Math.round(abs / (30 * 86400))
-  if (months <= 10)
-    return `${months} 个月${suffix}`
-  if (months <= 17)
-    return `1 年${suffix}`
+
+  if (months <= 10) return `${months} 个月${suffix}`
+  if (months <= 17) return `1 年${suffix}`
 
   return `${Math.round(abs / (365 * 86400))} 年${suffix}`
 }
@@ -70,17 +64,14 @@ export function convertMillisecondsToTime(milliseconds: number): string {
   const pad = (n: number) => n.toString().padStart(2, '0')
 
   // 超过 1 小时显示 HH:MM:SS，否则保持 MM:SS
-  return hours > 0
-    ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`
-    : `${pad(minutes)}:${pad(seconds)}`
+  return hours > 0 ? `${pad(hours)}:${pad(minutes)}:${pad(seconds)}` : `${pad(minutes)}:${pad(seconds)}`
 }
 
 /**
  * @description: 转化数字
  */
 export function formatNumber(value: number | string): number | string {
-  if (value === null || value === undefined)
-    return value
+  if (value === null || value === undefined) return value
 
   let num: number
 

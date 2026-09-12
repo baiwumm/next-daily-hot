@@ -24,7 +24,7 @@
 | 请求 | 服务端原生 `fetch`（经 `src/lib/request.ts` 封装）；客户端自研 `useRequest`（`src/hooks/use-request.ts`，**无** axios/SWR/ahooks） |
 | 解析/工具 | cheerio（HTML 解析）、crypto-js（微信读书签名）、lunar-typescript（农历）、@tanstack/react-virtual（长列表虚拟滚动）、@dnd-kit（卡片拖拽排序） |
 | 统计 | @vercel/analytics + 百度统计 + Google Analytics + Clarity（`src/components/Analytics`） |
-| 工程 | pnpm、ESLint 10 + @antfu/eslint-config 9（stylistic，**无 Prettier**）、release-it 发版 |
+| 工程 | pnpm、ESLint 10（react / react-hooks / jsx-a11y / typescript-eslint / import 插件组合）+ Prettier 3（经 eslint-plugin-prettier 接入）、release-it 发版 |
 
 无测试框架、无 CI（提交前自查 `pnpm lint` + `pnpm build`）。
 
@@ -74,11 +74,11 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 
 ## 开发约定
 
-- **代码风格**：@antfu/eslint-config（stylistic）——无分号、单引号、2 空格缩进；ESLint 即格式化，禁止引入 Prettier。
-- **import / export / JSX props 强制自动排序**（eslint.config.mjs 的 perfectionist 规则，error 级）：
-  - import 分组顺序：side-effect → Node 内置 → 第三方 → `@/` 项目内 → 相对路径 → 类型；组间 1 空行，组内字母序。
-  - JSX props 分组顺序：key/ref → aria-* → html 原生 → variant/size/color/radius → is/has 状态 → 其他 → on* 事件 → className/style。
-  - 写完代码先 `pnpm lint:fix`，不要手写对抗排序规则。
+- **代码风格**：ESLint（flat config）+ Prettier——Prettier 负责格式化，以 `prettier/prettier`（warn）接入 ESLint；`.prettierrc` 锁定单引号、无分号、`endOfLine: auto`、printWidth 120（延续项目原有风格基线）；`no-console`、未用变量（`_` 前缀豁免）为 warn。
+- **import 顺序**（`import/order`，warn）：type → builtin → external → internal → parent/sibling/index，组间保留空行。
+- **JSX props 排序**（`react/jsx-sort-props`，warn）：保留字最先 → shorthand 其次 → 其余字母序 → 回调最后；`react/self-closing-comp` 强制自闭合。
+- **语句空行**（`padding-line-between-statements`）：`return` 前必须空行，声明语句与其他语句之间空行。
+- 写完代码先 `pnpm lint:fix`，不要手写对抗格式化规则。
 - **命名**：组件目录 PascalCase + `index.tsx`；hooks 文件 `use-xxx.ts`；store 文件 `useXxxStore.ts`；其余文件/变量 camelCase 或 kebab-case。
 - **路径别名**：`@/*` → `src/*`，`#/*` → 项目根目录。
 - **注释**：中文 JSDoc；源码文件保留文件头 `@Description` 注释惯例，说明放在「为什么」而非「做了什么」。
@@ -141,7 +141,7 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 2. 禁止绕过 `fetchJson` / `fetchText` 直接裸 `fetch` 上游（丢失 UA / 超时 / 缓存策略）。
 3. 禁止让 `hotItemsConfig` 的 `value` 与 `src/app/api/` 目录名不一致——value 即路由路径，改名必须两处同步。
 4. 禁止引入替代性基础库：UI 库（非 HeroUI）、状态库（非 zustand）、请求库（非原生 fetch + 自研 useRequest），除非用户明确要求并评估影响。
-5. 禁止改动 `eslint.config.mjs` 的 perfectionist 排序规则套件（既有风格基线），新增代码以 `pnpm lint:fix` 适配。
+5. 禁止改动 `eslint.config.mjs` 与 Prettier 风格基线（与 better-admin/react 的 lint 体系对齐），新增代码以 `pnpm lint:fix` 适配。
 6. 禁止手工编辑 `.heroui-docs/`（工具生成目录）；不要把工具生成的文档索引块（HeroUI / Next.js）写入本文件，保持 AGENTS.md 纯手写。
 7. 禁止提交 `.env.local` 或任何私密密钥；`.env` 中只允许公开变量。
 8. 禁止在未沟通的情况下升级 Next.js / HeroUI / React 大版本（历史上均为独立 `chore:` 提交，需配套回归验证）。

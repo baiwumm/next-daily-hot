@@ -5,15 +5,15 @@
  * @LastEditTime: 2026-07-31 17:33:53
  * @Description: 动态列表子项
  */
+import type { HotValue } from '@/enums'
+import type { HotListItem } from '@/types'
+import type { ReactNode } from 'react'
+
 import { Description } from '@heroui/react'
 import { memo, useMemo } from 'react'
 
 import OverflowDetector from '@/components/OverflowDetector'
 import { formatNumber, hotLableColor, hotTagColor } from '@/lib/utils'
-
-import type { HotValue } from '@/enums'
-import type { HotListItem } from '@/types'
-import type { ReactNode } from 'react'
 
 interface RowData {
   index: number
@@ -23,15 +23,7 @@ interface RowData {
   suffix?: ReactNode
 }
 
-function HotDisplay({
-  value,
-  prefix,
-  suffix,
-}: {
-  value: string | number
-  prefix?: ReactNode
-  suffix?: ReactNode
-}) {
+function HotDisplay({ value, prefix, suffix }: { value: string | number; prefix?: ReactNode; suffix?: ReactNode }) {
   return (
     <Description className="shrink-0 flex items-center gap-0.5">
       {prefix}
@@ -42,13 +34,13 @@ function HotDisplay({
 }
 
 // Vercel 最佳实践：虚拟列表行组件用 memo，避免滚动/数据更新时无关行重渲染
-const RowComponent = memo(({ index, data, value, prefix, suffix }: RowData) => {
+const RowComponent = memo(function RowComponent({ index, data, value, prefix, suffix }: RowData) {
   const item = useMemo(() => data[index], [data, index])
   const { label } = item
 
   const colorStyle = useMemo(() => {
     const bgColor = label
-      ? (hotLableColor[label as keyof typeof hotLableColor] || 'var(--default)')
+      ? hotLableColor[label as keyof typeof hotLableColor] || 'var(--default)'
       : hotTagColor[index] || 'var(--default)'
 
     const textColor = (label ? hotLableColor[label as keyof typeof hotLableColor] : hotTagColor[index])
@@ -68,19 +60,17 @@ const RowComponent = memo(({ index, data, value, prefix, suffix }: RowData) => {
     if (item.tip) {
       return <HotDisplay prefix={prefix} suffix={suffix} value={item.tip} />
     }
+
     return null
   }, [item.hot, item.tip, prefix, suffix])
 
   return (
     <div className="flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default">
       <div className="flex items-center gap-2 min-w-0 flex-1">
-        <div
-          className="text-xs size-6 rounded shrink-0 flex items-center justify-center"
-          style={colorStyle}
-        >
+        <div className="text-xs size-6 rounded shrink-0 flex items-center justify-center" style={colorStyle}>
           {displayText}
         </div>
-        <OverflowDetector type={value} record={item} />
+        <OverflowDetector record={item} type={value} />
       </div>
       {endContent}
     </div>

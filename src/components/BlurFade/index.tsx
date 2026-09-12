@@ -1,9 +1,9 @@
 'use client'
 
+import type { MotionProps, UseInViewOptions, Variants } from 'motion/react'
+
 import { AnimatePresence, motion, useInView } from 'motion/react'
 import { useRef } from 'react'
-
-import type { MotionProps, UseInViewOptions, Variants } from 'motion/react'
 
 interface BlurFadeProps extends MotionProps {
   children: React.ReactNode
@@ -53,11 +53,13 @@ export default function BlurFade({
     },
   }
   const combinedVariants = variant || defaultVariants
+
   return (
     <AnimatePresence>
       <motion.div
         ref={ref}
         animate={isInView ? 'visible' : 'hidden'}
+        className={className}
         exit="hidden"
         initial="hidden"
         transition={{
@@ -66,7 +68,6 @@ export default function BlurFade({
           ease: 'easeOut',
         }}
         variants={combinedVariants}
-        className={className}
         {...props}
       >
         {children}

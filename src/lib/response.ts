@@ -1,8 +1,8 @@
+import type { HotListItem, IResponse } from '@/types'
+
 import { NextResponse } from 'next/server'
 
 import { RESPONSE } from '@/enums/response'
-
-import type { HotListItem, IResponse } from '@/types'
 
 /** 成功响应缓存头：CDN 边缘缓存 5 分钟，stale-while-revalidate 平滑刷新 */
 const CACHE_HEADERS = { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=60' }
@@ -18,6 +18,7 @@ export function errorResponse(): NextResponse {
     code: RESPONSE.ERROR,
     timestamp: Date.now(),
   }
+
   return NextResponse.json(body, { headers: NO_STORE_HEADERS })
 }
 
@@ -31,5 +32,6 @@ export function successResponse(list?: HotListItem[]): NextResponse {
     data: list || [],
     timestamp: Date.now(),
   }
+
   return NextResponse.json(body, { headers: CACHE_HEADERS })
 }

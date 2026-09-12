@@ -6,21 +6,15 @@
  * @Description: 热榜卡片
  */
 'use client'
+import type { HotListConfig, IResponse } from '@/types'
+
 import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui/icons'
-import {
-  Button,
-  Card,
-  Chip,
-  Description,
-  Label,
-  ScrollShadow,
-  Separator,
-  Spinner,
-  Tooltip,
-} from '@heroui/react'
+import { Button, Card, Chip, Description, Label, ScrollShadow, Separator, Spinner, Tooltip } from '@heroui/react'
 import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
+
+import HotListVirtual from './HotListVirtual'
 
 import BlurFade from '@/components/BlurFade'
 import SkeletonCard from '@/components/SkeletonCard'
@@ -28,23 +22,17 @@ import { API_CACHE_SECONDS, RESPONSE } from '@/enums/response'
 import { useRequest } from '@/hooks/use-request'
 import { useAppStore } from '@/store/useAppStore'
 
-import HotListVirtual from './HotListVirtual'
-
-import type { HotListConfig, IResponse } from '@/types'
-
 function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
-  const setUpdateTime = useAppStore(state => state.setUpdateTime)
+  const setUpdateTime = useAppStore((state) => state.setUpdateTime)
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
 
   // 更新相对时间
-  const relativeText = useAppStore(state =>
-    state.getRelativeTime(value),
-  )
+  const relativeText = useAppStore((state) => state.getRelativeTime(value))
 
   // 上次成功更新时间 + 当前时间（分钟级心跳，用于刷新冷却判断）
-  const updateTime = useAppStore(state => state.UpdateTime[value])
-  const now = useAppStore(state => state.now)
+  const updateTime = useAppStore((state) => state.UpdateTime[value])
+  const now = useAppStore((state) => state.now)
   // 已过分钟数（与"x 分钟前更新"的 fromNow 同源同取整，保证显示自洽）
   const elapsedMin = updateTime ? Math.round((now - updateTime) / 60_000) : 0
   // 剩余分钟 = 缓存窗口 - 已过分钟（两者相加恒等于缓存窗口）
@@ -58,26 +46,29 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
 
   const { data, loading, error, run } = useRequest(
     async () => {
-      const url = bypassCacheRef.current
-        ? `/api/${value}?t=${Date.now()}`
-        : `/api/${value}`
+      const url = bypassCacheRef.current ? `/api/${value}?t=${Date.now()}` : `/api/${value}`
+
       // 一次性消费标记
       bypassCacheRef.current = false
       const response = await fetch(url)
+
       if (response.status !== RESPONSE.SUCCESS) {
         throw new Error('Request failed')
       }
       const result: IResponse = await response.json()
+
       if (result.code === RESPONSE.ERROR) {
         throw new Error('API returned error')
       }
       const list = result.data || []
+
       // 空数据视为失败：不写入更新时间（否则会显示"xx 前更新"并触发刷新冷却，导致无法立即重试）
       if (!list.length) {
         throw new Error('API returned empty data')
       }
       // 仅在请求成功且有数据时记录更新时间，失败/空数据时保留旧值
       setUpdateTime({ [value]: Date.now() })
+
       return list
     },
     {
@@ -110,10 +101,10 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
         <div className="flex items-center gap-2">
           <Image
             alt={`${label}${tip}`}
+            className="rounded-md shrink-0"
             height={24}
             src={`/images/${value}.svg`}
             width={24}
-            className="rounded-md shrink-0"
           />
           <Label className="font-bold">{label}</Label>
         </div>
@@ -123,83 +114,57 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
           initial={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
-          <Chip
-            color={data?.length ? 'success' : 'danger'}
-            size="sm"
-            variant="soft"
-            className="px-2 py-0.5"
-          >
-            {loading
-              ? (
-                  <Spinner size="sm" />
-                )
-              : data?.length
-                ? (
-                    <CircleCheckFill width={14} />
-                  )
-                : (
-                    <CircleXmarkFill width={14} />
-                  )}
+          <Chip className="px-2 py-0.5" color={data?.length ? 'success' : 'danger'} size="sm" variant="soft">
+            {loading ? (
+              <Spinner size="sm" />
+            ) : data?.length ? (
+              <CircleCheckFill width={14} />
+            ) : (
+              <CircleXmarkFill width={14} />
+            )}
             {tip}
           </Chip>
         </motion.div>
       </Card.Header>
       <Separator />
       <Card.Content className="relative py-0">
-        <ScrollShadow hideScrollBar visibility="bottom" className="h-81.75 relative">
-          {loading
-            ? (
-                <SkeletonCard />
-              )
-            : null}
-          {loading
-            ? null
-            : !data?.length
-                ? (
-                    <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
-                      抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
-                    </Description>
-                  )
-                : (
-                    <BlurFade className="h-full pl-3">
-                      <HotListVirtual
-                        data={data}
-                        prefix={prefix}
-                        suffix={suffix}
-                        value={value}
-                      />
-                    </BlurFade>
-                  )}
+        <ScrollShadow hideScrollBar className="h-81.75 relative" visibility="bottom">
+          {loading ? <SkeletonCard /> : null}
+          {loading ? null : !data?.length ? (
+            <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
+              抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
+            </Description>
+          ) : (
+            <BlurFade className="h-full pl-3">
+              <HotListVirtual data={data} prefix={prefix} suffix={suffix} value={value} />
+            </BlurFade>
+          )}
         </ScrollShadow>
       </Card.Content>
       <Separator />
       <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
           <Description className="w-1/2">
-            {loading
-              ? '正在加载中...'
-              : error
-                ? '更新失败'
-                : `${relativeText}更新`}
+            {loading ? '正在加载中...' : error ? '更新失败' : `${relativeText}更新`}
           </Description>
-          <Separator orientation="vertical" className="flex-none" />
+          <Separator className="flex-none" orientation="vertical" />
           <div className="flex w-1/2 justify-center">
             <Tooltip delay={0}>
               <Button
+                isIconOnly
+                className={`text-muted${isCooldown ? ' opacity-50' : ''}`}
+                isDisabled={loading}
                 size="sm"
                 variant="ghost"
-                isDisabled={loading}
-                isIconOnly
                 // 冷却时不禁用按钮（否则 hover 不触发 Tooltip），改为拦截点击 + 视觉淡化
                 onPress={isCooldown ? undefined : handleRefresh}
-                className={`text-muted${isCooldown ? ' opacity-50' : ''}`}
               >
                 {/* Vercel 最佳实践：动画加在包装层而非 SVG 元素上 */}
                 <div className={loading ? 'animate-spin' : ''}>
                   <ArrowsRotateRight />
                 </div>
               </Button>
-              <Tooltip.Content placement="bottom" showArrow>
+              <Tooltip.Content showArrow placement="bottom">
                 <Tooltip.Arrow />
                 {isCooldown
                   ? remainMin > 0

@@ -5,29 +5,29 @@
  * @LastEditTime: 2026-07-31 17:35:06
  * @Description: 豆瓣电影-新片榜
  */
+import type { HotListItem } from '@/types'
+
 import * as cheerio from 'cheerio'
 
 import { fetchText } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
-import type { HotListItem } from '@/types'
-
 export async function GET() {
   // 官方 url
   const url = 'https://movie.douban.com/chart/'
+
   try {
     // 请求数据
     const responseBody = await fetchText(url)
     // 处理数据
     const getNumbers = (text: string | undefined) => {
-      if (!text)
-        return 10000000
+      if (!text) return 10000000
       const regex = /\d+/
       const match = text.match(regex)
+
       if (match) {
         return Number(match[0])
-      }
-      else {
+      } else {
         return 10000000
       }
     }
@@ -37,6 +37,7 @@ export async function GET() {
       const dom = $(item)
       const url = dom.find('a').attr('href') || ''
       const score = dom.find('.rating_nums').text() ?? '0.0'
+
       return {
         id: String(getNumbers(url)),
         title: `${dom.find('.pl2 a').text().replace(/\s+/g, ' ').trim().replace(/\n/g, '')}`,
@@ -47,10 +48,11 @@ export async function GET() {
         mobileUrl: `https://m.douban.com/movie/subject/${getNumbers(url)}/`,
       }
     })
+
     return successResponse(result)
-  }
-  catch (error) {
+  } catch (error) {
     console.error('上游请求失败：', error)
+
     return errorResponse()
   }
 }

@@ -6,19 +6,13 @@
  * @Description: 底部版权
  */
 'use client'
-import {
-  Chip,
-  cn,
-  Description,
-  Link,
-  Separator,
-} from '@heroui/react'
+import type { ReactNode } from 'react'
+
+import { Chip, cn, Description, Link, Separator } from '@heroui/react'
 import Image from 'next/image'
 import { useState } from 'react'
 
 import pkg from '#/package.json'
-
-import type { ReactNode } from 'react'
 
 interface Social {
   icon?: ReactNode
@@ -43,45 +37,36 @@ export default function Footer() {
       label: process.env.NEXT_PUBLIC_GONGAN!,
     },
   ]
+
   return (
     <footer className="shrink-0 mx-auto w-full container! px-6 py-4 grid grid-cols-1 sm:grid-cols-3 items-center gap-2">
       <div className="flex items-center gap-3 justify-self-center sm:justify-self-start">
         <div className="flex items-center gap-2">
           <div className="size-5 relative">
-            <Image alt="Logo" fill src="/logo.svg" />
+            <Image fill alt="Logo" src="/logo.svg" />
           </div>
-          <span className="text-sm font-bold">
-            {process.env.NEXT_PUBLIC_APP_NAME}
-          </span>
+          <span className="text-sm font-bold">{process.env.NEXT_PUBLIC_APP_NAME}</span>
         </div>
-        <Separator orientation="vertical" className="h-4 self-center" />
-        <Chip
-          color="success"
-          size="sm"
-          variant="soft"
-          className="px-2 py-0.5 text-[10px]"
-        >
+        <Separator className="h-4 self-center" orientation="vertical" />
+        <Chip className="px-2 py-0.5 text-[10px]" color="success" size="sm" variant="soft">
           <div
-            data-slot="status-indicator"
             className={cn(
               'relative flex size-2 shrink-0 rounded-full bg-success',
               'before:absolute before:inset-0 before:animate-ping before:rounded-full before:bg-inherit',
               'after:absolute after:inset-0.5 after:rounded-full after:bg-inherit',
             )}
+            data-slot="status-indicator"
           />
           <Chip.Label>服务状态正常</Chip.Label>
         </Chip>
       </div>
       <Description className="justify-self-center">
-        &copy;
-        {' '}
-        {year}
-        {' '}
+        &copy; {year}{' '}
         <a
+          className="hover:text-accent transition-colors"
           href={pkg.author.url}
           rel="noopener noreferrer"
           target="_blank"
-          className="hover:text-accent transition-colors"
         >
           {process.env.NEXT_PUBLIC_AUTHOR_NAME}
         </a>
@@ -89,21 +74,9 @@ export default function Footer() {
       </Description>
       <div className="flex gap-2 items-center flex-col sm:flex-row justify-self-center sm:justify-self-end">
         {IcpLinks.map(({ image, url, label }) => (
-          <Link
-            key={url}
-            href={url}
-            target="_blank"
-            className="flex gap-1 items-center no-underline"
-          >
-            <Image
-              alt={label}
-              height={14}
-              src={image!}
-              width={14}
-            />
-            <Description className="hover:text-accent transition-colors">
-              {label}
-            </Description>
+          <Link key={url} className="flex gap-1 items-center no-underline" href={url} target="_blank">
+            <Image alt={label} height={14} src={image!} width={14} />
+            <Description className="hover:text-accent transition-colors">{label}</Description>
           </Link>
         ))}
       </div>

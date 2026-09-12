@@ -6,6 +6,8 @@
  * @Description: 主题切换
  */
 'use client'
+import type { FC } from 'react'
+
 import { Moon, Sun } from '@gravity-ui/icons'
 import { Button, Tooltip, useIsHydrated } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
@@ -13,8 +15,6 @@ import { useTheme } from 'next-themes'
 import { useEffect, useRef } from 'react'
 
 import { useBlurCircleTheme } from '@/hooks/use-blur-circle-theme'
-
-import type { FC } from 'react'
 
 const MotionMoon = motion.create(Moon)
 const MotionSun = motion.create(Sun)
@@ -62,8 +62,7 @@ const ThemeSwitcher: FC = () => {
   }
 
   const handleToggle = () => {
-    if (isAnimating)
-      return // 防止动画期间重复点击
+    if (isAnimating) return // 防止动画期间重复点击
     playSound()
     toggleTheme()
   }
@@ -77,33 +76,31 @@ const ThemeSwitcher: FC = () => {
     <Tooltip delay={0}>
       <Button
         ref={ref}
+        isIconOnly
         aria-label="ThemeSwitcher"
+        isDisabled={isAnimating}
         size="sm"
         variant="ghost"
-        isDisabled={isAnimating}
-        isIconOnly
         onPress={handleToggle}
       >
         <AnimatePresence initial={false} mode="wait">
-          {isDarkMode
-            ? (
-                <MotionMoon
-                  key="moon"
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.6 }}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  transition={{ duration: 0.2, ease: 'easeInOut' }}
-                />
-              )
-            : (
-                <MotionSun
-                  key="sun"
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.6 }}
-                  initial={{ opacity: 0, scale: 0.6 }}
-                  transition={{ duration: 0.2, ease: 'easeInOut' }}
-                />
-              )}
+          {isDarkMode ? (
+            <MotionMoon
+              key="moon"
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              initial={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+            />
+          ) : (
+            <MotionSun
+              key="sun"
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+              initial={{ opacity: 0, scale: 0.6 }}
+              transition={{ duration: 0.2, ease: 'easeInOut' }}
+            />
+          )}
         </AnimatePresence>
       </Button>
       <Tooltip.Content showArrow>
