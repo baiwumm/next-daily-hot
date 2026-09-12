@@ -2,6 +2,7 @@
   "name": "next-daily-hot",
   "version": "3.10.0",
   "private": true,
+  "packageManager": "pnpm@11.24.0",
   "author": {
     "name": "baiwumm",
     "email": "me@baiwumm.com",
