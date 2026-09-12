@@ -65,10 +65,5 @@
     "release-it": "^20.2.0",
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3"
-  },
-  "pnpm": {
-    "overrides": {
-      "@adobe/react-spectrum": "3.47.3"
-    }
   }
 }

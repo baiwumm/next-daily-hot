@@ -105,7 +105,7 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 - **新私密变量走 `.env.local`**（`.env.*` 被 ignore），命名大写下划线；服务端专用变量不加 `NEXT_PUBLIC_` 前缀。
 - 可选变量：`NEXT_PUBLIC_HOT_CACHE_SECONDS` 覆盖缓存窗口（60~3600 秒，默认 300），服务端 revalidate、CDN 缓存头、客户端刷新冷却三处同源。
 - **无数据库、无后端服务**；唯一外部依赖是各平台上游接口（部分有反爬，见「注意事项」）。
-- `package.json` 的 `pnpm.overrides` 固定 `@adobe/react-spectrum@3.47.3`（HeroUI 依赖兼容），勿随意移除。
+- `pnpm-workspace.yaml` 的 `overrides` 固定 `@adobe/react-spectrum@3.47.3`（HeroUI 依赖兼容），勿随意移除（pnpm 10+ 不再读取 package.json 内嵌的 `pnpm` 字段）。
 - 新增依赖需克制：能用原生 API / 现有能力实现的不引库；引入前说明理由。
 
 ## 架构要点
