@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.10.1](https://github.com/baiwumm/next-daily-hot/compare/3.10.0...3.10.1) (2026-09-15)
+
+### ✨ Features | 新功能
+
+* 添加 theme-switch-animation 依赖包 ([fe8ed3c](https://github.com/baiwumm/next-daily-hot/commit/fe8ed3cbf3d984c06c1e76adaec3fdbfb6904b61))
+* **ThemeSwitcher:** 替换自定义主题切换动画为第三方库 ([dbcbac6](https://github.com/baiwumm/next-daily-hot/commit/dbcbac66f41b10abca05669e7ed9715012df204a))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 固定 packageManager 为 pnpm@11.24.0，修复 Vercel 构建时 pnpm 版本误判 ([735bf70](https://github.com/baiwumm/next-daily-hot/commit/735bf7092019bb7f05674b2c469ee873b4057ace))
+
 ## [3.10.0](https://github.com/baiwumm/next-daily-hot/compare/3.9.2...3.10.0) (2026-09-12)
 
 ### 🐛 Bug Fixes | Bug 修复
