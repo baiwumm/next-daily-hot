@@ -13,10 +13,7 @@ import { Button, Tooltip, useIsHydrated } from '@heroui/react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useTheme } from 'next-themes'
 import { useEffect, useRef } from 'react'
-import {
-  ThemeAnimationType,
-  useThemeAnimation,
-} from "theme-switch-animation/react";
+import { ThemeAnimationType, useThemeAnimation } from 'theme-switch-animation/react'
 
 const MotionMoon = motion.create(Moon)
 const MotionSun = motion.create(Sun)
@@ -27,9 +24,9 @@ const ThemeSwitcher: FC = () => {
 
   const { ref, toggleTheme, isDark } = useThemeAnimation({
     animationType: ThemeAnimationType.CIRCLE_BLUR,
-    isDark: resolvedTheme === "dark",
-    onChange: (next) => setTheme(next ? "dark" : "light"),
-  });
+    isDark: resolvedTheme === 'dark',
+    onChange: (next) => setTheme(next ? 'dark' : 'light'),
+  })
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
@@ -69,14 +66,7 @@ const ThemeSwitcher: FC = () => {
 
   return (
     <Tooltip delay={0}>
-      <Button
-        ref={ref}
-        isIconOnly
-        aria-label="ThemeSwitcher"
-        size="sm"
-        variant="ghost"
-        onPress={handleToggle}
-      >
+      <Button ref={ref} isIconOnly aria-label="ThemeSwitcher" size="sm" variant="ghost" onPress={handleToggle}>
         <AnimatePresence initial={false} mode="wait">
           {isDark ? (
             <MotionMoon
