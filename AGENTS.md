@@ -73,7 +73,7 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 ```
 
 - **常规发版**走 `.github/workflows/release.yml`（workflow_dispatch，在 main 上触发，patch / minor / major 或自定义版本号）：CI 先跑 `pnpm lint` + `pnpm build` 预检，再由 release-it 一次性完成版本号、CHANGELOG.md、`chore: Release v${version}` 提交、tag 与 GitHub Release；也可用 `gh workflow run release.yml -f bump=minor` 触发。
-- **tag 统一使用 `v` 前缀**（`.release-it.json` 的 `git.tagName` 显式锁定）；历史无前缀 tag 用 `scripts/migrate-tags-v-prefix.mjs` 一次性迁移（默认 dry-run 预览，`--apply` 执行），脚本会同步重指向 GitHub Release 并修正 CHANGELOG 的 compare 链接。
+- **tag 统一使用 `v` 前缀**（`.release-it.json` 的 `git.tagName` 显式锁定）；历史 tag 已于 2026-10-07 全部迁移为 v 前缀，GitHub Release 指向与 CHANGELOG 链接同步修正（一次性迁移脚本用后已删除，逻辑见 `4b172f2` 提交）。
 - 本地 `pnpm release` 为备用方式，与 CI 共用 `.release-it.json`（含 `requireBranch: main` 限制）。
 - `pnpm dev` / `pnpm build` 无需任何上游密钥；上游接口不可达只影响榜单数据，不阻塞构建。
 

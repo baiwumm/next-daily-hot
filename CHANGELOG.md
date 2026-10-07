@@ -1,6 +1,6 @@
 # Changelog
 
-## [3.10.1](https://github.com/baiwumm/next-daily-hot/compare/3.10.0...3.10.1) (2026-09-15)
+## [3.10.1](https://github.com/baiwumm/next-daily-hot/compare/v3.10.0...v3.10.1) (2026-09-15)
 
 ### ✨ Features | 新功能
 
@@ -11,7 +11,7 @@
 
 * 固定 packageManager 为 pnpm@11.24.0，修复 Vercel 构建时 pnpm 版本误判 ([735bf70](https://github.com/baiwumm/next-daily-hot/commit/735bf7092019bb7f05674b2c469ee873b4057ace))
 
-## [3.10.0](https://github.com/baiwumm/next-daily-hot/compare/3.9.2...3.10.0) (2026-09-12)
+## [3.10.0](https://github.com/baiwumm/next-daily-hot/compare/v3.9.2...v3.10.0) (2026-09-12)
 
 ### 🐛 Bug Fixes | Bug 修复
 
@@ -39,13 +39,13 @@
 
 * 字体改为自托管 [@font-face](https://github.com/font-face)，移除第三方字体 CSS 外链 ([73fcb3a](https://github.com/baiwumm/next-daily-hot/commit/73fcb3ae8156644ce5cf87feed8d6e3b8f232fcc))
 
-## [3.9.2](https://github.com/baiwumm/next-daily-hot/compare/3.9.1...3.9.2) (2026-08-12)
+## [3.9.2](https://github.com/baiwumm/next-daily-hot/compare/v3.9.1...v3.9.2) (2026-08-12)
 
 ### 🐛 Bug Fixes | Bug 修复
 
 * 热榜卡片空数据误显示更新时间并触发刷新冷却 ([7307940](https://github.com/baiwumm/next-daily-hot/commit/7307940537a6b91f6a7593a4ee4a28d00334eff4))
 
-## [3.9.1](https://github.com/baiwumm/next-daily-hot/compare/3.9.0...3.9.1) (2026-08-12)
+## [3.9.1](https://github.com/baiwumm/next-daily-hot/compare/v3.9.0...v3.9.1) (2026-08-12)
 
 ### 🎫 Chores | 其他更新
 
@@ -53,7 +53,7 @@
 * 升级 HeroUI 依赖与文档到最新版 ([1e45680](https://github.com/baiwumm/next-daily-hot/commit/1e456802fa0ce2038df8e963a4be3b229701b865))
 * 升级 Next.js 16.3.0 及配套依赖 ([0aff218](https://github.com/baiwumm/next-daily-hot/commit/0aff218168fd752d51b7101bf0800ea7a80a51ea))
 
-## [3.9.0](https://github.com/baiwumm/next-daily-hot/compare/3.8.2...3.9.0) (2026-08-11)
+## [3.9.0](https://github.com/baiwumm/next-daily-hot/compare/v3.8.2...v3.9.0) (2026-08-11)
 
 ### ✨ Features | 新功能
 
@@ -76,7 +76,7 @@
 * 服务器 fetch 缓存 + 刷新按钮冷却 ([8910ff5](https://github.com/baiwumm/next-daily-hot/commit/8910ff513ae284a1c5dc301aade5410eec230f6b))
 * 响应统一加 CDN 缓存头，修复错误时间戳恒定 ([57484d6](https://github.com/baiwumm/next-daily-hot/commit/57484d6d50fe76bf31d6ab7b1535ab2d79729604))
 
-## [3.8.2](https://github.com/baiwumm/next-daily-hot/compare/3.8.1...3.8.2) (2026-08-10)
+## [3.8.2](https://github.com/baiwumm/next-daily-hot/compare/v3.8.1...v3.8.2) (2026-08-10)
 
 ### 📝 Documentation | 文档
 
@@ -86,7 +86,7 @@
 
 * 重制 OG 分享图，适配站点主题与视觉规范 ([0118c5e](https://github.com/baiwumm/next-daily-hot/commit/0118c5ea7485accd91947b45d86a0dbc45ba251a))
 
-## [3.8.1](https://github.com/baiwumm/next-daily-hot/compare/3.8.0...3.8.1) (2026-08-10)
+## [3.8.1](https://github.com/baiwumm/next-daily-hot/compare/v3.8.0...v3.8.1) (2026-08-10)
 
 ### 🐛 Bug Fixes | Bug 修复
 
@@ -103,7 +103,7 @@
 
 * 依据 Vercel 最佳实践优化性能与 bundle 体积 ([573e938](https://github.com/baiwumm/next-daily-hot/commit/573e93894bdc8463b4087ea712fd6d135fd00899))
 
-## [3.8.0](https://github.com/baiwumm/next-daily-hot/compare/3.7.2...3.8.0) (2026-08-07)
+## [3.8.0](https://github.com/baiwumm/next-daily-hot/compare/v3.7.2...v3.8.0) (2026-08-07)
 
 ### ✨ Features | 新功能
 
@@ -125,19 +125,19 @@
 
 * 优化主题切换动画的清理逻辑与健壮性 ([77eb48a](https://github.com/baiwumm/next-daily-hot/commit/77eb48adf4158736ad606db608e365f3f465751c))
 
-## [3.7.2](https://github.com/baiwumm/next-daily-hot/compare/3.7.1...3.7.2) (2026-08-03)
+## [3.7.2](https://github.com/baiwumm/next-daily-hot/compare/v3.7.1...v3.7.2) (2026-08-03)
 
 ### 🎫 Chores | 其他更新
 
 * 去掉 .env.example 文件 ([2690e3a](https://github.com/baiwumm/next-daily-hot/commit/2690e3a1c4299a46c248e8dae23066fb5bdbb9eb))
 
-## [3.7.1](https://github.com/baiwumm/next-daily-hot/compare/3.7.0...3.7.1) (2026-08-03)
+## [3.7.1](https://github.com/baiwumm/next-daily-hot/compare/v3.7.0...v3.7.1) (2026-08-03)
 
 ### ✨ Features | 新功能
 
 * update README.md ([7139925](https://github.com/baiwumm/next-daily-hot/commit/713992598f0afe8e17710c4e37fcd2b5626b8b90))
 
-## [3.7.0](https://github.com/baiwumm/next-daily-hot/compare/3.6.10...3.7.0) (2026-07-31)
+## [3.7.0](https://github.com/baiwumm/next-daily-hot/compare/v3.6.10...v3.7.0) (2026-07-31)
 
 ### ✨ Features | 新功能
 
@@ -155,67 +155,67 @@
 
 * 优化代码逻辑和结构 ([70a614c](https://github.com/baiwumm/next-daily-hot/commit/70a614c01bce752a7f6d32f06ed916516001ec25))
 
-## [3.6.10](https://github.com/baiwumm/next-daily-hot/compare/3.6.9...3.6.10) (2026-07-22)
+## [3.6.10](https://github.com/baiwumm/next-daily-hot/compare/v3.6.9...v3.6.10) (2026-07-22)
 
 ### ⚡ Performance Improvements | 性能优化
 
 * 优化 env 文件配置和示例 ([055e0b2](https://github.com/baiwumm/next-daily-hot/commit/055e0b27ac08d4598a1ff13007270c3c0071bb20))
 
-## [3.6.9](https://github.com/baiwumm/next-daily-hot/compare/3.6.8...3.6.9) (2026-07-22)
+## [3.6.9](https://github.com/baiwumm/next-daily-hot/compare/v3.6.8...v3.6.9) (2026-07-22)
 
 ### ⚡ Performance Improvements | 性能优化
 
 * **FullLoading:** 使用 useIsHydrated 代替 mounted ([8b3aa84](https://github.com/baiwumm/next-daily-hot/commit/8b3aa84ca051626281ad0db0088963bd54f5a121))
 
-## [3.6.8](https://github.com/baiwumm/next-daily-hot/compare/3.6.7...3.6.8) (2026-07-17)
+## [3.6.8](https://github.com/baiwumm/next-daily-hot/compare/v3.6.7...v3.6.8) (2026-07-17)
 
 ### ⚡ Performance Improvements | 性能优化
 
 * 设置  Tooltip 的延迟为0 ([8211189](https://github.com/baiwumm/next-daily-hot/commit/8211189b0edeb1464a26c6da7fa7f0e53e12f6de))
 
-## [3.6.7](https://github.com/baiwumm/next-daily-hot/compare/3.6.6...3.6.7) (2026-07-07)
+## [3.6.7](https://github.com/baiwumm/next-daily-hot/compare/v3.6.6...v3.6.7) (2026-07-07)
 
 ### 💄 Styles | 风格
 
 * UI 调整 ([c62c25f](https://github.com/baiwumm/next-daily-hot/commit/c62c25fdb15d0cde11b85bb9462c2c22bffe26d2))
 
-## [3.6.6](https://github.com/baiwumm/next-daily-hot/compare/3.6.5...3.6.6) (2026-07-07)
+## [3.6.6](https://github.com/baiwumm/next-daily-hot/compare/v3.6.5...v3.6.6) (2026-07-07)
 
 ### ⚡ Performance Improvements | 性能优化
 
 * **BackTop:** 优化交互逻辑 ([e378863](https://github.com/baiwumm/next-daily-hot/commit/e3788630bf2c74b27726a5fadaa61d6bdbe63ddd))
 
-## [3.6.5](https://github.com/baiwumm/next-daily-hot/compare/3.6.4...3.6.5) (2026-07-07)
+## [3.6.5](https://github.com/baiwumm/next-daily-hot/compare/v3.6.4...v3.6.5) (2026-07-07)
 
 ### ⚡ Performance Improvements | 性能优化
 
 * **ThemeSwitcher:** 优化主题切换逻辑 ([89e42a2](https://github.com/baiwumm/next-daily-hot/commit/89e42a25ab96be0b87ed3d0a4892f5f46bb4336b))
 
-## [3.6.4](https://github.com/baiwumm/next-daily-hot/compare/3.6.3...3.6.4) (2026-07-07)
+## [3.6.4](https://github.com/baiwumm/next-daily-hot/compare/v3.6.3...v3.6.4) (2026-07-07)
 
 ### 🔧 Continuous Integration | CI 配置
 
 * 使用默认端口 ([ec2d9f6](https://github.com/baiwumm/next-daily-hot/commit/ec2d9f67b1ed7d5d3ae81a73250a4b0de22db0fe))
 
-## [3.6.3](https://github.com/baiwumm/next-daily-hot/compare/3.6.2...3.6.3) (2026-07-06)
+## [3.6.3](https://github.com/baiwumm/next-daily-hot/compare/v3.6.2...v3.6.3) (2026-07-06)
 
 ### ✨ Features | 新功能
 
 * update README.md ([f378062](https://github.com/baiwumm/next-daily-hot/commit/f37806277ce294d435ef314bedc410a64d2abfd0))
 
-## [3.6.2](https://github.com/baiwumm/next-daily-hot/compare/3.6.1...3.6.2) (2026-07-06)
+## [3.6.2](https://github.com/baiwumm/next-daily-hot/compare/v3.6.1...v3.6.2) (2026-07-06)
 
 ### 💄 Styles | 风格
 
 * 去除重复的样式 ([48594cf](https://github.com/baiwumm/next-daily-hot/commit/48594cf343e7cb6f083002cace8be3260d650462))
 
-## [3.6.1](https://github.com/baiwumm/next-daily-hot/compare/3.6.0...3.6.1) (2026-07-03)
+## [3.6.1](https://github.com/baiwumm/next-daily-hot/compare/v3.6.0...v3.6.1) (2026-07-03)
 
 ### ✨ Features | 新功能
 
 * **public:** 整理图片文件 ([1dd7889](https://github.com/baiwumm/next-daily-hot/commit/1dd78894101c4fb187b792e4ef9e6145da7d020a))
 
-## [3.6.0](https://github.com/baiwumm/next-daily-hot/compare/3.5.6...3.6.0) (2026-07-03)
+## [3.6.0](https://github.com/baiwumm/next-daily-hot/compare/v3.5.6...v3.6.0) (2026-07-03)
 
 ### ✨ Features | 新功能
 
@@ -243,7 +243,7 @@
 
 * 新增 @number-flow/react 包 ([a5caa1f](https://github.com/baiwumm/next-daily-hot/commit/a5caa1f048bd45aed24c03b2b59ae969cdcdd009))
 
-## [3.5.6](https://github.com/baiwumm/next-daily-hot/compare/3.5.5...3.5.6) (2026-07-01)
+## [3.5.6](https://github.com/baiwumm/next-daily-hot/compare/v3.5.5...v3.5.6) (2026-07-01)
 
 ### ✨ Features | 新功能
 
@@ -258,14 +258,14 @@
 
 * 降低 eslint 到 v9 版本，优化 lint 语法 ([d02b5bf](https://github.com/baiwumm/next-daily-hot/commit/d02b5bfb48931f270926f20a3cd1ccbe75f0ee80))
 
-## [3.5.5](https://github.com/baiwumm/next-daily-hot/compare/3.5.4...3.5.5) (2026-07-01)
+## [3.5.5](https://github.com/baiwumm/next-daily-hot/compare/v3.5.4...v3.5.5) (2026-07-01)
 
 ### ✨ Features | 新功能
 
 * 去除社交信息，优化底部版本 ([5fd6889](https://github.com/baiwumm/next-daily-hot/commit/5fd6889cd8ca200b916570133e272fe7f636cf8c))
 * 删除 Umami 统计代码 ([aad3f86](https://github.com/baiwumm/next-daily-hot/commit/aad3f869c06e4b9e519d3e55f67c7059b3ba4e1a))
 
-## [3.5.4](https://github.com/baiwumm/next-daily-hot/compare/3.5.3...3.5.4) (2026-06-26)
+## [3.5.4](https://github.com/baiwumm/next-daily-hot/compare/v3.5.3...v3.5.4) (2026-06-26)
 
 ### 💄 Styles | 风格
 
@@ -276,14 +276,14 @@
 * 更新 Hero UI 版本 ([9762d58](https://github.com/baiwumm/next-daily-hot/commit/9762d58a65c28b08cac2d6c88407277e626b19fb))
 * 更新包版本 ([bdcbada](https://github.com/baiwumm/next-daily-hot/commit/bdcbada07e46e30c3ff8df6ecb93c707942b585c))
 
-## [3.5.3](///compare/3.5.2...3.5.3) (2026-03-16)
+## [3.5.3](///compare/v3.5.2...v3.5.3) (2026-03-16)
 
 ### Performance Improvements
 
 * 删除 ProgressCircle 组件 16e0142
 * **BackTop:** 使用 Hero UI 的 ProgressCircle 组件，优化卡顿 a421747
 
-## [3.5.2](///compare/3.5.1...3.5.2) (2026-03-11)
+## [3.5.2](///compare/v3.5.1...v3.5.2) (2026-03-11)
 
 ### Features
 
@@ -294,14 +294,14 @@
 * 禁止 Image 图片优化 7e36173
 * **OverflowDetector:** 优化页面主题切换卡顿的问题 68ff709
 
-## [3.5.1](///compare/3.5.0...3.5.1) (2026-02-06)
+## [3.5.1](///compare/v3.5.0...v3.5.1) (2026-02-06)
 
 ### Performance Improvements
 
 * **HotCard:** 优化暗黑主题过渡卡顿的问题 e65f42b
 * TS 类型完善 32c56b5
 
-## [3.5.0](///compare/3.4.2...3.5.0) (2026-01-26)
+## [3.5.0](///compare/v3.4.2...v3.5.0) (2026-01-26)
 
 ### Features
 
@@ -319,13 +319,13 @@
 
 * 细节调整 22fdd08
 
-## [3.4.2](///compare/3.4.1...3.4.2) (2026-01-26)
+## [3.4.2](///compare/v3.4.1...v3.4.2) (2026-01-26)
 
 ### Features
 
 * 更新 Hero UI 版本，配置主题 03a7c3e
 
-## [3.4.1](///compare/3.4.0...3.4.1) (2026-01-21)
+## [3.4.1](///compare/v3.4.0...v3.4.1) (2026-01-21)
 
 ### Features
 
@@ -336,7 +336,7 @@
 
 * 删除 console.log 3a452f6
 
-## [3.4.0](///compare/3.3.1...3.4.0) (2026-01-20)
+## [3.4.0](///compare/v3.3.1...v3.4.0) (2026-01-20)
 
 ### Features
 
@@ -347,27 +347,27 @@
 
 * **HotSettings:** 禁用 Modal 点击关闭 227bf46
 
-## [3.3.1](///compare/3.3.0...3.3.1) (2026-01-15)
+## [3.3.1](///compare/v3.3.0...v3.3.1) (2026-01-15)
 
 ### Features
 
 * **baidu:** 新增 label 标签字段 ba7d048
 * **weibo:** 更改热度字段 1d81277
 
-## [3.3.0](///compare/3.2.1...3.3.0) (2026-01-15)
+## [3.3.0](///compare/v3.2.1...v3.3.0) (2026-01-15)
 
 ### Features
 
 * 新增 夸克-今日热点 80ff40f
 * **HotSettings:** 添加“恢复默认设置”功能 361ed08
 
-## [3.2.1](///compare/3.2.0...3.2.1) (2026-01-14)
+## [3.2.1](///compare/v3.2.0...v3.2.1) (2026-01-14)
 
 ### Features
 
 * 新增 虎扑-步行街热帖 8fa301e
 
-## [3.2.0](///compare/3.1.1...3.2.0) (2026-01-14)
+## [3.2.0](///compare/v3.1.1...v3.2.0) (2026-01-14)
 
 ### Features
 
@@ -375,26 +375,26 @@
 * 新增 小红书-实时热榜 b1b8c99
 * **HotSettings:** 热榜支持拖拽排序显示 db6ce60
 
-## [3.1.1](///compare/3.1.0...3.1.1) (2026-01-13)
+## [3.1.1](///compare/v3.1.0...v3.1.1) (2026-01-13)
 
 ### Performance Improvements
 
 * 优化类型 05d9eab
 
-## [3.1.0](///compare/3.0.1...3.1.0) (2026-01-12)
+## [3.1.0](///compare/v3.0.1...v3.1.0) (2026-01-12)
 
 ### Features
 
 * **HotCard:** 更新时间逻辑优化，其它细节微调 8dc3cad
 * **HotCard:** 新增列表虚拟滚动 1d7d5bf
 
-## [3.0.1](///compare/3.0.0...3.0.1) (2026-01-05)
+## [3.0.1](///compare/v3.0.0...v3.0.1) (2026-01-05)
 
 ### Features
 
 * update README.md 6e7d7d8
 
-## [3.0.0](///compare/2.1.0...3.0.0) (2026-01-05)
+## [3.0.0](///compare/v2.1.0...v3.0.0) (2026-01-05)
 
 ### Bug Fixes
 
@@ -405,7 +405,7 @@
 * 优化 SEO 信息 e8ebfcb
 * **eslint:** 优化 eslint 配置规则 be8d366
 
-## [2.1.0](///compare/2.0.0...2.1.0) (2025-11-21)
+## [2.1.0](///compare/v2.0.0...v2.1.0) (2025-11-21)
 
 ### Features
 
@@ -421,4 +421,4 @@
 * update README.md a5d5168
 * update README.md 86dca7c
 
-## [2.0.0](///compare/1.6.6...2.0.0) (2025-11-19)
+## [2.0.0](///compare/v1.6.6...v2.0.0) (2025-11-19)
