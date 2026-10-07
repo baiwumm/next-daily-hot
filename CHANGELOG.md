@@ -1,5 +1,30 @@
 # Changelog
 
+## [3.11.0](https://github.com/baiwumm/next-daily-hot/compare/v3.10.1...v3.11.0) (2026-10-07)
+
+### ✨ Features | 新功能
+
+* **theme-switch-animation:** 升级到 v0.2.0 版本 ([608fea4](https://github.com/baiwumm/next-daily-hot/commit/608fea4eda407ca53e6f830b8e86d805ec5b455d))
+* 新增 Ctrl/⌘+K 全局搜索，支持跨卡片条目定位与标题高亮 ([dbb8bb7](https://github.com/baiwumm/next-daily-hot/commit/dbb8bb7a603a55c57b95592588ea23a191661494))
+* 新增分类筛选视图，配置重构为按分类分组嵌套结构 ([48a1963](https://github.com/baiwumm/next-daily-hot/commit/48a19631b068cf6e33eff8cacfc49980238ad810))
+* 热榜条目新增排名趋势标记（上升/下降/新上榜） ([107e61e](https://github.com/baiwumm/next-daily-hot/commit/107e61e39ef0cbf4c36265fe50c4ce007637ad46))
+* 首页重构为分类分节布局，设置支持分类/平台两层排序与显隐 ([d1341e1](https://github.com/baiwumm/next-daily-hot/commit/d1341e1fe20ada053e7620a47c13f7aeee6a7353))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **dongchedi:** 热搜榜已下线登录墙，数据源切换为首页今日要闻 ([d86e193](https://github.com/baiwumm/next-daily-hot/commit/d86e193a8cd696cdfb5d5eae5d47b1c133962da9))
+* **health-check:** 分批限流加失败重试，消除并发突发触发上游风控的误报 ([7f0f690](https://github.com/baiwumm/next-daily-hot/commit/7f0f690db737713e9d541afad130f30cce6df610))
+
+### 🎫 Chores | 其他更新
+
+* 历史 tag 迁移 v 前缀，修正 CHANGELOG 链接 ([7b8fc51](https://github.com/baiwumm/next-daily-hot/commit/7b8fc51c14c010dcc5bd6e375cc8439e345f0aa5))
+
+### 🔧 Continuous Integration | CI 配置
+
+* 升级 theme-switch-animation 到 0.4.0 版本 ([b405263](https://github.com/baiwumm/next-daily-hot/commit/b405263129c6dace1d6a154d8c0e854d26ff6a48))
+* 新增 GitHub Actions 一键发版 workflow，tag 改用 v 前缀 ([4b172f2](https://github.com/baiwumm/next-daily-hot/commit/4b172f26ddd8428c72dfb98d73a576ccabe7fb1f))
+* 新增上游源健康巡检 workflow，异常自动开 issue 跟踪 ([d8299a8](https://github.com/baiwumm/next-daily-hot/commit/d8299a81a2bed8585457c5fd5e9cf9c423ad9dd3))
+
 ## [3.10.1](https://github.com/baiwumm/next-daily-hot/compare/v3.10.0...v3.10.1) (2026-09-15)
 
 ### ✨ Features | 新功能
