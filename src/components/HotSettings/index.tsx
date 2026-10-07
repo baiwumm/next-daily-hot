@@ -9,7 +9,18 @@
 import type { HotValue } from '@/enums'
 
 import { BucketPaint, Gear, Grip } from '@gravity-ui/icons'
-import { AlertDialog, Button, Checkbox, CheckboxGroup, cn, Label, Modal, toast, Tooltip } from '@heroui/react'
+import {
+  AlertDialog,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  cn,
+  Label,
+  Modal,
+  toast,
+  Tooltip,
+  Typography,
+} from '@heroui/react'
 import Image from 'next/image'
 import { useEffect, useMemo } from 'react'
 
@@ -113,7 +124,7 @@ export default function HotSettings() {
             <Modal.Body>
               <CheckboxGroup name="hot-items" value={visibleValues} onChange={onChange}>
                 <Sortable
-                  className="grid grid-cols-3 gap-3"
+                  className="grid grid-cols-2 gap-3"
                   getItemValue={(item) => item}
                   strategy="grid"
                   value={safeSortItems}
@@ -121,35 +132,44 @@ export default function HotSettings() {
                 >
                   {safeSortItems.map((value) => {
                     const raw = HOT_ITEMS.raw(value)
+                    // category 挂在分组配置上而非 raw 子项，从 items 索引取
+                    const category = HOT_ITEMS.items.find((item) => item.value === value)?.category
 
-                    if (!raw) return null
+                    if (!raw || !category) return null
 
                     return (
                       <SortableItem key={value} value={value}>
                         <Checkbox
                           className={cn(
-                            'group mt-0 gap-2 border border-default bg-surface px-2 py-3 transition-all rounded-xl',
+                            'group mt-0 border border-default bg-surface px-3 py-2.5 transition-all rounded-xl',
                             'data-[selected=true]:bg-accent-soft hover:bg-accent-soft',
                           )}
                           value={value}
                         >
-                          <Checkbox.Content className="flex flex-row items-center justify-between gap-1 w-full h-full">
-                            <div className="flex items-center gap-1 min-w-0">
-                              <SortableItemHandle className="text-muted-foreground shrink-0">
-                                <Grip width={16} />
-                              </SortableItemHandle>
-                              <Image
-                                alt={raw.label}
-                                className="rounded-md shrink-0"
-                                height={16}
-                                src={`/images/${value}.svg`}
-                                width={16}
-                              />
-                              <Label className="flex-1 text-xs truncate">{raw.label}</Label>
+                          <Checkbox.Content className="flex items-center gap-2.5 w-full">
+                            <SortableItemHandle className="text-muted-foreground shrink-0">
+                              <Grip width={14} />
+                            </SortableItemHandle>
+                            <Image
+                              alt={raw.label}
+                              className="rounded shrink-0"
+                              height={20}
+                              src={`/images/${value}.svg`}
+                              width={20}
+                            />
+                            {/* 分类标签：仅作归属提示，不参与拖拽排序（全局排序语义保持不变）；
+                                Checkbox 是字段组件，内部 Text 必须声明 slot，否则 RAC 抛错 */}
+                            <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                              <div className="flex items-center justify-between gap-2">
+                                <Label className="text-sm truncate">{raw.label}</Label>
+                                <Checkbox.Control className="size-4 shrink-0">
+                                  <Checkbox.Indicator />
+                                </Checkbox.Control>
+                              </div>
+                              <Typography className="truncate" color="muted" slot="description" type="body-sm">
+                                {category}
+                              </Typography>
                             </div>
-                            <Checkbox.Control className="size-4 shrink-0">
-                              <Checkbox.Indicator />
-                            </Checkbox.Control>
                           </Checkbox.Content>
                         </Checkbox>
                       </SortableItem>

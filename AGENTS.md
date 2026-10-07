@@ -124,11 +124,11 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
   → 客户端 useRequest → HotCard     （useInView 进入视口才请求；手动刷新 URL 加时间戳绕过 CDN）
 ```
 
-- **新增一个榜单 = 两步**：① `src/enums/index.tsx` 的 `hotItemsConfig` 加一项（`value` 即 API 路由目录名，两处必须一致）；② 新建 `src/app/api/<value>/route.ts`，抓取上游并映射为 `HotListItem[]`。特殊算法放 `src/lib/`。
+- **新增一个榜单 = 两步**：① `src/enums/index.tsx` 的 `hotItemsConfig` 在对应分类的 `children` 里加一行（`value` 即 API 路由目录名，两处必须一致，开发期有重复 value 断言）；② 新建 `src/app/api/<value>/route.ts`，抓取上游并映射为 `HotListItem[]`。特殊算法放 `src/lib/`。
 - **缓存三层同源**：服务端 fetch `revalidate` = CDN `s-maxage` = 客户端刷新冷却，全部取自 `API_CACHE_SECONDS`（`src/enums/response.ts`）；改动缓存策略必须三处一起评估。
 - **响应契约**：`IResponse { code, msg, data?, timestamp }` 固定；成功 `code=200`（可缓存），失败 `code=500` 且 `no-store`（避免错误被缓存）。前端依赖 `timestamp` 显示更新时间，勿改语义。
 - **客户端状态**：`useAppStore`（zustand persist）。改持久化结构必须递增 `version` 并补 `migrate`；`now/tick` 心跳是派生基准，不持久化。相对时间与刷新冷却共用同一时钟保证自洽。
-- **动画约束**：首页卡片网格的 FLIP 动画要求父子两层都是 `motion.div` 且开启 `layout`（见 `page.tsx` 注释），改动布局结构时保持该链路。
+- **动画约束**：首页卡片网格的 FLIP 重排动画由**子级** `motion.div` 的 `layout` 承担；父级 grid 容器只承载 variants，**不要开启 `layout`**——父级变换补偿会在网格重排时叠加错位（见 `page.tsx` 注释）。
 - **SEO**：`layout.tsx` metadata 的 keywords 由 `HOT_ITEMS` 派生；sitemap / robots / manifest / opengraph-image 均为 App Router 文件约定。
 
 ## 注意事项
