@@ -30,6 +30,7 @@ const hotItemsConfig = [
       { value: 'huxiu', label: '虎嗅', tip: '最新资讯' },
       { value: 'ifanr', label: '爱范儿', tip: '快讯' },
       { value: 'ithome', label: 'IT之家', tip: '热榜' },
+      { value: 'dongchedi', label: '懂车帝', tip: '今日要闻' },
     ],
   },
   {
@@ -50,6 +51,7 @@ const hotItemsConfig = [
       { value: 'kuaishou', label: '快手', tip: '热榜' },
       { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
       { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
+      { value: 'lol', label: '英雄联盟', tip: '更新公告' },
     ],
   },
   {
@@ -58,14 +60,6 @@ const hotItemsConfig = [
       { value: 'weread', label: '微信读书', tip: '飙升榜' },
       { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
     ],
-  },
-  {
-    category: '游戏',
-    children: [{ value: 'lol', label: '英雄联盟', tip: '更新公告' }],
-  },
-  {
-    category: '汽车',
-    children: [{ value: 'dongchedi', label: '懂车帝', tip: '今日要闻' }],
   },
 ] as const
 
@@ -134,4 +128,27 @@ export const HOT_ITEMS = {
   values: hotValues,
   /** 根据 value 获取原始配置 */
   raw: (value: HotValue): HotRaw | undefined => hotRawMap[value],
+}
+
+/**
+ * @description: 用户排序后的分类清单（配置新增的分类自动补尾，已下线的分类自动剔除）
+ */
+export const getOrderedCategories = (categoryOrder: readonly HotCategory[]): HotCategory[] => {
+  const valid = categoryOrder.filter((category) => HOT_CATEGORY_LIST.includes(category))
+  const known = new Set(valid)
+  const missing = HOT_CATEGORY_LIST.filter((category) => !known.has(category))
+
+  return [...valid, ...missing]
+}
+
+/**
+ * @description: 某分类在用户排序中的平台值（保留用户拖拽顺序，配置新增的平台按声明顺序补尾）
+ */
+export const getCategoryValues = (sortItems: readonly HotValue[], category: HotCategory): HotValue[] => {
+  const members = CATEGORY_GROUPS.find((group) => group.category === category)?.values ?? []
+  const memberSet = new Set(members)
+  const userOrder = sortItems.filter((value) => memberSet.has(value))
+  const missing = members.filter((value) => !userOrder.includes(value))
+
+  return [...userOrder, ...missing]
 }

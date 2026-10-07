@@ -12,7 +12,7 @@ import type { HotCategory, HotValue } from '@/enums'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { HOT_ITEMS } from '@/enums'
+import { HOT_CATEGORY_LIST, HOT_ITEMS } from '@/enums'
 import { fromNow } from '@/lib/utils'
 
 /** 排名趋势快照：某平台上次抓取时的条目排名 */
@@ -39,13 +39,13 @@ interface AppState {
   hiddenItems: HotValue[]
   setHiddenItems: (items: HotValue[]) => void
 
-  // 热榜排序
+  // 热榜排序（扁平展示顺序：分类块连续，块内为用户拖拽顺序；派生关系见 getOrderedCategories / getCategoryValues）
   sortItems: HotValue[]
   setSortItems: (items: HotValue[]) => void
 
-  /** 当前激活的分类（'all' 为全部）；分类过滤与显隐/排序正交叠加 */
-  activeCategory: HotCategory | 'all'
-  setActiveCategory: (category: HotCategory | 'all') => void
+  /** 分类顺序（设置里 ↑/↓ 调整；首页分节与锚点指示器共用） */
+  categoryOrder: HotCategory[]
+  setCategoryOrder: (items: HotCategory[]) => void
 
   /** 排名趋势快照（持久化）：上次抓取时各平台条目的标题 → 排名，作为趋势对比基准 */
   rankSnapshots: Partial<Record<HotValue, RankSnapshot>>
@@ -100,10 +100,10 @@ export const useAppStore = create(
         set({ sortItems: items })
       },
 
-      /* ================= 分类过滤 ================= */
-      activeCategory: 'all',
-      setActiveCategory: (category) => {
-        set({ activeCategory: category })
+      /* ================= 分类顺序 ================= */
+      categoryOrder: [...HOT_CATEGORY_LIST],
+      setCategoryOrder: (items) => {
+        set({ categoryOrder: items })
       },
 
       /* ================= 排名趋势 ================= */
@@ -140,7 +140,7 @@ export const useAppStore = create(
     }),
     {
       name: 'app-store', // 用于存储在 localStorage 中的键名
-      version: 3, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
+      version: 4, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
       migrate: (persistedState) => {
         // 兼容旧数据 / 版本升级：缺失字段回退到默认值
@@ -152,7 +152,7 @@ export const useAppStore = create(
           hiddenItems: state.hiddenItems ?? [],
           sortItems: state.sortItems ?? HOT_ITEMS.values,
           rankSnapshots: state.rankSnapshots ?? {},
-          activeCategory: state.activeCategory ?? 'all',
+          categoryOrder: state.categoryOrder ?? [...HOT_CATEGORY_LIST],
         } as AppState
       },
       // ⚠️ now / rankTrends / searchJump 是纯派生用的，不需要持久化
@@ -162,7 +162,7 @@ export const useAppStore = create(
           hiddenItems: state.hiddenItems,
           sortItems: state.sortItems,
           rankSnapshots: state.rankSnapshots,
-          activeCategory: state.activeCategory,
+          categoryOrder: state.categoryOrder,
         }) as any,
     },
   ),

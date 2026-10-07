@@ -1,19 +1,20 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 15:55:09
- * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-01-14 15:17:15
- * @Description: 首页
+ * @LastEditTime: 2026-10-07 23:30:00
+ * @Description: 首页（按分类分节纵向渲染，右侧锚点指示器导航）
  */
 'use client'
 
-import { Button, Card, Description, ScrollShadow, Separator, Skeleton } from '@heroui/react'
-import { AnimatePresence, motion } from 'motion/react'
+import { Card, Separator, Skeleton } from '@heroui/react'
+import { motion } from 'motion/react'
 import { useEffect, useMemo, useState } from 'react'
 
+import BlurFade from '@/components/BlurFade'
+import CategoryIndicator from '@/components/CategoryIndicator'
 import HotCard from '@/components/HotCard'
 import SkeletonCard from '@/components/SkeletonCard'
-import { CATEGORY_GROUPS, HOT_ITEMS } from '@/enums'
+import { getCategoryValues, getOrderedCategories, HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
 
 const gridClassName = 'grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]'
@@ -22,24 +23,20 @@ export default function Home() {
   const [mounted, setMounted] = useState(false)
   const hiddenItems = useAppStore((state) => state.hiddenItems)
   const sortItems = useAppStore((state) => state.sortItems)
-  const activeCategory = useAppStore((state) => state.activeCategory)
-  const setActiveCategory = useAppStore((state) => state.setActiveCategory)
+  const categoryOrder = useAppStore((state) => state.categoryOrder)
 
-  // 分类 → 平台值集合（'all' 时为 null 表示不过滤）
-  const categorySet = useMemo(() => {
-    if (activeCategory === 'all') return null
-
-    const group = CATEGORY_GROUPS.find((group) => group.category === activeCategory)
-
-    return group ? new Set(group.values) : null
-  }, [activeCategory])
-
-  // 过滤链：拖拽排序 → 排除设置里隐藏的 → 按分类过滤（三者正交叠加）
-  const visibleItems = useMemo(() => {
+  // 分节数据：分类顺序（用户排序）× 块内平台顺序（用户排序）× 排除设置里隐藏的平台；
+  // 读取时归一化——配置新增的分类/平台自动补尾，下线的自动剔除，全部隐藏的分节不渲染
+  const sections = useMemo(() => {
     const hiddenSet = new Set(hiddenItems ?? [])
 
-    return sortItems.filter((value) => !hiddenSet.has(value) && (!categorySet || categorySet.has(value)))
-  }, [hiddenItems, sortItems, categorySet])
+    return getOrderedCategories(categoryOrder)
+      .map((category) => ({
+        category,
+        values: getCategoryValues(sortItems, category).filter((value) => !hiddenSet.has(value)),
+      }))
+      .filter(({ values }) => values.length > 0)
+  }, [categoryOrder, sortItems, hiddenItems])
 
   useEffect(() => {
     const timer = setTimeout(setMounted, 0, true)
@@ -76,72 +73,44 @@ export default function Home() {
 
   return (
     <>
-      {/* 分类过滤：单选 Chip 行（ScrollShadow 横向滚动），切换时下方网格走 FLIP 重排动画 */}
-      <div aria-label="卡片分类过滤" role="group">
-        <ScrollShadow hideScrollBar className="flex gap-2 mb-4" orientation="horizontal">
-          {[{ category: 'all' as const, label: '全部' }, ...CATEGORY_GROUPS].map(({ category }) => (
-            <Button
-              key={category}
-              aria-pressed={activeCategory === category}
-              className="shrink-0"
-              size="sm"
-              variant={activeCategory === category ? 'primary' : 'ghost'}
-              onPress={() => setActiveCategory(category)}
-            >
-              {category === 'all' ? '全部' : category}
-            </Button>
-          ))}
-        </ScrollShadow>
+      <div className="space-y-10">
+        {sections.map(({ category, values }) => (
+          // layout：设置里 ↑/↓ 调整分类顺序时，分节交换带 FLIP 平滑动画（与设置弹窗一致）
+          // scroll-mt：锚点定位时给 sticky Header 让位；id 供 CategoryIndicator scroll-spy 与跳转
+          <BlurFade
+            key={category}
+            layout
+            className="flex flex-col gap-3 scroll-mt-24"
+            id={`cat-${category}`}
+            transition={{ duration: 0.3, ease: 'easeOut', layout: { type: 'spring', stiffness: 300, damping: 34 } }}
+          >
+            <h2 className="text-lg font-black">{category}</h2>
+            <div className={gridClassName}>
+              {values.map((value, index) => {
+                const raw = HOT_ITEMS.raw(value)
+
+                if (!raw) return null
+
+                return (
+                  // layout="position"：设置里平台排序/显隐后，卡片 FLIP 滑动到新位置（只动画位置，避免 scale 拉伸卡内内容）
+                  <motion.div
+                    key={value}
+                    layout="position"
+                    transition={{ layout: { type: 'spring', stiffness: 350, damping: 35 } }}
+                  >
+                    {/* 每张卡独立 BlurFade（自身 useInView once 触发淡入，与兄弟状态解耦）：
+                        不用父级 stagger variants——显隐/重排后新插入的卡可能卡在 hidden 态，产生空白占位 */}
+                    <BlurFade className="h-full" delay={Math.min(index * 0.04, 0.24)}>
+                      <HotCard {...raw} />
+                    </BlurFade>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </BlurFade>
+        ))}
       </div>
-      {visibleItems.length ? (
-        // 👇 父容器只用 motion.div 承载 variants；不要开启 layout——
-        // 网格重排时父级 layout 的变换补偿会叠加在子级 FLIP 动画上，造成卡片错位/整片空白
-        <motion.div
-          animate="visible"
-          className={gridClassName}
-          initial="hidden"
-          variants={{ visible: { transition: { staggerChildren: 0.02 } } }} // ✅ 卡片依次交错浮现
-        >
-          {/* popLayout：退场卡片立即脱离文档流（仍播放退场动画），连续快速切换分类不会互相占位导致整片空白 */}
-          <AnimatePresence mode="popLayout">
-            {visibleItems.map((value) => {
-              const raw = HOT_ITEMS.raw(value)
-
-              if (!raw) return null
-
-              return (
-                // 👇 每个子项也必须是 motion.div + layout
-                <motion.div
-                  key={raw.value}
-                  layout // ✅ 关键：让位置变化可动画
-                  exit={{
-                    opacity: 0,
-                    filter: 'blur(4px)',
-                    y: 20,
-                    transition: { duration: 0.3, ease: 'easeOut' },
-                  }}
-                  transition={{ layout: { type: 'spring', stiffness: 300, damping: 30 } }} // ✅ 位置变化用 spring，更跟手
-                  variants={{
-                    hidden: { opacity: 0, filter: 'blur(4px)', y: 20 },
-                    visible: {
-                      opacity: 1,
-                      filter: 'blur(0px)',
-                      y: 0,
-                      transition: { duration: 0.4, ease: 'easeOut' },
-                    },
-                  }}
-                >
-                  <HotCard {...raw} />
-                </motion.div>
-              )
-            })}
-          </AnimatePresence>
-        </motion.div>
-      ) : (
-        <Description className="flex h-40 justify-center items-center text-center">
-          该分类下没有显示中的卡片，可在右上角设置中开启对应热榜 🤔
-        </Description>
-      )}
+      <CategoryIndicator categories={sections.map(({ category }) => category)} />
     </>
   )
 }

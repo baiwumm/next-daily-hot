@@ -20,6 +20,7 @@ import BlurFade from '@/components/BlurFade'
 import SkeletonCard from '@/components/SkeletonCard'
 import { API_CACHE_SECONDS, RESPONSE } from '@/enums/response'
 import { useRequest } from '@/hooks/use-request'
+import { smoothScrollTo } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 
 function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
@@ -113,9 +114,13 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   const [highlightIndex, setHighlightIndex] = useState<number | null>(null)
 
   useEffect(() => {
-    if (searchJump?.value !== value) return
+    if (searchJump?.value !== value || !ref.current) return
 
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    // 滚动到卡片垂直居中的位置（smoothScrollTo 为 rAF 自绘动画，跨环境行为一致）
+    const rect = ref.current.getBoundingClientRect()
+    const targetTop = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2
+
+    smoothScrollTo(targetTop)
   }, [searchJump, value])
 
   useEffect(() => {

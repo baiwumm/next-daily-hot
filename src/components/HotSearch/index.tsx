@@ -9,7 +9,7 @@ import { Magnifier } from '@gravity-ui/icons'
 import { Button, Chip, Modal, SearchField, Tooltip, Typography, useOverlayState } from '@heroui/react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 
-import { CATEGORY_GROUPS, HOT_ITEMS } from '@/enums'
+import { HOT_ITEMS } from '@/enums'
 import { formatNumber } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 
@@ -36,20 +36,13 @@ function HotSearch() {
   const overlayState = useOverlayState()
 
   const hiddenItems = useAppStore((state) => state.hiddenItems)
-  const activeCategory = useAppStore((state) => state.activeCategory)
   const setSearchJump = useAppStore((state) => state.setSearchJump)
 
-  // 参与搜索的平台（与首页网格同一条过滤语义：显隐 + 当前分类叠加，保证搜索结果可跳转）
-  const visibleValues = useMemo(() => {
-    const categoryValues =
-      activeCategory === 'all'
-        ? null
-        : new Set(CATEGORY_GROUPS.find((group) => group.category === activeCategory)?.values)
-
-    return HOT_ITEMS.items.filter(
-      (item) => !hiddenItems.includes(item.value) && (!categoryValues || categoryValues.has(item.value)),
-    )
-  }, [hiddenItems, activeCategory])
+  // 参与搜索的平台（尊重用户隐藏设置；分节布局下所有可见平台均可跳转）
+  const visibleValues = useMemo(
+    () => HOT_ITEMS.items.filter((item) => !hiddenItems.includes(item.value)),
+    [hiddenItems],
+  )
 
   // Ctrl/⌘+K 全局唤起（浏览器默认的搜索聚焦行为一并拦截）
   useEffect(() => {
@@ -276,8 +269,7 @@ function HotSearch() {
                 ↑↓ 选择 · Enter 跳转 · Esc 关闭
               </Typography>
               <Typography className="whitespace-nowrap" color="muted" type="body-sm">
-                {activeCategory === 'all' ? '' : `「${activeCategory}」`}已索引{' '}
-                {visibleValues.filter((item) => index[item.value]).length}/{visibleValues.length} 平台
+                已索引 {visibleValues.filter((item) => index[item.value]).length}/{visibleValues.length} 平台
               </Typography>
             </Modal.Footer>
           </Modal.Dialog>

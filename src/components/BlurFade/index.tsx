@@ -8,6 +8,8 @@ import { useRef } from 'react'
 interface BlurFadeProps extends MotionProps {
   children: React.ReactNode
   className?: string
+  /** 锚点 id（透传到根元素，供 scroll-spy / hash 定位） */
+  id?: string
   variant?: {
     hidden: { y: number }
     visible: { y: number }
@@ -26,6 +28,7 @@ type MarginType = UseInViewOptions['margin']
 export default function BlurFade({
   children,
   className,
+  id,
   variant,
   duration = 0.3,
   delay = 0,
@@ -61,6 +64,7 @@ export default function BlurFade({
         animate={isInView ? 'visible' : 'hidden'}
         className={className}
         exit="hidden"
+        id={id}
         initial="hidden"
         transition={{
           delay,

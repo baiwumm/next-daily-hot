@@ -109,3 +109,39 @@ export function formatNumber(value: number | string): number | string {
 
   return COMPACT_NUMBER_FORMAT.format(num)
 }
+
+/**
+ * @description: 平滑滚动到指定纵向位置（rAF 自绘动画）
+ * 不用原生 scrollIntoView/scrollTo 的 smooth：部分环境会被布局抖动打断且行为不可控，
+ * rAF 自绘在所有环境行为一致；系统开启减弱动态效果时直接跳转
+ * @param top 目标纵向位置（会自动钳制到文档范围）
+ */
+export function smoothScrollTo(top: number): void {
+  const clampedTop = Math.max(0, Math.min(top, document.documentElement.scrollHeight - window.innerHeight))
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.scrollTo(0, clampedTop)
+
+    return
+  }
+
+  const start = window.scrollY
+  const distance = clampedTop - start
+
+  // 距离过小无需动画
+  if (Math.abs(distance) < 2) return
+
+  const duration = Math.min(600, Math.max(300, Math.abs(distance) * 0.25))
+  const startTime = performance.now()
+  const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3)
+
+  const step = (now: number) => {
+    const progress = Math.min(1, (now - startTime) / duration)
+
+    window.scrollTo(0, start + distance * easeOutCubic(progress))
+
+    if (progress < 1) requestAnimationFrame(step)
+  }
+
+  requestAnimationFrame(step)
+}
