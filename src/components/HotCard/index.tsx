@@ -12,7 +12,7 @@ import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui
 import { Button, Card, Chip, Description, Label, ScrollShadow, Separator, Spinner, Tooltip } from '@heroui/react'
 import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import HotListVirtual from './HotListVirtual'
 
@@ -105,6 +105,35 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
     recordRankSnapshot(value, titles.join('\n'), ranks)
   }, [data, recordRankSnapshot, value])
 
+  // 消费搜索跳转（两段式）：先滚动页面把卡片带入视口（未加载的卡片借此触发 useInView 拉数据），
+  // 数据到达后再定位卡内条目并高亮。两段缺一不可：合并成一个 effect 会造成
+  // 「没数据 → 不滚动 → 永远没数据」的死锁。
+  const searchJump = useAppStore((state) => state.searchJump)
+  const setSearchJump = useAppStore((state) => state.setSearchJump)
+  const [highlightIndex, setHighlightIndex] = useState<number | null>(null)
+
+  useEffect(() => {
+    if (searchJump?.value !== value) return
+
+    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [searchJump, value])
+
+  useEffect(() => {
+    if (searchJump?.value !== value || !data?.length) return
+
+    setHighlightIndex(searchJump.index >= 0 ? searchJump.index : null)
+    setSearchJump(null)
+  }, [searchJump, data, value, setSearchJump])
+
+  // 高亮短暂保留后清除，避免常亮干扰
+  useEffect(() => {
+    if (highlightIndex === null) return
+
+    const timer = setTimeout(() => setHighlightIndex(null), 3200)
+
+    return () => clearTimeout(timer)
+  }, [highlightIndex])
+
   useEffect(() => {
     if (isInView) {
       run()
@@ -158,7 +187,14 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
             </Description>
           ) : (
             <BlurFade className="h-full pl-3">
-              <HotListVirtual data={data} prefix={prefix} suffix={suffix} trends={trends} value={value} />
+              <HotListVirtual
+                data={data}
+                highlight={highlightIndex}
+                prefix={prefix}
+                suffix={suffix}
+                trends={trends}
+                value={value}
+              />
             </BlurFade>
           )}
         </ScrollShadow>

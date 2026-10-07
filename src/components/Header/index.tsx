@@ -11,6 +11,7 @@ import { Button, Description, Tooltip } from '@heroui/react'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
+import HotSearch from '@/components/HotSearch'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import TimeAndLunar from '@/components/TimeAndLunar'
 import pkg from '#/package.json'
@@ -32,6 +33,9 @@ export default function Header() {
       </div>
       <TimeAndLunar />
       <div className="flex gap-1 justify-self-end">
+        {/* 全局搜索（Ctrl/⌘+K，触发按钮与 Modal 一体在 HotSearch 内部） */}
+        <HotSearch />
+
         {/* 热榜设置（Tooltip 内置于 HotSettings，只包裹触发按钮；若在此包住整个 Modal，
             弹窗经 portal 渲染后仍在 Tooltip 触发元素之下，弹窗内 hover 会误触发 Tooltip） */}
         <HotSettings />

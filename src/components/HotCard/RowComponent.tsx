@@ -21,6 +21,8 @@ interface RowData {
   value: HotValue
   /** 排名趋势：标题 → 名次变化（正数上升 / 负数下降 / 0 持平）；null 表示无对比基准 */
   trends?: Record<string, number> | null
+  /** 搜索跳转高亮的行号（仅命中行收到非 null 值，配合行级 memo 避免整卡重渲染） */
+  highlightIndex?: number | null
   prefix?: ReactNode
   suffix?: ReactNode
 }
@@ -36,7 +38,15 @@ function HotDisplay({ value, prefix, suffix }: { value: string | number; prefix?
 }
 
 // Vercel 最佳实践：虚拟列表行组件用 memo，避免滚动/数据更新时无关行重渲染
-const RowComponent = memo(function RowComponent({ index, data, value, trends, prefix, suffix }: RowData) {
+const RowComponent = memo(function RowComponent({
+  index,
+  data,
+  value,
+  trends,
+  highlightIndex,
+  prefix,
+  suffix,
+}: RowData) {
   const item = data[index]
   const { label, title } = item
 
@@ -77,7 +87,11 @@ const RowComponent = memo(function RowComponent({ index, data, value, trends, pr
     ) : null
 
   return (
-    <div className="flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default">
+    <div
+      className={`flex group justify-between items-center gap-1 min-w-0 py-1.5 w-full border-b border-default${
+        highlightIndex === index ? ' row-flash' : ''
+      }`}
+    >
       <div className="flex items-center gap-2 min-w-0 flex-1">
         <div className="text-xs size-6 rounded shrink-0 flex items-center justify-center" style={colorStyle}>
           {displayText}

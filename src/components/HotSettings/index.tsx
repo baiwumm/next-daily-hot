@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 14:00:17
+ * @LastEditTime: 2026-10-07 18:14:28
  * @Description: 热榜显示
  */
 'use client'
@@ -87,7 +87,7 @@ export default function HotSettings() {
           但在 React 树中仍是 Tooltip 触发元素的后代，会导致弹窗内 hover 误触发 Tooltip */}
       <Tooltip delay={0}>
         <Tooltip.Trigger aria-label="热榜设置">
-          <Button isIconOnly aria-label="热点榜单设置" size="sm" variant="ghost">
+          <Button isIconOnly aria-label="热榜设置" size="sm" variant="ghost">
             <BucketPaint />
           </Button>
         </Tooltip.Trigger>

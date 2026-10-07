@@ -49,6 +49,10 @@ interface AppState {
   rankTrends: Partial<Record<HotValue, Record<string, number> | null>>
   /** 记录一次抓取排名并派生趋势：与上次数据指纹相同则幂等跳过（StrictMode 双跑 / 缓存命中均安全） */
   recordRankSnapshot: (value: HotValue, hash: string, ranks: Record<string, number>) => void
+
+  /** 搜索跳转信号（瞬态）：index 为 -1 表示只定位到卡片；token 递增以支持重复跳转同一目标 */
+  searchJump: { value: HotValue; index: number; token: number } | null
+  setSearchJump: (jump: AppState['searchJump']) => void
 }
 
 export const useAppStore = create(
@@ -116,6 +120,12 @@ export const useAppStore = create(
           rankSnapshots: { ...state.rankSnapshots, [value]: { hash, ranks } },
           rankTrends: { ...state.rankTrends, [value]: current ? deltas : null },
         }))
+      },
+
+      /* ================= 搜索跳转 ================= */
+      searchJump: null,
+      setSearchJump: (jump) => {
+        set({ searchJump: jump })
       },
     }),
     {

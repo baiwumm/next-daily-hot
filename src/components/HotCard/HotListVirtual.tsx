@@ -14,12 +14,14 @@ export default function HotListVirtual({
   prefix,
   suffix,
   trends,
+  highlight,
 }: {
   data: HotListItem[]
   value: HotValue
   prefix?: React.ReactNode
   suffix?: React.ReactNode
   trends?: Record<string, number> | null
+  highlight?: number | null
 }) {
   const parentRef = useRef<HTMLDivElement>(null)
 
@@ -29,6 +31,13 @@ export default function HotListVirtual({
     estimateSize: () => 41, // 👈 初始估算，measureElement 会按实际高度校准
     overscan: 8,
   })
+
+  // 搜索跳转：把目标行滚入虚拟列表可视区（数据就绪后 highlight 才会非空，时序上安全）
+  useEffect(() => {
+    if (highlight != null && highlight >= 0) {
+      rowVirtualizer.scrollToIndex(highlight, { align: 'center' })
+    }
+  }, [highlight, rowVirtualizer])
 
   // 是否还能向下滚动（用于显示"可滚动"提示）
   const [canScrollDown, setCanScrollDown] = useState(false)
@@ -75,7 +84,15 @@ export default function HotListVirtual({
                 data-index={virtualRow.index}
                 style={{ transform: `translateY(${virtualRow.start}px)` }}
               >
-                <RowComponent data={data} index={index} prefix={prefix} suffix={suffix} trends={trends} value={value} />
+                <RowComponent
+                  data={data}
+                  highlightIndex={highlight === index ? highlight : null}
+                  index={index}
+                  prefix={prefix}
+                  suffix={suffix}
+                  trends={trends}
+                  value={value}
+                />
               </div>
             )
           })}

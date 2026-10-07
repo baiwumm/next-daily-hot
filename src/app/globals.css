@@ -115,3 +115,28 @@
     scrollbar-color: var(--scrollbar) transparent;
   }
 }
+
+/* 搜索跳转定位：标题文字闪烁品牌色后渐回前景色，不填充背景（避免行内左右留白不对称） */
+@keyframes title-flash {
+  0% {
+    color: var(--accent);
+  }
+  60% {
+    color: var(--accent);
+  }
+  100% {
+    color: var(--foreground);
+  }
+}
+
+.row-flash .truncate {
+  animation: title-flash 3s ease-out;
+}
+
+/* 减弱动态效果偏好下不做动画，保留静态品牌色标题作为定位提示 */
+@media (prefers-reduced-motion: reduce) {
+  .row-flash .truncate {
+    animation: none;
+    color: var(--accent);
+  }
+}
