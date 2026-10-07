@@ -24,9 +24,9 @@
 | 请求 | 服务端原生 `fetch`（经 `src/lib/request.ts` 封装）；客户端自研 `useRequest`（`src/hooks/use-request.ts`，**无** axios/SWR/ahooks） |
 | 解析/工具 | cheerio（HTML 解析）、crypto-js（微信读书签名）、lunar-typescript（农历）、@tanstack/react-virtual（长列表虚拟滚动）、@dnd-kit（卡片拖拽排序） |
 | 统计 | @vercel/analytics + 百度统计 + Google Analytics + Clarity（`src/components/Analytics`） |
-| 工程 | pnpm、ESLint 10（react / react-hooks / jsx-a11y / typescript-eslint / import 插件组合）+ Prettier 3（经 eslint-plugin-prettier 接入）、release-it 发版 |
+| 工程 | pnpm、ESLint 10（react / react-hooks / jsx-a11y / typescript-eslint / import 插件组合）+ Prettier 3（经 eslint-plugin-prettier 接入）、release-it 发版（GitHub Actions 一键发版） |
 
-无测试框架、无 CI（提交前自查 `pnpm lint` + `pnpm build`）。
+无测试框架；发版 workflow（`.github/workflows/release.yml`）内置 lint + build 门禁，但无 PR 级 CI——提交前仍需自查 `pnpm lint` + `pnpm build`。
 
 ## 目录结构
 
@@ -54,7 +54,9 @@ src/
 ├── styles/fonts.css        # Maple Mono CN 自托管 @font-face（字体文件在 public/fonts/）
 └── types/index.ts          # HotListConfig / HotListItem / IResponse 共享类型
 .agents/skills/             # Agent Skills（见「AI Agent 代码生成规范」）
+.github/workflows/          # Release 一键发版 workflow（workflow_dispatch）
 .heroui-docs/               # HeroUI 本地文档（工具生成，gitignore）
+scripts/                    # Node 工具脚本（release-it 钩子等）
 ```
 
 ## 常用命令
@@ -66,11 +68,13 @@ pnpm build          # 生产构建（构建依赖 .env，见「环境与依赖�
 pnpm start          # 运行生产构建
 pnpm lint           # ESLint 检查（即格式化工具，无独立 format 命令）
 pnpm lint:fix       # 自动修复
-pnpm release        # release-it 发版：版本号 + CHANGELOG.md + GitHub Release
+pnpm release        # 本地发版（备用，需本地 GITHUB_TOKEN）；常规发版走 Actions 的 Release workflow
 npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 ```
 
-- 发版由维护者执行 `pnpm release`，自动生成 `chore: Release v${version}` 提交与 tag。
+- **常规发版**走 `.github/workflows/release.yml`（workflow_dispatch，在 main 上触发，patch / minor / major 或自定义版本号）：CI 先跑 `pnpm lint` + `pnpm build` 预检，再由 release-it 一次性完成版本号、CHANGELOG.md、`chore: Release v${version}` 提交、tag 与 GitHub Release；也可用 `gh workflow run release.yml -f bump=minor` 触发。
+- **tag 统一使用 `v` 前缀**（`.release-it.json` 的 `git.tagName` 显式锁定）；历史无前缀 tag 用 `scripts/migrate-tags-v-prefix.mjs` 一次性迁移（默认 dry-run 预览，`--apply` 执行），脚本会同步重指向 GitHub Release 并修正 CHANGELOG 的 compare 链接。
+- 本地 `pnpm release` 为备用方式，与 CI 共用 `.release-it.json`（含 `requireBranch: main` 限制）。
 - `pnpm dev` / `pnpm build` 无需任何上游密钥；上游接口不可达只影响榜单数据，不阻塞构建。
 
 ## 开发约定
@@ -134,7 +138,7 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 - `.heroui-docs/`、`next-env.d.ts`、`.next/` 为工具/构建生成，勿手工编辑、勿提交。
 - `src/app/page.tsx` 用 `mounted` 状态先渲染骨架再挂载内容，规避 SSR hydration 不匹配；客户端含随机性/读 localStorage 的 UI 需沿用此模式。
 - 图片：`next.config.ts` 中 `images.unoptimized: true`（禁用 Next 图片优化），外链封面图直接原图输出。
-- 全站中文注释与文案；README 徽章版本号随发版手动同步（已知不同步，如 Next 16.0 vs 实际 16.3.0）。
+- 全站中文注释与文案；README 的 Next 徽章由 release-it `after:bump` 钩子（`scripts/sync-readme-badges.mjs`）按 package.json 中固定的 Next 版本自动同步，无需手工维护。
 
 ## 禁止事项
 

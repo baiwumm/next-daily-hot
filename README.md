@@ -3,7 +3,7 @@
   <h1>今日热榜</h1>
   <p align="center">汇聚全网热点资讯，实时掌握热门趋势</p>
   <p align="center">
-    <img src="https://img.shields.io/badge/Next-16.0-black?style=flat&logo=Next.js" alt="Next.js">
+    <img src="https://img.shields.io/badge/Next-16.3.4-black?style=flat&logo=Next.js" alt="Next.js">
     <img src="https://img.shields.io/badge/HeroUI-3+-000000?style=flat&logo=HEROui&logoColor=white" alt="HeroUI"/>
     <img src="https://img.shields.io/github/stars/baiwumm/next-daily-hot?style=social" alt="GitHub stars" />
     <img src="https://img.shields.io/github/forks/baiwumm/next-daily-hot?style=social" alt="GitHub forks" />

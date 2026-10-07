@@ -1,0 +1,87 @@
+name: Release
+
+# 一键远程发版（workflow_dispatch，请在 main 上触发）：CI 先跑 lint / build 预检，任一失败即中止、
+# 不产生任何提交；通过后由 release-it 一次性完成 版本号 → CHANGELOG.md → Release 提交 → tag → GitHub Release。
+#
+# 触发方式（二选一）：
+#   · GitHub Actions 页面 → Release → Run workflow：选 patch / minor / major，或直接填自定义版本号；
+#   · gh workflow run release.yml -f bump=minor（自定义版本号用 -f version=v3.12.0）。
+#
+# 设计取舍：
+#   · 版本真源是根 package.json（release-it bump），天然不存在「tag 与 package.json 版本不一致」问题，
+#     因此无需 better-admin 那种 tag 校验步骤；
+#   · tag 自 v3.11.0 起带 v 前缀（.release-it.json 的 git.tagName 显式锁定，不再跟随历史无前缀风格）；
+#   · .env 已提交，build 无需注入密钥；权限仅 contents: write，最小化授权；
+#   · release-it 以 GITHUB_TOKEN 推送提交与 tag 并创建 Release，提交作者为 github-actions[bot]，
+#     由 GITHUB_TOKEN 触发的推送不会连带触发其他 workflow（本仓库也只有这一个 workflow）；
+#   · 发版提交推上 main 后，Vercel 自动跟随部署生产环境。
+#
+# 本地仍可 `pnpm release`（需本地 GITHUB_TOKEN），与 CI 共用 .release-it.json，行为一致。
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 版本类型
+        type: choice
+        required: true
+        default: patch
+        options:
+          - patch
+          - minor
+          - major
+      version:
+        description: 自定义版本号（选填，填写后覆盖版本类型，如 v3.12.0）
+        type: string
+        required: false
+
+permissions:
+  contents: write # release-it 需要推送 Release 提交与 tag，并创建 GitHub Release
+
+concurrency:
+  group: release # 同一时刻只允许一个发版流程排队
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Lint & Build & Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # release-it 需要完整 tag 历史来计算上一版本与 CHANGELOG 区间
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4 # 版本取自 package.json 的 packageManager 字段
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
+
+      - name: Configure git author
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          BUMP: ${{ inputs.bump }}
+          CUSTOM_VERSION: ${{ inputs.version }}
+        run: |
+          INCREMENT="${CUSTOM_VERSION:-$BUMP}"
+          INCREMENT="${INCREMENT#v}" # 容忍 v 前缀写法，release-it 接受纯版本号
+          echo "发版增量：${INCREMENT}"
+          # 不用 `pnpm release -- ...`：pnpm 会把 -- 原样透传给脚本，release-it 会误当成版本参数
+          pnpm exec release-it "$INCREMENT" --ci

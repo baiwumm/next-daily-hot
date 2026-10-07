@@ -24,7 +24,13 @@
     }
   },
   "git": {
-    "commitMessage": "chore: Release v${version}"
+    "commitMessage": "chore: Release v${version}",
+    "requireBranch": "main",
+    "tagName": "v${version}",
+    "tagAnnotation": "Release v${version}"
+  },
+  "hooks": {
+    "after:bump": "node scripts/sync-readme-badges.mjs"
   },
   "github": {
     "release": true,
