@@ -13,11 +13,13 @@ export default function HotListVirtual({
   value,
   prefix,
   suffix,
+  trends,
 }: {
   data: HotListItem[]
   value: HotValue
   prefix?: React.ReactNode
   suffix?: React.ReactNode
+  trends?: Record<string, number> | null
 }) {
   const parentRef = useRef<HTMLDivElement>(null)
 
@@ -73,7 +75,7 @@ export default function HotListVirtual({
                 data-index={virtualRow.index}
                 style={{ transform: `translateY(${virtualRow.start}px)` }}
               >
-                <RowComponent data={data} index={index} prefix={prefix} suffix={suffix} value={value} />
+                <RowComponent data={data} index={index} prefix={prefix} suffix={suffix} trends={trends} value={value} />
               </div>
             )
           })}

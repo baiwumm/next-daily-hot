@@ -83,6 +83,28 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   // error 时也不进入冷却，保证用户能立即重试
   const isCooldown = !error && cooldownMs > 0
 
+  // 排名趋势：数据到达后与上次快照对比。基准是本地持久化的上次数据（跨会话有效），
+  // 首次查看无基准时不显示任何标记；同一份数据重复触发由 store 幂等跳过
+  const recordRankSnapshot = useAppStore((state) => state.recordRankSnapshot)
+  const trends = useAppStore((state) => state.rankTrends[value])
+
+  useEffect(() => {
+    if (!data?.length) return
+
+    // 用标题做匹配 key：部分源的条目 id 按排名生成（如懂车帝 id=序号），跨请求不稳定
+    const ranks: Record<string, number> = {}
+    const titles: string[] = []
+
+    data.forEach((item, idx) => {
+      const key = item.title.trim()
+
+      titles.push(key)
+      ranks[key] = idx + 1
+    })
+
+    recordRankSnapshot(value, titles.join('\n'), ranks)
+  }, [data, recordRankSnapshot, value])
+
   useEffect(() => {
     if (isInView) {
       run()
@@ -136,7 +158,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
             </Description>
           ) : (
             <BlurFade className="h-full pl-3">
-              <HotListVirtual data={data} prefix={prefix} suffix={suffix} value={value} />
+              <HotListVirtual data={data} prefix={prefix} suffix={suffix} trends={trends} value={value} />
             </BlurFade>
           )}
         </ScrollShadow>
