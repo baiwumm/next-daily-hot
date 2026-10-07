@@ -1,0 +1,56 @@
+name: Upstream Health Check
+
+# 上游源定时巡检：在 runner 上构建并启动生产服务，逐个请求本地回源的全部榜单 API。
+# 不直接打线上域名——线上启用 Vercel Security Checkpoint，脚本类客户端会被挑战页拦截（HTTP 429）。
+# 判定：HTTP 200 + code=200 + data 非空数组；异常时创建/更新 tracking issue（label: upstream-health），
+# 全部恢复后自动关闭。巡检结果写 Step Summary，脚本恒以 0 退出，避免失败运行刷红 Actions 历史。
+# 每日 4 次（UTC 0/6/12/18 = 东八区 8/14/20/2 点）；GitHub 定时触发可能有分钟级延迟，属正常。
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write # 维护 upstream-health 跟踪 issue
+  contents: read
+
+concurrency:
+  group: upstream-health-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Build & Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4 # 版本取自 package.json 的 packageManager 字段
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Start server
+        run: |
+          pnpm start &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:3000 > /dev/null && echo "服务就绪（第 ${i} 次探测）" && break
+            sleep 2
+          done
+          curl -sf http://127.0.0.1:3000 > /dev/null || { echo "服务未就绪，终止巡检"; exit 1; }
+
+      - name: Check all sources
+        env:
+          GITHUB_TOKEN: ${{ github.token }} # 供脚本维护跟踪 issue
+          BASE_URL: http://127.0.0.1:3000
+        run: node scripts/health-check.mjs

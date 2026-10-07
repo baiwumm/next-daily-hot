@@ -54,7 +54,7 @@ src/
 ├── styles/fonts.css        # Maple Mono CN 自托管 @font-face（字体文件在 public/fonts/）
 └── types/index.ts          # HotListConfig / HotListItem / IResponse 共享类型
 .agents/skills/             # Agent Skills（见「AI Agent 代码生成规范」）
-.github/workflows/          # Release 一键发版 workflow（workflow_dispatch）
+.github/workflows/          # CI：Release 一键发版（手动触发）+ 上游健康巡检（定时）
 .heroui-docs/               # HeroUI 本地文档（工具生成，gitignore）
 scripts/                    # Node 工具脚本（release-it 钩子等）
 ```
@@ -138,6 +138,7 @@ npx tsc --noEmit    # 类型检查（无独立 typecheck 脚本）
 - `.heroui-docs/`、`next-env.d.ts`、`.next/` 为工具/构建生成，勿手工编辑、勿提交。
 - `src/app/page.tsx` 用 `mounted` 状态先渲染骨架再挂载内容，规避 SSR hydration 不匹配；客户端含随机性/读 localStorage 的 UI 需沿用此模式。
 - 图片：`next.config.ts` 中 `images.unoptimized: true`（禁用 Next 图片优化），外链封面图直接原图输出。
+- 线上域名当前启用 Vercel Security Checkpoint：脚本/curl 直连 `hot.baiwumm.com/api/*` 会拿到 429 挑战页（与 UA 无关），服务端巡检或接口调试请走本地构建服务（`pnpm build && pnpm start` 后访问 `127.0.0.1:3000`）；若日后关闭该模式可恢复直连。
 - 全站中文注释与文案；README 的 Next 徽章由 release-it `after:bump` 钩子（`scripts/sync-readme-badges.mjs`）按 package.json 中固定的 Next 版本自动同步，无需手工维护。
 
 ## 禁止事项
