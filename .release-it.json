@@ -34,6 +34,7 @@
   },
   "github": {
     "release": true,
+    "releaseNameTemplate": "Release v${version}",
     "draft": false
   }
 }
