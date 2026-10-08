@@ -159,25 +159,32 @@ export const useAppStore = create(
     }),
     {
       name: 'app-store', // 用于存储在 localStorage 中的键名
-      version: 5, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
+      version: 6, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
       migrate: (persistedState) => {
         // 兼容旧数据 / 版本升级：缺失字段回退到默认值
         // 返回类型断言为 AppState：persist 默认 merge 会与初始 state 浅合并补全方法
         const state = (persistedState ?? {}) as Partial<AppState>
 
+        // v5 → v6：豆瓣电影的 value 更正拼写为 douban-movie，旧数据里按 value 存的键与顺序一并跟随
+        const fixValue = (value: string): HotValue => (value === 'douban-movic' ? 'douban-movie' : (value as HotValue))
+
+        const UpdateTime = Object.fromEntries(
+          Object.entries(state.UpdateTime ?? {}).map(([value, ts]) => [fixValue(value), ts]),
+        )
+
         // v4 → v5：快照补 savedAt 时间戳，旧数据记为 0（已过期）——升级后首轮静默重建基准，避免拿远古快照对比出满屏「新」
         const rankSnapshots = Object.fromEntries(
-          Object.entries(state.rankSnapshots ?? {}).map(([key, snapshot]) => [
-            key,
+          Object.entries(state.rankSnapshots ?? {}).map(([value, snapshot]) => [
+            fixValue(value),
             { ...snapshot, savedAt: snapshot?.savedAt ?? 0 },
           ]),
         )
 
         return {
-          UpdateTime: state.UpdateTime ?? {},
-          hiddenItems: state.hiddenItems ?? [],
-          sortItems: state.sortItems ?? HOT_ITEMS.values,
+          UpdateTime,
+          hiddenItems: (state.hiddenItems ?? []).map(fixValue),
+          sortItems: (state.sortItems ?? HOT_ITEMS.values).map(fixValue),
           rankSnapshots,
           categoryOrder: state.categoryOrder ?? [...HOT_CATEGORY_LIST],
         } as AppState

@@ -60,7 +60,7 @@ const hotItemsConfig = [
       { value: 'douyin', label: '抖音', tip: '热点榜' },
       { value: 'kuaishou', label: '快手', tip: '热榜' },
       { value: 'acfun', label: 'AcFun', tip: '热榜' },
-      { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
+      { value: 'douban-movie', label: '豆瓣电影', tip: '新片榜' },
       { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
       { value: 'qq-music', label: 'QQ 音乐', tip: '热歌榜' },
     ],
