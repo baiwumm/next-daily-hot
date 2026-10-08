@@ -20,10 +20,22 @@ const hotItemsConfig = [
     ],
   },
   {
+    category: '社区讨论',
+    children: [
+      { value: 'xiaohongshu', label: '小红书', tip: '实时热榜' },
+      { value: 'zhihu', label: '知乎', tip: '热榜' },
+      { value: 'baidutieba', label: '百度贴吧', tip: '热议榜' },
+      { value: 'hupu', label: '虎扑', tip: '步行街热帖', suffix: '亮' },
+      { value: 'woshipm', label: '人人都是产品经理', tip: '热榜' },
+    ],
+  },
+  {
     category: '财经',
     children: [
       { value: 'wallstcn', label: '华尔街见闻', tip: '热文榜' },
       { value: 'jin10', label: '金十数据', tip: '快讯' },
+      { value: 'cls', label: '财联社', tip: '热榜' },
+      { value: 'eastmoney', label: '东方财富', tip: '快讯' },
     ],
   },
   {
@@ -39,16 +51,6 @@ const hotItemsConfig = [
       { value: 'sspai', label: '少数派', tip: '热门文章' },
       { value: 'ithome', label: 'IT之家', tip: '热榜' },
       { value: 'dongchedi', label: '懂车帝', tip: '今日要闻' },
-    ],
-  },
-  {
-    category: '社区讨论',
-    children: [
-      { value: 'xiaohongshu', label: '小红书', tip: '实时热榜' },
-      { value: 'zhihu', label: '知乎', tip: '热榜' },
-      { value: 'baidutieba', label: '百度贴吧', tip: '热议榜' },
-      { value: 'hupu', label: '虎扑', tip: '步行街热帖', suffix: '亮' },
-      { value: 'woshipm', label: '人人都是产品经理', tip: '热榜' },
     ],
   },
   {
@@ -68,6 +70,8 @@ const hotItemsConfig = [
     children: [
       { value: 'weread', label: '微信读书', tip: '飙升榜' },
       { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
+      { value: 'douban-book', label: '豆瓣读书', tip: '热门图书' },
+      { value: 'jjwxc', label: '晋江文学城', tip: '总分榜' },
     ],
   },
   {
