@@ -1,14 +1,26 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
- * @LastEditTime: 2026-10-07 23:13:27
+ * @LastEditTime: 2026-10-08 09:50:19
  * @Description: 热榜显示（两层排序：分类层 ↑/↓ 调整顺序与整体显隐；平台层分类内拖拽排序与单独显隐）
  */
 'use client'
 import type { HotCategory, HotValue } from '@/enums'
 
 import { ArrowDown, ArrowUp, BucketPaint, Gear, Grip } from '@gravity-ui/icons'
-import { AlertDialog, Button, Checkbox, cn, Label, Modal, toast, Tooltip, Typography, Description } from '@heroui/react'
+import {
+  AlertDialog,
+  Button,
+  Checkbox,
+  cn,
+  Label,
+  Modal,
+  toast,
+  Tooltip,
+  Typography,
+  Description,
+  Surface,
+} from '@heroui/react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import { useMemo } from 'react'
@@ -16,6 +28,8 @@ import { useMemo } from 'react'
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable'
 import { getCategoryValues, getOrderedCategories, HOT_CATEGORY_LIST, HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
+
+const MotionSurface = motion.create(Surface)
 
 export default function HotSettings() {
   const hiddenItems = useAppStore((state) => state.hiddenItems)
@@ -118,11 +132,12 @@ export default function HotSettings() {
 
                 return (
                   // layout：↑/↓ 交换分类时 FLIP 平滑滑动，不做生硬跳变
-                  <motion.section
+                  <MotionSurface
                     key={category}
                     layout
-                    className="flex flex-col gap-2.5 rounded-2xl border border-default p-4"
+                    className="flex flex-col gap-2.5 rounded-2xl border p-4"
                     transition={{ layout: { type: 'spring', stiffness: 350, damping: 34 } }}
+                    variant="transparent"
                   >
                     {/* 分类头：显隐 Checkbox + 分类名，↑/↓ 水平排列在标题后（部分隐藏时半选态）+ 显示计数 */}
                     <div className="flex items-center gap-2">
@@ -220,7 +235,7 @@ export default function HotSettings() {
                         )
                       })}
                     </Sortable>
-                  </motion.section>
+                  </MotionSurface>
                 )
               })}
             </Modal.Body>
