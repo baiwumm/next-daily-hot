@@ -61,7 +61,6 @@ const hotItemsConfig = [
       { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
       { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
       { value: 'qq-music', label: 'QQ 音乐', tip: '热歌榜' },
-      { value: 'lol', label: '英雄联盟', tip: '更新公告' },
     ],
   },
   {
@@ -69,6 +68,17 @@ const hotItemsConfig = [
     children: [
       { value: 'weread', label: '微信读书', tip: '飙升榜' },
       { value: 'history-today', label: '百度百科', tip: '历史上的今天', suffix: '年' },
+    ],
+  },
+  {
+    category: '游戏',
+    children: [
+      { value: 'lol', label: '英雄联盟', tip: '更新公告' },
+      { value: 'gp', label: '和平精英', tip: '官方资讯' },
+      { value: 'yjwujian', label: '永劫无间', tip: '官方资讯' },
+      { value: 'genshin', label: '原神', tip: '官方公告' },
+      { value: 'zzz', label: '绝区零', tip: '官方公告' },
+      { value: 'arknights', label: '明日方舟', tip: '官方公告' },
     ],
   },
 ] as const

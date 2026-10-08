@@ -83,6 +83,19 @@ const COMPACT_NUMBER_FORMAT = new Intl.NumberFormat('zh-CN', {
 })
 
 /**
+ * @description: 东八区月日文本（MM-DD），公告类榜单的发布时间提示
+ * 服务器可能在 UTC 时区，按固定 +8 偏移取日期，保证与国内用户感知一致
+ * @param timestamp 秒级时间戳
+ */
+export function formatCnMonthDay(timestamp?: number): string | undefined {
+  if (!timestamp) return undefined
+
+  const date = new Date(timestamp * 1000 + 8 * 3_600_000)
+
+  return `${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())}`
+}
+
+/**
  * @description: 转化数字
  */
 export function formatNumber(value: number | string): number | string {
