@@ -21,7 +21,14 @@ interface RankSnapshot {
   hash: string
   /** 标题（trim 后）→ 排名 */
   ranks: Record<string, number>
+  /** 快照写入时间，用于基准时效判断（过老的整体轮换榜单只会产生满屏噪声标记） */
+  savedAt: number
 }
+
+/** 趋势基准时效：快照超过该时长不作为对比基准（新闻榜隔夜整榜轮换，逐条标记无参考价值） */
+const SNAPSHOT_MAX_AGE = 12 * 60 * 60 * 1000
+/** 噪声熔断阈值：单轮「新上榜」条目占比超过一半视为整榜换血，本轮不出任何标记 */
+const NEW_RATIO_THRESHOLD = 0.5
 
 interface AppState {
   /** 每个热榜子项的最后更新时间 */
@@ -49,9 +56,9 @@ interface AppState {
 
   /** 排名趋势快照（持久化）：上次抓取时各平台条目的标题 → 排名，作为趋势对比基准 */
   rankSnapshots: Partial<Record<HotValue, RankSnapshot>>
-  /** 排名趋势（瞬态派生，不持久化）：平台 → 标题 → 名次变化（正数上升 / 负数下降 / 0 持平）；null 表示尚无对比基准 */
+  /** 排名趋势（瞬态派生，不持久化）：平台 → 标题 → 名次变化（正数上升 / 负数下降 / 0 持平）；null 表示本轮不显示标记（无基准 / 基准过期 / 新条目过半） */
   rankTrends: Partial<Record<HotValue, Record<string, number> | null>>
-  /** 记录一次抓取排名并派生趋势：与上次数据指纹相同则幂等跳过（StrictMode 双跑 / 缓存命中均安全） */
+  /** 记录一次抓取排名并派生趋势：与上次数据指纹相同则幂等跳过（StrictMode 双跑 / 缓存命中均安全）；基准过期或新条目过半时熔断本轮标记 */
   recordRankSnapshot: (value: HotValue, hash: string, ranks: Record<string, number>) => void
 
   /** 搜索跳转信号（瞬态）：index 为 -1 表示只定位到卡片；token 递增以支持重复跳转同一目标 */
@@ -115,20 +122,32 @@ export const useAppStore = create(
         // 同一份数据不重算：既省一次全量对比，也保证 effect 重跑时趋势显示稳定
         if (current?.hash === hash) return
 
+        // 基准时效：快照过老（如隔夜）时整榜往往已轮换，逐条对比只剩噪声，静默重建基准
+        const savedAt = current?.savedAt ?? 0
+        const valid = Boolean(current) && Date.now() - savedAt < SNAPSHOT_MAX_AGE
+
         // 派生趋势：只对比两次快照都存在的条目；新条目由组件按「不在对比结果中」识别
         const deltas: Record<string, number> = {}
+        let newCount = 0
 
-        if (current) {
+        if (current && valid) {
           for (const [title, rank] of Object.entries(ranks)) {
             const prevRank = current.ranks[title]
 
-            if (prevRank !== undefined) deltas[title] = prevRank - rank
+            if (prevRank === undefined) {
+              newCount += 1
+            } else {
+              deltas[title] = prevRank - rank
+            }
           }
         }
 
+        // 噪声熔断：新上榜条目过半说明整榜已换血，本轮逐条标记没有信息量
+        const tooManyNew = valid && newCount / Object.keys(ranks).length > NEW_RATIO_THRESHOLD
+
         set((state) => ({
-          rankSnapshots: { ...state.rankSnapshots, [value]: { hash, ranks } },
-          rankTrends: { ...state.rankTrends, [value]: current ? deltas : null },
+          rankSnapshots: { ...state.rankSnapshots, [value]: { hash, ranks, savedAt: Date.now() } },
+          rankTrends: { ...state.rankTrends, [value]: valid && !tooManyNew ? deltas : null },
         }))
       },
 
@@ -140,18 +159,26 @@ export const useAppStore = create(
     }),
     {
       name: 'app-store', // 用于存储在 localStorage 中的键名
-      version: 4, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
+      version: 5, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
       migrate: (persistedState) => {
         // 兼容旧数据 / 版本升级：缺失字段回退到默认值
         // 返回类型断言为 AppState：persist 默认 merge 会与初始 state 浅合并补全方法
         const state = (persistedState ?? {}) as Partial<AppState>
 
+        // v4 → v5：快照补 savedAt 时间戳，旧数据记为 0（已过期）——升级后首轮静默重建基准，避免拿远古快照对比出满屏「新」
+        const rankSnapshots = Object.fromEntries(
+          Object.entries(state.rankSnapshots ?? {}).map(([key, snapshot]) => [
+            key,
+            { ...snapshot, savedAt: snapshot?.savedAt ?? 0 },
+          ]),
+        )
+
         return {
           UpdateTime: state.UpdateTime ?? {},
           hiddenItems: state.hiddenItems ?? [],
           sortItems: state.sortItems ?? HOT_ITEMS.values,
-          rankSnapshots: state.rankSnapshots ?? {},
+          rankSnapshots,
           categoryOrder: state.categoryOrder ?? [...HOT_CATEGORY_LIST],
         } as AppState
       },

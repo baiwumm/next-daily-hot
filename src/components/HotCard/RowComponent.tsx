@@ -60,12 +60,16 @@ const RowComponent = memo(function RowComponent({
   // Vercel 最佳实践：primitive 派生值无需 useMemo 缓存
   const displayText = label ? label.slice(0, 1) : index + 1
 
-  // 排名趋势：无对比基准（首次查看）不显示任何标记；持平不显示；新上榜标「新」
+  // 排名趋势：无对比基准（首次查看 / 基准过期 / 新条目过半熔断）不显示任何标记；
+  // 右列不是热度数值（tip 型时间流榜单，如夸克）时同样不显示——箭头跟在时间后会被误读为热度变化；
+  // 条目自带平台编辑标签（微博/百度的「新」「热」）时不再叠加趋势「新」，避免同字形重复（↑/↓ 保留）
   const titleKey = title.trim()
   const delta = trends?.[titleKey]
   const trendNode =
-    trends == null ? null : delta === undefined ? (
-      <span className="shrink-0 text-warning text-xs leading-none">新</span>
+    !item.hot || trends == null ? null : delta === undefined ? (
+      label ? null : (
+        <span className="shrink-0 text-warning text-xs leading-none">新</span>
+      )
     ) : delta > 0 ? (
       <span className="shrink-0 text-danger text-xs leading-none">↑{delta}</span>
     ) : delta < 0 ? (
