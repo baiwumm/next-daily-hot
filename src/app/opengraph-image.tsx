@@ -12,7 +12,7 @@ export const contentType = 'image/png'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://hot.baiwumm.com'
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || '今日热榜'
-const APP_DESC = process.env.NEXT_PUBLIC_APP_DESC || '汇聚全网热点资讯，实时掌握热门趋势'
+const APP_DESC = process.env.NEXT_PUBLIC_APP_DESC || '看看全网都在聊什么'
 const APP_HOST = APP_URL.replace(/^https?:\/\//, '').replace(/\/$/, '')
 const AUTHOR_NAME = process.env.NEXT_PUBLIC_AUTHOR_NAME || '白雾茫茫丶'
 const AUTHOR_ROLE = process.env.NEXT_PUBLIC_AUTHOR_ROLE || '独立开发者'

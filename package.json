@@ -1,5 +1,5 @@
 {
-  "name": "next-daily-hot",
+  "name": "daily-trending",
   "version": "3.11.0",
   "private": true,
   "packageManager": "pnpm@11.24.0",
@@ -9,8 +9,8 @@
     "url": "https://baiwumm.com"
   },
   "git": {
-    "url": "https://github.com/baiwumm/next-daily-hot",
-    "issues": "https://github.com/baiwumm/next-daily-hot/issues"
+    "url": "https://github.com/baiwumm/daily-trending",
+    "issues": "https://github.com/baiwumm/daily-trending/issues"
   },
   "scripts": {
     "dev": "next dev",

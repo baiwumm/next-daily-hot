@@ -1,4 +1,4 @@
-# AGENTS.md — 今日热榜（next-daily-hot）开发指南
+# AGENTS.md — 今日热榜（daily-trending）开发指南
 
 > 本文件指导 AI Agent 与开发者快速理解并参与本项目开发，动手前先通读本文。
 
@@ -10,7 +10,7 @@
 纯聚合前端——**无数据库、无自建后端**，数据由 Next.js Route Handlers（`src/app/api/<platform>/route.ts`）
 在服务端抓取各平台上游接口，统一映射为 `HotListItem[]` 后返回给客户端渲染。
 
-- 仓库：<https://github.com/baiwumm/next-daily-hot>，线上：<https://hot.baiwumm.com>（Vercel 部署）
+- 仓库：<https://github.com/baiwumm/daily-trending>，线上：<https://hot.baiwumm.com>（Vercel 部署）
 - 单页面应用：唯一业务页面 `src/app/page.tsx`，一次渲染全部榜单卡片
 
 ## 技术栈

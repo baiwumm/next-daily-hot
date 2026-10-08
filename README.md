@@ -1,13 +1,13 @@
 <div align="center">
   <img src="./public/logo.svg" alt="logo" height="90" />
   <h1>今日热榜</h1>
-  <p align="center">汇聚全网热点资讯，实时掌握热门趋势</p>
+  <p align="center">看看全网都在聊什么</p>
   <p align="center">
     <img src="https://img.shields.io/badge/Next-16.3.4-black?style=flat&logo=Next.js" alt="Next.js">
     <img src="https://img.shields.io/badge/HeroUI-3+-000000?style=flat&logo=HEROui&logoColor=white" alt="HeroUI"/>
-    <img src="https://img.shields.io/github/stars/baiwumm/next-daily-hot?style=social" alt="GitHub stars" />
-    <img src="https://img.shields.io/github/forks/baiwumm/next-daily-hot?style=social" alt="GitHub forks" />
-    <img src="https://img.shields.io/github/license/baiwumm/next-daily-hot?style=flat" alt="License" />
+    <img src="https://img.shields.io/github/stars/baiwumm/daily-trending?style=social" alt="GitHub stars" />
+    <img src="https://img.shields.io/github/forks/baiwumm/daily-trending?style=social" alt="GitHub forks" />
+    <img src="https://img.shields.io/github/license/baiwumm/daily-trending?style=flat" alt="License" />
   </p>
 </div>
 
@@ -37,10 +37,10 @@
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/baiwumm/next-daily-hot.git
+git clone https://github.com/baiwumm/daily-trending.git
 
 # 2. 进入项目目录
-cd next-daily-hot
+cd daily-trending
 
 # 3. 安装依赖
 pnpm install
@@ -77,20 +77,13 @@ http://localhost:3000
 
 `code` 为 200 成功（CDN 缓存 300 秒，URL 加 `?t=` 时间戳可绕过）、500 失败（不缓存）；`timestamp` 为数据更新时间。
 
-端点清单（按分类）：
-
-- **资讯综合**：`weibo` `toutiao` `baidu` `qq` `netease` `quark` `thepaper` `zhihu-daily`
-- **财经**：`wallstcn` `jin10`
-- **科技数码**：`juejin` `github-trending` `hello-github` `csdn` `36kr` `huxiu` `ifanr` `sspai` `ithome` `dongchedi`
-- **社区讨论**：`xiaohongshu` `zhihu` `baidutieba` `hupu` `woshipm`
-- **影音娱乐**：`bilibili` `douyin` `kuaishou` `acfun` `douban-movic` `netease-music` `qq-music` `lol`
-- **阅读**：`weread` `history-today`
+端点 `value` 与上游平台的对应关系以 `src/enums/index.tsx` 的 `hotItemsConfig` 为准（唯一数据源，当前 7 个分类 44 个榜单）；`value` 即 `src/app/api/<value>/route.ts` 的目录名。
 
 > ⚠️ 线上站点已启用 Vercel Security Checkpoint：脚本 / 服务端直连 `https://hot.baiwumm.com/api/*` 会返回 429 挑战页（与 UA 无关）。接口调试请使用本地构建服务（`pnpm build && pnpm start` 后访问 `http://127.0.0.1:3000`）。
 
 ### 🚀 Vercel 一键部署
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/baiwumm/next-daily-hot)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/baiwumm/daily-trending)
 
 点击按钮即可快速部署到 Vercel。
 
