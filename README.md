@@ -23,12 +23,15 @@
 
 ### 🚀 特性
 
-- 🔥 聚合 30+ 热门平台（微博、知乎、B站、抖音、GitHub 等）
+- 🔥 聚合 35+ 热门平台（微博、知乎、B站、抖音、GitHub 等），六大分类
+- 🗂️ 分类分节布局 + 锚点导航，分类 / 平台两级排序与显隐
+- 📈 排名趋势标记（↑ / ↓ / 新）
+- ⌨️ Ctrl / ⌘ + K 全局搜索，跨卡片条目定位
 - ⚡ 基于 Next.js SSR，快速加载
 - 🎨 支持明暗主题切换
 - 📱 响应式设计，适配移动端
 - 🔍 SEO 优化，搜索友好
-- 🏗️ 模块化架构，方便扩展
+- 🧩 模块化架构，新增一个榜单只需两步
 
 ### 🛠️ 本地开发
 
@@ -48,6 +51,42 @@ pnpm dev
 # 5. 打开浏览器访问
 http://localhost:3000
 ```
+
+### 🔌 开放 API
+
+所有榜单数据通过统一端点暴露：`GET /api/<value>`（`value` 为平台标识），返回结构：
+
+```json
+{
+  "code": 200,
+  "msg": "success",
+  "data": [
+    {
+      "id": "唯一标识",
+      "title": "标题",
+      "url": "详情地址",
+      "mobileUrl": "移动端地址",
+      "hot": 12345,
+      "desc": "描述（可选）",
+      "pic": "封面图（可选）"
+    }
+  ],
+  "timestamp": 1791500000000
+}
+```
+
+`code` 为 200 成功（CDN 缓存 300 秒，URL 加 `?t=` 时间戳可绕过）、500 失败（不缓存）；`timestamp` 为数据更新时间。
+
+端点清单（按分类）：
+
+- **资讯综合**：`weibo` `toutiao` `baidu` `qq` `netease` `quark` `thepaper` `zhihu-daily`
+- **财经**：`wallstcn` `jin10`
+- **科技数码**：`juejin` `github-trending` `hello-github` `csdn` `36kr` `huxiu` `ifanr` `sspai` `ithome` `dongchedi`
+- **社区讨论**：`xiaohongshu` `zhihu` `baidutieba` `hupu` `woshipm`
+- **影音娱乐**：`bilibili` `douyin` `kuaishou` `acfun` `douban-movic` `netease-music` `qq-music` `lol`
+- **阅读**：`weread` `history-today`
+
+> ⚠️ 线上站点已启用 Vercel Security Checkpoint：脚本 / 服务端直连 `https://hot.baiwumm.com/api/*` 会返回 429 挑战页（与 UA 无关）。接口调试请使用本地构建服务（`pnpm build && pnpm start` 后访问 `http://127.0.0.1:3000`）。
 
 ### 🚀 Vercel 一键部署
 

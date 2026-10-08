@@ -5,6 +5,7 @@
 
 ## 最近完成
 
+- ✅ README 更新：特性列表补齐（分类分节 / 两级排序 / 趋势 / Ctrl+K 搜索）+「开放 API」章节（35 端点 + 响应结构 + Vercel Checkpoint 警示）（2026-10-08）
 - ✅ 新平台接入：新增华尔街见闻 / 金十数据（新增「财经」分类）/ QQ 音乐 / AcFun / 少数派，全站 35 源；V2EX / Steam 本机网络不可达暂缓，TapTap 需逆向 GraphQL 暂缓（2026-10-08）
 - ✅ 发版自动化：GitHub Actions 一键发版（lint/build 门禁 → release-it → tag → Release），tag 统一 `v` 前缀（2026-10-07，首次实测 v3.11.0 通过）
 - ✅ 上游源健康巡检：每 6 小时构建自检 30 个源，异常自动开 issue 跟踪、恢复自动关闭（2026-10-07）
@@ -15,13 +16,7 @@
 
 ## 近期计划（P0）
 
-### 1. README 更新
-
-- 特性列表补齐：分类分节 + 锚点导航、两层排序、排名趋势、Ctrl/⌘+K 全局搜索
-- 补「开放 API」章节：35 个端点清单 + `IResponse` 结构
-- ⚠️ 必须标注：线上启用 Vercel Security Checkpoint，脚本/服务端直连 `hot.baiwumm.com/api/*` 会拿到 429 挑战页（与 UA 无关），接口调试用本地构建服务；若长期开启可考虑在 Vercel Firewall 对 `/api/*` 配白名单后再宣传开放 API
-
-### 2. 错误监控
+### 1. 错误监控
 
 - 现状：只有访问统计（百度/GA/Clarity），**没有错误上报**
 - 候选：Sentry（免费档够用，Next.js 官方 SDK）或轻量自建（`errorResponse()` 失败路径埋点上报）
