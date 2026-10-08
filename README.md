@@ -59,7 +59,7 @@ http://localhost:3000
 ```json
 {
   "code": 200,
-  "msg": "success",
+  "msg": "请求成功",
   "data": [
     {
       "id": "唯一标识",
