@@ -20,6 +20,13 @@ const hotItemsConfig = [
     ],
   },
   {
+    category: '财经',
+    children: [
+      { value: 'wallstcn', label: '华尔街见闻', tip: '热文榜' },
+      { value: 'jin10', label: '金十数据', tip: '快讯' },
+    ],
+  },
+  {
     category: '科技数码',
     children: [
       { value: 'juejin', label: '稀土掘金', tip: '热榜' },
@@ -29,6 +36,7 @@ const hotItemsConfig = [
       { value: '36kr', label: '36氪', tip: '24小时热榜' },
       { value: 'huxiu', label: '虎嗅', tip: '最新资讯' },
       { value: 'ifanr', label: '爱范儿', tip: '快讯' },
+      { value: 'sspai', label: '少数派', tip: '热门文章' },
       { value: 'ithome', label: 'IT之家', tip: '热榜' },
       { value: 'dongchedi', label: '懂车帝', tip: '今日要闻' },
     ],
@@ -49,8 +57,10 @@ const hotItemsConfig = [
       { value: 'bilibili', label: '哔哩哔哩', tip: '热门榜' },
       { value: 'douyin', label: '抖音', tip: '热点榜' },
       { value: 'kuaishou', label: '快手', tip: '热榜' },
+      { value: 'acfun', label: 'AcFun', tip: '热榜' },
       { value: 'douban-movic', label: '豆瓣电影', tip: '新片榜' },
       { value: 'netease-music', label: '网易云音乐', tip: '热歌榜' },
+      { value: 'qq-music', label: 'QQ 音乐', tip: '热歌榜' },
       { value: 'lol', label: '英雄联盟', tip: '更新公告' },
     ],
   },

@@ -5,6 +5,7 @@
 
 ## 最近完成
 
+- ✅ 新平台接入：新增华尔街见闻 / 金十数据（新增「财经」分类）/ QQ 音乐 / AcFun / 少数派，全站 35 源；V2EX / Steam 本机网络不可达暂缓，TapTap 需逆向 GraphQL 暂缓（2026-10-08）
 - ✅ 发版自动化：GitHub Actions 一键发版（lint/build 门禁 → release-it → tag → Release），tag 统一 `v` 前缀（2026-10-07，首次实测 v3.11.0 通过）
 - ✅ 上游源健康巡检：每 6 小时构建自检 30 个源，异常自动开 issue 跟踪、恢复自动关闭（2026-10-07）
 - ✅ 懂车帝源修复：热搜榜下线登录墙，切换为首页「今日要闻」（2026-10-07）
@@ -14,20 +15,13 @@
 
 ## 近期计划（P0）
 
-### 1. 新平台接入（扩充分类宽度）
-
-- **候选**（公开接口、成本低优先）：V2EX（`api/topics/hot.json`，补社区）、Steam 热销 / TapTap（补游戏，当前 LOL 已并入影音娱乐）、雪球 / 华尔街见闻（财经，目前完全空白）、少数派、QQ 音乐（`c.y.qq.com`）
-- **不推荐**（接口有强签名 / 反爬重）：酷安、小宇宙、微信公众号热文、Reddit
-- **新增套路**（两步，详见 AGENTS.md）：`enums/index.tsx` 的 `hotItemsConfig` 对应分类 `children` 加一行（value 即路由名）→ 新建 `src/app/api/<value>/route.ts`；上游有反爬参考现有 `buildHeaders`（Referer / 空 UA）
-- 每接入一个源，健康巡检自动纳入，无需额外配置
-
-### 2. README 更新
+### 1. README 更新
 
 - 特性列表补齐：分类分节 + 锚点导航、两层排序、排名趋势、Ctrl/⌘+K 全局搜索
-- 补「开放 API」章节：30 个端点清单 + `IResponse` 结构
+- 补「开放 API」章节：35 个端点清单 + `IResponse` 结构
 - ⚠️ 必须标注：线上启用 Vercel Security Checkpoint，脚本/服务端直连 `hot.baiwumm.com/api/*` 会拿到 429 挑战页（与 UA 无关），接口调试用本地构建服务；若长期开启可考虑在 Vercel Firewall 对 `/api/*` 配白名单后再宣传开放 API
 
-### 3. 错误监控
+### 2. 错误监控
 
 - 现状：只有访问统计（百度/GA/Clarity），**没有错误上报**
 - 候选：Sentry（免费档够用，Next.js 官方 SDK）或轻量自建（`errorResponse()` 失败路径埋点上报）
