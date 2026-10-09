@@ -1,5 +1,43 @@
 # Changelog
 
+## [3.12.0](https://github.com/baiwumm/daily-trending/compare/v3.11.0...v3.12.0) (2026-10-09)
+
+### ✨ Features | 新功能
+
+* **HotSettings:** 使用Surface组件替代motion.section提升UI表现 ([9aa98ee](https://github.com/baiwumm/daily-trending/commit/9aa98ee70316e542ba884cf648ec4f916d7f067d))
+* 平台收藏常看功能——星标跨分类置顶聚合，支持设置内排序管理与搜索跳转定位 ([9da123a](https://github.com/baiwumm/daily-trending/commit/9da123a4ffb95be7f5fee24648de81ced5bc20d5))
+* 新增新浪新闻/同花顺/什么值得买/Steam 四个榜单源，调整分类默认排序 ([adf2c84](https://github.com/baiwumm/daily-trending/commit/adf2c84ad339e29da0389e02d0142a6cd6047b0d))
+* 新增游戏分类，接入英雄联盟/和平精英/永劫无间/原神/绝区零/明日方舟 ([a4dce1a](https://github.com/baiwumm/daily-trending/commit/a4dce1a735e825b9250d1256b56c7595602ab529))
+* 新增财经分类与华尔街见闻/金十数据/QQ音乐/少数派/AcFun 五个榜单源 ([db4dd0e](https://github.com/baiwumm/daily-trending/commit/db4dd0e6994d1619887a4d953f27fc9b3e5d2b44))
+* 财经接入财联社/东方财富，阅读接入豆瓣读书/晋江文学城，调整分类默认排序 ([87ccb8e](https://github.com/baiwumm/daily-trending/commit/87ccb8e518c998ba64f37b1180f3ee096a4d5af1))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **CategoryIndicator:** 修复分类指示器中tooltip触发器的包装问题 ([37af999](https://github.com/baiwumm/daily-trending/commit/37af9994581e98ded65dd954af922bb86846a3d1))
+* **HotSettings:** 常看空态提示文案同步星标新位置（底部刷新按钮旁） ([ef69cc5](https://github.com/baiwumm/daily-trending/commit/ef69cc50ead15c03fa7a9162dcfdddfacee2f8fc))
+* 发版名称配置项笔误，releaseNameTemplate 为无效 key，改用 releaseName ([fd6ba49](https://github.com/baiwumm/daily-trending/commit/fd6ba499496ccb25f241e98fcb8f042113147e7d))
+* 排名趋势标记降噪——平台标签去重、tip 型榜单不显示、基准时效与新条目占比熔断 ([34797f4](https://github.com/baiwumm/daily-trending/commit/34797f4c4c7fe6b961a675b265789aa95fe68093))
+* 豆瓣电影端点更正拼写 douban-movic → douban-movie ([e325bba](https://github.com/baiwumm/daily-trending/commit/e325bbaf4c12f9b6233ef504f36b2f7bb0b2b469))
+
+### 🎫 Chores | 其他更新
+
+* 仓库更名 daily-trending，副标题改为「看看全网都在聊什么」 ([3032711](https://github.com/baiwumm/daily-trending/commit/3032711db17bde56e792e3d3a07875fdc2da0d7f))
+* 升级 Next 16.4.0、HeroUI 3.2.6、theme-switch-animation 0.5.1 ([3653444](https://github.com/baiwumm/daily-trending/commit/3653444e5405537913c3873c83249063593c1a1a))
+
+### 📝 Documentation | 文档
+
+* README 响应示例的 msg 更正为实际值「请求成功」 ([60d2311](https://github.com/baiwumm/daily-trending/commit/60d23115473273168c309c75d68194235dbcfd22))
+* README 宣传片改用可点击封面图 ([d4ea080](https://github.com/baiwumm/daily-trending/commit/d4ea080b4b091fc539f118ad817baad0a7e4ca9e))
+* README 补齐特性列表与开放 API 章节 ([0d98fa8](https://github.com/baiwumm/daily-trending/commit/0d98fa80f901182de49adfc067e95d6687749a02))
+* README 预览改用产品宣传片 ([f492bcb](https://github.com/baiwumm/daily-trending/commit/f492bcb168642742049401aff4aa0dcd877e5ee7))
+* 去掉分类与榜单数量的硬编码表述，避免平台增减时文档漂移 ([9ee590e](https://github.com/baiwumm/daily-trending/commit/9ee590e6f1549b3eea47367385432e243742a634))
+* 平台数量 44→48，特性列表补充常看收藏 ([d40ee2e](https://github.com/baiwumm/daily-trending/commit/d40ee2e936446a84bf171373f8707bd8eaef008e))
+* 新增产品路线图；fix: Release 名称补 v 前缀与 tag 风格一致 ([24bb95e](https://github.com/baiwumm/daily-trending/commit/24bb95e100cf6b90db0f9c7d610b995b62068983))
+
+### ♻ Code Refactoring | 代码重构
+
+* **components:** 移除多余的Tooltip.Trigger包装组件 ([0e5855d](https://github.com/baiwumm/daily-trending/commit/0e5855df82b5f43c279e7e5bf859cdb96fee856e))
+
 ## [3.11.0](https://github.com/baiwumm/next-daily-hot/compare/v3.10.1...v3.11.0) (2026-10-07)
 
 ### ✨ Features | 新功能
