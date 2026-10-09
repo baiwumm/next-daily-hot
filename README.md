@@ -13,12 +13,19 @@
 
 ---
 
-### 📸 预览
+### 📺 预览
 
 <div align="center">
-  <img src="./public/light.png" width="90%" alt="Light 模式" />
+  <video
+    src="https://github.com/baiwumm/daily-trending/releases/download/promo/daily-trending-56s.mp4"
+    poster="https://raw.githubusercontent.com/baiwumm/daily-trending/main/public/video-poster.png"
+    width="90%"
+    controls
+    preload="none"
+    playsinline
+  ></video>
   <br />
-  <img src="./public/dark.png" width="90%" alt="Dark 模式" />
+  <sub>56 秒 · 1080p · 带口播与字幕 ｜ 播不出来？<a href="https://github.com/baiwumm/daily-trending/releases/download/promo/daily-trending-56s.mp4">直接下载 mp4</a></sub>
 </div>
 
 ### 🚀 特性
