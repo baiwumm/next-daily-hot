@@ -6,7 +6,7 @@
 
 ## 项目概览
 
-**今日热榜**：聚合 48 个热门平台（微博、知乎、B 站、抖音、GitHub 等）热榜的单页应用。
+**今日热榜**：聚合微博、知乎、B 站、抖音、GitHub 等全网热门平台热榜的单页应用。
 纯聚合前端——**无数据库、无自建后端**，数据由 Next.js Route Handlers（`src/app/api/<platform>/route.ts`）
 在服务端抓取各平台上游接口，统一映射为 `HotListItem[]` 后返回给客户端渲染。
 
@@ -37,12 +37,12 @@ src/
 │   ├── page.tsx            # 首页（唯一业务页面，'use client'）
 │   ├── globals.css         # Tailwind v4 入口 + HeroUI 主题变量
 │   ├── sitemap.ts / robots.ts / manifest.json / opengraph-image.tsx  # SEO/PWA
-│   └── api/<platform>/route.ts   # 48 个榜单 API（目录名 = 榜单 value）
+│   └── api/<platform>/route.ts   # 各榜单 API（目录名 = 榜单 value，数量以 hotItemsConfig 为准）
 ├── components/             # 14 个组件，PascalCase 目录 + index.tsx
 │   ├── HotCard/            # 榜单卡片（含 HotListVirtual 虚拟列表）
 │   └── HotSettings/ Sortable/  # 卡片显示/隐藏/拖拽排序设置
 ├── enums/
-│   ├── index.tsx           # HOT_ITEMS：全部榜单配置唯一数据源（48 项）
+│   ├── index.tsx           # HOT_ITEMS：全部榜单配置唯一数据源（分类/平台数量以此为准）
 │   └── response.ts         # 响应码 + API_CACHE_SECONDS 缓存窗口
 ├── hooks/                  # use-request.ts（自研 useRequest）、use-is-mobile 等
 ├── lib/
