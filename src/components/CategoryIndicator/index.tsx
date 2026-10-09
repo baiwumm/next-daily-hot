@@ -137,20 +137,18 @@ export default function CategoryIndicator({ categories }: CategoryIndicatorProps
 
         return (
           <Tooltip key={category} closeDelay={CLOSE_DELAY} delay={0}>
-            <Tooltip.Trigger>
-              {/* 整个槽位是 hover 热区，也是点击跳转区 */}
-              <button
-                aria-label={`跳转到分类：${category}`}
-                className="flex h-4 w-7 cursor-pointer items-center justify-end"
-                id={`cat-bar-${category}`}
-                type="button"
-                onClick={() => scrollToCategory(category)}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <span className={cn('h-1 rounded-full transition-all duration-300', barClass)} />
-              </button>
-            </Tooltip.Trigger>
+            {/* 整个槽位是 hover 热区，也是点击跳转区 */}
+            <button
+              aria-label={`跳转到分类：${category}`}
+              className="flex h-4 w-7 cursor-pointer items-center justify-end"
+              id={`cat-bar-${category}`}
+              type="button"
+              onClick={() => scrollToCategory(category)}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+            >
+              <span className={cn('h-1 rounded-full transition-all duration-300', barClass)} />
+            </button>
             <Tooltip.Content showArrow offset={8} placement="left">
               <Tooltip.Arrow />
               {category}

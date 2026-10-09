@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-19 17:52:08
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2026-07-31 17:18:38
+ * @LastEditTime: 2026-10-09 09:06:01
  * @Description: 顶部布局
  */
 'use client'
@@ -41,15 +41,7 @@ export default function Header() {
         <HotSettings />
 
         {/* 主题切换按钮 */}
-        <Tooltip delay={0}>
-          <Tooltip.Trigger aria-label="主题切换">
-            <ThemeSwitcher />
-          </Tooltip.Trigger>
-          <Tooltip.Content showArrow>
-            <Tooltip.Arrow />
-            主题切换
-          </Tooltip.Content>
-        </Tooltip>
+        <ThemeSwitcher />
         {/* Github */}
         <Tooltip delay={0}>
           <Button

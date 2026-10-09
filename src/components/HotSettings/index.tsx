@@ -1,7 +1,7 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
- * @LastEditTime: 2026-10-08 09:50:19
+ * @LastEditTime: 2026-10-09 09:06:53
  * @Description: 热榜显示（两层排序：分类层 ↑/↓ 调整顺序与整体显隐；平台层分类内拖拽排序与单独显隐）
  */
 'use client'
@@ -99,11 +99,9 @@ export default function HotSettings() {
       {/* Tooltip 只包裹触发按钮，不能包裹整个 Modal：Modal 的 backdrop/弹窗经 portal 渲染，
           但在 React 树中仍是 Tooltip 触发元素的后代，会导致弹窗内 hover 误触发 Tooltip */}
       <Tooltip delay={0}>
-        <Tooltip.Trigger aria-label="热榜设置">
-          <Button isIconOnly aria-label="热榜设置" size="sm" variant="ghost">
-            <BucketPaint />
-          </Button>
-        </Tooltip.Trigger>
+        <Button isIconOnly aria-label="热榜设置" size="sm" variant="ghost">
+          <BucketPaint />
+        </Button>
         <Tooltip.Content showArrow>
           <Tooltip.Arrow />
           热榜设置

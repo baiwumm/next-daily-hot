@@ -167,11 +167,9 @@ function HotSearch() {
       {/* Tooltip 只包裹触发按钮，不能包裹整个 Modal：Modal 的 backdrop/弹窗经 portal 渲染，
           但在 React 树中仍是 Tooltip 触发元素的后代，会导致弹窗内 hover 误触发 Tooltip */}
       <Tooltip delay={0}>
-        <Tooltip.Trigger aria-label="搜索">
-          <Button isIconOnly aria-label="搜索" size="sm" variant="ghost">
-            <Magnifier />
-          </Button>
-        </Tooltip.Trigger>
+        <Button isIconOnly aria-label="搜索" size="sm" variant="ghost">
+          <Magnifier />
+        </Button>
         <Tooltip.Content showArrow>
           <Tooltip.Arrow />
           搜索（Ctrl + K）
