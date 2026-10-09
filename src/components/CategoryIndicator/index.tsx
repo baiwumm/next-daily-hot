@@ -3,7 +3,6 @@
  * 骨架取自 better-nav 同名组件，按本项目分类模型适配（分类名即锚点 id）
  */
 'use client'
-import type { HotCategory } from '@/enums'
 
 import { cn, Tooltip } from '@heroui/react'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -11,15 +10,15 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { smoothScrollTo } from '@/lib/utils'
 
 interface CategoryIndicatorProps {
-  /** 用户排序后的可见分类（与首页分节同源） */
-  categories: HotCategory[]
+  /** 用户排序后的可见分类（与首页分节同源；含「常看」虚拟分类，故为 string） */
+  categories: string[]
 }
 
 /** hover 离开后恢复横线状态的延迟（与 Tooltip closeDelay 保持一致） */
 const CLOSE_DELAY = 150
 
 export default function CategoryIndicator({ categories }: CategoryIndicatorProps) {
-  const [activeCategory, setActiveCategory] = useState<HotCategory | ''>('')
+  const [activeCategory, setActiveCategory] = useState('')
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const tickingRef = useRef(false)
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
@@ -28,7 +27,7 @@ export default function CategoryIndicator({ categories }: CategoryIndicatorProps
   useEffect(() => {
     const getActiveCategory = () => {
       const threshold = window.innerHeight * 0.3
-      let current: HotCategory | '' = ''
+      let current = ''
       let minDist = Number.POSITIVE_INFINITY
 
       categories.forEach((category) => {
@@ -100,7 +99,7 @@ export default function CategoryIndicator({ categories }: CategoryIndicatorProps
     closeTimerRef.current = setTimeout(setHoveredIndex, CLOSE_DELAY, null)
   }, [])
 
-  const scrollToCategory = useCallback((category: HotCategory) => {
+  const scrollToCategory = useCallback((category: string) => {
     const el = document.getElementById(`cat-${category}`)
 
     if (!el) return

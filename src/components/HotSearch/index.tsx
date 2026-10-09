@@ -36,6 +36,7 @@ function HotSearch() {
   const overlayState = useOverlayState()
 
   const hiddenItems = useAppStore((state) => state.hiddenItems)
+  const favoriteItems = useAppStore((state) => state.favoriteItems)
   const setSearchJump = useAppStore((state) => state.setSearchJump)
 
   // 参与搜索的平台（尊重用户隐藏设置；分节布局下所有可见平台均可跳转）
@@ -147,7 +148,13 @@ function HotSearch() {
 
   const activate = (row: ResultRow) => {
     // index = -1 表示只定位到卡片；条目跳转的下标与卡片自身数据同源同序
-    setSearchJump({ value: row.value, index: row.type === 'entry' ? row.index : -1, token: Date.now() })
+    // 已收藏的平台在常看分节还有一张同名卡，scope 优先定位常看分节那张
+    setSearchJump({
+      value: row.value,
+      index: row.type === 'entry' ? row.index : -1,
+      token: Date.now(),
+      scope: favoriteItems.includes(row.value) ? 'favorite' : undefined,
+    })
     overlayState.close()
   }
 

@@ -8,7 +8,7 @@
 'use client'
 import type { HotListConfig, IResponse } from '@/types'
 
-import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill } from '@gravity-ui/icons'
+import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill, Star, StarFill } from '@gravity-ui/icons'
 import { Button, Card, Chip, Description, Label, ScrollShadow, Separator, Spinner, Tooltip } from '@heroui/react'
 import { motion, useInView } from 'motion/react'
 import Image from 'next/image'
@@ -23,10 +23,19 @@ import { useRequest } from '@/hooks/use-request'
 import { smoothScrollTo } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 
-function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
+/** 卡片作用域：常看分节与原分类分节可能同时渲染同一平台，搜索跳转靠 scope 精确定位到其中一张 */
+interface HotCardProps extends HotListConfig {
+  scope?: 'favorite'
+}
+
+function HotCard({ value, label, tip, prefix, suffix, scope }: HotCardProps) {
   const setUpdateTime = useAppStore((state) => state.setUpdateTime)
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
+
+  // 常看收藏：窄选择器只让星标状态变化的这张卡重渲染
+  const isFavorite = useAppStore((state) => state.favoriteItems.includes(value))
+  const toggleFavorite = useAppStore((state) => state.toggleFavorite)
 
   // 更新相对时间
   const relativeText = useAppStore((state) => state.getRelativeTime(value))
@@ -114,21 +123,21 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   const [highlightIndex, setHighlightIndex] = useState<number | null>(null)
 
   useEffect(() => {
-    if (searchJump?.value !== value || !ref.current) return
+    if (searchJump?.value !== value || searchJump.scope !== scope || !ref.current) return
 
     // 滚动到卡片垂直居中的位置（smoothScrollTo 为 rAF 自绘动画，跨环境行为一致）
     const rect = ref.current.getBoundingClientRect()
     const targetTop = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2
 
     smoothScrollTo(targetTop)
-  }, [searchJump, value])
+  }, [searchJump, scope, value])
 
   useEffect(() => {
-    if (searchJump?.value !== value || !data?.length) return
+    if (searchJump?.value !== value || searchJump.scope !== scope || !data?.length) return
 
     setHighlightIndex(searchJump.index >= 0 ? searchJump.index : null)
     setSearchJump(null)
-  }, [searchJump, data, value, setSearchJump])
+  }, [searchJump, scope, data, value, setSearchJump])
 
   // 高亮短暂保留后清除，避免常亮干扰
   useEffect(() => {
@@ -211,7 +220,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
             {loading ? '正在加载中...' : error ? '更新失败' : `${relativeText}更新`}
           </Description>
           <Separator className="flex-none" orientation="vertical" />
-          <div className="flex w-1/2 justify-center">
+          <div className="flex w-1/2 justify-center gap-1">
             <Tooltip delay={0}>
               <Button
                 isIconOnly
@@ -234,6 +243,22 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
                     ? `缓存中，约 ${remainMin} 分钟后可刷新`
                     : '缓存中，即将可刷新'
                   : '获取最新'}
+              </Tooltip.Content>
+            </Tooltip>
+            <Tooltip delay={0}>
+              <Button
+                isIconOnly
+                aria-label={isFavorite ? '取消常看' : '设为常看'}
+                className={isFavorite ? 'text-warning' : 'text-muted'}
+                size="sm"
+                variant="ghost"
+                onPress={() => toggleFavorite(value)}
+              >
+                {isFavorite ? <StarFill width={16} /> : <Star width={16} />}
+              </Button>
+              <Tooltip.Content showArrow placement="bottom">
+                <Tooltip.Arrow />
+                {isFavorite ? '取消常看' : '设为常看'}
               </Tooltip.Content>
             </Tooltip>
           </div>

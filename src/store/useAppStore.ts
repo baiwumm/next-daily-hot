@@ -54,6 +54,11 @@ interface AppState {
   categoryOrder: HotCategory[]
   setCategoryOrder: (items: HotCategory[]) => void
 
+  /** 收藏的常看平台（跨分类聚合，数组顺序即展示顺序；首页置顶分节与设置管理区块共用） */
+  favoriteItems: HotValue[]
+  setFavoriteItems: (items: HotValue[]) => void
+  toggleFavorite: (value: HotValue) => void
+
   /** 排名趋势快照（持久化）：上次抓取时各平台条目的标题 → 排名，作为趋势对比基准 */
   rankSnapshots: Partial<Record<HotValue, RankSnapshot>>
   /** 排名趋势（瞬态派生，不持久化）：平台 → 标题 → 名次变化（正数上升 / 负数下降 / 0 持平）；null 表示本轮不显示标记（无基准 / 基准过期 / 新条目过半） */
@@ -61,8 +66,8 @@ interface AppState {
   /** 记录一次抓取排名并派生趋势：与上次数据指纹相同则幂等跳过（StrictMode 双跑 / 缓存命中均安全）；基准过期或新条目过半时熔断本轮标记 */
   recordRankSnapshot: (value: HotValue, hash: string, ranks: Record<string, number>) => void
 
-  /** 搜索跳转信号（瞬态）：index 为 -1 表示只定位到卡片；token 递增以支持重复跳转同一目标 */
-  searchJump: { value: HotValue; index: number; token: number } | null
+  /** 搜索跳转信号（瞬态）：index 为 -1 表示只定位到卡片；token 递增以支持重复跳转同一目标；scope 定位常看分节或原分类分节的同名卡片 */
+  searchJump: { value: HotValue; index: number; token: number; scope?: 'favorite' } | null
   setSearchJump: (jump: AppState['searchJump']) => void
 }
 
@@ -113,6 +118,19 @@ export const useAppStore = create(
         set({ categoryOrder: items })
       },
 
+      /* ================= 常看收藏 ================= */
+      favoriteItems: [],
+      setFavoriteItems: (items) => {
+        set({ favoriteItems: items })
+      },
+      toggleFavorite: (value) => {
+        set((state) => ({
+          favoriteItems: state.favoriteItems.includes(value)
+            ? state.favoriteItems.filter((item) => item !== value)
+            : [...state.favoriteItems, value],
+        }))
+      },
+
       /* ================= 排名趋势 ================= */
       rankSnapshots: {},
       rankTrends: {},
@@ -159,7 +177,7 @@ export const useAppStore = create(
     }),
     {
       name: 'app-store', // 用于存储在 localStorage 中的键名
-      version: 6, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
+      version: 7, // Vercel 最佳实践：数据结构版本化，字段变更时递增并配合 migrate 平滑迁移
       storage: createJSONStorage(() => localStorage), // 指定使用 localStorage 存储
       migrate: (persistedState) => {
         // 兼容旧数据 / 版本升级：缺失字段回退到默认值
@@ -181,12 +199,18 @@ export const useAppStore = create(
           ]),
         )
 
+        // v6 → v7：新增常看收藏，旧数据回退为空数组；顺手剔除配置已下线的平台并去重
+        const favoriteItems = [
+          ...new Set((state.favoriteItems ?? []).map(fixValue).filter((value) => HOT_ITEMS.raw(value))),
+        ]
+
         return {
           UpdateTime,
           hiddenItems: (state.hiddenItems ?? []).map(fixValue),
           sortItems: (state.sortItems ?? HOT_ITEMS.values).map(fixValue),
           rankSnapshots,
           categoryOrder: state.categoryOrder ?? [...HOT_CATEGORY_LIST],
+          favoriteItems,
         } as AppState
       },
       // ⚠️ now / rankTrends / searchJump 是纯派生用的，不需要持久化
@@ -197,6 +221,7 @@ export const useAppStore = create(
           sortItems: state.sortItems,
           rankSnapshots: state.rankSnapshots,
           categoryOrder: state.categoryOrder,
+          favoriteItems: state.favoriteItems,
         }) as any,
     },
   ),

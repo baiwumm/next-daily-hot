@@ -176,3 +176,8 @@ export const getCategoryValues = (sortItems: readonly HotValue[], category: HotC
 
   return [...userOrder, ...missing]
 }
+
+/**
+ * @description: 常看分节的虚拟分类名（非 hotItemsConfig 中的分类，首页置顶分节与锚点导航共用）
+ */
+export const FAVORITE_CATEGORY = '常看'

@@ -7,6 +7,7 @@
 'use client'
 
 import { Card, Separator, Skeleton } from '@heroui/react'
+import { StarFill } from '@gravity-ui/icons'
 import { motion } from 'motion/react'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -14,7 +15,7 @@ import BlurFade from '@/components/BlurFade'
 import CategoryIndicator from '@/components/CategoryIndicator'
 import HotCard from '@/components/HotCard'
 import SkeletonCard from '@/components/SkeletonCard'
-import { getCategoryValues, getOrderedCategories, HOT_ITEMS } from '@/enums'
+import { getCategoryValues, getOrderedCategories, FAVORITE_CATEGORY, HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
 
 const gridClassName = 'grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]'
@@ -24,19 +25,24 @@ export default function Home() {
   const hiddenItems = useAppStore((state) => state.hiddenItems)
   const sortItems = useAppStore((state) => state.sortItems)
   const categoryOrder = useAppStore((state) => state.categoryOrder)
+  const favoriteItems = useAppStore((state) => state.favoriteItems)
 
-  // 分节数据：分类顺序（用户排序）× 块内平台顺序（用户排序）× 排除设置里隐藏的平台；
+  // 分节数据：常看收藏（跨分类聚合，置顶）+ 分类顺序（用户排序）× 块内平台顺序（用户排序）× 排除设置里隐藏的平台；
   // 读取时归一化——配置新增的分类/平台自动补尾，下线的自动剔除，全部隐藏的分节不渲染
   const sections = useMemo(() => {
     const hiddenSet = new Set(hiddenItems ?? [])
-
-    return getOrderedCategories(categoryOrder)
+    const favorites = favoriteItems.filter((value) => !hiddenSet.has(value) && HOT_ITEMS.raw(value))
+    const categorySections = getOrderedCategories(categoryOrder)
       .map((category) => ({
         category,
         values: getCategoryValues(sortItems, category).filter((value) => !hiddenSet.has(value)),
       }))
       .filter(({ values }) => values.length > 0)
-  }, [categoryOrder, sortItems, hiddenItems])
+
+    return favorites.length
+      ? [{ category: FAVORITE_CATEGORY, values: favorites }, ...categorySections]
+      : categorySections
+  }, [categoryOrder, sortItems, hiddenItems, favoriteItems])
 
   useEffect(() => {
     const timer = setTimeout(setMounted, 0, true)
@@ -84,7 +90,10 @@ export default function Home() {
             id={`cat-${category}`}
             transition={{ duration: 0.3, ease: 'easeOut', layout: { type: 'spring', stiffness: 300, damping: 34 } }}
           >
-            <h2 className="text-lg font-black">{category}</h2>
+            <h2 className="flex items-center gap-1.5 text-lg font-black">
+              {category === FAVORITE_CATEGORY && <StarFill className="text-warning" width={18} />}
+              {category}
+            </h2>
             <div className={gridClassName}>
               {values.map((value, index) => {
                 const raw = HOT_ITEMS.raw(value)
@@ -101,7 +110,7 @@ export default function Home() {
                     {/* 每张卡独立 BlurFade（自身 useInView once 触发淡入，与兄弟状态解耦）：
                         不用父级 stagger variants——显隐/重排后新插入的卡可能卡在 hidden 态，产生空白占位 */}
                     <BlurFade className="h-full" delay={Math.min(index * 0.04, 0.24)}>
-                      <HotCard {...raw} />
+                      <HotCard {...raw} scope={category === FAVORITE_CATEGORY ? 'favorite' : undefined} />
                     </BlurFade>
                   </motion.div>
                 )

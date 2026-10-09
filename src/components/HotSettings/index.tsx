@@ -7,7 +7,7 @@
 'use client'
 import type { HotCategory, HotValue } from '@/enums'
 
-import { ArrowDown, ArrowUp, BucketPaint, Gear, Grip } from '@gravity-ui/icons'
+import { ArrowDown, ArrowUp, BucketPaint, Gear, Grip, StarFill, Xmark } from '@gravity-ui/icons'
 import {
   AlertDialog,
   Button,
@@ -38,6 +38,9 @@ export default function HotSettings() {
   const setSortItems = useAppStore((state) => state.setSortItems)
   const categoryOrder = useAppStore((state) => state.categoryOrder)
   const setCategoryOrder = useAppStore((state) => state.setCategoryOrder)
+  const favoriteItems = useAppStore((state) => state.favoriteItems)
+  const setFavoriteItems = useAppStore((state) => state.setFavoriteItems)
+  const toggleFavorite = useAppStore((state) => state.toggleFavorite)
 
   // 分区块数据：分类顺序 × 块内平台顺序（读取时归一化，含隐藏平台——复选框要能对隐藏项反向勾选）
   const sections = useMemo(
@@ -89,6 +92,7 @@ export default function HotSettings() {
     setCategoryOrder([...HOT_CATEGORY_LIST])
     setSortItems(HOT_ITEMS.values)
     setHiddenItems([])
+    setFavoriteItems([])
     toast.success('操作成功！', {
       timeout: 2000,
     })
@@ -119,10 +123,67 @@ export default function HotSettings() {
                   </Modal.Icon>
                   <h1 className="font-bold">热榜设置</h1>
                 </div>
-                <Description>分类用箭头调整顺序与显隐；平台在分类内拖拽排序，可单独控制显隐。</Description>
+                <Description>星标收藏的常看平台置顶聚合；分类用箭头调整顺序与显隐，平台在分类内拖拽排序。</Description>
               </Modal.Heading>
             </Modal.Header>
             <Modal.Body className="space-y-3">
+              {/* 常看管理：跨分类收藏的平台置顶聚合，拖拽调整顺序，× 移除（星标入口在每张卡片右上角） */}
+              <Surface className="flex flex-col gap-2.5 rounded-2xl border p-4" variant="transparent">
+                <div className="flex items-center gap-2">
+                  <StarFill className="text-warning" width={14} />
+                  <h2 className="font-black">常看</h2>
+                  <Typography className="ml-auto" color="muted" type="body-sm">
+                    {favoriteItems.length}
+                  </Typography>
+                </div>
+                {favoriteItems.length ? (
+                  <Sortable
+                    className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2"
+                    getItemValue={(item) => item}
+                    strategy="grid"
+                    value={favoriteItems}
+                    onValueChange={setFavoriteItems}
+                  >
+                    {favoriteItems.map((value) => {
+                      const raw = HOT_ITEMS.raw(value)
+
+                      if (!raw) return null
+
+                      return (
+                        <SortableItem key={value} value={value}>
+                          <div className="flex items-center gap-1 border border-default bg-surface px-2 py-2.5 rounded-xl">
+                            <SortableItemHandle className="text-muted-foreground shrink-0">
+                              <Grip width={16} />
+                            </SortableItemHandle>
+                            <Image
+                              alt={raw.label}
+                              className="rounded-md shrink-0"
+                              height={16}
+                              src={`/images/${value}.svg`}
+                              width={16}
+                            />
+                            <Label className="flex-1 text-xs truncate">{raw.label}</Label>
+                            <Button
+                              isIconOnly
+                              aria-label={`移除常看：${raw.label}`}
+                              className="text-muted size-4 min-w-4"
+                              size="sm"
+                              variant="ghost"
+                              onPress={() => toggleFavorite(value)}
+                            >
+                              <Xmark width={12} />
+                            </Button>
+                          </div>
+                        </SortableItem>
+                      )
+                    })}
+                  </Sortable>
+                ) : (
+                  <Typography className="block py-1 text-center" color="muted" type="body-sm">
+                    点击卡片右上角的星标，把常看的平台聚合到首页顶部
+                  </Typography>
+                )}
+              </Surface>
               {sections.map(({ category, values }, index) => {
                 const hiddenCount = values.filter((value) => hiddenItems.includes(value)).length
                 const allHidden = hiddenCount === values.length
@@ -249,7 +310,7 @@ export default function HotSettings() {
                         <AlertDialog.Heading>恢复默认设置？</AlertDialog.Heading>
                       </AlertDialog.Header>
                       <AlertDialog.Body>
-                        该操作会重置热榜的分类顺序、平台排序与显示配置，并恢复为系统默认状态。
+                        该操作会重置热榜的分类顺序、平台排序、显示配置与常看收藏，并恢复为系统默认状态。
                       </AlertDialog.Body>
                       <AlertDialog.Footer>
                         <Button slot="close" variant="tertiary">
