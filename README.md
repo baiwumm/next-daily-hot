@@ -13,19 +13,14 @@
 
 ---
 
-### 📺 预览
+### 📺 宣传片
 
 <div align="center">
-  <video
-    src="https://github.com/baiwumm/daily-trending/releases/download/promo/daily-trending-56s.mp4"
-    poster="https://raw.githubusercontent.com/baiwumm/daily-trending/main/public/video-poster.png"
-    width="90%"
-    controls
-    preload="none"
-    playsinline
-  ></video>
+  <a href="https://github.com/baiwumm/daily-trending/releases/tag/promo" title="观看 56 秒宣传片">
+    <img src="./public/video-poster.png" width="90%" alt="今日热榜产品宣传片封面：48 个平台的热榜，一页扫完" />
+  </a>
   <br />
-  <sub>56 秒 · 1080p · 带口播与字幕 ｜ 播不出来？<a href="https://github.com/baiwumm/daily-trending/releases/download/promo/daily-trending-56s.mp4">直接下载 mp4</a></sub>
+  <sub>56 秒 · 1080p · 带口播与中英字幕 ｜ 点封面进 Release 页取片，或<a href="https://github.com/baiwumm/daily-trending/releases/download/promo/daily-trending-56s.mp4">直接下载 mp4</a></sub>
 </div>
 
 ### 🚀 特性
