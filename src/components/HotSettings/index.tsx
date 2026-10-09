@@ -127,7 +127,7 @@ export default function HotSettings() {
               </Modal.Heading>
             </Modal.Header>
             <Modal.Body className="space-y-3">
-              {/* 常看管理：跨分类收藏的平台置顶聚合，拖拽调整顺序，× 移除（星标入口在每张卡片右上角） */}
+              {/* 常看管理：跨分类收藏的平台置顶聚合，拖拽调整顺序，× 移除（星标入口在每张卡片底部刷新按钮旁） */}
               <Surface className="flex flex-col gap-2.5 rounded-2xl border p-4" variant="transparent">
                 <div className="flex items-center gap-2">
                   <StarFill className="text-warning" width={14} />
@@ -180,7 +180,7 @@ export default function HotSettings() {
                   </Sortable>
                 ) : (
                   <Typography className="block py-1 text-center" color="muted" type="body-sm">
-                    点击卡片右上角的星标，把常看的平台聚合到首页顶部
+                    点击卡片底部刷新按钮旁的星标，把常看的平台聚合到首页顶部
                   </Typography>
                 )}
               </Surface>
