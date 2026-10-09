@@ -17,6 +17,7 @@ const hotItemsConfig = [
       { value: 'quark', label: '夸克', tip: '今日热点' },
       { value: 'thepaper', label: '澎湃新闻', tip: '热榜' },
       { value: 'zhihu-daily', label: '知乎日报', tip: '推荐榜' },
+      { value: 'sina-news', label: '新浪新闻', tip: '热点榜' },
     ],
   },
   {
@@ -27,22 +28,24 @@ const hotItemsConfig = [
       { value: 'baidutieba', label: '百度贴吧', tip: '热议榜' },
       { value: 'hupu', label: '虎扑', tip: '步行街热帖', suffix: '亮' },
       { value: 'woshipm', label: '人人都是产品经理', tip: '热榜' },
+      { value: 'smzdm', label: '什么值得买', tip: '热榜' },
     ],
   },
   {
     category: '财经',
     children: [
+      { value: '10jqka', label: '同花顺', tip: '热榜' },
+      { value: 'eastmoney', label: '东方财富', tip: '快讯' },
+      { value: 'cls', label: '财联社', tip: '热榜' },
       { value: 'wallstcn', label: '华尔街见闻', tip: '热文榜' },
       { value: 'jin10', label: '金十数据', tip: '快讯' },
-      { value: 'cls', label: '财联社', tip: '热榜' },
-      { value: 'eastmoney', label: '东方财富', tip: '快讯' },
     ],
   },
   {
     category: '科技数码',
     children: [
-      { value: 'juejin', label: '稀土掘金', tip: '热榜' },
       { value: 'github-trending', label: 'Github', tip: '热门仓库', suffix: <Star width={12} /> },
+      { value: 'juejin', label: '稀土掘金', tip: '热榜' },
       { value: 'hello-github', label: 'HelloGithub', tip: '精选' },
       { value: 'csdn', label: 'CSDN', tip: '热榜' },
       { value: '36kr', label: '36氪', tip: '24小时热榜' },
@@ -77,6 +80,7 @@ const hotItemsConfig = [
   {
     category: '游戏',
     children: [
+      { value: 'steam', label: 'Steam', tip: '热销榜' },
       { value: 'lol', label: '英雄联盟', tip: '更新公告' },
       { value: 'gp', label: '和平精英', tip: '官方资讯' },
       { value: 'yjwujian', label: '永劫无间', tip: '官方资讯' },
