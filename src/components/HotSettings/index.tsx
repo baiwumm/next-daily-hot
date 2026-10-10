@@ -23,6 +23,7 @@ import {
   Surface,
 } from '@heroui/react'
 import { motion } from 'motion/react'
+import NumberFlow from '@number-flow/react'
 import { useMemo } from 'react'
 
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable'
@@ -241,7 +242,7 @@ export default function HotSettings() {
                         </Button>
                       </div>
                       <Typography className="ml-auto" color="muted" type="body-sm">
-                        {values.length - hiddenCount}/{values.length}
+                        <NumberFlow value={values.length - hiddenCount} />/<NumberFlow value={values.length} />
                       </Typography>
                     </div>
                     {/* 平台层：分类内拖拽排序 + 单独显隐（样式与初版单行一致，分类归属由区块本身表达） */}
