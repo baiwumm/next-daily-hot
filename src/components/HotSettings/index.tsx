@@ -136,7 +136,7 @@ export default function HotSettings() {
                   <StarFill className="text-warning" width={14} />
                   <h2 className="font-black">常看</h2>
                   <Chip className="ml-auto" size="sm" variant="soft">
-                    {favoriteItems.length}
+                    <NumberFlow value={favoriteItems.length} />
                   </Chip>
                 </div>
                 {favoriteItems.length ? (
@@ -242,7 +242,7 @@ export default function HotSettings() {
                         </Button>
                       </div>
                       <Typography className="ml-auto" color="muted" type="body-sm">
-                        <NumberFlow value={values.length - hiddenCount} />/<NumberFlow value={values.length} />
+                        <NumberFlow value={values.length - hiddenCount} />/{values.length}
                       </Typography>
                     </div>
                     {/* 平台层：分类内拖拽排序 + 单独显隐（样式与初版单行一致，分类归属由区块本身表达） */}
