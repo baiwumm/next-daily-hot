@@ -23,12 +23,7 @@ import { useRequest } from '@/hooks/use-request'
 import { smoothScrollTo } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 
-/** 卡片作用域：常看分节与原分类分节可能同时渲染同一平台，搜索跳转靠 scope 精确定位到其中一张 */
-interface HotCardProps extends HotListConfig {
-  scope?: 'favorite'
-}
-
-function HotCard({ value, label, tip, prefix, suffix, scope }: HotCardProps) {
+function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
   const setUpdateTime = useAppStore((state) => state.setUpdateTime)
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true })
@@ -123,21 +118,21 @@ function HotCard({ value, label, tip, prefix, suffix, scope }: HotCardProps) {
   const [highlightIndex, setHighlightIndex] = useState<number | null>(null)
 
   useEffect(() => {
-    if (searchJump?.value !== value || searchJump.scope !== scope || !ref.current) return
+    if (searchJump?.value !== value || !ref.current) return
 
     // 滚动到卡片垂直居中的位置（smoothScrollTo 为 rAF 自绘动画，跨环境行为一致）
     const rect = ref.current.getBoundingClientRect()
     const targetTop = rect.top + window.scrollY - (window.innerHeight - rect.height) / 2
 
     smoothScrollTo(targetTop)
-  }, [searchJump, scope, value])
+  }, [searchJump, value])
 
   useEffect(() => {
-    if (searchJump?.value !== value || searchJump.scope !== scope || !data?.length) return
+    if (searchJump?.value !== value || !data?.length) return
 
     setHighlightIndex(searchJump.index >= 0 ? searchJump.index : null)
     setSearchJump(null)
-  }, [searchJump, scope, data, value, setSearchJump])
+  }, [searchJump, data, value, setSearchJump])
 
   // 高亮短暂保留后清除，避免常亮干扰
   useEffect(() => {

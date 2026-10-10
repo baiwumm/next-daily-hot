@@ -66,8 +66,8 @@ interface AppState {
   /** 记录一次抓取排名并派生趋势：与上次数据指纹相同则幂等跳过（StrictMode 双跑 / 缓存命中均安全）；基准过期或新条目过半时熔断本轮标记 */
   recordRankSnapshot: (value: HotValue, hash: string, ranks: Record<string, number>) => void
 
-  /** 搜索跳转信号（瞬态）：index 为 -1 表示只定位到卡片；token 递增以支持重复跳转同一目标；scope 定位常看分节或原分类分节的同名卡片 */
-  searchJump: { value: HotValue; index: number; token: number; scope?: 'favorite' } | null
+  /** 搜索跳转信号（瞬态）：index 为 -1 表示只定位到卡片；token 递增以支持重复跳转同一目标 */
+  searchJump: { value: HotValue; index: number; token: number } | null
   setSearchJump: (jump: AppState['searchJump']) => void
 }
 

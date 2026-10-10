@@ -27,15 +27,16 @@ export default function Home() {
   const categoryOrder = useAppStore((state) => state.categoryOrder)
   const favoriteItems = useAppStore((state) => state.favoriteItems)
 
-  // 分节数据：常看收藏（跨分类聚合，置顶）+ 分类顺序（用户排序）× 块内平台顺序（用户排序）× 排除设置里隐藏的平台；
-  // 读取时归一化——配置新增的分类/平台自动补尾，下线的自动剔除，全部隐藏的分节不渲染
+  // 分节数据：常看收藏（置顶，收藏后即从原分类移入）+ 分类顺序（用户排序）× 块内平台顺序（用户排序）
+  // × 排除设置里隐藏的平台；读取时归一化——配置新增的分类/平台自动补尾，下线的自动剔除，无卡片的分节不渲染
   const sections = useMemo(() => {
     const hiddenSet = new Set(hiddenItems ?? [])
+    const favSet = new Set(favoriteItems)
     const favorites = favoriteItems.filter((value) => !hiddenSet.has(value) && HOT_ITEMS.raw(value))
     const categorySections = getOrderedCategories(categoryOrder)
       .map((category) => ({
         category,
-        values: getCategoryValues(sortItems, category).filter((value) => !hiddenSet.has(value)),
+        values: getCategoryValues(sortItems, category).filter((value) => !hiddenSet.has(value) && !favSet.has(value)),
       }))
       .filter(({ values }) => values.length > 0)
 
@@ -110,7 +111,7 @@ export default function Home() {
                     {/* 每张卡独立 BlurFade（自身 useInView once 触发淡入，与兄弟状态解耦）：
                         不用父级 stagger variants——显隐/重排后新插入的卡可能卡在 hidden 态，产生空白占位 */}
                     <BlurFade className="h-full" delay={Math.min(index * 0.04, 0.24)}>
-                      <HotCard {...raw} scope={category === FAVORITE_CATEGORY ? 'favorite' : undefined} />
+                      <HotCard {...raw} />
                     </BlurFade>
                   </motion.div>
                 )

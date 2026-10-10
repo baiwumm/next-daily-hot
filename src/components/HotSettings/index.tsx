@@ -1,17 +1,18 @@
 /*
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2025-11-20 11:05:40
- * @LastEditTime: 2026-10-09 09:06:53
+ * @LastEditTime: 2026-10-10 09:42:57
  * @Description: 热榜显示（两层排序：分类层 ↑/↓ 调整顺序与整体显隐；平台层分类内拖拽排序与单独显隐）
  */
 'use client'
 import type { HotCategory, HotValue } from '@/enums'
 
-import { ArrowDown, ArrowUp, BucketPaint, Gear, Grip, StarFill, Xmark } from '@gravity-ui/icons'
+import { ArrowDown, ArrowUp, BucketPaint, Gear, Grip, Star, StarFill, Xmark } from '@gravity-ui/icons'
 import {
   AlertDialog,
   Button,
   Checkbox,
+  Chip,
   cn,
   Label,
   Modal,
@@ -123,7 +124,9 @@ export default function HotSettings() {
                   </Modal.Icon>
                   <h1 className="font-bold">热榜设置</h1>
                 </div>
-                <Description>星标收藏的常看平台置顶聚合；分类用箭头调整顺序与显隐，平台在分类内拖拽排序。</Description>
+                <Description>
+                  星标收藏的常看平台置顶聚合，并从原分类移入常看；分类用箭头调整顺序与显隐，平台行可拖拽排序、点星标收藏、勾选控制显隐。
+                </Description>
               </Modal.Heading>
             </Modal.Header>
             <Modal.Body className="space-y-3">
@@ -132,9 +135,9 @@ export default function HotSettings() {
                 <div className="flex items-center gap-2">
                   <StarFill className="text-warning" width={14} />
                   <h2 className="font-black">常看</h2>
-                  <Typography className="ml-auto" color="muted" type="body-sm">
+                  <Chip className="ml-auto" size="sm" variant="soft">
                     {favoriteItems.length}
-                  </Typography>
+                  </Chip>
                 </div>
                 {favoriteItems.length ? (
                   <Sortable
@@ -204,6 +207,7 @@ export default function HotSettings() {
                         aria-label={`显示分类：${category}`}
                         isIndeterminate={someHidden}
                         isSelected={!allHidden}
+                        variant="secondary"
                         onChange={(checked) => toggleCategory(category, checked)}
                       >
                         <Checkbox.Content className="flex items-center gap-2">
@@ -268,6 +272,7 @@ export default function HotSettings() {
                                   'data-[selected=true]:bg-accent-soft hover:bg-accent-soft',
                                 )}
                                 isSelected={!hiddenItems.includes(value)}
+                                variant="secondary"
                                 onChange={(selected) => togglePlatform(value, selected)}
                               >
                                 <Checkbox.Content className="flex flex-row items-center justify-between gap-1 w-full">
@@ -283,6 +288,30 @@ export default function HotSettings() {
                                       width={16}
                                     />
                                     <Label className="flex-1 text-xs truncate">{raw.label}</Label>
+                                    {/* 行内星标：就地收藏/取消常看，与卡片底部星标同一语义（收藏后平台移入常看分节） */}
+                                    <Tooltip delay={0}>
+                                      <Button
+                                        isIconOnly
+                                        aria-label={
+                                          favoriteItems.includes(value)
+                                            ? `取消常看：${raw.label}`
+                                            : `设为常看：${raw.label}`
+                                        }
+                                        className={cn(
+                                          'size-4 min-w-4',
+                                          favoriteItems.includes(value) ? 'text-warning' : 'text-muted',
+                                        )}
+                                        size="sm"
+                                        variant="ghost"
+                                        onPress={() => toggleFavorite(value)}
+                                      >
+                                        {favoriteItems.includes(value) ? <StarFill width={12} /> : <Star width={12} />}
+                                      </Button>
+                                      <Tooltip.Content showArrow>
+                                        <Tooltip.Arrow />
+                                        {favoriteItems.includes(value) ? '取消常看' : '设为常看'}
+                                      </Tooltip.Content>
+                                    </Tooltip>
                                   </div>
                                   <Checkbox.Control className="size-4 shrink-0">
                                     <Checkbox.Indicator />
