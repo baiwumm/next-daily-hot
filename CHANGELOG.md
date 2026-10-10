@@ -1,5 +1,44 @@
 # Changelog
 
+## [3.13.0](https://github.com/baiwumm/daily-trending/compare/v3.12.0...v3.13.0) (2026-10-10)
+
+### ✨ Features | 新功能
+
+* 收藏策略改为「收藏即从原分类移入常看」，设置面板支持行内星标收藏 ([3328ea8](https://github.com/baiwumm/daily-trending/commit/3328ea8fdef7fabb7d8923ed4498d8cdd2689837))
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **components:** 平台图标改用原生 img，根除非正方形 SVG 的 next/image 尺寸警告 ([8db38ae](https://github.com/baiwumm/daily-trending/commit/8db38aeaf603957780a5359c8ecaf05d084ec3cc))
+* **components:** 弹窗滚动容器加 overscroll-contain，阻断滚到边界后的滚动链穿透 ([f631879](https://github.com/baiwumm/daily-trending/commit/f631879e894d69fea5cc7f43944016430e02d6dd))
+* **HotCard:** 请求未触发的卡片保持骨架态，不再误显加载失败文案 ([af91838](https://github.com/baiwumm/daily-trending/commit/af91838c2b43b0c699cc8c01aef45097f2047924))
+* **HotSearch:** scrollIntoView 仅跟随键盘导航，消除 hover 激活与滚动的自激励跳动 ([253c2e8](https://github.com/baiwumm/daily-trending/commit/253c2e8a59b9ba088a9710b4d91e089fefd80e4e))
+* **lib:** successResponse 出口集中消毒，拦截上游异常条目保护客户端渲染 ([060cdfd](https://github.com/baiwumm/daily-trending/commit/060cdfd5c5e712bd924e9bc97a46ceb5dd9327e4))
+
+### 🎫 Chores | 其他更新
+
+* 删除 README 改用内联播放器后不再引用的 video-poster.png ([b820cc0](https://github.com/baiwumm/daily-trending/commit/b820cc045ab5247f95a76d0b7df7d69ca43bb9fe))
+* 删除预览区改用宣传片后不再引用的 dark.png ([3d4d6c9](https://github.com/baiwumm/daily-trending/commit/3d4d6c91e37b5dea40be84dacdbacd7eb2a5b8da))
+
+### 📝 Documentation | 文档
+
+* AGENTS.md 去掉组件数量硬编码 ([5829c22](https://github.com/baiwumm/daily-trending/commit/5829c224d122bcd2df0f619885f1d5800f0857b7))
+* README 宣传片改用 GitHub 原生内联播放器 ([27dc7fd](https://github.com/baiwumm/daily-trending/commit/27dc7fd122e2fc4d920916d5ba4a257122eaeda7)), closes [#20](https://github.com/baiwumm/daily-trending/issues/20)
+
+### 💄 Styles | 风格
+
+* **HotSearch:** 搜索列表恢复显示原生滚动条，保留滚动阴影 ([74ec854](https://github.com/baiwumm/daily-trending/commit/74ec8543d9f1478548d61751284e4f4a62fdd418))
+* **HotSearch:** 搜索结果列表改用 ScrollShadow，阴影提示可滚动方向 ([a10e78f](https://github.com/baiwumm/daily-trending/commit/a10e78fb43416f592aa0e9c7db4bb5e4f10c2084))
+
+### ♻ Code Refactoring | 代码重构
+
+* enums 目录更名 config，主配置文件改名 hot-list.tsx ([4a6b4c3](https://github.com/baiwumm/daily-trending/commit/4a6b4c36665f991cda5c25a730db4dacf69573ba))
+* **HotCard:** RowComponent 改名 HotListRow，名称表意化且与 HotListVirtual 风格一致 ([1638191](https://github.com/baiwumm/daily-trending/commit/16381914856c5de90d45506e2c0312e41f66f27f))
+* **page:** 挂载前整页骨架与分类分节布局同构，消除挂载跳动 ([042ddd7](https://github.com/baiwumm/daily-trending/commit/042ddd75354762ea1e4baa31675bb82e03742f60))
+
+### ⚡ Performance Improvements | 性能优化
+
+* **HotSearch:** 搜索索引写入 sessionStorage 会话缓存，窗口内免重复拉取 ([39035ea](https://github.com/baiwumm/daily-trending/commit/39035ea17cd819b29a07442b6ed7c14ab7857d11))
+
 ## [3.12.0](https://github.com/baiwumm/daily-trending/compare/v3.11.0...v3.12.0) (2026-10-09)
 
 ### ✨ Features | 新功能
