@@ -135,7 +135,7 @@ export default function HotSettings() {
                 <div className="flex items-center gap-2">
                   <StarFill className="text-warning" width={14} />
                   <h2 className="font-black">常看</h2>
-                  <Chip className="ml-auto" size="sm" variant="soft">
+                  <Chip className="ml-auto">
                     <NumberFlow value={favoriteItems.length} />
                   </Chip>
                 </div>

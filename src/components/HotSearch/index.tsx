@@ -325,12 +325,12 @@ function HotSearch() {
                 onMouseLeave={() => setActiveIndex(-1)}
               >
                 {pendingCount > 0 && (
-                  <Typography className="block px-2 py-1.5" color="muted" type="body-sm">
+                  <Typography className="block px-2 py-1.5" color="muted" type="body-xs">
                     正在索引平台数据（剩余 {pendingCount} 个）…
                   </Typography>
                 )}
                 {!rows.length ? (
-                  <Typography className="block px-3 py-8 text-center" color="muted" type="body-sm">
+                  <Typography className="block px-3 py-8 text-center" color="muted" type="body-xs">
                     没有匹配的结果
                   </Typography>
                 ) : (
@@ -341,7 +341,7 @@ function HotSearch() {
                     return (
                       <Fragment key={row.type === 'platform' ? `p-${row.value}` : `e-${row.value}-${row.index}`}>
                         {showHeader && (
-                          <Typography className="block px-2 pt-2 pb-1" color="muted" type="body-sm">
+                          <Typography className="block px-2 pt-2 pb-1" color="muted" type="body-xs">
                             {row.type === 'platform' ? '平台' : '条目'}
                           </Typography>
                         )}
@@ -386,10 +386,10 @@ function HotSearch() {
               </ScrollShadow>
             </Modal.Body>
             <Modal.Footer className="flex-wrap items-center gap-x-3 gap-y-1 justify-between">
-              <Typography className="whitespace-nowrap" color="muted" type="body-sm">
+              <Typography className="whitespace-nowrap" color="muted" type="body-xs">
                 ↑↓ 选择 · Enter 跳转 · Esc 关闭
               </Typography>
-              <Typography className="whitespace-nowrap" color="muted" type="body-sm">
+              <Typography className="whitespace-nowrap" color="muted" type="body-xs">
                 已索引 {visibleValues.filter((item) => index[item.value]).length}/{visibleValues.length} 平台
               </Typography>
             </Modal.Footer>
