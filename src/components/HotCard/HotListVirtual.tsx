@@ -6,7 +6,7 @@ import { useVirtualizer } from '@tanstack/react-virtual'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef, useState } from 'react'
 
-import RowComponent from './RowComponent'
+import HotListRow from './HotListRow'
 
 export default function HotListVirtual({
   data,
@@ -84,7 +84,7 @@ export default function HotListVirtual({
                 data-index={virtualRow.index}
                 style={{ transform: `translateY(${virtualRow.start}px)` }}
               >
-                <RowComponent
+                <HotListRow
                   data={data}
                   highlightIndex={highlight === index ? highlight : null}
                   index={index}
