@@ -154,29 +154,36 @@ export default function HotSettings() {
 
                       return (
                         <SortableItem key={value} value={value}>
-                          <div className="flex items-center gap-1 border border-default bg-surface px-2 py-2.5 rounded-xl">
-                            <SortableItemHandle className="text-muted-foreground shrink-0">
-                              <Grip width={16} />
-                            </SortableItemHandle>
-                            <img
-                              alt={raw.label}
-                              className="rounded-md shrink-0"
-                              height={16}
-                              src={`/images/${value}.svg`}
-                              width={16}
-                            />
-                            <Label className="flex-1 text-xs truncate">{raw.label}</Label>
-                            <Button
-                              isIconOnly
-                              aria-label={`移除常看：${raw.label}`}
-                              className="text-muted size-5"
-                              size="sm"
-                              variant="ghost"
-                              onPress={() => toggleFavorite(value)}
-                            >
-                              <Xmark width={12} />
-                            </Button>
-                          </div>
+                          {/* layout：收藏/移除常看时剩余条目 FLIP 平滑滑动，与分类块拖拽重排同一弹簧参数 */}
+                          <motion.div
+                            layout
+                            className="h-full"
+                            transition={{ type: 'spring', stiffness: 500, damping: 40 }}
+                          >
+                            <div className="flex items-center gap-1 border border-default bg-surface px-2 py-2.5 rounded-xl">
+                              <SortableItemHandle className="text-muted-foreground shrink-0">
+                                <Grip width={16} />
+                              </SortableItemHandle>
+                              <img
+                                alt={raw.label}
+                                className="rounded-md shrink-0"
+                                height={16}
+                                src={`/images/${value}.svg`}
+                                width={16}
+                              />
+                              <Label className="flex-1 text-xs truncate">{raw.label}</Label>
+                              <Button
+                                isIconOnly
+                                aria-label={`移除常看：${raw.label}`}
+                                className="text-muted size-5"
+                                size="sm"
+                                variant="ghost"
+                                onPress={() => toggleFavorite(value)}
+                              >
+                                <Xmark width={12} />
+                              </Button>
+                            </div>
+                          </motion.div>
                         </SortableItem>
                       )
                     })}
