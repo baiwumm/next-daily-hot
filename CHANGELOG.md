@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.13.1](https://github.com/baiwumm/daily-trending/compare/v3.13.0...v3.13.1) (2026-10-10)
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **HotSearch:** 移出搜索列表时清除 hover 高亮，activeIndex 置 -1 表示无激活项 ([69a8916](https://github.com/baiwumm/daily-trending/commit/69a89162c26e3d8bc8b85c126142026ebb8ddeb2))
+* **HotSearch:** 超长标题按关键词锚定切片展示，保证命中词必然可见 ([2320b0b](https://github.com/baiwumm/daily-trending/commit/2320b0bbc8454a2644c9dc6c40de9d12dcd092db))
+* **Sortable:** 拖拽投影改用 drop-shadow，贴合圆角轮廓消除方形底色 ([682e8d2](https://github.com/baiwumm/daily-trending/commit/682e8d22a9e173e7a366c56069a489a16ab67299))
+
+### 💄 Styles | 风格
+
+* **HotSettings:** 分类显隐计数接入 NumberFlow 数字滚动动画 ([59064f3](https://github.com/baiwumm/daily-trending/commit/59064f392aab230070e300b79e983373e1c3664e))
+* **HotSettings:** 常看条目补 layout FLIP 动画，收藏/移除时与分类块一致平滑滑动 ([817f8c4](https://github.com/baiwumm/daily-trending/commit/817f8c439bf1e7b25c10839b6b9697a31d643a8b))
+* **HotSettings:** 常看计数接入 NumberFlow，分类计数固定分母退回纯文本 ([fe24533](https://github.com/baiwumm/daily-trending/commit/fe245335805ef48755ffb1c91a9feb5249ede9bc))
+* **HotSettings:** 平台行星标按钮移至勾选框旁成组右对齐 ([0a12eab](https://github.com/baiwumm/daily-trending/commit/0a12eab9cac000753f283b6154d3ed89c637f7f4))
+* 修改网页标题 ([06166ab](https://github.com/baiwumm/daily-trending/commit/06166ab927134f9ea627e936c2037b92e29c58a7))
+* 样式微调 ([930957e](https://github.com/baiwumm/daily-trending/commit/930957e9405b4e47b044815cee4452dd27e144d8))
+
 ## [3.13.0](https://github.com/baiwumm/daily-trending/compare/v3.12.0...v3.13.0) (2026-10-10)
 
 ### ✨ Features | 新功能
