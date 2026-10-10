@@ -174,8 +174,13 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
           initial={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2, ease: 'easeInOut' }}
         >
-          <Chip className="px-2 py-0.5" color={data?.length ? 'success' : 'danger'} size="sm" variant="soft">
-            {loading ? (
+          <Chip
+            className="px-2 py-0.5"
+            color={!isInView || loading ? undefined : data?.length ? 'success' : 'danger'}
+            size="sm"
+            variant="soft"
+          >
+            {!isInView ? null : loading ? (
               <Spinner size="sm" />
             ) : data?.length ? (
               <CircleCheckFill width={14} />
@@ -189,8 +194,10 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       <Separator />
       <Card.Content className="relative py-0">
         <ScrollShadow hideScrollBar className="h-81.75 relative" visibility="bottom">
-          {loading ? <SkeletonCard /> : null}
-          {loading ? null : !data?.length ? (
+          {/* 「请求未触发」（useInView 未命中）与加载中共用骨架，避免还没轮到加载就被误读成加载失败 */}
+          {loading || !isInView ? (
+            <SkeletonCard />
+          ) : !data?.length ? (
             <Description className="flex h-full justify-center items-center px-8 text-center leading-5">
               抱歉，可能服务器遇到问题了，请稍后重试，或者打开右上角设置关闭热榜显示！🤔
             </Description>
@@ -212,7 +219,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
       <Card.Footer className="p-3">
         <div className="flex text-center justify-between w-full items-center space-x-4 text-small h-5">
           <Description className="w-1/2">
-            {loading ? '正在加载中...' : error ? '更新失败' : `${relativeText}更新`}
+            {loading || !isInView ? '正在加载中...' : error ? '更新失败' : `${relativeText}更新`}
           </Description>
           <Separator className="flex-none" orientation="vertical" />
           <div className="flex w-1/2 justify-center gap-1">
