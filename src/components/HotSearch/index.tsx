@@ -294,7 +294,7 @@ function HotSearch() {
             </Modal.Header>
             {/* overscroll-contain 阻断滚动链：列表滚到边界后，剩余滚量不再传给弹窗背后的页面 */}
             <Modal.Body className="gap-0 p-2 pt-0 overflow-hidden overscroll-contain">
-              <ScrollShadow ref={listRef} hideScrollBar className="max-h-[52vh] overscroll-contain">
+              <ScrollShadow ref={listRef} className="max-h-[52vh] overscroll-contain">
                 {pendingCount > 0 && (
                   <Typography className="block px-2 py-1.5" color="muted" type="body-sm">
                     正在索引平台数据（剩余 {pendingCount} 个）…
