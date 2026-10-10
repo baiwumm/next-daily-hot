@@ -194,8 +194,16 @@ function HotSearch() {
     return () => controller.abort()
   }, [overlayState.isOpen])
 
-  // 激活项滚入可视区（长列表键盘导航时保持可见）
+  // 激活项滚入可视区（仅键盘导航）：↑↓ 会把激活项移出视野需要跟随滚动；
+  // 鼠标 hover 激活的行必然已在光标下，若同样触发 scrollIntoView，会与滚轮滚动形成
+  // 「滚动 → 新行进入光标 → hover 激活 → 列表再滚几像素露出该行 → 下一行进入光标」的自激励循环，
+  // 表现为列表到底后仍在持续轻微跳动
+  const isKeyboardNavRef = useRef(false)
+
   useEffect(() => {
+    if (!isKeyboardNavRef.current) return
+
+    isKeyboardNavRef.current = false
     listRef.current?.querySelector('[data-active="true"]')?.scrollIntoView({ block: 'nearest' })
   }, [activeIndex])
 
@@ -236,9 +244,11 @@ function HotSearch() {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'ArrowDown') {
       event.preventDefault()
+      isKeyboardNavRef.current = true
       setActiveIndex((prev) => Math.min(prev + 1, rows.length - 1))
     } else if (event.key === 'ArrowUp') {
       event.preventDefault()
+      isKeyboardNavRef.current = true
       setActiveIndex((prev) => Math.max(prev - 1, 0))
     }
   }
@@ -311,7 +321,10 @@ function HotSearch() {
                           data-active={i === activeIndex}
                           type="button"
                           onClick={() => activate(row)}
-                          onMouseEnter={() => setActiveIndex(i)}
+                          onMouseEnter={() => {
+                            isKeyboardNavRef.current = false
+                            setActiveIndex(i)
+                          }}
                         >
                           {row.type === 'platform' ? (
                             <>
