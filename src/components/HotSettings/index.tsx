@@ -128,7 +128,7 @@ export default function HotSettings() {
                 </Description>
               </Modal.Heading>
             </Modal.Header>
-            <Modal.Body className="space-y-3">
+            <Modal.Body className="space-y-3 overscroll-contain">
               {/* 常看管理：跨分类收藏的平台置顶聚合，拖拽调整顺序，× 移除（星标入口在每张卡片底部刷新按钮旁） */}
               <Surface className="flex flex-col gap-2.5 rounded-2xl border p-4" variant="transparent">
                 <div className="flex items-center gap-2">
