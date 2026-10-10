@@ -26,12 +26,42 @@ export function errorResponse(): NextResponse {
 }
 
 /**
- * 成功响应：统一封装 + CDN 缓存头
+ * 榜单数据消毒：在响应出口统一兜底上游字段异常——
+ * - 剔除非对象条目、title 非字符串或空白（客户端排名对比与搜索会对 title 调 trim/toLowerCase，异常值直接炸渲染）
+ * - 按 id 去重（重复 id 会导致虚拟列表 React key 冲突）；无 id 的条目不参与去重、原样保留
+ * 只清洗不改结构：IResponse 契约与成功/失败语义不变，各路由无需自行防御
+ */
+function sanitizeHotList(list?: HotListItem[]): HotListItem[] {
+  const seen = new Set<string>()
+
+  return (list ?? []).filter((item) => {
+    if (!item || typeof item.title !== 'string' || !item.title.trim()) {
+      return false
+    }
+
+    if (item.id === undefined || item.id === null) {
+      return true
+    }
+
+    const key = String(item.id)
+
+    if (seen.has(key)) {
+      return false
+    }
+
+    seen.add(key)
+
+    return true
+  })
+}
+
+/**
+ * 成功响应：统一封装 + 出口数据消毒 + CDN 缓存头
  * 空数据按不缓存处理：客户端把空列表视为失败会立即重试，
  * 若被 CDN 缓存会把这份空结果钉住整个缓存窗口，重试拿到的始终是同一份空数据
  */
 export function successResponse(list?: HotListItem[]): NextResponse {
-  const data = list || []
+  const data = sanitizeHotList(list)
   const body: IResponse = {
     msg: RESPONSE.label(RESPONSE.SUCCESS),
     code: RESPONSE.SUCCESS,

@@ -47,7 +47,7 @@ src/
 ├── hooks/                  # use-request.ts（自研 useRequest）、use-is-mobile 等
 ├── lib/
 │   ├── request.ts          # 上游请求公共层：fetchJson / fetchText（统一 UA、15s 超时、revalidate）
-│   ├── response.ts         # successResponse / errorResponse（统一 IResponse + CDN 缓存头）
+│   ├── response.ts         # successResponse / errorResponse（统一 IResponse + CDN 缓存头 + 出口数据消毒）
 │   ├── utils.ts            # fromNow / formatNumber 等纯工具
 │   └── weread.ts           # 微信读书书籍 ID 算法（crypto-js）
 ├── store/useAppStore.ts    # zustand 全局状态（更新时间/心跳/隐藏/排序，persist）
