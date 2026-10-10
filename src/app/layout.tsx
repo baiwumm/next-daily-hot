@@ -27,7 +27,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://hot.baiwumm.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_URL), // 基础 URL,用于补全相对路径
-  title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_DESC}`, // 网站标题
+  title: `${process.env.NEXT_PUBLIC_APP_DESC} - ${process.env.NEXT_PUBLIC_APP_NAME}`, // 网站标题
   description: process.env.NEXT_PUBLIC_APP_DESC, // 网站描述
   applicationName: process.env.NEXT_PUBLIC_APP_NAME, // 应用名称
   authors: [
