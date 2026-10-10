@@ -169,7 +169,7 @@ export default function HotSettings() {
                             <Button
                               isIconOnly
                               aria-label={`移除常看：${raw.label}`}
-                              className="text-muted size-4 min-w-4"
+                              className="text-muted size-5"
                               size="sm"
                               variant="ghost"
                               onPress={() => toggleFavorite(value)}

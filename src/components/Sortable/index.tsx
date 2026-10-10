@@ -130,13 +130,15 @@ function Sortable<T>({
       <DragOverlay>
         {activeId ? (
           <div className="z-50">
-            {/* dnd-kit DragOverlay 需要遍历 children 找到被拖拽项并克隆增强样式，是官方推荐写法 */}
+            {/* dnd-kit DragOverlay 需要遍历 children 找到被拖拽项并克隆增强样式，是官方推荐写法。
+                投影用 drop-shadow 而非 shadow-lg：克隆的是透明包装层，box-shadow 沿边框盒画方形阴影
+                会露出直角底色，drop-shadow 沿内容 alpha 轮廓渲染、贴合子级芯片的圆角 */}
             {React.Children.map(children, (child) => {
               if (React.isValidElement(child) && (child.props as any).value === activeId) {
                 // 修改子元素 props 只能通过 cloneElement（React 官方 API）
                 return React.cloneElement(child as React.ReactElement<any>, {
                   ...(child.props as any),
-                  className: cn((child.props as any).className, 'z-50 shadow-lg'),
+                  className: cn((child.props as any).className, 'z-50 drop-shadow-lg'),
                 })
               }
 
