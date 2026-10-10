@@ -15,10 +15,51 @@ import BlurFade from '@/components/BlurFade'
 import CategoryIndicator from '@/components/CategoryIndicator'
 import HotCard from '@/components/HotCard'
 import SkeletonCard from '@/components/SkeletonCard'
-import { getCategoryValues, getOrderedCategories, FAVORITE_CATEGORY, HOT_ITEMS } from '@/enums'
+import { getCategoryValues, getOrderedCategories, CATEGORY_GROUPS, FAVORITE_CATEGORY, HOT_ITEMS } from '@/enums'
 import { useAppStore } from '@/store/useAppStore'
 
 const gridClassName = 'grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]'
+
+// 挂载前的整页骨架：按配置分类分节、每节渲染实际卡片数，与真实布局同构，挂载切换时不跳动。
+// 只从配置推导（SSR 与客户端首帧完全一致），不读 store 持久化状态，规避 hydration 不匹配
+function SkeletonSections() {
+  return (
+    <div className="space-y-10">
+      {CATEGORY_GROUPS.map(({ category, values }) => (
+        <div key={category} className="flex flex-col gap-3">
+          <Skeleton className="h-5 w-24 rounded-md" />
+          <div className={gridClassName}>
+            {values.map((value) => (
+              <SkeletonHotCard key={value} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function SkeletonHotCard() {
+  return (
+    <Card className="p-0 gap-0">
+      <Card.Header className="flex justify-between items-center flex-row p-3">
+        <div className="flex items-center gap-2">
+          <Skeleton className="size-6 rounded-md" />
+          <Skeleton className="h-4 w-16 rounded-md" />
+        </div>
+        <Skeleton className="h-5 w-14 rounded-full" />
+      </Card.Header>
+      <Separator />
+      <Card.Content className="relative py-0 h-81.75 overflow-hidden">
+        <SkeletonCard />
+      </Card.Content>
+      <Separator />
+      <Card.Footer className="p-3">
+        <Skeleton className="h-4 w-32 rounded-md" />
+      </Card.Footer>
+    </Card>
+  )
+}
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
@@ -51,31 +92,9 @@ export default function Home() {
     return () => clearTimeout(timer)
   }, [])
 
-  // 挂载前渲染骨架网格，避免 SSR 空白 + 全屏 loading 的闪烁
+  // 挂载前渲染与真实布局同构的骨架，避免 SSR 空白 + 全屏 loading 的闪烁
   if (!mounted) {
-    return (
-      <div className={gridClassName}>
-        {Array.from({ length: 8 }, (_, index) => (
-          <Card key={index + 1} className="p-0 gap-0">
-            <Card.Header className="flex justify-between items-center flex-row p-3">
-              <div className="flex items-center gap-2">
-                <Skeleton className="size-6 rounded-md" />
-                <Skeleton className="h-4 w-16 rounded-md" />
-              </div>
-              <Skeleton className="h-5 w-14 rounded-full" />
-            </Card.Header>
-            <Separator />
-            <Card.Content className="relative py-0 h-81.75 overflow-hidden">
-              <SkeletonCard />
-            </Card.Content>
-            <Separator />
-            <Card.Footer className="p-3">
-              <Skeleton className="h-4 w-32 rounded-md" />
-            </Card.Footer>
-          </Card>
-        ))}
-      </div>
-    )
+    return <SkeletonSections />
   }
 
   return (
