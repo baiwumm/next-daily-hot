@@ -78,7 +78,7 @@ http://localhost:3000
 
 `code` 为 200 成功（CDN 缓存 300 秒，URL 加 `?t=` 时间戳可绕过）、500 失败（不缓存）；`timestamp` 为数据更新时间。
 
-端点 `value` 与上游平台的对应关系以 `src/enums/index.tsx` 的 `hotItemsConfig` 为准（唯一数据源）；`value` 即 `src/app/api/<value>/route.ts` 的目录名。
+端点 `value` 与上游平台的对应关系以 `src/config/hot-list.tsx` 的 `hotItemsConfig` 为准（唯一数据源）；`value` 即 `src/app/api/<value>/route.ts` 的目录名。
 
 > ⚠️ 线上站点已启用 Vercel Security Checkpoint：脚本 / 服务端直连 `https://hot.baiwumm.com/api/*` 会返回 429 挑战页（与 UA 无关）。接口调试请使用本地构建服务（`pnpm build && pnpm start` 后访问 `http://127.0.0.1:3000`）。
 
