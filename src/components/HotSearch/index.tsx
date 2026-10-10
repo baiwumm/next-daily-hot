@@ -318,7 +318,12 @@ function HotSearch() {
             </Modal.Header>
             {/* overscroll-contain 阻断滚动链：列表滚到边界后，剩余滚量不再传给弹窗背后的页面 */}
             <Modal.Body className="gap-0 p-2 pt-0 overflow-hidden overscroll-contain">
-              <ScrollShadow ref={listRef} className="max-h-[52vh] overscroll-contain">
+              {/* onMouseLeave 清除 hover 高亮：activeIndex -1 表示无激活项，↑↓ / 再次 hover 可重新激活 */}
+              <ScrollShadow
+                ref={listRef}
+                className="max-h-[52vh] overscroll-contain"
+                onMouseLeave={() => setActiveIndex(-1)}
+              >
                 {pendingCount > 0 && (
                   <Typography className="block px-2 py-1.5" color="muted" type="body-sm">
                     正在索引平台数据（剩余 {pendingCount} 个）…
@@ -341,7 +346,7 @@ function HotSearch() {
                           </Typography>
                         )}
                         <button
-                          className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left transition-colors${i === activeIndex ? ' bg-accent/10' : ''}`}
+                          className={`flex w-full items-center gap-2 rounded-3xl px-2 py-1.5 text-left transition-colors${i === activeIndex ? ' bg-accent-soft' : ''}`}
                           data-active={i === activeIndex}
                           title={row.type === 'entry' ? row.title : undefined}
                           type="button"
@@ -353,23 +358,21 @@ function HotSearch() {
                         >
                           {row.type === 'platform' ? (
                             <>
-                              <Chip size="sm" variant="soft">
-                                {row.tip}
-                              </Chip>
+                              <Chip size="sm">{row.tip}</Chip>
                               <Typography className="font-medium" type="body-sm">
                                 <HighlightText keyword={query} text={row.label} />
                               </Typography>
                             </>
                           ) : (
                             <>
-                              <Chip className="shrink-0" size="sm" variant="soft">
+                              <Chip className="shrink-0" size="sm">
                                 {row.label}
                               </Chip>
                               <Typography className="flex-1 min-w-0 truncate" type="body-sm">
                                 <HighlightText keyword={query} text={clipAroundKeyword(row.title, query)} />
                               </Typography>
                               {row.hot ? (
-                                <Typography className="shrink-0" color="muted" type="body-sm">
+                                <Typography className="shrink-0" color="muted" type="body-xs">
                                   {formatNumber(row.hot)}
                                 </Typography>
                               ) : null}
