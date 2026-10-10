@@ -288,6 +288,9 @@ export default function HotSettings() {
                                       width={16}
                                     />
                                     <Label className="flex-1 text-xs truncate">{raw.label}</Label>
+                                  </div>
+                                  {/* 星标与勾选框成组靠右对齐 */}
+                                  <div className="flex items-center gap-1 shrink-0">
                                     {/* 行内星标：就地收藏/取消常看，与卡片底部星标同一语义（收藏后平台移入常看分节） */}
                                     <Tooltip delay={0}>
                                       <Button
@@ -312,10 +315,10 @@ export default function HotSettings() {
                                         {favoriteItems.includes(value) ? '取消常看' : '设为常看'}
                                       </Tooltip.Content>
                                     </Tooltip>
+                                    <Checkbox.Control className="size-4 shrink-0">
+                                      <Checkbox.Indicator />
+                                    </Checkbox.Control>
                                   </div>
-                                  <Checkbox.Control className="size-4 shrink-0">
-                                    <Checkbox.Indicator />
-                                  </Checkbox.Control>
                                 </Checkbox.Content>
                               </Checkbox>
                             </motion.div>
