@@ -11,7 +11,6 @@ import type { HotListConfig, IResponse } from '@/types'
 import { ArrowsRotateRight, CircleCheckFill, CircleXmarkFill, Star, StarFill } from '@gravity-ui/icons'
 import { Button, Card, Chip, Description, Label, ScrollShadow, Separator, Spinner, Tooltip } from '@heroui/react'
 import { motion, useInView } from 'motion/react'
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
 import HotListVirtual from './HotListVirtual'
@@ -159,7 +158,7 @@ function HotCard({ value, label, tip, prefix, suffix }: HotListConfig) {
     <Card ref={ref} className="p-0 gap-0">
       <Card.Header className="flex justify-between items-center flex-row p-3">
         <div className="flex items-center gap-2">
-          <Image
+          <img
             alt={`${label}${tip}`}
             className="rounded-md shrink-0"
             height={24}

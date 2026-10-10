@@ -23,7 +23,6 @@ import {
   Surface,
 } from '@heroui/react'
 import { motion } from 'motion/react'
-import Image from 'next/image'
 import { useMemo } from 'react'
 
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable'
@@ -158,7 +157,7 @@ export default function HotSettings() {
                             <SortableItemHandle className="text-muted-foreground shrink-0">
                               <Grip width={16} />
                             </SortableItemHandle>
-                            <Image
+                            <img
                               alt={raw.label}
                               className="rounded-md shrink-0"
                               height={16}
@@ -280,7 +279,7 @@ export default function HotSettings() {
                                     <SortableItemHandle className="text-muted-foreground shrink-0">
                                       <Grip width={16} />
                                     </SortableItemHandle>
-                                    <Image
+                                    <img
                                       alt={raw.label}
                                       className="rounded-md shrink-0"
                                       height={16}
