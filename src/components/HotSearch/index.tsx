@@ -2,6 +2,7 @@
  * @Description: 全局搜索（Ctrl/⌘+K）：跨卡片搜索平台与条目标题，纯客户端内存过滤，无新增接口
  */
 'use client'
+import type { ReactNode } from 'react'
 import type { HotValue } from '@/enums'
 import type { HotListItem, IResponse } from '@/types'
 
@@ -10,6 +11,7 @@ import { Button, Chip, Modal, SearchField, Tooltip, Typography, useOverlayState 
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 
 import { HOT_ITEMS } from '@/enums'
+import { API_CACHE_SECONDS } from '@/enums/response'
 import { formatNumber } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 
@@ -23,13 +25,88 @@ type ResultRow =
   | { type: 'platform'; value: HotValue; label: string; tip: string }
   | { type: 'entry'; value: HotValue; label: string; title: string; hot?: number | string; index: number }
 
+/**
+ * 关键词高亮：在原始大小写文本上定位每次命中（needle 归一化口径与结果过滤一致：trim + 小写），
+ * 命中片段品牌色加粗、其余原样输出。indexOf 循环天然免疫正则特殊字符，也不用担心重叠匹配
+ */
+function HighlightText({ text, keyword }: { text: string; keyword: string }) {
+  const needle = keyword.trim().toLowerCase()
+
+  if (!needle) return text
+
+  const nodes: ReactNode[] = []
+  let cursor = 0
+  let index = text.toLowerCase().indexOf(needle)
+
+  while (index !== -1) {
+    if (index > cursor) {
+      nodes.push(text.slice(cursor, index))
+    }
+
+    nodes.push(
+      <span key={index} className="text-accent font-bold">
+        {text.slice(index, index + needle.length)}
+      </span>,
+    )
+    cursor = index + needle.length
+    index = text.toLowerCase().indexOf(needle, cursor)
+  }
+
+  if (cursor < text.length) {
+    nodes.push(text.slice(cursor))
+  }
+
+  return nodes
+}
+
+/** 搜索索引条目：只存搜索用得到的字段，压缩 sessionStorage 占用（跳转定位靠数组顺序，与卡片数据天然对齐） */
+type SearchIndexItem = Pick<HotListItem, 'title' | 'hot'>
+/** 会话索引缓存：value → 写入时间 + 条目列表 */
+type SearchIndexCache = Partial<Record<HotValue, { ts: number; data: SearchIndexItem[] }>>
+
+const INDEX_CACHE_KEY = 'hot-search-index'
+
+/** 读取并剔除过期条目（与接口缓存窗口对齐；sessionStorage 不存在或损坏时静默回退空对象，SSR 同样安全） */
+function readIndexCache(): SearchIndexCache {
+  try {
+    const raw = sessionStorage.getItem(INDEX_CACHE_KEY)
+    const minTs = Date.now() - API_CACHE_SECONDS * 1000
+
+    return Object.fromEntries(
+      Object.entries(raw ? (JSON.parse(raw) as SearchIndexCache) : {}).flatMap(([value, cached]) =>
+        cached && cached.ts > minTs ? [[value, cached] as const] : [],
+      ),
+    )
+  } catch {
+    return {}
+  }
+}
+
+/** 水合初始索引：缓存条目展开为索引状态，命中平台打开面板时不再重复拉取 */
+function hydrateIndexCache(): Partial<Record<HotValue, SearchIndexItem[]>> {
+  return Object.fromEntries(Object.entries(readIndexCache()).map(([value, entry]) => [value, entry.data]))
+}
+
+/** 写入单个平台的索引缓存（配额超限等失败不影响功能，下次打开仍走网络拉取） */
+function writeIndexCache(value: HotValue, data: SearchIndexItem[]) {
+  try {
+    const cache = readIndexCache()
+
+    cache[value] = { ts: Date.now(), data }
+    sessionStorage.setItem(INDEX_CACHE_KEY, JSON.stringify(cache))
+  } catch {
+    // 静默失败
+  }
+}
+
 function HotSearch() {
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(0)
-  // 搜索索引：平台 → 条目列表（会话级缓存，打开面板时分批补拉未加载的平台）
-  const [index, setIndex] = useState<Partial<Record<HotValue, HotListItem[]>>>({})
+  // 搜索索引：平台 → 条目列表（打开面板时分批补拉未索引的平台；sessionStorage 会话缓存，窗口内免拉取）
+  const [index, setIndex] = useState<Partial<Record<HotValue, SearchIndexItem[]>>>(hydrateIndexCache)
   const [pendingCount, setPendingCount] = useState(0)
-  const fetchedRef = useRef(new Set<HotValue>())
+  // 从缓存水合的平台视为已索引，避免同一会话内重复请求
+  const fetchedRef = useRef(new Set<HotValue>(Object.keys(index) as HotValue[]))
   const listRef = useRef<HTMLDivElement>(null)
 
   // 受控弹层状态：Ctrl/⌘+K 全局快捷键与 Modal 内触发按钮共用
@@ -95,7 +172,11 @@ function HotSearch() {
         if (result.code !== 200 || !result.data?.length) return
 
         fetchedRef.current.add(value)
-        setIndex((prev) => ({ ...prev, [value]: result.data }))
+        // 只留搜索用得到的字段，写穿到会话缓存
+        const items: SearchIndexItem[] = result.data.map(({ title, hot }) => ({ title, hot }))
+
+        setIndex((prev) => ({ ...prev, [value]: items }))
+        writeIndexCache(value, items)
       } catch {
         // 中断或网络失败：留待下次打开重试
       } finally {
@@ -237,7 +318,7 @@ function HotSearch() {
                                 {row.tip}
                               </Chip>
                               <Typography className="font-medium" type="body-sm">
-                                {row.label}
+                                <HighlightText keyword={query} text={row.label} />
                               </Typography>
                             </>
                           ) : (
@@ -246,7 +327,7 @@ function HotSearch() {
                                 {row.label}
                               </Chip>
                               <Typography className="flex-1 min-w-0 truncate" type="body-sm">
-                                {row.title}
+                                <HighlightText keyword={query} text={row.title} />
                               </Typography>
                               {row.hot ? (
                                 <Typography className="shrink-0" color="muted" type="body-sm">
