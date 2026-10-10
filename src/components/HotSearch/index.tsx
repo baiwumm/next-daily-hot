@@ -7,7 +7,7 @@ import type { HotValue } from '@/config/hot-list'
 import type { HotListItem, IResponse } from '@/types'
 
 import { Magnifier } from '@gravity-ui/icons'
-import { Button, Chip, Modal, SearchField, Tooltip, Typography, useOverlayState } from '@heroui/react'
+import { Button, Chip, Modal, ScrollShadow, SearchField, Tooltip, Typography, useOverlayState } from '@heroui/react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 
 import { HOT_ITEMS } from '@/config/hot-list'
@@ -294,7 +294,7 @@ function HotSearch() {
             </Modal.Header>
             {/* overscroll-contain 阻断滚动链：列表滚到边界后，剩余滚量不再传给弹窗背后的页面 */}
             <Modal.Body className="gap-0 p-2 pt-0 overflow-hidden overscroll-contain">
-              <div ref={listRef} className="max-h-[52vh] overflow-y-auto overscroll-contain">
+              <ScrollShadow ref={listRef} hideScrollBar className="max-h-[52vh] overscroll-contain">
                 {pendingCount > 0 && (
                   <Typography className="block px-2 py-1.5" color="muted" type="body-sm">
                     正在索引平台数据（剩余 {pendingCount} 个）…
@@ -355,7 +355,7 @@ function HotSearch() {
                     )
                   })
                 )}
-              </div>
+              </ScrollShadow>
             </Modal.Body>
             <Modal.Footer className="flex-wrap items-center gap-x-3 gap-y-1 justify-between">
               <Typography className="whitespace-nowrap" color="muted" type="body-sm">
