@@ -38,7 +38,7 @@ src/
 │   ├── globals.css         # Tailwind v4 入口 + HeroUI 主题变量
 │   ├── sitemap.ts / robots.ts / manifest.json / opengraph-image.tsx  # SEO/PWA
 │   └── api/<platform>/route.ts   # 各榜单 API（目录名 = 榜单 value，数量以 hotItemsConfig 为准）
-├── components/             # 14 个组件，PascalCase 目录 + index.tsx
+├── components/             # PascalCase 目录 + index.tsx
 │   ├── HotCard/            # 榜单卡片（含 HotListVirtual 虚拟列表）
 │   └── HotSettings/ Sortable/  # 卡片显示/隐藏/拖拽排序设置
 ├── enums/
