@@ -59,6 +59,30 @@ function HighlightText({ text, keyword }: { text: string; keyword: string }) {
   return nodes
 }
 
+/** 标题切片的字符预算：命中词前约 1/3 作上下文，其余给命中词及后文（窄屏下超预算部分由 truncate 兜底） */
+const TITLE_SNIPPET_BUDGET = 30
+
+/**
+ * 关键词锚定切片：超长标题以首次命中位置为中心截取窗口、两端补省略号，
+ * 保证命中词必然在可见范围内（单行省略号会裁掉尾部，深命中位置的高亮会随之丢失）。
+ * 类似搜索结果摘要的展示逻辑：围绕关键词给上下文，而不是从标题开头硬截
+ */
+function clipAroundKeyword(text: string, keyword: string): string {
+  const needle = keyword.trim().toLowerCase()
+
+  if (!needle || text.length <= TITLE_SNIPPET_BUDGET) return text
+
+  const index = text.toLowerCase().indexOf(needle)
+
+  // 无命中（防御：条目行本应必有命中）时退化为头部截断
+  if (index === -1) return `${text.slice(0, TITLE_SNIPPET_BUDGET)}…`
+
+  const start = Math.max(0, index - Math.floor(TITLE_SNIPPET_BUDGET / 3))
+  const end = Math.min(text.length, start + TITLE_SNIPPET_BUDGET)
+
+  return `${start > 0 ? '…' : ''}${text.slice(start, end)}${end < text.length ? '…' : ''}`
+}
+
 /** 搜索索引条目：只存搜索用得到的字段，压缩 sessionStorage 占用（跳转定位靠数组顺序，与卡片数据天然对齐） */
 type SearchIndexItem = Pick<HotListItem, 'title' | 'hot'>
 /** 会话索引缓存：value → 写入时间 + 条目列表 */
@@ -319,6 +343,7 @@ function HotSearch() {
                         <button
                           className={`flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left transition-colors${i === activeIndex ? ' bg-accent/10' : ''}`}
                           data-active={i === activeIndex}
+                          title={row.type === 'entry' ? row.title : undefined}
                           type="button"
                           onClick={() => activate(row)}
                           onMouseEnter={() => {
@@ -341,7 +366,7 @@ function HotSearch() {
                                 {row.label}
                               </Chip>
                               <Typography className="flex-1 min-w-0 truncate" type="body-sm">
-                                <HighlightText keyword={query} text={row.title} />
+                                <HighlightText keyword={query} text={clipAroundKeyword(row.title, query)} />
                               </Typography>
                               {row.hot ? (
                                 <Typography className="shrink-0" color="muted" type="body-sm">
