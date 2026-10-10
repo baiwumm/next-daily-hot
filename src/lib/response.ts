@@ -2,7 +2,7 @@ import type { HotListItem, IResponse } from '@/types'
 
 import { NextResponse } from 'next/server'
 
-import { API_CACHE_SECONDS, RESPONSE } from '@/enums/response'
+import { API_CACHE_SECONDS, RESPONSE } from '@/config/response'
 
 /**
  * 成功响应缓存头：CDN 边缘缓存窗口与服务端 fetch revalidate、客户端刷新冷却三层同源，

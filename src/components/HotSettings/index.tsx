@@ -5,7 +5,7 @@
  * @Description: 热榜显示（两层排序：分类层 ↑/↓ 调整顺序与整体显隐；平台层分类内拖拽排序与单独显隐）
  */
 'use client'
-import type { HotCategory, HotValue } from '@/enums'
+import type { HotCategory, HotValue } from '@/config/hot-list'
 
 import { ArrowDown, ArrowUp, BucketPaint, Gear, Grip, Star, StarFill, Xmark } from '@gravity-ui/icons'
 import {
@@ -27,7 +27,7 @@ import Image from 'next/image'
 import { useMemo } from 'react'
 
 import { Sortable, SortableItem, SortableItemHandle } from '@/components/Sortable'
-import { getCategoryValues, getOrderedCategories, HOT_CATEGORY_LIST, HOT_ITEMS } from '@/enums'
+import { getCategoryValues, getOrderedCategories, HOT_CATEGORY_LIST, HOT_ITEMS } from '@/config/hot-list'
 import { useAppStore } from '@/store/useAppStore'
 
 const MotionSurface = motion.create(Surface)

@@ -18,7 +18,7 @@ import HotListVirtual from './HotListVirtual'
 
 import BlurFade from '@/components/BlurFade'
 import SkeletonCard from '@/components/SkeletonCard'
-import { API_CACHE_SECONDS, RESPONSE } from '@/enums/response'
+import { API_CACHE_SECONDS, RESPONSE } from '@/config/response'
 import { useRequest } from '@/hooks/use-request'
 import { smoothScrollTo } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'

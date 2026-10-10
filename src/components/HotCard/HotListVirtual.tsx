@@ -1,4 +1,4 @@
-import type { HotValue } from '@/enums'
+import type { HotValue } from '@/config/hot-list'
 import type { HotListItem } from '@/types'
 
 import { ArrowDown } from '@gravity-ui/icons'

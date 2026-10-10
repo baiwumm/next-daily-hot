@@ -5,7 +5,7 @@
  * @LastEditTime: 2026-07-31 17:33:53
  * @Description: 动态列表子项
  */
-import type { HotValue } from '@/enums'
+import type { HotValue } from '@/config/hot-list'
 import type { HotListItem } from '@/types'
 import type { ReactNode } from 'react'
 

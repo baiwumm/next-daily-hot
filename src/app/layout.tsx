@@ -20,7 +20,7 @@ import BackTop from '@/components/BackTop'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import MotionProvider from '@/components/MotionProvider'
-import { HOT_ITEMS } from '@/enums'
+import { HOT_ITEMS } from '@/config/hot-list'
 import pkg from '#/package.json'
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://hot.baiwumm.com'

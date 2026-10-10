@@ -7,7 +7,7 @@
  */
 'use client'
 
-import type { HotValue } from '@/enums'
+import type { HotValue } from '@/config/hot-list'
 import type { HotListItem } from '@/types'
 
 import { Tooltip } from '@heroui/react'

@@ -7,12 +7,12 @@
  */
 
 'use client'
-import type { HotCategory, HotValue } from '@/enums'
+import type { HotCategory, HotValue } from '@/config/hot-list'
 
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { HOT_CATEGORY_LIST, HOT_ITEMS } from '@/enums'
+import { HOT_CATEGORY_LIST, HOT_ITEMS } from '@/config/hot-list'
 import { fromNow } from '@/lib/utils'
 
 /** 排名趋势快照：某平台上次抓取时的条目排名 */

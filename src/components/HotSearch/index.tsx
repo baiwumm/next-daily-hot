@@ -3,15 +3,15 @@
  */
 'use client'
 import type { ReactNode } from 'react'
-import type { HotValue } from '@/enums'
+import type { HotValue } from '@/config/hot-list'
 import type { HotListItem, IResponse } from '@/types'
 
 import { Magnifier } from '@gravity-ui/icons'
 import { Button, Chip, Modal, SearchField, Tooltip, Typography, useOverlayState } from '@heroui/react'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 
-import { HOT_ITEMS } from '@/enums'
-import { API_CACHE_SECONDS } from '@/enums/response'
+import { HOT_ITEMS } from '@/config/hot-list'
+import { API_CACHE_SECONDS } from '@/config/response'
 import { formatNumber } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 

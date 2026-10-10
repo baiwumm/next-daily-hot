@@ -15,7 +15,13 @@ import BlurFade from '@/components/BlurFade'
 import CategoryIndicator from '@/components/CategoryIndicator'
 import HotCard from '@/components/HotCard'
 import SkeletonCard from '@/components/SkeletonCard'
-import { getCategoryValues, getOrderedCategories, CATEGORY_GROUPS, FAVORITE_CATEGORY, HOT_ITEMS } from '@/enums'
+import {
+  getCategoryValues,
+  getOrderedCategories,
+  CATEGORY_GROUPS,
+  FAVORITE_CATEGORY,
+  HOT_ITEMS,
+} from '@/config/hot-list'
 import { useAppStore } from '@/store/useAppStore'
 
 const gridClassName = 'grid gap-4 grid-cols-[repeat(auto-fill,minmax(20rem,1fr))]'

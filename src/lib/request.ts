@@ -2,7 +2,7 @@
  * @description: 上游请求公共工具：统一 UA、超时、缓存与错误日志
  */
 
-import { API_CACHE_SECONDS } from '@/enums/response'
+import { API_CACHE_SECONDS } from '@/config/response'
 
 /** Chrome 桌面端 UA（多数上游 JSON API 的反爬要求） */
 export const UA_CHROME =

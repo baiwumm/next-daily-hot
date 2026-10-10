@@ -3,7 +3,7 @@
  */
 import type { HotListItem } from '@/types'
 
-import { API_CACHE_SECONDS } from '@/enums/response'
+import { API_CACHE_SECONDS } from '@/config/response'
 import { fetchJson, isManualRefresh } from '@/lib/request'
 import { errorResponse, successResponse } from '@/lib/response'
 
